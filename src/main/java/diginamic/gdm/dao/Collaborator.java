@@ -14,6 +14,7 @@ import lombok.Setter;
 
 /**
  * Entity which reprensents a Collaborator
+ * 
  * @author Joseph
  *
  */
@@ -32,10 +33,9 @@ public class Collaborator {
 	private String lastName;
 	/** firstName */
 	private String firstName;
-	/** email : identification mail address*/
+	/** email : identification mail address */
 	private String email;
 	/** password : remember to add security */
 	private String password;
 
-	
 }

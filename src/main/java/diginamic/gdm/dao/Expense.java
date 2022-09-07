@@ -1,5 +1,8 @@
 package diginamic.gdm.dao;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,22 +14,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which reprensents a city
+ * Entity which reprensents a Collaborator
  * 
  * @author Joseph
  *
  */
-@Getter
-@Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class City {
+@Getter
+@Setter
+public class Expense {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	/** name : the name of the city */
-	private String name;
+	/** date : the date of the expense */
+	private LocalDateTime date;
 
+	/** cost : the cost of the expense */
+	private BigDecimal cost;
+
+	/** tva : the applicable TVA */
+	private Float tva;
 }

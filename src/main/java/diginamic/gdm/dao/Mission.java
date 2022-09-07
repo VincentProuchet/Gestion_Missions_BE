@@ -1,5 +1,8 @@
 package diginamic.gdm.dao;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,22 +14,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which reprensents a city
+ * Entity which reprensents a Collaborator
  * 
  * @author Joseph
  *
  */
-@Getter
-@Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class City {
+@Getter
+@Setter
+public class Mission {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	/** name : the name of the city */
-	private String name;
+	/** startDate : the date of the start of the mission */
+	private LocalDateTime startDate;
+
+	/** startDate : the date of the end of the mission */
+	private LocalDateTime endDate;
+
+	/** bonus : the bonus for the collaborator */
+	private BigDecimal bonus;
 
 }
