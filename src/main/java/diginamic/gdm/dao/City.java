@@ -25,6 +25,7 @@ public class City {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	/** name : the name of the city*/
 	private String name;
 
 }
