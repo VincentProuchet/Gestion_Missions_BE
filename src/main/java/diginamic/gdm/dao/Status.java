@@ -1,7 +1,7 @@
 package diginamic.gdm.dao;
 
 /**
- * Represents the status of the demand of the mission
+ * Represents the status of the request for the mission
  * 
  * @author Joseph
  *

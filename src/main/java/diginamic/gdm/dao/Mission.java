@@ -2,11 +2,17 @@ package diginamic.gdm.dao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,5 +43,39 @@ public class Mission {
 
 	/** bonus : the bonus for the collaborator */
 	private BigDecimal bonus;
+
+	/** missionTransport : the type of transport for the mission */
+	@Enumerated(EnumType.STRING)
+	private Transport missionTransport;
+
+	/** status : the status of the mission request */
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	/**
+	 * nature : the nature of the mission, contains common details about the mission
+	 */
+	@ManyToOne
+	@JoinColumn(name = "natureID")
+	private Nature nature;
+
+	/** startCity : the city where the collaborator is initially */
+	@ManyToOne
+	@JoinColumn(name = "startCityID")
+	private City startCity;
+
+	/** startCity : the city where the mission holds place */
+	@ManyToOne
+	@JoinColumn(name = "endCityID")
+	private City endCity;
+
+	/** expenses : business expenses for the mission */
+	@OneToMany(mappedBy = "mission")
+	private Set<Expense> expenses;
+
+	/** collaborator : the collaborator this mission is due to */
+	@ManyToOne
+	@JoinColumn(name = "collaboratorID")
+	private Collaborator collaborator;
 
 }

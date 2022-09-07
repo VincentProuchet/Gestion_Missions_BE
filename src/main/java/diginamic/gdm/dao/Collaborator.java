@@ -1,11 +1,16 @@
 package diginamic.gdm.dao;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,5 +42,14 @@ public class Collaborator {
 	private String email;
 	/** password : remember to add security */
 	private String password;
+
+	/** missions : the missions this collaborator is in charge of */
+	@OneToMany(mappedBy = "collaborator")
+	private Set<Mission> missions;
+
+	/** manager : the manager of this collaborator */
+	@ManyToOne
+	@JoinColumn(name = "managerID")
+	private Manager manager;
 
 }

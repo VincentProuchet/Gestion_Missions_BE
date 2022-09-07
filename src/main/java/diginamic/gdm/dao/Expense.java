@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,4 +39,14 @@ public class Expense {
 
 	/** tva : the applicable TVA */
 	private Float tva;
+
+	/** mission : the mission which requiered this expense */
+	@ManyToOne
+	@JoinColumn(name = "missionID")
+	private Mission mission;
+
+	/** expenseType : the nature of this expense */
+	@ManyToOne
+	@JoinColumn(name = "expenseTypeID")
+	private ExpenseType expenseType;
 }
