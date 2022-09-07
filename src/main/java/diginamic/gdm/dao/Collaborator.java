@@ -1,5 +1,6 @@
 package diginamic.gdm.dao;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -45,7 +46,7 @@ public class Collaborator {
 
 	/** missions : the missions this collaborator is in charge of */
 	@OneToMany(mappedBy = "collaborator")
-	private Set<Mission> missions;
+	private Set<Mission> missions = new HashSet<Mission>();
 
 	/** manager : the manager of this collaborator */
 	@ManyToOne

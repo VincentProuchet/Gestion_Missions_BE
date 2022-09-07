@@ -2,6 +2,7 @@ package diginamic.gdm.dao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -71,7 +72,7 @@ public class Mission {
 
 	/** expenses : business expenses for the mission */
 	@OneToMany(mappedBy = "mission")
-	private Set<Expense> expenses;
+	private Set<Expense> expenses = new HashSet<Expense>();
 
 	/** collaborator : the collaborator this mission is due to */
 	@ManyToOne
