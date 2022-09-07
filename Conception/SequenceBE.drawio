@@ -1,9 +1,14 @@
-<mxfile host="app.diagrams.net" modified="2022-09-07T13:21:11.761Z" agent="5.0 (Windows)" etag="oM9I3kYRjdRsU4cGdKDq" version="20.2.8" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-07T13:41:03.837Z" agent="5.0 (Windows)" etag="cc-reBW6rAuCl-kFnJKS" version="20.2.8" type="github">
   <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">
-    <mxGraphModel dx="2881" dy="943" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3220" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="429.32000000000016" y="1890" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="3nuBFxr9cyL0pnOWT2aG-1" value="&#xa;Classe MissionService" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="364.32" y="80" width="130" height="1180" as="geometry" />
         </mxCell>
@@ -15,6 +20,11 @@
               <mxPoint x="155.68" y="900" />
             </Array>
             <mxPoint x="-71" y="72" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="1890" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="3nuBFxr9cyL0pnOWT2aG-5" value="JPA&#xa;(s&#39;occupe de la BDD)" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
@@ -35,6 +45,11 @@
               <mxPoint x="640" y="380" />
             </Array>
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="1880" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-5" value="&lt;div&gt;Controller&lt;/div&gt;&lt;div&gt;BE&lt;br&gt;&lt;/div&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
@@ -112,8 +127,13 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-150" y="1880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-33" value="Employé" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
-          <mxGeometry x="-200" y="80" width="100" height="1120" as="geometry" />
+          <mxGeometry x="-200" y="80" width="100" height="1140" as="geometry" />
         </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-34" value="Création Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-33" target="5L8-g9ovLrtgpSLUulJO-5">
           <mxGeometry x="-0.1587" relative="1" as="geometry">
@@ -182,7 +202,7 @@
           <mxGeometry x="180" y="680" width="184.32" height="100" as="geometry" />
         </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-24" value="&lt;div&gt;E données non valides&lt;br&gt;&lt;/div&gt;&lt;div&gt;- la mission est VALIDEE et seul son status peut être modifiée&lt;/div&gt;&lt;div&gt;- La mission est TERMINEE et ne peux être modifié&lt;/div&gt;&lt;div&gt;- la nature de la mission n&#39;est pas valide&lt;br&gt;&lt;/div&gt;&lt;div&gt;- la date de début ne peux être égale ou antérieur à la date du jour&lt;/div&gt;&lt;div&gt;- la date de fin ne peux être antérieure à la date de début&lt;br&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" vertex="1" parent="1">
-          <mxGeometry x="490" y="640" width="280" height="169" as="geometry" />
+          <mxGeometry x="480" y="680" width="280" height="169" as="geometry" />
         </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-74" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-33">
           <mxGeometry relative="1" as="geometry">
@@ -192,6 +212,12 @@
               <mxPoint x="30" y="1170" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-81" value="&lt;div&gt;Modification&amp;nbsp; de mission&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="580" width="1010" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-85" value="&lt;div&gt;Modification&amp;nbsp; de mission&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="1220" width="1010" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
