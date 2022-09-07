@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-09-07T14:36:57.512Z" agent="5.0 (Windows)" etag="1dUckAM2xBbPWBl-XFp6" version="20.2.8" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-07T14:50:04.011Z" agent="5.0 (Windows)" etag="QF2WqXTi2xVwDamultaH" version="20.2.8" type="github">
   <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">
-    <mxGraphModel dx="3694" dy="1406" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2858" dy="1004" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -18,7 +18,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="3nuBFxr9cyL0pnOWT2aG-5" value="JPA&#xa;(s&#39;occupe de la BDD)" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
-          <mxGeometry x="690" y="80" width="180" height="1090" as="geometry" />
+          <mxGeometry x="690" y="80" width="180" height="2968" as="geometry" />
         </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-5" value="&lt;div&gt;Controller&lt;/div&gt;&lt;div&gt;BE&lt;br&gt;&lt;/div&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="20" y="80" width="100" height="2990" as="geometry" />
@@ -182,7 +182,7 @@
           <mxGeometry x="-360" y="1210" width="1010" height="50" as="geometry" />
         </mxCell>
         <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-1" value="&lt;div&gt;Afficher mission&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
-          <mxGeometry x="-347" y="667" width="1010" height="50" as="geometry" />
+          <mxGeometry x="-371" y="601" width="1010" height="50" as="geometry" />
         </mxCell>
         <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-2" value="Demande d&#39;information d&#39;une mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-33" target="5L8-g9ovLrtgpSLUulJO-5">
           <mxGeometry x="-0.1587" relative="1" as="geometry">
@@ -232,7 +232,7 @@
             <mxPoint x="780.1799999999995" y="446.9799999999998" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-8" value="select Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.512;exitY=0.291;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.496;entryY=0.691;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="3nuBFxr9cyL0pnOWT2aG-5">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-8" value="select Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.512;exitY=0.291;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="3nuBFxr9cyL0pnOWT2aG-5">
           <mxGeometry x="-0.0317" relative="1" as="geometry">
             <mxPoint x="432.2400000000004" y="843.3799999999999" as="sourcePoint" />
             <mxPoint x="780.8599999999993" y="800" as="targetPoint" />
@@ -258,10 +258,103 @@
         <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-13" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="5L8-g9ovLrtgpSLUulJO-5">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="74" y="474" as="targetPoint" />
-            <mxPoint x="432.9800000000005" y="474" as="sourcePoint" />
+            <mxPoint x="408" y="527" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="374" y="538" />
+              <mxPoint x="333" y="527" />
             </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-17" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="431.0099999999993" y="2411.8" as="targetPoint" />
+            <mxPoint x="779.5" y="2411.8" as="sourcePoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-18" value="Modification Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="2137" as="sourcePoint" />
+            <mxPoint x="428.81999999999925" y="2137" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;" edge="1" source="Jw-Lm7LRE4pyzQuO6-6R-26" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="2297" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-20" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="68" y="2453.1" as="targetPoint" />
+            <mxPoint x="426.9800000000005" y="2453.1" as="sourcePoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-21" value="update Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry x="-0.0323" relative="1" as="geometry">
+            <mxPoint x="426.9800000000005" y="2362.24" as="sourcePoint" />
+            <mxPoint x="779.5" y="2362.24" as="targetPoint" />
+            <Array as="points" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-22" value="Modification Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-152" y="2037" as="sourcePoint" />
+            <mxPoint x="69.49999999999955" y="2037" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-30" y="2037" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=none;endArrow=none;endFill=0;" edge="1" source="Jw-Lm7LRE4pyzQuO6-6R-25" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="2087" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=none;endFill=0;" edge="1" source="Jw-Lm7LRE4pyzQuO6-6R-25" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="2057" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-25" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- le statut ne peux être changé que par le manageur&lt;/div&gt;&lt;div&gt;- les propriété ne peuvent être changées que par le créateur&lt;br&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" vertex="1" parent="1">
+          <mxGeometry x="180" y="1997" width="184.32" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-26" value="&lt;div&gt;E données non valides&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Une mission au status TERMINEE ou VALIDEE ne peut être supprimée&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Seul le créateur peut supprimer une mission&lt;br&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" vertex="1" parent="1">
+          <mxGeometry x="480" y="1997" width="280" height="169" as="geometry" />
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-27" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-152" y="2487" as="targetPoint" />
+            <mxPoint x="69.5" y="2487" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="30" y="2487" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-28" value="&lt;div&gt;Suppresion de mission&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="-360" y="1897" width="1010" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-15" value="controle des régles métiers" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1">
+          <mxGeometry x="1" y="-72" width="60" relative="1" as="geometry">
+            <mxPoint x="510" y="2199" as="sourcePoint" />
+            <mxPoint x="635" y="2274" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="455" y="2246" />
+              <mxPoint x="526" y="2305" />
+            </Array>
+            <mxPoint x="-71" y="72" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-16" value="&lt;div&gt;controle des accés&lt;/div&gt;" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;rounded=0;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5">
+          <mxGeometry x="1" y="-70" width="60" relative="1" as="geometry">
+            <mxPoint x="72" y="2077" as="sourcePoint" />
+            <mxPoint x="72.00000000000045" y="2123" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="112" y="2057" />
+              <mxPoint x="129" y="2091" />
+            </Array>
+            <mxPoint x="-69" y="70" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
