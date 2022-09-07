@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 
 /**
  * Entity which represents an Administrator
+ * 
  * @author Joseph
  *
  */
