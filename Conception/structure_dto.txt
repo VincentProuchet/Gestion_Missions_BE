@@ -1,0 +1,94 @@
+public class MissionDTO {
+
+	private Date dateDebut;
+	private Date dateFin;
+    private Ville villeDepart;
+    private Ville villeArrivee;
+    private BigDecimal montantPrime;
+    private Transport transport;
+    private Statut statut; 
+    private NatureDTO nature;
+    private CollaborateurDTO collaborateur;
+    private List<LigneFraisDTO> lignesFrais;
+
+}
+
+// Mission JSON :
+{
+    "prime": montantPrime,
+    "statut": statut,
+    "transport": transport,
+    "dateDebut": dateDebut,
+    "dateFin": dateDebut,
+    "villeDepart": villeDepart,
+    "villeArrivee": villeArrivee
+    "nature": nature,
+    "collaborateur": collaborateur
+    "lignesFrais": [...lignesFrais],
+}
+
+
+public class NatureDTO {
+
+    private String libelle;
+    private boolean hasPrime;
+    private boolean hasFacture;
+    private BigDecimal tjm;
+    private float primePercent;
+    private Date dateDebutValidite;
+    private Date dateFinValidite;
+
+}
+
+// Nature JSON :
+{
+    "libelle": libelle,
+    "dateCreation": dateDebutValidite 
+    "dateFin": dateFinValidite
+    "prime": hasPrime,
+    "facture": hasFacture,
+    "tauxJournalier": tjm,
+    "pourcentagePrime": hasPrime ? primePercent : undefined
+}
+
+
+public class CollaborateurDTO {
+
+    private String nom;
+    private String prenom;
+    private String email;
+    private String password;
+    private String authToken;
+    private Role role;
+    private CollaborateurDTO manager;
+
+}
+
+// Collaborateur JSON :
+{
+    "nom": nom,
+    "prenom": prenom,
+    "email": email,
+    "password": password,
+    "authToken": authToken,
+    "role": role,
+    "manager": manager
+}
+
+
+public class LigneFraisDTO {
+
+    private Date date;
+    private BigDecimal montant;
+    private float tva; 
+    private TypeDeFrais type;
+
+}
+
+// Ligne de frais JSON :
+{
+    "date": date,
+    "montant": montant,
+    "pourcentageTVA": tva,
+    "typeFrais": type
+}
