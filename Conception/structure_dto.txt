@@ -1,5 +1,6 @@
 public class MissionDTO {
 
+	private Integer id;
 	private Date dateDebut;
 	private Date dateFin;
     private Ville villeDepart;
@@ -15,6 +16,7 @@ public class MissionDTO {
 
 // Mission JSON :
 {
+	"id":00,
     "prime": montantPrime,
     "statut": statut,
     "transport": transport,
@@ -29,7 +31,8 @@ public class MissionDTO {
 
 
 public class NatureDTO {
-
+	
+	private Integer id;
     private String libelle;
     private boolean hasPrime;
     private boolean hasFacture;
@@ -42,6 +45,7 @@ public class NatureDTO {
 
 // Nature JSON :
 {
+	"id":00,
     "libelle": libelle,
     "dateCreation": dateDebutValidite 
     "dateFin": dateFinValidite
@@ -53,7 +57,8 @@ public class NatureDTO {
 
 
 public class CollaborateurDTO {
-
+	
+	private Integer id;
     private String nom;
     private String prenom;
     private String email;
@@ -66,6 +71,7 @@ public class CollaborateurDTO {
 
 // Collaborateur JSON :
 {
+	"id":00,
     "nom": nom,
     "prenom": prenom,
     "email": email,
@@ -78,6 +84,8 @@ public class CollaborateurDTO {
 
 public class LigneFraisDTO {
 
+	private Integer id;
+	private Integer idMission;
     private Date date;
     private BigDecimal montant;
     private float tva; 
@@ -87,6 +95,8 @@ public class LigneFraisDTO {
 
 // Ligne de frais JSON :
 {
+	"id":00,
+	"idMission":00,
     "date": date,
     "montant": montant,
     "pourcentageTVA": tva,
