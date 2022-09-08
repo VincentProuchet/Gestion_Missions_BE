@@ -28,10 +28,10 @@ public interface NatureService {
 	/**
 	 * Updates the data for a specific registered mission nature.
 	 * 
-	 * @param id The id corresponding to the nature to update
+	 * @param nature The nature to update with modified info
 	 * @return The resulting nature with updated info
 	 */
-	Nature update(int id);
+	Nature update(Nature nature);
 	
 	/**
 	 * Deletes a specific registered mission nature.
