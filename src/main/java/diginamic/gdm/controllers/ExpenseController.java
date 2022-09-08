@@ -1,6 +1,5 @@
 package diginamic.gdm.controllers;
 
-import java.io.ObjectInputFilter.Status;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -15,51 +14,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.services.MissionService;
+import diginamic.gdm.dao.Expense;
+import diginamic.gdm.services.ExpenseService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(path = "mission", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "frais", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class MissionController {
+public class ExpenseController {
 	
-	private MissionService missionService;
+	private ExpenseService expenseService;
 
 	@GetMapping
-	public List<Mission> list() {
-		return missionService.list();
+	public List<Expense> list() {
+		return expenseService.list();
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody Mission mission) {
-		missionService.create(mission);
-	}
-	
-	@GetMapping(path = "{id}")
-	public Mission read(@PathVariable int id) {
-		return missionService.read(id);
+	public void create(@RequestBody Expense expense) {
+		expenseService.create(expense);
 	}
 	
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Mission update(@RequestBody Mission mission) {
-		return missionService.update(mission);
+	public Expense update(@RequestBody Expense expense) {
+		return expenseService.update(expense);
 	}
 	
 	@DeleteMapping(path = "{id}")
 	public void delete(@PathVariable int id) {
-		missionService.delete(id);
-	}
-	
-	@PutMapping(path = "{id}/valider")
-	public void accept(@PathVariable int id) {
-		missionService.updateStatus(id, Status.ALLOWED);
-	}
-	
-	@PutMapping(path = "{id}/rejeter")
-	public void reject(@PathVariable int id) {
-		missionService.updateStatus(id, Status.REJECTED);
+		expenseService.delete(id);
 	}
 	
 }
