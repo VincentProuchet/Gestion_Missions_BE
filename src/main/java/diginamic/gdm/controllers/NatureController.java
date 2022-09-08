@@ -18,29 +18,58 @@ import diginamic.gdm.dao.Nature;
 import diginamic.gdm.services.NatureService;
 import lombok.AllArgsConstructor;
 
+/**
+ * REST API controller for {@link Nature} related paths.
+ * 
+ * @author DorianBoel
+ */
 @RestController
 @RequestMapping(path = "nature", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class NatureController {
 	
+	/**
+	 * The {@link NatureService} dependency.
+	 */
 	private NatureService natureService;
 
+	/**
+	 * Gets the full list of registered mission natures.
+	 * 
+	 * @return A list of all natures
+	 */
 	@GetMapping
 	public List<Nature> list() {
 		return natureService.list();
 	}
 	
+	/**
+	 * Saves a new {@link Nature} instance.
+	 * 
+	 * @param nature The new nature within the request body to be registered
+	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void create(@RequestBody Nature nature) {
 		natureService.create(nature);
 	}
 	
+	/**
+	 * Updates the data for a specific registered mission nature.
+	 * 
+	 * @param nature The nature within the request body with modified info
+	 * @return The resulting nature with updated info
+	 */
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Nature update(@RequestBody Nature nature) {
 		return natureService.update(nature);
 	}
 	
+	/**
+	 * Deletes a specific registered mission nature.
+	 * 
+	 * @param id The id corresponding to the nature to delete
+	 */
 	@DeleteMapping(path = "{id}")
 	public void delete(@PathVariable int id) {
 		natureService.delete(id);

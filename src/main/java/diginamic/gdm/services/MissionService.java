@@ -13,7 +13,7 @@ import diginamic.gdm.dao.Mission;
 public interface MissionService {
 	
 	/**
-	 * Gets the full list of registered mission.
+	 * Gets the full list of registered missions.
 	 * 
 	 * @return A list of all missions
 	 */
