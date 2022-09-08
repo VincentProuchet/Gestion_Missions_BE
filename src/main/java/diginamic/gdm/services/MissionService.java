@@ -1,5 +1,6 @@
 package diginamic.gdm.services;
 
+import java.io.ObjectInputFilter.Status;
 import java.util.List;
 
 import diginamic.gdm.dao.Mission;
@@ -12,7 +13,7 @@ import diginamic.gdm.dao.Mission;
 public interface MissionService {
 	
 	/**
-	 * Gets the full list of registered mission.
+	 * Gets the full list of registered missions.
 	 * 
 	 * @return A list of all missions
 	 */
@@ -47,5 +48,13 @@ public interface MissionService {
 	 * @param id The id corresponding to the mission to delete
 	 */
 	void delete(int id);
+
+	/**
+	 * Updates the current status for a specific mission.
+	 * 
+	 * @param id The id corresponding to the mission whose status to update
+	 * @param status The new status to be applied to the mission
+	 */
+	void updateStatus(int id, Status status);
 
 }

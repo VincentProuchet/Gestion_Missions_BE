@@ -14,65 +14,65 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.dao.Nature;
-import diginamic.gdm.services.NatureService;
+import diginamic.gdm.dao.Expense;
+import diginamic.gdm.services.ExpenseService;
 import lombok.AllArgsConstructor;
 
 /**
- * REST API controller for {@link Nature} related paths.
+ * REST API controller for {@link Expense} related paths.
  * 
  * @author DorianBoel
  */
 @RestController
-@RequestMapping(path = "nature", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "frais", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class NatureController {
+public class ExpenseController {
 	
 	/**
-	 * The {@link NatureService} dependency.
+	 * The {@link ExpenseService} dependency.
 	 */
-	private NatureService natureService;
+	private ExpenseService expenseService;
 
 	/**
-	 * Gets the full list of registered mission natures.
+	 * Gets the full list of registered expenses.
 	 * 
-	 * @return A list of all natures
+	 * @return A list of all expenses
 	 */
 	@GetMapping
-	public List<Nature> list() {
-		return natureService.list();
+	public List<Expense> list() {
+		return expenseService.list();
 	}
 	
 	/**
-	 * Saves a new {@link Nature} instance.
+	 * Saves a new {@link Expense} instance.
 	 * 
-	 * @param nature The new nature within the request body to be registered
+	 * @param expense The new expense within the request body to be registered
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody Nature nature) {
-		natureService.create(nature);
+	public void create(@RequestBody Expense expense) {
+		expenseService.create(expense);
 	}
 	
 	/**
-	 * Updates the data for a specific registered mission nature.
+	 * Updates the data for a specific registered expense.
 	 * 
-	 * @param nature The nature within the request body with modified info
-	 * @return The resulting nature with updated info
+	 * @param expense The expense within the request body with modified info
+	 * @return The resulting expense with updated info
 	 */
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Nature update(@RequestBody Nature nature) {
-		return natureService.update(nature);
+	public Expense update(@RequestBody Expense expense) {
+		return expenseService.update(expense);
 	}
 	
 	/**
-	 * Deletes a specific registered mission nature.
+	 * Deletes a specific registered expense.
 	 * 
-	 * @param id The id corresponding to the nature to delete
+	 * @param id The id corresponding to the expense to delete
 	 */
 	@DeleteMapping(path = "{id}")
 	public void delete(@PathVariable int id) {
-		natureService.delete(id);
+		expenseService.delete(id);
 	}
 	
 }
