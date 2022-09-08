@@ -33,4 +33,11 @@ public interface ExpenseService {
 	 */
 	Expense update(int id);
 	
+	/**
+	 * Deletes a specific registered expense.
+	 * 
+	 * @param id The id corresponding to the expense to delete
+	 */
+	void delete(int id);
+	
 }
