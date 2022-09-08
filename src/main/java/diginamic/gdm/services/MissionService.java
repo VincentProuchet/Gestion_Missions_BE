@@ -36,10 +36,10 @@ public interface MissionService {
 	/**
 	 * Updates the data for a specific registered mission.
 	 * 
-	 * @param id The id corresponding to the mission to update
+	 * @param mission The mission to update with modified info
 	 * @return The resulting mission with updated info
 	 */
-	Mission update(int id);
+	Mission update(Mission mission);
 	
 	/**
 	 * Deletes a specific registered mission.
