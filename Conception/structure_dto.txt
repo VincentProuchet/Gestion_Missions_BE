@@ -41,11 +41,12 @@ public class LigneFraisDTO {
 }
 
 // Ligne de frais JSON :
+// Expense
 {
 	"id":0,
 	"idMission":0,
     "date": 2022-04-15,
-    "value": 0,
+    "cost": 0,
     "TVA": 25,
     "ExpenseType": "type"
     
@@ -78,7 +79,7 @@ public class NatureDTO {
 }
 
 
-public class CollaborateurDTO {
+public class CollaboratorDTO {
 	
 	private Integer id;
     private String lastName;
@@ -90,7 +91,7 @@ public class CollaborateurDTO {
 
 }
 
-// Collaborateur JSON :
+// Collaborator JSON :
 {
 	"id":0,
     "lastName": "nom",
