@@ -1,14 +1,14 @@
-<mxfile host="app.diagrams.net" modified="2022-09-08T13:42:29.709Z" agent="5.0 (Windows)" etag="0NZalipApBm3qu059NMy" version="20.3.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-09-09T08:14:41.920Z" agent="5.0 (Windows)" etag="5JKMWQqtjD9stcxpJwXI" version="20.3.0" type="github">
   <diagram id="kgpKYQtTHZ0yAKxKKP6v" name="Page-1">
-    <mxGraphModel dx="9591" dy="4479" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="5066" dy="2447" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="3nuBFxr9cyL0pnOWT2aG-1" value="&#xa;Classe MissionService" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
-          <mxGeometry x="364.32" y="-960" width="130" height="4356" as="geometry" />
+          <mxGeometry x="343" y="-973" width="130" height="4356" as="geometry" />
         </mxCell>
         <mxCell id="3nuBFxr9cyL0pnOWT2aG-5" value="JPA&#xa;(s&#39;occupe de la BDD)" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
-          <mxGeometry x="882" y="-972" width="180" height="3501" as="geometry" />
+          <mxGeometry x="888" y="-973" width="180" height="3501" as="geometry" />
         </mxCell>
         <mxCell id="5L8-g9ovLrtgpSLUulJO-5" value="&lt;div&gt;Controller&lt;/div&gt;&lt;div&gt;BE&lt;br&gt;&lt;/div&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="16" y="-973" width="100" height="4383" as="geometry" />
@@ -16,17 +16,19 @@
         <mxCell id="5L8-g9ovLrtgpSLUulJO-13" value="Création de mission" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" parent="1" vertex="1">
           <mxGeometry x="-360" y="10" width="1010" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-2" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la date de début ne peux être antérieure ou égale à la date du jour&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;-&amp;nbsp;&lt;/font&gt;&lt;font face=&quot;Helvetica&quot;&gt; la nature de la mission à une date de fin de validité&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1135.11px; transform: scaleX(0.901648);&quot;&gt;La date de fin ne peux être antérieure&amp;nbsp; ou égale à la date de&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 497.849px; top: 1135.11px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;début&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;span id=&quot;page36R_mcid21&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1089.53px; transform: scaleX(0.908369);&quot;&gt;- La date de début et la date ne fin ne peuvent pas êt&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 376.385px; top: 1089.53px; transform: scaleX(0.938461);&quot;&gt;re&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 390.337px; top: 1089.53px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 394.184px; top: 1089.53px; transform: scaleX(0.921216);&quot;&gt;un week&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 451.575px; top: 1089.53px;&quot;&gt;-&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 456.478px; top: 1089.53px; transform: scaleX(0.927065);&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page36R_mcid22&quot; class=&quot;markedContent&quot;&gt;&lt;/span&gt;&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page39R_mcid0&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 111.187px; transform: scaleX(0.911965);&quot;&gt;- La date de début, la date de fin&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 371.999px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 375.84px; top: 111.187px; transform: scaleX(0.916522);&quot;&gt;et la nature de mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.045px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 111.187px; transform: scaleX(0.945553);&quot;&gt;sont obligatoir&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 632.313px; top: 111.187px; transform: scaleX(0.843485);&quot;&gt;es&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid1&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 142.119px; top: 134.101px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 134.101px; transform: scaleX(0.904996);&quot;&gt;Une&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 189.422px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 193.27px; top: 134.101px; transform: scaleX(0.910233);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 244.85px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 248.663px; top: 134.101px; transform: scaleX(0.911306);&quot;&gt;ne doit pas chevaucher une autre&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 474.849px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 478.666px; top: 134.101px; transform: scaleX(0.907579);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.095px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 134.101px; transform: scaleX(0.927615);&quot;&gt;existante&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;d&#39;un même collaborateur&lt;span id=&quot;page39R_mcid2&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- S&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 156.985px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 168.207px; top: 156.985px; transform: scaleX(0.920046);&quot;&gt;i le type de transport est l&#39;avion, une anticipation de 7 jours est exigée:&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 188.912px; top: 179.077px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 198.937px; top: 179.077px;&quot;&gt; &lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span style=&quot;&quot;&gt;	&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 216.154px; top: 178.779px; transform: scaleX(0.908007);&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;	&lt;/span&gt;date de début de mission &amp;gt;= date jour + 7 jours calendaires&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid4&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;-&amp;nbsp;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 142.119px; top: 201.662px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 201.662px; transform: scaleX(0.893766);&quot;&gt;La ville de dép&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 258.107px; top: 201.662px; transform: scaleX(0.952141);&quot;&gt;art et d&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 307.734px; top: 201.662px;&quot;&gt;’&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 311.911px; top: 201.662px; transform: scaleX(0.925718);&quot;&gt;arrivée sont obligatoires&lt;/span&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-2" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la date de début ne peux être antérieure ou égale à la date du jour&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;-&amp;nbsp;&lt;/font&gt;&lt;font face=&quot;Helvetica&quot;&gt; la nature de la mission à une date de fin de validité&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1135.11px; transform: scaleX(0.901648);&quot;&gt;La date de fin ne peux être antérieure&amp;nbsp; ou égale à la date de&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 497.849px; top: 1135.11px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;début&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;span id=&quot;page36R_mcid21&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1089.53px; transform: scaleX(0.908369);&quot;&gt;- La date de début et la date ne fin ne peuvent pas êt&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 376.385px; top: 1089.53px; transform: scaleX(0.938461);&quot;&gt;re&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 390.337px; top: 1089.53px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 394.184px; top: 1089.53px; transform: scaleX(0.921216);&quot;&gt;un week&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 451.575px; top: 1089.53px;&quot;&gt;-&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 456.478px; top: 1089.53px; transform: scaleX(0.927065);&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page36R_mcid22&quot; class=&quot;markedContent&quot;&gt;&lt;/span&gt;&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page39R_mcid0&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 111.187px; transform: scaleX(0.911965);&quot;&gt;- La date de début, la date de fin&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 371.999px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 375.84px; top: 111.187px; transform: scaleX(0.916522);&quot;&gt;et la nature de mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.045px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 111.187px; transform: scaleX(0.945553);&quot;&gt;sont obligatoir&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 632.313px; top: 111.187px; transform: scaleX(0.843485);&quot;&gt;es&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid1&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 142.119px; top: 134.101px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 134.101px; transform: scaleX(0.904996);&quot;&gt;Une&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 189.422px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 193.27px; top: 134.101px; transform: scaleX(0.910233);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 244.85px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 248.663px; top: 134.101px; transform: scaleX(0.911306);&quot;&gt;ne doit pas chevaucher une autre&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 474.849px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 478.666px; top: 134.101px; transform: scaleX(0.907579);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.095px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 134.101px; transform: scaleX(0.927615);&quot;&gt;existante&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;d&#39;un même collaborateur&lt;span id=&quot;page39R_mcid2&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- S&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 156.985px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 168.207px; top: 156.985px; transform: scaleX(0.920046);&quot;&gt;i le type de transport est l&#39;avion, une anticipation de 7 jours est exigée:&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 188.912px; top: 179.077px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 198.937px; top: 179.077px;&quot;&gt; &lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 216.154px; top: 178.779px; transform: scaleX(0.908007);&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt; &lt;/span&gt;date de début de mission &amp;gt;= date jour + 7 jours calendaires&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid4&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;-&amp;nbsp;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 142.119px; top: 201.662px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 201.662px; transform: scaleX(0.893766);&quot;&gt;La ville de dép&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 258.107px; top: 201.662px; transform: scaleX(0.952141);&quot;&gt;art et d&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 307.734px; top: 201.662px;&quot;&gt;’&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 311.911px; top: 201.662px; transform: scaleX(0.925718);&quot;&gt;arrivée sont obligatoires&lt;/span&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="545" y="110" width="354" height="236" as="geometry" />
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-20" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="3nuBFxr9cyL0pnOWT2aG-5">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-20" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-5" edge="1" target="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="438.9999999999993" y="1715.0000000000002" as="targetPoint" />
+            <mxPoint x="425" y="986" as="targetPoint" />
             <mxPoint x="787.49" y="1715.0000000000002" as="sourcePoint" />
-            <Array as="points" />
+            <Array as="points">
+              <mxPoint x="854" y="1712" />
+            </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-22" value="Modification Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-22" value="Modification Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="70" y="1450" as="sourcePoint" />
             <mxPoint x="428.8199999999997" y="1450" as="targetPoint" />
@@ -38,18 +40,20 @@
             <mxPoint x="520" y="1610" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-25" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-25" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" source="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="68" y="1766.1" as="targetPoint" />
             <mxPoint x="426.9800000000005" y="1766.1" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-28" value="update Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1" target="3nuBFxr9cyL0pnOWT2aG-5">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-28" value="update Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" target="3nuBFxr9cyL0pnOWT2aG-5" edge="1" source="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry x="-0.0323" relative="1" as="geometry">
             <mxPoint x="426.9800000000005" y="1675.2399999999998" as="sourcePoint" />
             <mxPoint x="779.5" y="1675.2399999999998" as="targetPoint" />
-            <Array as="points" />
+            <Array as="points">
+              <mxPoint x="886" y="1677" />
+            </Array>
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
@@ -109,10 +113,10 @@
         <mxCell id="5L8-g9ovLrtgpSLUulJO-63" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- le statut ne peux être changé que par le manageur&lt;/div&gt;&lt;div&gt;- les propriété ne peuvent être changées que par le créateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" parent="1" vertex="1">
           <mxGeometry x="187" y="1303" width="184.32" height="127" as="geometry" />
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-24" value="&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;E données non valides&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;- Seul les mission au status INITIALE ou REJETEE peuvent être modifiée&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;- la nature de la mission n&#39;est pas valide&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;- la date de début ne peux être antérieure ou égale à la date du jour&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1135.11px; transform: scaleX(0.901648);&quot;&gt;La date de fin ne peux être antérieure&amp;nbsp; ou égale à la date de&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 497.849px; top: 1135.11px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;début&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page36R_mcid21&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1089.53px; transform: scaleX(0.908369);&quot;&gt;- La date de début et la date ne fin ne peuvent pas êt&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 376.385px; top: 1089.53px; transform: scaleX(0.938461);&quot;&gt;re&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 390.337px; top: 1089.53px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 394.184px; top: 1089.53px; transform: scaleX(0.921216);&quot;&gt;un week&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 451.575px; top: 1089.53px;&quot;&gt;-&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 456.478px; top: 1089.53px; transform: scaleX(0.927065);&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page36R_mcid22&quot; class=&quot;markedContent&quot;&gt;&lt;/span&gt;&lt;/font&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page39R_mcid0&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 111.187px; transform: scaleX(0.911965);&quot;&gt;- La date de début, la date de fin&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 371.999px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 375.84px; top: 111.187px; transform: scaleX(0.916522);&quot;&gt;et la nature de mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.045px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 111.187px; transform: scaleX(0.945553);&quot;&gt;sont obligatoir&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 632.313px; top: 111.187px; transform: scaleX(0.843485);&quot;&gt;es&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid1&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- Les Date d&#39;u&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 134.101px; transform: scaleX(0.904996);&quot;&gt;ne&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 189.422px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 193.27px; top: 134.101px; transform: scaleX(0.910233);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 244.85px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 248.663px; top: 134.101px; transform: scaleX(0.911306);&quot;&gt;ne doit pas chevaucher une autre&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 474.849px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 478.666px; top: 134.101px; transform: scaleX(0.907579);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.095px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 134.101px; transform: scaleX(0.927615);&quot;&gt;existante&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;d&#39;un même collaborateur&lt;span id=&quot;page39R_mcid2&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- S&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 156.985px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 168.207px; top: 156.985px; transform: scaleX(0.920046);&quot;&gt;i le type de transport est l&#39;avion, une anticipation de 7 jours est exigée:&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 188.912px; top: 179.077px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 198.937px; top: 179.077px;&quot;&gt; &lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span style=&quot;&quot;&gt;	&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 216.154px; top: 178.779px; transform: scaleX(0.908007);&quot;&gt;date de début de mission &amp;gt;= date jour + 7 jours calendaires&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid4&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;-&amp;nbsp;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 142.119px; top: 201.662px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 201.662px; transform: scaleX(0.893766);&quot;&gt;La ville de dép&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 258.107px; top: 201.662px; transform: scaleX(0.952141);&quot;&gt;art et d&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 307.734px; top: 201.662px;&quot;&gt;’&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 311.911px; top: 201.662px; transform: scaleX(0.925718);&quot;&gt;arrivée sont obligatoires&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-24" value="&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;E données non valides&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;- Seul les mission au status INITIALE ou REJETEE peuvent être modifiée&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;- la nature de la mission n&#39;est pas valide&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;- la date de début ne peux être antérieure ou égale à la date du jour&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1135.11px; transform: scaleX(0.901648);&quot;&gt;La date de fin ne peux être antérieure&amp;nbsp; ou égale à la date de&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 497.849px; top: 1135.11px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;début&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page36R_mcid21&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1089.53px; transform: scaleX(0.908369);&quot;&gt;- La date de début et la date ne fin ne peuvent pas êt&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 376.385px; top: 1089.53px; transform: scaleX(0.938461);&quot;&gt;re&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 390.337px; top: 1089.53px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 394.184px; top: 1089.53px; transform: scaleX(0.921216);&quot;&gt;un week&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 451.575px; top: 1089.53px;&quot;&gt;-&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 456.478px; top: 1089.53px; transform: scaleX(0.927065);&quot;&gt;end&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page36R_mcid22&quot; class=&quot;markedContent&quot;&gt;&lt;/span&gt;&lt;/font&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page39R_mcid0&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 111.187px; transform: scaleX(0.911965);&quot;&gt;- La date de début, la date de fin&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 371.999px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 375.84px; top: 111.187px; transform: scaleX(0.916522);&quot;&gt;et la nature de mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.045px; top: 111.187px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 111.187px; transform: scaleX(0.945553);&quot;&gt;sont obligatoir&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 632.313px; top: 111.187px; transform: scaleX(0.843485);&quot;&gt;es&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid1&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- Les Date d&#39;u&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 134.101px; transform: scaleX(0.904996);&quot;&gt;ne&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 189.422px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 193.27px; top: 134.101px; transform: scaleX(0.910233);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 244.85px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 248.663px; top: 134.101px; transform: scaleX(0.911306);&quot;&gt;ne doit pas chevaucher une autre&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 474.849px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 478.666px; top: 134.101px; transform: scaleX(0.907579);&quot;&gt;mission&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 530.095px; top: 134.101px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 533.877px; top: 134.101px; transform: scaleX(0.927615);&quot;&gt;existante&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;d&#39;un même collaborateur&lt;span id=&quot;page39R_mcid2&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;- S&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 156.985px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 168.207px; top: 156.985px; transform: scaleX(0.920046);&quot;&gt;i le type de transport est l&#39;avion, une anticipation de 7 jours est exigée:&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 188.912px; top: 179.077px;&quot;&gt;&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 198.937px; top: 179.077px;&quot;&gt; &lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;&lt;span id=&quot;page39R_mcid3&quot; class=&quot;markedContent&quot;&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 216.154px; top: 178.779px; transform: scaleX(0.908007);&quot;&gt;date de début de mission &amp;gt;= date jour + 7 jours calendaires&lt;/span&gt;&lt;/span&gt;&lt;span id=&quot;page39R_mcid4&quot; class=&quot;markedContent&quot;&gt;&lt;br role=&quot;presentation&quot;&gt;-&amp;nbsp;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 142.119px; top: 201.662px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 201.662px; transform: scaleX(0.893766);&quot;&gt;La ville de dép&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 258.107px; top: 201.662px; transform: scaleX(0.952141);&quot;&gt;art et d&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 307.734px; top: 201.662px;&quot;&gt;’&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 311.911px; top: 201.662px; transform: scaleX(0.925718);&quot;&gt;arrivée sont obligatoires&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="564" y="1295" width="356" height="339" as="geometry" />
         </mxCell>
-        <mxCell id="5L8-g9ovLrtgpSLUulJO-74" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
+        <mxCell id="5L8-g9ovLrtgpSLUulJO-74" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" source="5L8-g9ovLrtgpSLUulJO-5">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-152" y="1800" as="targetPoint" />
             <mxPoint x="69.5" y="1800" as="sourcePoint" />
@@ -142,7 +146,7 @@
             <mxPoint x="431.56000000000057" y="423.3799999999999" as="sourcePoint" />
             <mxPoint x="780.1799999999995" y="380" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="640.68" y="380" />
+              <mxPoint x="630" y="457" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
@@ -157,7 +161,7 @@
             <mxPoint x="780.1799999999995" y="446.9799999999998" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-8" value="select Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" target="3nuBFxr9cyL0pnOWT2aG-5" edge="1" source="3nuBFxr9cyL0pnOWT2aG-1">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-8" value="select Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-5" edge="1">
           <mxGeometry x="-0.0317" relative="1" as="geometry">
             <mxPoint x="432.2400000000004" y="843.3799999999999" as="sourcePoint" />
             <mxPoint x="780.8599999999993" y="800" as="targetPoint" />
@@ -167,7 +171,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-9" value="Data mission" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="3nuBFxr9cyL0pnOWT2aG-1" source="3nuBFxr9cyL0pnOWT2aG-5">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-9" value="Data mission" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-5" target="3nuBFxr9cyL0pnOWT2aG-1" edge="1">
           <mxGeometry x="0.0999" relative="1" as="geometry">
             <mxPoint x="430.1600000000005" y="866.9799999999998" as="targetPoint" />
             <Array as="points">
@@ -177,7 +181,7 @@
             <mxPoint x="780.8599999999993" y="866.9799999999998" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-10" value="Données mission" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="5L8-g9ovLrtgpSLUulJO-5" source="3nuBFxr9cyL0pnOWT2aG-1">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-10" value="Données mission" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="5L8-g9ovLrtgpSLUulJO-5" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="74.0935294117647" y="-137" as="targetPoint" />
             <mxPoint x="435.9100000000002" y="-137" as="sourcePoint" />
@@ -195,32 +199,36 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-17" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="3nuBFxr9cyL0pnOWT2aG-5">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-17" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-5" edge="1" target="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="431.0099999999993" y="2411.8" as="targetPoint" />
             <mxPoint x="779.5" y="2411.8" as="sourcePoint" />
-            <Array as="points" />
+            <Array as="points">
+              <mxPoint x="721" y="2405" />
+            </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-18" value="Suppression Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-18" value="Suppression Mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="70" y="2137" as="sourcePoint" />
             <mxPoint x="428.81999999999925" y="2137" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-20" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-20" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" source="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="68" y="2453.1" as="targetPoint" />
             <mxPoint x="426.9800000000005" y="2453.1" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-21" value="delete Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1" target="3nuBFxr9cyL0pnOWT2aG-5">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-21" value="delete Mission" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" target="3nuBFxr9cyL0pnOWT2aG-5" edge="1" source="3nuBFxr9cyL0pnOWT2aG-1">
           <mxGeometry x="-0.0323" relative="1" as="geometry">
             <mxPoint x="426.9800000000005" y="2362.24" as="sourcePoint" />
             <mxPoint x="779.5" y="2362.24" as="targetPoint" />
-            <Array as="points" />
+            <Array as="points">
+              <mxPoint x="748" y="2340" />
+            </Array>
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
@@ -244,12 +252,12 @@
         <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-26" value="&lt;div&gt;E données non valides&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Seules les missions au status INITIALE ou REJETEE peuvent être supprimée&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Seul le créateur peut supprimer une mission&lt;br&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="532" y="2226" width="280" height="97" as="geometry" />
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-27" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-27" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="5L8-g9ovLrtgpSLUulJO-33" source="5L8-g9ovLrtgpSLUulJO-5">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-152" y="2487" as="targetPoint" />
-            <mxPoint x="69.5" y="2487" as="sourcePoint" />
+            <mxPoint x="-144" y="2489" as="targetPoint" />
+            <mxPoint x="77.5" y="2489" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="30" y="2487" />
+              <mxPoint x="-25" y="2489" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -259,21 +267,10 @@
         <mxCell id="WW6heL2LgJYkknNflD3q-214" value="&#xa;Classe NatureService" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="-1544" y="80" width="199" height="3006.5" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-150" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="WW6heL2LgJYkknNflD3q-214">
-          <mxGeometry x="1" y="-66" relative="1" as="geometry">
-            <mxPoint x="99.99666666666758" y="154" as="sourcePoint" />
-            <mxPoint x="99.99666666666758" y="217.00000000000045" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="195" y="154" />
-              <mxPoint x="195" y="217" />
-            </Array>
-            <mxPoint x="-66" y="60" as="offset" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="WW6heL2LgJYkknNflD3q-216" value="JPA&#xa;(s&#39;occupe de la BDD)" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="-1245" y="70" width="275.1600000000001" height="3260" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-122" value="Nature" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;fillColor=#42FF68;strokeColor=#d6b656;" vertex="1" parent="WW6heL2LgJYkknNflD3q-216">
+        <mxCell id="GcxWw0-37bTrWmLcglua-122" value="Nature" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;fillColor=#42FF68;strokeColor=#d6b656;" parent="WW6heL2LgJYkknNflD3q-216" vertex="1">
           <mxGeometry x="-1090.84" y="-210" width="1366" height="140" as="geometry" />
         </mxCell>
         <mxCell id="WW6heL2LgJYkknNflD3q-263" value="&lt;div&gt;E données non valides&lt;br&gt;&lt;/div&gt;&lt;div&gt;- Une nature ne peux être supprimé physiquement que si aucune mission n&#39;y ai rattachée&lt;br&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="WW6heL2LgJYkknNflD3q-216" vertex="1">
@@ -289,7 +286,7 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-148" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="WW6heL2LgJYkknNflD3q-217">
+        <mxCell id="GcxWw0-37bTrWmLcglua-148" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="WW6heL2LgJYkknNflD3q-217" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="48.99999999999977" y="1285.999999999999" as="sourcePoint" />
             <mxPoint x="48.99999999999977" y="1332" as="targetPoint" />
@@ -303,28 +300,30 @@
         <mxCell id="WW6heL2LgJYkknNflD3q-220" value="Création de nature" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" parent="1" vertex="1">
           <mxGeometry x="-2263" y="20" width="1010" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-224" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-214" source="WW6heL2LgJYkknNflD3q-216">
+        <mxCell id="WW6heL2LgJYkknNflD3q-224" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-216" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1471.9900000000016" y="1734.8000000000002" as="targetPoint" />
             <mxPoint x="-1123.5" y="1734.8000000000002" as="sourcePoint" />
-            <Array as="points" />
+            <Array as="points">
+              <mxPoint x="-1291" y="1720" />
+            </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-225" value="Modification Nature" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-225" value="Modification Nature" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1833" y="1460" as="sourcePoint" />
             <mxPoint x="-1474.1800000000003" y="1460" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-227" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" source="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-227" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1835" y="1776.1000000000004" as="targetPoint" />
             <mxPoint x="-1476.0200000000004" y="1776.1000000000004" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-228" value="update Nature" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-216" source="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-228" value="update Nature" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-216" edge="1">
           <mxGeometry x="-0.0323" relative="1" as="geometry">
             <mxPoint x="-1476.0200000000004" y="1685.2399999999998" as="sourcePoint" />
             <mxPoint x="-1123.5" y="1685.2399999999998" as="targetPoint" />
@@ -370,7 +369,7 @@
             <mxPoint x="-1543" y="160" as="sourcePoint" />
             <mxPoint x="-1488" y="352" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-1608" y="350" />
+              <mxPoint x="-1613" y="275" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -418,7 +417,7 @@
             <mxPoint x="-1471.4399999999994" y="433.3799999999999" as="sourcePoint" />
             <mxPoint x="-1122.8200000000006" y="390" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-1262.3200000000002" y="390" />
+              <mxPoint x="-1282" y="458" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
@@ -433,7 +432,7 @@
             <mxPoint x="-1122.8200000000006" y="456.9799999999998" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-250" value="select Nature" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" target="WW6heL2LgJYkknNflD3q-216" edge="1" source="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-250" value="select Nature" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-216" edge="1">
           <mxGeometry x="-0.0317" relative="1" as="geometry">
             <mxPoint x="-1470.7600000000002" y="853.3800000000001" as="sourcePoint" />
             <mxPoint x="-1122.1400000000008" y="810" as="targetPoint" />
@@ -443,7 +442,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-251" value="Data Nature" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.506;entryY=0.278;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-214" source="WW6heL2LgJYkknNflD3q-216">
+        <mxCell id="WW6heL2LgJYkknNflD3q-251" value="Data Nature" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.506;entryY=0.278;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="WW6heL2LgJYkknNflD3q-216" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry x="0.0999" relative="1" as="geometry">
             <mxPoint x="-1472.8400000000001" y="876.9799999999996" as="targetPoint" />
             <Array as="points" />
@@ -451,7 +450,7 @@
             <mxPoint x="-1122.1400000000012" y="876.9799999999996" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-252" value="Données Nature" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-217" source="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-252" value="Données Nature" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-217" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1839" y="908" as="targetPoint" />
             <mxPoint x="-1470.5" y="901.7600000000002" as="sourcePoint" />
@@ -469,7 +468,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-254" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-214" source="WW6heL2LgJYkknNflD3q-216">
+        <mxCell id="WW6heL2LgJYkknNflD3q-254" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-216" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1471.9900000000016" y="2421.8" as="targetPoint" />
             <mxPoint x="-1123.5" y="2421.8" as="sourcePoint" />
@@ -478,21 +477,21 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-255" value="suppression de Nature" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-255" value="suppression de Nature" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1833" y="2147" as="sourcePoint" />
             <mxPoint x="-1474.1800000000003" y="2147" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-257" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" source="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-257" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1835" y="2463.1000000000013" as="targetPoint" />
             <mxPoint x="-1476.0200000000004" y="2463.1000000000013" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WW6heL2LgJYkknNflD3q-258" value="delete Nature" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-216" source="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="WW6heL2LgJYkknNflD3q-258" value="delete Nature" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-216" edge="1">
           <mxGeometry x="-0.0323" relative="1" as="geometry">
             <mxPoint x="-1476.0200000000004" y="2372.24" as="sourcePoint" />
             <mxPoint x="-1123.5" y="2372.24" as="targetPoint" />
@@ -534,13 +533,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-12" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-12" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" parent="1" vertex="1">
           <mxGeometry x="180" y="-766" width="184.32" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-121" value="MISSIONS" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;fillColor=#2130FF;fontColor=#F5F5F5;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-121" value="MISSIONS" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;fillColor=#2130FF;fontColor=#F5F5F5;" parent="1" vertex="1">
           <mxGeometry x="-428" y="-1119" width="1366" height="103" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-135" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5">
+        <mxCell id="GcxWw0-37bTrWmLcglua-135" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="94.00000000000011" y="221.5399999999999" as="sourcePoint" />
             <mxPoint x="98.62" y="259.46" as="targetPoint" />
@@ -551,18 +550,18 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-138" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-138" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="438.9973684210525" y="226.0026315789475" as="sourcePoint" />
             <mxPoint x="438.9973684210525" y="264.95" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="512" y="284" />
-              <mxPoint x="512" y="347" />
+              <mxPoint x="512" y="337" />
+              <mxPoint x="512" y="426" />
             </Array>
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-139" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5">
+        <mxCell id="GcxWw0-37bTrWmLcglua-139" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="71" y="757.9999999999995" as="sourcePoint" />
             <mxPoint x="71" y="804" as="targetPoint" />
@@ -573,7 +572,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-140" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5">
+        <mxCell id="GcxWw0-37bTrWmLcglua-140" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="79.99666666666697" y="1368" as="sourcePoint" />
             <mxPoint x="79.99666666666697" y="1431" as="targetPoint" />
@@ -584,7 +583,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-141" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5">
+        <mxCell id="GcxWw0-37bTrWmLcglua-141" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-5" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="69" y="2056" as="sourcePoint" />
             <mxPoint x="69.00285714285778" y="2119.002857142858" as="targetPoint" />
@@ -595,7 +594,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-142" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-142" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="434.8199999999997" y="1522" as="sourcePoint" />
             <mxPoint x="434.8199999999997" y="1585" as="targetPoint" />
@@ -606,7 +605,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-143" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-143" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="3nuBFxr9cyL0pnOWT2aG-1" target="3nuBFxr9cyL0pnOWT2aG-1" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="426.9999999999997" y="2255" as="sourcePoint" />
             <mxPoint x="440" y="2318" as="targetPoint" />
@@ -617,7 +616,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-144" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="WW6heL2LgJYkknNflD3q-217" target="WW6heL2LgJYkknNflD3q-217">
+        <mxCell id="GcxWw0-37bTrWmLcglua-144" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="WW6heL2LgJYkknNflD3q-217" target="WW6heL2LgJYkknNflD3q-217" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="-1833" y="182.9999999999991" as="sourcePoint" />
             <mxPoint x="-1833" y="229" as="targetPoint" />
@@ -628,7 +627,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-147" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="WW6heL2LgJYkknNflD3q-217" target="WW6heL2LgJYkknNflD3q-217">
+        <mxCell id="GcxWw0-37bTrWmLcglua-147" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="WW6heL2LgJYkknNflD3q-217" target="WW6heL2LgJYkknNflD3q-217" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="-1829.0000000000002" y="802.9999999999991" as="sourcePoint" />
             <mxPoint x="-1829.0000000000002" y="849" as="targetPoint" />
@@ -639,7 +638,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-149" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="WW6heL2LgJYkknNflD3q-217" target="WW6heL2LgJYkknNflD3q-217">
+        <mxCell id="GcxWw0-37bTrWmLcglua-149" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="WW6heL2LgJYkknNflD3q-217" target="WW6heL2LgJYkknNflD3q-217" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="-1838.0000000000002" y="2069.999999999999" as="sourcePoint" />
             <mxPoint x="-1838.0000000000002" y="2116" as="targetPoint" />
@@ -650,7 +649,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-151" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="GcxWw0-37bTrWmLcglua-151" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="-1439.0033333333322" y="1530" as="sourcePoint" />
             <mxPoint x="-1439.0033333333322" y="1593.0000000000005" as="targetPoint" />
@@ -661,7 +660,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-11" value="Données mission" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1" target="5L8-g9ovLrtgpSLUulJO-33" source="5L8-g9ovLrtgpSLUulJO-5">
+        <mxCell id="Jw-Lm7LRE4pyzQuO6-6R-11" value="Données mission" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="5L8-g9ovLrtgpSLUulJO-5" target="5L8-g9ovLrtgpSLUulJO-33" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-153.99647058823513" y="-123" as="targetPoint" />
             <mxPoint x="66.17999999999955" y="-123" as="sourcePoint" />
@@ -670,43 +669,43 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-154" value="&#xa;Classe FraisService" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-154" value="&#xa;Classe FraisService" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="2434.32" y="-965" width="130" height="4356" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-155" value="JPA&#xa;(s&#39;occupe de la BDD)" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-155" value="JPA&#xa;(s&#39;occupe de la BDD)" style="shape=umlLifeline;perimeter=lifelinePerimeter;container=1;collapsible=0;recursiveResize=0;rounded=0;shadow=0;strokeWidth=1;" parent="1" vertex="1">
           <mxGeometry x="2952" y="-977" width="180" height="3501" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-156" value="&lt;div&gt;Controller&lt;/div&gt;&lt;div&gt;BE&lt;br&gt;&lt;/div&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-156" value="&lt;div&gt;Controller&lt;/div&gt;&lt;div&gt;BE&lt;br&gt;&lt;/div&gt;" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="2086" y="-978" width="100" height="4383" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-157" value="Création d&#39;une ligne de frais" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-157" value="Création d&#39;une ligne de frais" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" parent="1" vertex="1">
           <mxGeometry x="1710" y="5" width="1010" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-158" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la ligne de frais doit être associée à une mission&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la date du frais DOIT êtrre comprise entre la date de début et la date de fin de la mission&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la nature du frais doit être valide&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- le montant du frais doit être positif et supérieur à 0&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-158" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la ligne de frais doit être associée à une mission&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la date du frais DOIT êtrre comprise entre la date de début et la date de fin de la mission&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la nature du frais doit être valide&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- le montant du frais doit être positif et supérieur à 0&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="2616" y="213" width="421" height="135" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-159" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-155">
+        <mxCell id="GcxWw0-37bTrWmLcglua-159" value="Mise à jour Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="GcxWw0-37bTrWmLcglua-155" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2509" y="1710" as="targetPoint" />
             <mxPoint x="2857.49" y="1710.0000000000002" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-160" value="Modification ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-160" value="Modification ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2140" y="1445" as="sourcePoint" />
             <mxPoint x="2498.8199999999997" y="1445" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-162" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-162" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2138" y="1761.1000000000004" as="targetPoint" />
             <mxPoint x="2496.9799999999996" y="1761.1000000000004" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-163" value="update ligne de frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="GcxWw0-37bTrWmLcglua-155">
+        <mxCell id="GcxWw0-37bTrWmLcglua-163" value="update ligne de frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="GcxWw0-37bTrWmLcglua-155" edge="1">
           <mxGeometry x="-0.0323" relative="1" as="geometry">
             <mxPoint x="2496.9799999999996" y="1670.2399999999998" as="sourcePoint" />
             <mxPoint x="2849.5" y="1670.2399999999998" as="targetPoint" />
@@ -714,10 +713,10 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-164" value="Employé" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-164" value="Employé" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="1870" y="-978" width="100" height="4286" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-165" value="Création Frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-164" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-165" value="Création Frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-164" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry x="-0.1587" relative="1" as="geometry">
             <mxPoint x="1950" y="145" as="sourcePoint" />
             <mxPoint x="2140" y="145" as="targetPoint" />
@@ -727,7 +726,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-166" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-164">
+        <mxCell id="GcxWw0-37bTrWmLcglua-166" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-164" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1920" y="225" as="targetPoint" />
             <mxPoint x="2140" y="415" as="sourcePoint" />
@@ -736,7 +735,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-167" value="Modification  ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-167" value="Modification  ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1918" y="1345" as="sourcePoint" />
             <mxPoint x="2139.5" y="1345" as="targetPoint" />
@@ -745,7 +744,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-168" value="Création" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-168" value="Création" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2197" y="321" as="sourcePoint" />
             <mxPoint x="2485" y="337" as="targetPoint" />
@@ -754,16 +753,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-169" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-169" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;" parent="1" vertex="1">
           <mxGeometry x="2226" y="153" width="184.32" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-170" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=none;endArrow=none;endFill=0;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-170" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=none;endArrow=none;endFill=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2190" y="1395" as="targetPoint" />
             <mxPoint x="2257" y="1348" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-174" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-174" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1918" y="1795" as="targetPoint" />
             <mxPoint x="2139.5" y="1795" as="sourcePoint" />
@@ -772,13 +771,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-175" value="&lt;div&gt;Modification ligne de frais&lt;br&gt;&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-175" value="&lt;div&gt;Modification ligne de frais&lt;br&gt;&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" parent="1" vertex="1">
           <mxGeometry x="1710" y="1205" width="1010" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-176" value="&lt;div&gt;Afficher ligne de frais&lt;br&gt;&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-176" value="&lt;div&gt;Afficher ligne de frais&lt;br&gt;&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" parent="1" vertex="1">
           <mxGeometry x="1710" y="-871" width="1010" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-177" value="Demande d&#39;information d&#39;une mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-164" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-177" value="Demande d&#39;information d&#39;une mission" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-164" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry x="-0.1587" relative="1" as="geometry">
             <mxPoint x="1920.0014285714283" y="725" as="sourcePoint" />
             <mxPoint x="2140.43" y="725" as="targetPoint" />
@@ -788,17 +787,17 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-178" value="insert ligne de frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-155">
+        <mxCell id="GcxWw0-37bTrWmLcglua-178" value="insert ligne de frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-155" edge="1">
           <mxGeometry x="-0.0317" relative="1" as="geometry">
             <mxPoint x="2501.5600000000004" y="418.3799999999999" as="sourcePoint" />
             <mxPoint x="2850.1799999999994" y="375" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="2710.68" y="375" />
+              <mxPoint x="2736" y="469" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-179" value="Insertion Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-155" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-179" value="Insertion Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-155" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry x="0.0999" relative="1" as="geometry">
             <mxPoint x="2499.48" y="441.9799999999998" as="targetPoint" />
             <Array as="points">
@@ -808,7 +807,7 @@
             <mxPoint x="2850.1799999999994" y="441.9799999999998" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-180" value="select Frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-155">
+        <mxCell id="GcxWw0-37bTrWmLcglua-180" value="select Frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-155" edge="1">
           <mxGeometry x="-0.0317" relative="1" as="geometry">
             <mxPoint x="2502.2400000000002" y="838.3799999999999" as="sourcePoint" />
             <mxPoint x="2850.859999999999" y="795" as="targetPoint" />
@@ -818,7 +817,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-181" value="Data ligne de frais" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-155" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-181" value="Data ligne de frais" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-155" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry x="0.0999" relative="1" as="geometry">
             <mxPoint x="2500.1600000000003" y="861.9799999999998" as="targetPoint" />
             <Array as="points">
@@ -828,7 +827,7 @@
             <mxPoint x="2850.859999999999" y="861.9799999999998" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-182" value="Données " style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-182" value="Données " style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2144.093529411765" y="-142" as="targetPoint" />
             <mxPoint x="2505.9100000000003" y="-142" as="sourcePoint" />
@@ -837,7 +836,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-183" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-183" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2144" y="469" as="targetPoint" />
             <mxPoint x="2478" y="522" as="sourcePoint" />
@@ -846,28 +845,28 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-184" value="Suppression Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-155">
+        <mxCell id="GcxWw0-37bTrWmLcglua-184" value="Suppression Réussie" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;entryX=0.513;entryY=0.86;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="GcxWw0-37bTrWmLcglua-155" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2501.0099999999984" y="2406.7999999999993" as="targetPoint" />
             <mxPoint x="2849.5" y="2406.8" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-185" value="Suppression ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-185" value="Suppression ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2140" y="2132" as="sourcePoint" />
             <mxPoint x="2498.8199999999997" y="2132" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-187" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-187" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.895;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2138" y="2448.1000000000004" as="targetPoint" />
             <mxPoint x="2496.9799999999996" y="2448.1000000000004" as="sourcePoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-188" value="delete ligne de frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="GcxWw0-37bTrWmLcglua-155">
+        <mxCell id="GcxWw0-37bTrWmLcglua-188" value="delete ligne de frais" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;exitX=0.482;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="GcxWw0-37bTrWmLcglua-155" edge="1">
           <mxGeometry x="-0.0323" relative="1" as="geometry">
             <mxPoint x="2496.9799999999996" y="2357.24" as="sourcePoint" />
             <mxPoint x="2849.5" y="2357.24" as="targetPoint" />
@@ -875,7 +874,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-189" value="Suppression  ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-189" value="Suppression  ligne de frais" style="verticalAlign=bottom;startArrow=oval;endArrow=block;startSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1918" y="2032" as="sourcePoint" />
             <mxPoint x="2139.5" y="2032" as="targetPoint" />
@@ -884,13 +883,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-190" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=none;endArrow=none;endFill=0;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-190" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=none;endArrow=none;endFill=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2190" y="2082" as="targetPoint" />
             <mxPoint x="2250" y="2042" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-194" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-194" value="Message d&#39;état" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1918" y="2482" as="targetPoint" />
             <mxPoint x="2139.5" y="2482" as="sourcePoint" />
@@ -899,16 +898,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-195" value="&lt;div&gt;Suppression ligne de frais&lt;br&gt;&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-195" value="&lt;div&gt;Suppression ligne de frais&lt;br&gt;&lt;/div&gt;" style="shape=umlFrame;whiteSpace=wrap;html=1;width=185;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;" parent="1" vertex="1">
           <mxGeometry x="1710" y="1892" width="1010" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-196" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-196" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=center;" parent="1" vertex="1">
           <mxGeometry x="2250" y="-771" width="184.32" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-197" value="Lignes Frais" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;fillColor=#EDDA09;fontColor=#424242;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-197" value="Lignes Frais" style="shape=umlFrame;whiteSpace=wrap;html=1;width=120;height=30;boundedLbl=1;verticalAlign=middle;align=left;spacingLeft=5;fillColor=#EDDA09;fontColor=#424242;" parent="1" vertex="1">
           <mxGeometry x="1642" y="-1124" width="1366" height="103" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-198" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-198" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2164" y="216.5399999999999" as="sourcePoint" />
             <mxPoint x="2168.62" y="254.45999999999998" as="targetPoint" />
@@ -919,18 +918,18 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-199" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-199" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2508.9973684210527" y="221.0026315789475" as="sourcePoint" />
             <mxPoint x="2508.9973684210527" y="259.95" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="2582" y="279" />
-              <mxPoint x="2582" y="342" />
+              <mxPoint x="2582" y="344" />
+              <mxPoint x="2582" y="435" />
             </Array>
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-200" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-200" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2141" y="752.9999999999995" as="sourcePoint" />
             <mxPoint x="2141" y="799" as="targetPoint" />
@@ -941,7 +940,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-201" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-201" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2149.996666666667" y="1363" as="sourcePoint" />
             <mxPoint x="2149.996666666667" y="1426" as="targetPoint" />
@@ -952,7 +951,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-202" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156">
+        <mxCell id="GcxWw0-37bTrWmLcglua-202" value="Contrôle des accés" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-156" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2139" y="2051" as="sourcePoint" />
             <mxPoint x="2139.002857142858" y="2114.002857142858" as="targetPoint" />
@@ -963,7 +962,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-203" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-203" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2504.8199999999997" y="1517" as="sourcePoint" />
             <mxPoint x="2504.8199999999997" y="1580" as="targetPoint" />
@@ -974,7 +973,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-204" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-204" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="GcxWw0-37bTrWmLcglua-154" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="2496.9999999999995" y="2250" as="sourcePoint" />
             <mxPoint x="2510" y="2313" as="targetPoint" />
@@ -985,7 +984,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-205" value="Données ligne de frais" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-164">
+        <mxCell id="GcxWw0-37bTrWmLcglua-205" value="Données ligne de frais" style="verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-164" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1916.0035294117647" y="-128" as="targetPoint" />
             <mxPoint x="2136.1799999999994" y="-128" as="sourcePoint" />
@@ -994,7 +993,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-206" value="Demande" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" edge="1" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-154">
+        <mxCell id="GcxWw0-37bTrWmLcglua-206" value="Demande" style="verticalAlign=bottom;endArrow=block;shadow=0;strokeWidth=1;" parent="1" source="GcxWw0-37bTrWmLcglua-156" target="GcxWw0-37bTrWmLcglua-154" edge="1">
           <mxGeometry x="-0.0317" relative="1" as="geometry">
             <mxPoint x="1943.6599999999999" y="-633" as="sourcePoint" />
             <mxPoint x="2486.34" y="-633" as="targetPoint" />
@@ -1004,7 +1003,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-210" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="GcxWw0-37bTrWmLcglua-210" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="-1434.0033333333322" y="1534" as="sourcePoint" />
             <mxPoint x="-1434.0033333333322" y="1597.0000000000005" as="targetPoint" />
@@ -1015,7 +1014,7 @@
             <mxPoint x="-66" y="60" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-211" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-214">
+        <mxCell id="GcxWw0-37bTrWmLcglua-211" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" source="WW6heL2LgJYkknNflD3q-214" target="WW6heL2LgJYkknNflD3q-214" edge="1">
           <mxGeometry x="1" y="-66" relative="1" as="geometry">
             <mxPoint x="-1418.0033333333322" y="2256" as="sourcePoint" />
             <mxPoint x="-1418.0033333333322" y="2319.0000000000005" as="targetPoint" />
@@ -1029,17 +1028,28 @@
         <mxCell id="WW6heL2LgJYkknNflD3q-223" value="&lt;div&gt;E Intégrités des données&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;- la date de début de validité DOIT être égale à la date du jour&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;- &lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 161.669px; top: 1135.11px; transform: scaleX(0.901648);&quot;&gt;La date de fin de validité ne peux être antérieure&amp;nbsp; ou égale à la date de&lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 497.849px; top: 1135.11px;&quot;&gt; &lt;/span&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;début&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page39R_mcid4&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 311.911px; top: 201.662px; transform: scaleX(0.925718);&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;span id=&quot;page36R_mcid23&quot; class=&quot;markedContent&quot;&gt;&lt;span dir=&quot;ltr&quot; role=&quot;presentation&quot; style=&quot;left: 501.913px; top: 1135.11px; transform: scaleX(0.953815);&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;- le Code nature existe déjà, elle va reçevoir une date de fin de validité et&amp;nbsp; une nouvelle nature sera crée avec le même code" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="-1330" y="183" width="345" height="144" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-212" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la ligne de frais doit être associée à une mission&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la date du frais DOIT être comprise entre la date de début et la date de fin de la mission&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la nature du frais doit être valide&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- le montant du frais doit être positif et supérieur à 0&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- un frais au status VALIDE ne peux être modifié &lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-212" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la ligne de frais doit être associée à une mission&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la date du frais DOIT être comprise entre la date de début et la date de fin de la mission&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- la nature du frais doit être valide&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- le montant du frais doit être positif et supérieur à 0&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;- un frais au status VALIDE ne peux être modifié &lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="2587" y="1415" width="421" height="144" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-213" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-213" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;" parent="1" vertex="1">
           <mxGeometry x="2263" y="1306.62" width="184.32" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-214" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-214" value="&lt;div&gt;E droits non valides&lt;/div&gt;&lt;div&gt;- pas un collaborateur&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;" parent="1" vertex="1">
           <mxGeometry x="2223" y="2011" width="184.32" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GcxWw0-37bTrWmLcglua-215" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" vertex="1" parent="1">
+        <mxCell id="GcxWw0-37bTrWmLcglua-215" value="&lt;div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Times New Roman&quot;&gt;E Intégrités des données&lt;/font&gt;&lt;/div&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=13;verticalAlign=top;align=left;spacingLeft=7;" parent="1" vertex="1">
           <mxGeometry x="2581" y="2110" width="421" height="144" as="geometry" />
+        </mxCell>
+        <mxCell id="GcxWw0-37bTrWmLcglua-150" value="Contrôle des règles métier" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;elbow=vertical;edgeStyle=orthogonalEdgeStyle;curved=1;" parent="1" edge="1" target="WW6heL2LgJYkknNflD3q-214" source="WW6heL2LgJYkknNflD3q-214">
+          <mxGeometry x="1" y="-66" relative="1" as="geometry">
+            <mxPoint x="-1419" y="236" as="sourcePoint" />
+            <mxPoint x="-1444.0033333333324" y="297.00000000000045" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-1339" y="306" />
+              <mxPoint x="-1339" y="397" />
+            </Array>
+            <mxPoint x="-66" y="60" as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
