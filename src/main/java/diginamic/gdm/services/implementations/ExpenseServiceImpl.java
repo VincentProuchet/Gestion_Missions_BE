@@ -7,15 +7,21 @@ import org.springframework.stereotype.Service;
 import diginamic.gdm.dao.Expense;
 import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.services.ExpenseService;
+import lombok.AllArgsConstructor;
 
+/**
+ * Implementation for {@link ExpenseService}.
+ * 
+ * @author DorianBoel
+ */
 @Service
+@AllArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 	
+	/**
+	 * The {@link ExpenseRepository} dependency.
+	 */
 	private ExpenseRepository expenseRepository;
-	
-	public ExpenseServiceImpl(ExpenseRepository expenseRepository) {
-		this.expenseRepository = expenseRepository;
-	}
 
 	@Override
 	public List<Expense> list() {
@@ -25,7 +31,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public void create(Expense expense) {
 		this.expenseRepository.save(expense);
-
 	}
 
 	@Override

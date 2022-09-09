@@ -51,6 +51,6 @@ public class Nature {
 	 */
 	private LocalDateTime endOfValidity;
 
-	/** decription : the name of the nature */
-	private String decription;
+	/** description : the name of the nature */
+	private String description;
 }

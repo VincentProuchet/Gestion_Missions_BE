@@ -2,13 +2,26 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.services.MissionService;
+import lombok.AllArgsConstructor;
 
+/**
+ * Implementation for {@link MissionService}.
+ * 
+ * @author DorianBoel
+ */
+@Service
+@AllArgsConstructor
 public class MissionServiceImpl implements MissionService {
 	
+	/**
+	 * The {@link MissionRepository} dependency.
+	 */
 	private MissionRepository missionRepository;
 
 	@Override
