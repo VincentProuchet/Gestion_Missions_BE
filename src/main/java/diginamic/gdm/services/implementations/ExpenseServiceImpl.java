@@ -40,6 +40,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		current.setTva(expense.getTva());
 		current.setCost(expense.getCost());
 		current.setExpenseType(expense.getExpenseType());
+		this.expenseRepository.save(current);
 		return current;
 	}
 

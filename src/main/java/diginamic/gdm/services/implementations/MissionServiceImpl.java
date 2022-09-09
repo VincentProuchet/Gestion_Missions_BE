@@ -49,6 +49,7 @@ public class MissionServiceImpl implements MissionService {
 		current.setStartCity(mission.getStartCity());
 		current.setEndCity(mission.getEndCity());
 		current.setNature(mission.getNature());
+		this.missionRepository.save(current);
 		return current;
 	}
 

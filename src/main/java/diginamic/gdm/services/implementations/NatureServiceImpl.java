@@ -43,6 +43,7 @@ public class NatureServiceImpl implements NatureService {
 		current.setDateOfValidity(nature.getDateOfValidity());
 		current.setEndOfValidity(nature.getEndOfValidity());
 		current.setDescription(nature.getDescription());
+		this.natureRepository.save(current);
 		return current;
 	}
 

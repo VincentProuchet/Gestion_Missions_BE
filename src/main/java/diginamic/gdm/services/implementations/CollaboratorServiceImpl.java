@@ -46,6 +46,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		current.setPassword(collaborator.getPassword());
 		current.setEmail(collaborator.getEmail());
 		current.setManager(collaborator.getManager());
+		this.collaboratorRepository.save(current);
 		return current;
 	}
 
