@@ -1,9 +1,10 @@
 package diginamic.gdm.services;
 
-import java.io.ObjectInputFilter.Status;
+
 import java.util.List;
 
 import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Status;
 
 /**
  * Interface to be implemented by a mission service class.

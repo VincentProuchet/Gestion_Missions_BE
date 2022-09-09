@@ -788,7 +788,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -286,
-											"top": -76,
+											"top": -140,
 											"height": 13
 										},
 										{
@@ -799,10 +799,10 @@
 											},
 											"font": "Arial;13;1",
 											"left": 761,
-											"top": 471,
+											"top": 439,
 											"width": 310.044921875,
 											"height": 13,
-											"text": "Composant modal ajout/modification d'une nature"
+											"text": "Composant modal ajout d'une nature"
 										},
 										{
 											"_type": "LabelView",
@@ -812,7 +812,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 761,
-											"top": 486,
+											"top": 454,
 											"width": 310.044921875,
 											"height": 13,
 											"text": "(from Module de manipulation des Natures)"
@@ -826,14 +826,14 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -286,
-											"top": -76,
+											"top": -140,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 756,
-									"top": 464,
+									"top": 432,
 									"width": 320.044921875,
 									"height": 40,
 									"stereotypeLabel": {
@@ -861,7 +861,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -143,
-									"top": -38,
+									"top": -70,
 									"width": 10,
 									"height": 10
 								},
@@ -877,7 +877,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -143,
-									"top": -38,
+									"top": -70,
 									"width": 10,
 									"height": 10
 								},
@@ -893,7 +893,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -143,
-									"top": -38,
+									"top": -70,
 									"width": 10,
 									"height": 10
 								},
@@ -909,7 +909,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -143,
-									"top": -38,
+									"top": -70,
 									"width": 10,
 									"height": 10
 								}
@@ -917,7 +917,7 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 736,
-							"top": 464,
+							"top": 432,
 							"width": 340.044921875,
 							"height": 45,
 							"showNamespace": true,
@@ -2228,7 +2228,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -294,
-											"top": 100,
+											"top": 84,
 											"height": 13
 										},
 										{
@@ -2239,10 +2239,10 @@
 											},
 											"font": "Arial;13;1",
 											"left": 433,
-											"top": 1015,
+											"top": 1007,
 											"width": 350.5048828125,
 											"height": 13,
-											"text": "Composant modal ajout/modification d'une ligne de frais"
+											"text": "Composant modal ajout d'une ligne de frais"
 										},
 										{
 											"_type": "LabelView",
@@ -2252,7 +2252,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 433,
-											"top": 1030,
+											"top": 1022,
 											"width": 350.5048828125,
 											"height": 13,
 											"text": "(from Composant manipulation des notes de frais)"
@@ -2266,14 +2266,14 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -294,
-											"top": 100,
+											"top": 84,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 428,
-									"top": 1008,
+									"top": 1000,
 									"width": 360.5048828125,
 									"height": 40,
 									"stereotypeLabel": {
@@ -2301,7 +2301,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -147,
-									"top": 50,
+									"top": 42,
 									"width": 10,
 									"height": 10
 								},
@@ -2317,7 +2317,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -147,
-									"top": 50,
+									"top": 42,
 									"width": 10,
 									"height": 10
 								},
@@ -2333,7 +2333,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -147,
-									"top": 50,
+									"top": 42,
 									"width": 10,
 									"height": 10
 								},
@@ -2349,7 +2349,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -147,
-									"top": 50,
+									"top": 42,
 									"width": 10,
 									"height": 10
 								}
@@ -2357,7 +2357,7 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 408,
-							"top": 1008,
+							"top": 1000,
 							"width": 380.5048828125,
 							"height": 45,
 							"showNamespace": true,
@@ -2408,7 +2408,7 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -210,
-											"top": -42,
+											"top": -10,
 											"height": 13
 										},
 										{
@@ -2419,7 +2419,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 769,
-											"top": 583,
+											"top": 599,
 											"width": 295.419921875,
 											"height": 13,
 											"text": "Composant modal confirmation de suppression"
@@ -2432,7 +2432,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 769,
-											"top": 598,
+											"top": 614,
 											"width": 295.419921875,
 											"height": 13,
 											"text": "(from Module de manipulation des Natures)"
@@ -2446,14 +2446,14 @@
 											"visible": false,
 											"font": "Arial;13;0",
 											"left": -210,
-											"top": -42,
+											"top": -10,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 764,
-									"top": 576,
+									"top": 592,
 									"width": 305.419921875,
 									"height": 40,
 									"stereotypeLabel": {
@@ -2481,7 +2481,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -105,
-									"top": -21,
+									"top": -5,
 									"width": 10,
 									"height": 10
 								},
@@ -2497,7 +2497,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -105,
-									"top": -21,
+									"top": -5,
 									"width": 10,
 									"height": 10
 								},
@@ -2513,7 +2513,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -105,
-									"top": -21,
+									"top": -5,
 									"width": 10,
 									"height": 10
 								},
@@ -2529,7 +2529,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": -105,
-									"top": -21,
+									"top": -5,
 									"width": 10,
 									"height": 10
 								}
@@ -2537,7 +2537,7 @@
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 744,
-							"top": 576,
+							"top": 592,
 							"width": 325.419921875,
 							"height": 45,
 							"showNamespace": true,
@@ -3638,6 +3638,366 @@
 							"templateParameterCompartment": {
 								"$ref": "AAAAAAGDHE600s4JACk="
 							}
+						},
+						{
+							"_type": "UMLComponentView",
+							"_id": "AAAAAAGDHaa0gzAczuA=",
+							"_parent": {
+								"$ref": "AAAAAAGDHBOpV8kvUrI="
+							},
+							"model": {
+								"$ref": "AAAAAAGDHaUC9jASHIE="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGDHaa0gzAdkf0=",
+									"_parent": {
+										"$ref": "AAAAAAGDHaa0gzAczuA="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHaUC9jASHIE="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHaa0hDAe8qw=",
+											"_parent": {
+												"$ref": "AAAAAAGDHaa0gzAdkf0="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -92,
+											"top": -48,
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHaa0hDAfzgc=",
+											"_parent": {
+												"$ref": "AAAAAAGDHaa0gzAdkf0="
+											},
+											"font": "Arial;13;1",
+											"left": 769,
+											"top": 519,
+											"width": 275.38037109375,
+											"height": 13,
+											"text": "Composant modal modification d'une nature"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHaa0hDAguZ8=",
+											"_parent": {
+												"$ref": "AAAAAAGDHaa0gzAdkf0="
+											},
+											"font": "Arial;13;0",
+											"left": 769,
+											"top": 534,
+											"width": 275.38037109375,
+											"height": 13,
+											"text": "(from Module de manipulation des Natures)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHaa0hDAhzVk=",
+											"_parent": {
+												"$ref": "AAAAAAGDHaa0gzAdkf0="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -92,
+											"top": -48,
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 764,
+									"top": 512,
+									"width": 285.38037109375,
+									"height": 40,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAGDHaa0hDAe8qw="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAGDHaa0hDAfzgc="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAGDHaa0hDAguZ8="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAGDHaa0hDAhzVk="
+									}
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGDHaa0hDAieUY=",
+									"_parent": {
+										"$ref": "AAAAAAGDHaa0gzAczuA="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHaUC9jASHIE="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -46,
+									"top": -24,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGDHaa0hDAj2Xo=",
+									"_parent": {
+										"$ref": "AAAAAAGDHaa0gzAczuA="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHaUC9jASHIE="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -46,
+									"top": -24,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLReceptionCompartmentView",
+									"_id": "AAAAAAGDHaa0hDAkBiE=",
+									"_parent": {
+										"$ref": "AAAAAAGDHaa0gzAczuA="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHaUC9jASHIE="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -46,
+									"top": -24,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLTemplateParameterCompartmentView",
+									"_id": "AAAAAAGDHaa0hDAl5Ek=",
+									"_parent": {
+										"$ref": "AAAAAAGDHaa0gzAczuA="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHaUC9jASHIE="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -46,
+									"top": -24,
+									"width": 10,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"containerChangeable": true,
+							"left": 744,
+							"top": 512,
+							"width": 305.38037109375,
+							"height": 45,
+							"showNamespace": true,
+							"nameCompartment": {
+								"$ref": "AAAAAAGDHaa0gzAdkf0="
+							},
+							"suppressAttributes": true,
+							"suppressOperations": true,
+							"attributeCompartment": {
+								"$ref": "AAAAAAGDHaa0hDAieUY="
+							},
+							"operationCompartment": {
+								"$ref": "AAAAAAGDHaa0hDAj2Xo="
+							},
+							"receptionCompartment": {
+								"$ref": "AAAAAAGDHaa0hDAkBiE="
+							},
+							"templateParameterCompartment": {
+								"$ref": "AAAAAAGDHaa0hDAl5Ek="
+							}
+						},
+						{
+							"_type": "UMLComponentView",
+							"_id": "AAAAAAGDHafH2zBKQ7Q=",
+							"_parent": {
+								"$ref": "AAAAAAGDHBOpV8kvUrI="
+							},
+							"model": {
+								"$ref": "AAAAAAGDHad+ozBEE2s="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGDHafH2zBLtWk=",
+									"_parent": {
+										"$ref": "AAAAAAGDHafH2zBKQ7Q="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHad+ozBEE2s="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHafH2zBM2Hk=",
+											"_parent": {
+												"$ref": "AAAAAAGDHafH2zBLtWk="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -202,
+											"top": -86,
+											"height": 13
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHafH3DBNIwM=",
+											"_parent": {
+												"$ref": "AAAAAAGDHafH2zBLtWk="
+											},
+											"font": "Arial;13;1",
+											"left": 441,
+											"top": 1071,
+											"width": 315.84033203125,
+											"height": 13,
+											"text": "Composant modal modification d'une ligne de frais"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHafH3DBOetE=",
+											"_parent": {
+												"$ref": "AAAAAAGDHafH2zBLtWk="
+											},
+											"font": "Arial;13;0",
+											"left": 441,
+											"top": 1086,
+											"width": 315.84033203125,
+											"height": 13,
+											"text": "(from Composant manipulation des notes de frais)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGDHafH3DBPelI=",
+											"_parent": {
+												"$ref": "AAAAAAGDHafH2zBLtWk="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": -202,
+											"top": -86,
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 436,
+									"top": 1064,
+									"width": 325.84033203125,
+									"height": 40,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAGDHafH2zBM2Hk="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAGDHafH3DBNIwM="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAGDHafH3DBOetE="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAGDHafH3DBPelI="
+									}
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGDHafH3DBQRa0=",
+									"_parent": {
+										"$ref": "AAAAAAGDHafH2zBKQ7Q="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHad+ozBEE2s="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -101,
+									"top": -43,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGDHafH3DBRIVY=",
+									"_parent": {
+										"$ref": "AAAAAAGDHafH2zBKQ7Q="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHad+ozBEE2s="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -101,
+									"top": -43,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLReceptionCompartmentView",
+									"_id": "AAAAAAGDHafH3DBSJgU=",
+									"_parent": {
+										"$ref": "AAAAAAGDHafH2zBKQ7Q="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHad+ozBEE2s="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -101,
+									"top": -43,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLTemplateParameterCompartmentView",
+									"_id": "AAAAAAGDHafH3DBT29Y=",
+									"_parent": {
+										"$ref": "AAAAAAGDHafH2zBKQ7Q="
+									},
+									"model": {
+										"$ref": "AAAAAAGDHad+ozBEE2s="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": -101,
+									"top": -43,
+									"width": 10,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"containerChangeable": true,
+							"left": 416,
+							"top": 1064,
+							"width": 345.84033203125,
+							"height": 45,
+							"showNamespace": true,
+							"nameCompartment": {
+								"$ref": "AAAAAAGDHafH2zBLtWk="
+							},
+							"suppressAttributes": true,
+							"suppressOperations": true,
+							"attributeCompartment": {
+								"$ref": "AAAAAAGDHafH3DBQRa0="
+							},
+							"operationCompartment": {
+								"$ref": "AAAAAAGDHafH3DBRIVY="
+							},
+							"receptionCompartment": {
+								"$ref": "AAAAAAGDHafH3DBSJgU="
+							},
+							"templateParameterCompartment": {
+								"$ref": "AAAAAAGDHafH3DBT29Y="
+							}
 						}
 					]
 				},
@@ -3689,7 +4049,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGDHBxArsmRdUc="
 									},
-									"name": "Composant modal ajout/modification d'une nature"
+									"name": "Composant modal ajout d'une nature"
 								},
 								{
 									"_type": "UMLComponent",
@@ -3706,6 +4066,14 @@
 										"$ref": "AAAAAAGDHBxArsmRdUc="
 									},
 									"name": "Composant modal confirmation de suppression"
+								},
+								{
+									"_type": "UMLComponent",
+									"_id": "AAAAAAGDHaUC9jASHIE=",
+									"_parent": {
+										"$ref": "AAAAAAGDHBxArsmRdUc="
+									},
+									"name": "Composant modal modification d'une nature"
 								}
 							]
 						},
@@ -3765,7 +4133,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGDHD43zsvCJy4="
 									},
-									"name": "Composant modal ajout/modification d'une ligne de frais"
+									"name": "Composant modal ajout d'une ligne de frais"
 								},
 								{
 									"_type": "UMLComponent",
@@ -3782,6 +4150,14 @@
 										"$ref": "AAAAAAGDHD43zsvCJy4="
 									},
 									"name": "Composant modal suppression d'une ligne de frais"
+								},
+								{
+									"_type": "UMLComponent",
+									"_id": "AAAAAAGDHad+ozBEE2s=",
+									"_parent": {
+										"$ref": "AAAAAAGDHD43zsvCJy4="
+									},
+									"name": "Composant modal modification d'une ligne de frais"
 								}
 							]
 						},
