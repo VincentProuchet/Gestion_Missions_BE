@@ -1,6 +1,6 @@
 public class MissionDTO {
 
-	private Integer id;
+	private int id;
 	private Date start;
 	private Date end;
     private Ville startCity;
@@ -10,7 +10,7 @@ public class MissionDTO {
     private Statut status; 
     private NatureDTO nature;
     private CollaborateurDTO collaborator;
-    private List<LigneFraisDTO> expenses;
+    private List<ExpenseDTO> expenses;
 
 }
 
@@ -47,7 +47,7 @@ public class LigneFraisDTO {
     "date": 2022-04-15,
     "value": 0,
     "TVA": 25,
-    "typeFrais": "type"
+    "ExpenseType": "type"
     
 }
 
