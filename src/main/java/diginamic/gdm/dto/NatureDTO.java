@@ -6,12 +6,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+/**
+ * DataTransferObject 
+ * @author Vincent
+ *
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class NatureDTO {
 	
+	
+	/** id */
+	private Integer id=0; 
 	/** Est-ce que la mission 
 	 * fait l'objet de distribution de primes */
 	private boolean hasPrime= false;
