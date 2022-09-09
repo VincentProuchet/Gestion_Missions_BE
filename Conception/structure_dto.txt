@@ -1,69 +1,90 @@
 public class MissionDTO {
 
 	private Integer id;
-	private Date dateDebut;
-	private Date dateFin;
-    private Ville villeDepart;
-    private Ville villeArrivee;
-    private BigDecimal montantPrime;
+	private Date start;
+	private Date end;
+    private Ville startCity;
+    private Ville arrivalCity;
+    private BigDecimal bonus;
     private Transport transport;
-    private Statut statut; 
+    private Statut status; 
     private NatureDTO nature;
-    private CollaborateurDTO collaborateur;
-    private List<LigneFraisDTO> lignesFrais;
+    private CollaborateurDTO collaborator;
+    private List<LigneFraisDTO> expenses;
 
 }
 
 // Mission JSON :
 {
-	"id":00,
-    "prime": montantPrime,
-    "statut": statut,
-    "transport": transport,
-    "dateDebut": dateDebut,
-    "dateFin": dateDebut,
-    "villeDepart": villeDepart,
-    "villeArrivee": villeArrivee
+	"id":0,
+    "bonus": 0,
+    "status": 0,
+    "transport": 0,
+    "start": dateDebut,
+    "end": dateDebut,
+    "startCity": villeDepart,
+    "arrivalCity": villeArrivee
     "nature": nature,
-    "collaborateur": collaborateur
-    "lignesFrais": [...lignesFrais],
+    "collaborator": 0
+    "expenses": [...lignesFrais],
+}
+
+public class LigneFraisDTO {
+
+	private int id;
+	private int idMission;
+    private LocalDateTime date;
+    private BigDecimal value;
+    private float tva; 
+    private ExpenseType type;
+
+}
+
+// Ligne de frais JSON :
+{
+	"id":0,
+	"idMission":0,
+    "date": 2022-04-15,
+    "value": 0,
+    "TVA": 25,
+    "typeFrais": "type"
+    
 }
 
 
 public class NatureDTO {
 	
-	private Integer id;
-    private String libelle;
-    private boolean hasPrime;
-    private boolean hasFacture;
+	private int id;
+    private String description;
+    private boolean givesBonus;
+    private boolean charged;
     private BigDecimal tjm;
-    private float primePercent;
-    private Date dateDebutValidite;
-    private Date dateFinValidite;
+    private float bonusPercentage;
+    private Date dateOfValidity;
+    private Date endOfValidity;
 
 }
 
 // Nature JSON :
 {
-	"id":00,
-    "libelle": libelle,
-    "dateCreation": dateDebutValidite 
-    "dateFin": dateFinValidite
-    "prime": hasPrime,
-    "facture": hasFacture,
-    "tauxJournalier": tjm,
-    "pourcentagePrime": hasPrime ? primePercent : undefined
+	"id":1,
+    "description": "réparer Git",
+    "dateOfValidity":  2021-02-15
+    "endOfValidity": 2022-02-15
+    "givesBonus": false,
+    "charged": false,
+    "tjm": 0,
+    "bonusPercentage": 2
 }
 
 
 public class CollaborateurDTO {
 	
 	private Integer id;
-    private String nom;
-    private String prenom;
+    private String lastName;
+    private String firstName;
     private String email;
     private String password;
-    private String authToken;
     private Role role;
     private CollaborateurDTO manager;
 
@@ -71,34 +92,18 @@ public class CollaborateurDTO {
 
 // Collaborateur JSON :
 {
-	"id":00,
-    "nom": nom,
-    "prenom": prenom,
-    "email": email,
-    "password": password,
-    "authToken": authToken,
-    "role": role,
-    "manager": manager
+	"id":0,
+    "lastName": "nom",
+    "firstName": "prenom",
+    "email": "email",
+    "role": "role",
+    "manager": {
+	    "id":0,
+	    "lastName": "nom",
+	    "firstName": "prenom",
+	    "email": "email",
+	    "role": "role",
+    	}    
 }
 
 
-public class LigneFraisDTO {
-
-	private Integer id;
-	private Integer idMission;
-    private Date date;
-    private BigDecimal montant;
-    private float tva; 
-    private TypeDeFrais type;
-
-}
-
-// Ligne de frais JSON :
-{
-	"id":00,
-	"idMission":00,
-    "date": date,
-    "montant": montant,
-    "pourcentageTVA": tva,
-    "typeFrais": type
-}
