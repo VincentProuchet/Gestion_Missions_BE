@@ -68,12 +68,13 @@ public class ExpenseController {
 	/**
 	 * Updates the data for a specific registered expense.
 	 * 
+	 * @param id The id corresponding to the expense to update
 	 * @param expense The expense within the request body with modified info
 	 * @return The resulting expense with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Expense update(@RequestBody Expense expense) {
-		return expenseService.update(expense);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Expense update(@PathVariable int id, @RequestBody Expense expense) {
+		return expenseService.update(id, expense);
 	}
 	
 	/**

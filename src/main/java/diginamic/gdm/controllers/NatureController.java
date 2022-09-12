@@ -68,12 +68,13 @@ public class NatureController {
 	/**
 	 * Updates the data for a specific registered mission nature.
 	 * 
+	 * @param id The id corresponding to the nature to update
 	 * @param nature The nature within the request body with modified info
 	 * @return The resulting nature with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Nature update(@RequestBody Nature nature) {
-		return natureService.update(nature);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Nature update(@PathVariable int id, @RequestBody Nature nature) {
+		return natureService.update(id, nature);
 	}
 	
 	/**

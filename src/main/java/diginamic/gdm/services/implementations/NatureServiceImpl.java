@@ -39,8 +39,8 @@ public class NatureServiceImpl implements NatureService {
 	}
 
 	@Override
-	public Nature update(Nature nature) {
-		Nature current = read(nature.getId());
+	public Nature update(int id, Nature nature) {
+		Nature current = read(id);
 		current.setGivesBonus(nature.isGivesBonus());
 		current.setCharged(nature.isCharged());
 		current.setTjm(nature.getTjm());

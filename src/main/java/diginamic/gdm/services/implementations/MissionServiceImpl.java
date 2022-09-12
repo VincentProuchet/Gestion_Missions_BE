@@ -40,7 +40,7 @@ public class MissionServiceImpl implements MissionService {
 	}
 
 	@Override
-	public Mission update(Mission mission) {
+	public Mission update(int id, Mission mission) {
 		Mission current = read(mission.getId());
 		current.setBonus(mission.getBonus());
 		current.setMissionTransport(mission.getMissionTransport());

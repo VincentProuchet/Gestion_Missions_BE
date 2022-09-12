@@ -68,12 +68,13 @@ public class CityController {
 	/**
 	 * Updates the data for a specific registered city.
 	 * 
+	 * @param id The id corresponding to the city to update
 	 * @param city The city within the request body with modified info
 	 * @return The resulting city with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public City update(@RequestBody City city) {
-		return cityService.update(city);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public City update(@PathVariable int id, @RequestBody City city) {
+		return cityService.update(id, city);
 	}
 	
 	/**

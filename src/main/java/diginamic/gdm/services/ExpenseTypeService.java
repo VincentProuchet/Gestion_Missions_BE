@@ -36,10 +36,11 @@ public interface ExpenseTypeService {
 	/**
 	 * Updates the data for a specific registered expense type.
 	 * 
+	 * @param id The id corresponding to the expense type to update
 	 * @param expenseType The expense type to update with modified info
 	 * @return The resulting expense type with updated info
 	 */
-	ExpenseType update(ExpenseType expenseType);
+	ExpenseType update(int id, ExpenseType expenseType);
 	
 	/**
 	 * Deletes a specific registered expense type.

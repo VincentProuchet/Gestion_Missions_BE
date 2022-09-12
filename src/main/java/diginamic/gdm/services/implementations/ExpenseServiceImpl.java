@@ -39,7 +39,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense update(Expense expense) {
+	public Expense update(int id, Expense expense) {
 		Expense current = read(expense.getId());
 		current.setDate(expense.getDate());
 		current.setTva(expense.getTva());

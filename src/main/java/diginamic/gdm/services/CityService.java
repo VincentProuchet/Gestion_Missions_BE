@@ -36,10 +36,11 @@ public interface CityService {
 	/**
 	 * Updates the data for a specific registered city.
 	 * 
+	 * @param id The id corresponding to the city to update
 	 * @param city The city to update with modified info
 	 * @return The resulting city with updated info
 	 */
-	City update(City city);
+	City update(int id, City city);
 
 	/**
 	 * Deletes a specific registered city.

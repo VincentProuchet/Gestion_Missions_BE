@@ -36,10 +36,11 @@ public interface ExpenseService {
 	/**
 	 * Updates the data for a specific registered expense.
 	 * 
+	 * @param id The id corresponding to the expense to update
 	 * @param expense The expense to update with modified info
 	 * @return The resulting expense with updated info
 	 */
-	Expense update(Expense expense);
+	Expense update(int id, Expense expense);
 	
 	/**
 	 * Deletes a specific registered expense.

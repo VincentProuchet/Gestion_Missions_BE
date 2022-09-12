@@ -39,8 +39,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	}
 
 	@Override
-	public Collaborator update(Collaborator collaborator) {
-		Collaborator current = this.collaboratorRepository.findById(collaborator.getId()).orElseThrow();
+	public Collaborator update(int id, Collaborator collaborator) {
+		Collaborator current = this.collaboratorRepository.findById(id).orElseThrow();
 		current.setFirstName(collaborator.getFirstName());
 		current.setLastName(collaborator.getLastName());
 		current.setPassword(collaborator.getPassword());

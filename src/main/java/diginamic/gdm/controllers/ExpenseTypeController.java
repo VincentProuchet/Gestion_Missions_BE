@@ -68,12 +68,13 @@ public class ExpenseTypeController {
 	/**
 	 * Updates the data for a specific registered expense type.
 	 * 
+	 * @param id The id corresponding to the expense type to update
 	 * @param expenseType The expense type within the request body with modified info
 	 * @return The resulting expense type with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ExpenseType update(@RequestBody ExpenseType expenseType) {
-		return expenseTypeService.update(expenseType);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ExpenseType update(@PathVariable int id, @RequestBody ExpenseType expenseType) {
+		return expenseTypeService.update(id, expenseType);
 	}
 	
 	/**

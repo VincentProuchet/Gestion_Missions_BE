@@ -39,7 +39,7 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	}
 
 	@Override
-	public ExpenseType update(ExpenseType expenseType) {
+	public ExpenseType update(int id, ExpenseType expenseType) {
 		ExpenseType current = read(expenseType.getId());
 		current.setName(expenseType.getName());
 		this.expenseTypeRepository.save(current);

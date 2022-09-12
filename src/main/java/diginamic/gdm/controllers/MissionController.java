@@ -69,12 +69,13 @@ public class MissionController {
 	/**
 	 * Updates the data for a specific registered mission.
 	 * 
+	 * @param id The id corresponding to the mission to update
 	 * @param mission The mission withing the request body with modified info
 	 * @return The resulting mission with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Mission update(@RequestBody Mission mission) {
-		return missionService.update(mission);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Mission update(@PathVariable int id, @RequestBody Mission mission) {
+		return missionService.update(id, mission);
 	}
 	
 	/**

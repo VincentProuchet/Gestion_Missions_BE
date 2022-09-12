@@ -39,8 +39,8 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public City update(City city) {
-		City current = read(city.getId());
+	public City update(int id, City city) {
+		City current = read(id);
 		current.setName(city.getName());
 		this.cityRepository.save(current);
 		return current;
