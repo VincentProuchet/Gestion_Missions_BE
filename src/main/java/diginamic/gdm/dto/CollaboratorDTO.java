@@ -1,5 +1,6 @@
 package diginamic.gdm.dto;
 
+import diginamic.gdm.dao.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +24,10 @@ public class CollaboratorDTO {
 	/** firstName prénom */
 	private String firstName = null;
 	
-	/** email */
-	/**Il manque le Rôle il va falloir
-	 *  créer la classe qui le définit 
-	 * pour pouvoir les passer dans le DTO
-	 * ou le passer en texte
-	 * private Role role;
-	 */
+	/** role */
+	private Role role = null;
 	
+	/** email */
 	private String email = null;
 	/** manager  le manager a un collaborateur null pour éviter
 	 * de passer toute la */
