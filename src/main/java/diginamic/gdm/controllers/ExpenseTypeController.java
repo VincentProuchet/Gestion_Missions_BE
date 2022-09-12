@@ -57,7 +57,7 @@ public class ExpenseTypeController {
 	/**
 	 * Updates the data for a specific registered expense type.
 	 * 
-	 * @param expenseType The new expense type within the request body
+	 * @param expenseType The expense type within the request body with modified info
 	 * @return The resulting expense type with updated info
 	 */
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -68,7 +68,7 @@ public class ExpenseTypeController {
 	/**
 	 * Deletes a specific registered expense type.
 	 * 
-	 * @param name The name of the expense type to delete
+	 * @param id The id of the expense type to delete
 	 */
 	@DeleteMapping(path = "{id}")
 	public void delete(@PathVariable int id) {

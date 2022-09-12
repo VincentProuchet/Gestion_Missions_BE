@@ -36,7 +36,7 @@ public interface ExpenseTypeService {
 	/**
 	 * Deletes a specific registered expense type.
 	 * 
-	 * @param name The name of the expense type to delete
+	 * @param id The id of the expense type to delete
 	 */
 	void delete(int id);
 	
