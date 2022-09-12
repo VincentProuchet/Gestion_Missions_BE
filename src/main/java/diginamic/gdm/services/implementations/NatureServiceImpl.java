@@ -32,10 +32,15 @@ public class NatureServiceImpl implements NatureService {
 	public void create(Nature nature) {
 		this.natureRepository.save(nature);
 	}
+	
+	@Override
+	public Nature read(int id) {
+		return this.natureRepository.findById(id).orElseThrow();
+	}
 
 	@Override
 	public Nature update(Nature nature) {
-		Nature current = this.natureRepository.findById(nature.getId()).orElseThrow();
+		Nature current = read(nature.getId());
 		current.setGivesBonus(nature.isGivesBonus());
 		current.setCharged(nature.isCharged());
 		current.setTjm(nature.getTjm());
@@ -49,7 +54,7 @@ public class NatureServiceImpl implements NatureService {
 
 	@Override
 	public void delete(int id) {
-		Nature nature = this.natureRepository.findById(id).orElseThrow();
+		Nature nature = read(id);
 		this.natureRepository.delete(nature);
 	}
 

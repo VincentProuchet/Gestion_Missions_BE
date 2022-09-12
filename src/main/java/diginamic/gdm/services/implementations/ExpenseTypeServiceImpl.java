@@ -32,10 +32,15 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	public void create(ExpenseType expenseType) {
 		this.expenseTypeRepository.save(expenseType);
 	}
+	
+	@Override
+	public ExpenseType read(int id) {
+		return this.expenseTypeRepository.findById(id).orElseThrow();
+	}
 
 	@Override
 	public ExpenseType update(ExpenseType expenseType) {
-		ExpenseType current = this.expenseTypeRepository.findById(expenseType.getId()).orElseThrow();
+		ExpenseType current = read(expenseType.getId());
 		current.setName(expenseType.getName());
 		this.expenseTypeRepository.save(current);
 		return current;
@@ -43,7 +48,7 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 
 	@Override
 	public void delete(int id) {
-		ExpenseType expenseType = this.expenseTypeRepository.findById(id).orElseThrow();
+		ExpenseType expenseType = read(id);
 		this.expenseTypeRepository.delete(expenseType);
 	}
 

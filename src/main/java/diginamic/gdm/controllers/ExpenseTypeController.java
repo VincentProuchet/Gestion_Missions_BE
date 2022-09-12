@@ -55,6 +55,17 @@ public class ExpenseTypeController {
 	}
 	
 	/**
+	 * Gets a specific registered expense type.
+	 * 
+	 * @param id The id corresponding to the expense type to get
+	 * @return The registered expense type corresponding to the given id
+	 */
+	@GetMapping(path = "{id}")
+	public ExpenseType read(@PathVariable int id) {
+		return expenseTypeService.read(id);
+	}
+	
+	/**
 	 * Updates the data for a specific registered expense type.
 	 * 
 	 * @param expenseType The expense type within the request body with modified info

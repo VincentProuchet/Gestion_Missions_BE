@@ -24,6 +24,14 @@ public interface CityService {
 	 * @param city The new city to be registered
 	 */
 	void create(City city);
+	
+	/**
+	 * Gets a specific registered city.
+	 * 
+	 * @param id The id corresponding to the city to get
+	 * @return The registered city corresponding to the given id
+	 */
+	City read(int id);
 
 	/**
 	 * Updates the data for a specific registered city.

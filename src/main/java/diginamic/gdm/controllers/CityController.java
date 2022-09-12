@@ -55,6 +55,17 @@ public class CityController {
 	}
 	
 	/**
+	 * Gets a specific registered city.
+	 * 
+	 * @param id The id corresponding to the city to get
+	 * @return The registered city corresponding to the given id
+	 */
+	@GetMapping(path = "{id}")
+	public City read(@PathVariable int id) {
+		return cityService.read(id);
+	}
+	
+	/**
 	 * Updates the data for a specific registered city.
 	 * 
 	 * @param city The city within the request body with modified info

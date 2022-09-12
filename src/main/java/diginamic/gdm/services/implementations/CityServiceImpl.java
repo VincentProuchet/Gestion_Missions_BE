@@ -32,10 +32,15 @@ public class CityServiceImpl implements CityService {
 	public void create(City city) {
 		this.cityRepository.save(city);
 	}
+	
+	@Override
+	public City read(int id) {
+		return this.cityRepository.findById(id).orElseThrow();
+	}
 
 	@Override
 	public City update(City city) {
-		City current = this.cityRepository.findById(city.getId()).orElseThrow();
+		City current = read(city.getId());
 		current.setName(city.getName());
 		this.cityRepository.save(current);
 		return current;
@@ -43,7 +48,7 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public void delete(int id) {
-		City city = this.cityRepository.findById(id).orElseThrow();
+		City city = read(id);
 		this.cityRepository.delete(city);
 	}
 

@@ -55,6 +55,17 @@ public class ExpenseController {
 	}
 	
 	/**
+	 * Gets a specific registered expense.
+	 * 
+	 * @param id The id corresponding to the expense to get
+	 * @return The registered expense corresponding to the given id
+	 */
+	@GetMapping(path = "{id}")
+	public Expense read(@PathVariable int id) {
+		return expenseService.read(id);
+	}
+	
+	/**
 	 * Updates the data for a specific registered expense.
 	 * 
 	 * @param expense The expense within the request body with modified info

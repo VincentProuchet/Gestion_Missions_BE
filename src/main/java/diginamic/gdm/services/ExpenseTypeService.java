@@ -26,6 +26,14 @@ public interface ExpenseTypeService {
 	void create(ExpenseType expenseType);
 	
 	/**
+	 * Gets a specific registered expense type.
+	 * 
+	 * @param id The id corresponding to the expense type to get
+	 * @return The registered expense type corresponding to the given id
+	 */
+	ExpenseType read(int id);
+	
+	/**
 	 * Updates the data for a specific registered expense type.
 	 * 
 	 * @param expenseType The expense type to update with modified info

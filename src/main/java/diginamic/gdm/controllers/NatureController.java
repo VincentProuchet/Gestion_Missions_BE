@@ -55,6 +55,17 @@ public class NatureController {
 	}
 	
 	/**
+	 * Gets a specific registered mission nature.
+	 * 
+	 * @param id The id corresponding to the nature to get
+	 * @return The registered nature corresponding to the given id
+	 */
+	@GetMapping(path = "{id}")
+	public Nature read(@PathVariable int id) {
+		return natureService.read(id);
+	}
+	
+	/**
 	 * Updates the data for a specific registered mission nature.
 	 * 
 	 * @param nature The nature within the request body with modified info
