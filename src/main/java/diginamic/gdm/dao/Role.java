@@ -1,15 +1,29 @@
 package diginamic.gdm.dao;
 
+/**
+ * Represents a collaborator's role/function
+ * 
+ * @author DorianBoel
+ */
 public enum Role {
 
-	COLLABORATOR(Collaborator.class),
-	MANAGER(Manager.class),
-	ADMIN(Administrator.class);
+	COLLABORATOR("collaborator", Collaborator.class),
+	MANAGER("manager", Manager.class),
+	ADMIN("admin", Administrator.class);
 	
-	public final Class<? extends Collaborator> CLASS;
+	/**
+	 * The name of the role
+	 */
+	public final String LABEL;
 	
-	private Role(Class<? extends Collaborator> cl) {
-		CLASS = cl;
+	/**
+	 * The class entity associated with this specific role
+	 */
+	public final Class<? extends Collaborator> AS_CLASS;
+	
+	private Role(String label, Class<? extends Collaborator> cl) {
+		LABEL = label;
+		AS_CLASS = cl;
 	}
 	
 }

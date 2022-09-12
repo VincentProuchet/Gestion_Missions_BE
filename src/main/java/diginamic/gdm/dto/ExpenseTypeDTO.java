@@ -16,6 +16,12 @@ import lombok.Setter;
 @Setter
 public class ExpenseTypeDTO {
 
+	
+	/**
+	 * Database id
+	 */
+	private int id = 0;
+	
 	/**
 	 * Expense type name identifier.
 	 */
