@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
  * @author DorianBoel
  */
 @RestController
-@RequestMapping(path = "frais", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "expense", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ExpenseController {
 	
@@ -55,14 +55,26 @@ public class ExpenseController {
 	}
 	
 	/**
+	 * Gets a specific registered expense.
+	 * 
+	 * @param id The id corresponding to the expense to get
+	 * @return The registered expense corresponding to the given id
+	 */
+	@GetMapping(path = "{id}")
+	public Expense read(@PathVariable int id) {
+		return expenseService.read(id);
+	}
+	
+	/**
 	 * Updates the data for a specific registered expense.
 	 * 
+	 * @param id The id corresponding to the expense to update
 	 * @param expense The expense within the request body with modified info
 	 * @return The resulting expense with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Expense update(@RequestBody Expense expense) {
-		return expenseService.update(expense);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Expense update(@PathVariable int id, @RequestBody Expense expense) {
+		return expenseService.update(id, expense);
 	}
 	
 	/**

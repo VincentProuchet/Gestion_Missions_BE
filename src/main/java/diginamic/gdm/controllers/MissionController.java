@@ -1,6 +1,5 @@
 package diginamic.gdm.controllers;
 
-import java.io.ObjectInputFilter.Status;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Status;
 import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
 
@@ -69,12 +69,13 @@ public class MissionController {
 	/**
 	 * Updates the data for a specific registered mission.
 	 * 
+	 * @param id The id corresponding to the mission to update
 	 * @param mission The mission withing the request body with modified info
 	 * @return The resulting mission with updated info
 	 */
-	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Mission update(@RequestBody Mission mission) {
-		return missionService.update(mission);
+	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Mission update(@PathVariable int id, @RequestBody Mission mission) {
+		return missionService.update(id, mission);
 	}
 	
 	/**
@@ -88,13 +89,13 @@ public class MissionController {
 	}
 	
 	/**
-	 * Validates a mission by updating its status to {@link Status#ALLOWED ALLOWED}
+	 * Validates a mission by updating its status to {@link Status#VALIDATED VALIDATED}
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
 	@PutMapping(path = "{id}/valider")
 	public void validate(@PathVariable int id) {
-		missionService.updateStatus(id, Status.ALLOWED);
+		missionService.updateStatus(id, Status.VALIDATED);
 	}
 	
 	/**

@@ -36,9 +36,10 @@ public interface CollaboratorService {
 	/**
 	 * Updates the data for a specific registered collaborator.
 	 * 
+	 * @param id The id corresponding to the collaborator to update
 	 * @param collaborator The collaborator to update with modified info
 	 * @return The resulting collaborator with updated info
 	 */
-	Collaborator update(Collaborator collaborator);
+	Collaborator update(int id, Collaborator collaborator);
 	
 }

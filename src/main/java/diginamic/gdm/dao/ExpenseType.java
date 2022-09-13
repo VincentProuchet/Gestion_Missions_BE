@@ -1,6 +1,8 @@
 package diginamic.gdm.dao;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +22,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExpenseType {
-	/** name : the name of the type of expense */
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	/** name : the name of the type of expense */
 	private String name;
 
 }
