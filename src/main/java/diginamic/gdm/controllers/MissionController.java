@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
+import diginamic.gdm.dto.MissionDTO;
 import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
 
@@ -40,8 +41,8 @@ public class MissionController {
 	 * @return A list of all missions
 	 */
 	@GetMapping
-	public List<Mission> list() {
-		return missionService.list();
+	public List<MissionDTO> list() {
+		return missionService.list().stream().map(mission -> new MissionDTO(mission)).toList();
 	}
 	
 	/**
@@ -51,8 +52,8 @@ public class MissionController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody Mission mission) {
-		missionService.create(mission);
+	public void create(@RequestBody MissionDTO mission) {
+		missionService.create(mission.instantiate());
 	}
 	
 	/**
@@ -62,20 +63,20 @@ public class MissionController {
 	 * @return The registered mission corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public Mission read(@PathVariable int id) {
-		return missionService.read(id);
+	public MissionDTO read(@PathVariable int id) {
+		return new MissionDTO(missionService.read(id));
 	}
 	
 	/**
 	 * Updates the data for a specific registered mission.
 	 * 
 	 * @param id The id corresponding to the mission to update
-	 * @param mission The mission withing the request body with modified info
+	 * @param missionDTO The mission withing the request body with modified info
 	 * @return The resulting mission with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Mission update(@PathVariable int id, @RequestBody Mission mission) {
-		return missionService.update(id, mission);
+	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) {
+		return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
 	}
 	
 	/**

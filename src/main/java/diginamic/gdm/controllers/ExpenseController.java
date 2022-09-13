@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.Expense;
+import diginamic.gdm.dto.ExpenseDTO;
 import diginamic.gdm.services.ExpenseService;
 import lombok.AllArgsConstructor;
 
@@ -39,8 +40,8 @@ public class ExpenseController {
 	 * @return A list of all expenses
 	 */
 	@GetMapping
-	public List<Expense> list() {
-		return expenseService.list();
+	public List<ExpenseDTO> list() {
+		return expenseService.list().stream().map(expense -> new ExpenseDTO(expense)).toList();
 	}
 	
 	/**
@@ -50,8 +51,8 @@ public class ExpenseController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody Expense expense) {
-		expenseService.create(expense);
+	public void create(@RequestBody ExpenseDTO expense) {
+		expenseService.create(expense.getIdMission(), expense.instantiate());
 	}
 	
 	/**
@@ -61,20 +62,20 @@ public class ExpenseController {
 	 * @return The registered expense corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public Expense read(@PathVariable int id) {
-		return expenseService.read(id);
+	public ExpenseDTO read(@PathVariable int id) {
+		return new ExpenseDTO(expenseService.read(id));
 	}
 	
 	/**
 	 * Updates the data for a specific registered expense.
 	 * 
 	 * @param id The id corresponding to the expense to update
-	 * @param expense The expense within the request body with modified info
+	 * @param expenseDTO The expense within the request body with modified info
 	 * @return The resulting expense with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Expense update(@PathVariable int id, @RequestBody Expense expense) {
-		return expenseService.update(id, expense);
+	public ExpenseDTO update(@PathVariable int id, @RequestBody ExpenseDTO expenseDTO) {
+		return new ExpenseDTO(expenseService.update(id, expenseDTO.instantiate()));
 	}
 	
 	/**

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.Nature;
+import diginamic.gdm.dto.NatureDTO;
 import diginamic.gdm.services.NatureService;
 import lombok.AllArgsConstructor;
 
@@ -39,8 +40,8 @@ public class NatureController {
 	 * @return A list of all natures
 	 */
 	@GetMapping
-	public List<Nature> list() {
-		return natureService.list();
+	public List<NatureDTO> list() {
+		return natureService.list().stream().map(nature -> new NatureDTO(nature)).toList();
 	}
 	
 	/**
@@ -50,8 +51,8 @@ public class NatureController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody Nature nature) {
-		natureService.create(nature);
+	public void create(@RequestBody NatureDTO nature) {
+		natureService.create(nature.instantiate());
 	}
 	
 	/**
@@ -61,20 +62,20 @@ public class NatureController {
 	 * @return The registered nature corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public Nature read(@PathVariable int id) {
-		return natureService.read(id);
+	public NatureDTO read(@PathVariable int id) {
+		return new NatureDTO(natureService.read(id));
 	}
 	
 	/**
 	 * Updates the data for a specific registered mission nature.
 	 * 
 	 * @param id The id corresponding to the nature to update
-	 * @param nature The nature within the request body with modified info
+	 * @param natureDTO The nature within the request body with modified info
 	 * @return The resulting nature with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Nature update(@PathVariable int id, @RequestBody Nature nature) {
-		return natureService.update(id, nature);
+	public NatureDTO update(@PathVariable int id, @RequestBody NatureDTO natureDTO) {
+		return new NatureDTO(natureService.update(id, natureDTO.instantiate()));
 	}
 	
 	/**

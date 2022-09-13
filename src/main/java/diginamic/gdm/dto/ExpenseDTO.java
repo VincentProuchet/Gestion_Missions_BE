@@ -3,6 +3,7 @@ package diginamic.gdm.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import diginamic.gdm.dao.Expense;
 import diginamic.gdm.dao.ExpenseType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ExpenseDTO {
+public class ExpenseDTO implements DTO<Expense> {
 
 	/**
 	 * Database id
@@ -49,5 +50,19 @@ public class ExpenseDTO {
 	 * Represents {@link diginamic.gdm.dao.Expense#expenseType Expense.expenseType}
 	 */
 	private ExpenseType type = null;
+	
+	public ExpenseDTO(Expense expense) {
+		this.id = expense.getId();
+		this.idMission = expense.getMission().getId();
+		this.date = expense.getDate();
+		this.cost = expense.getCost();
+		this.tva = expense.getTva();
+		this.type = expense.getExpenseType();
+	}
+
+	@Override
+	public Expense instantiate() {
+		return new Expense(id, date, cost, tva, null, type);
+	}
 	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.City;
+import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.services.CityService;
 import lombok.AllArgsConstructor;
 
@@ -39,19 +40,19 @@ public class CityController {
 	 * @return A list of all cities
 	 */
 	@GetMapping
-	public List<City> list() {
-		return cityService.list();
+	public List<CityDTO> list() {
+		return cityService.list().stream().map(city -> new CityDTO(city)).toList();
 	}
 	
 	/**
 	 * Saves a new {@link City} instance.
 	 * 
-	 * @param city The new city within the request body to be registered
+	 * @param cityDTO The new city within the request body to be registered
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody City city) {
-		cityService.create(city);
+	public void create(@RequestBody CityDTO cityDTO) {
+		cityService.create(cityDTO.instantiate());
 	}
 	
 	/**
@@ -61,20 +62,20 @@ public class CityController {
 	 * @return The registered city corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public City read(@PathVariable int id) {
-		return cityService.read(id);
+	public CityDTO read(@PathVariable int id) {
+		return new CityDTO(cityService.read(id));
 	}
 	
 	/**
 	 * Updates the data for a specific registered city.
 	 * 
 	 * @param id The id corresponding to the city to update
-	 * @param city The city within the request body with modified info
+	 * @param cityDTO The city within the request body with modified info
 	 * @return The resulting city with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public City update(@PathVariable int id, @RequestBody City city) {
-		return cityService.update(id, city);
+	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) {
+		return new CityDTO(cityService.update(id, cityDTO.instantiate()));
 	}
 	
 	/**

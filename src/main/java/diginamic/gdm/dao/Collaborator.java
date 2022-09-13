@@ -43,6 +43,8 @@ public class Collaborator {
 	private String email;
 	/** password : remember to add security */
 	private String password;
+	/** collaborator role */
+	private Role role;
 
 	/** missions : the missions this collaborator is in charge of */
 	@OneToMany(mappedBy = "collaborator")
