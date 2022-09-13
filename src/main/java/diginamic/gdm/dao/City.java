@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which reprensents a city
+ * Entity which represents a city
  * 
  * @author Joseph
  *
