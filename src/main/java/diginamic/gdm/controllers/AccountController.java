@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,7 @@ public class AccountController {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
+	
 
 	/**
 	 * Registers a new user account
@@ -50,8 +52,11 @@ public class AccountController {
 	 * @param login
 	 */
 	@PostMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CHECKPOINT)
-	public AuthenticationDTO logIn(@RequestBody LoginDTO login) {
+	@ResponseStatus(value = HttpStatus.ACCEPTED)	
+	public @ResponseBody AuthenticationDTO logIn(@RequestBody LoginDTO login) {
+		if(login.getLogin() == null && login.getPassword()==null) {
+			return null;
+		}
 		// we instanciate an authenticationDTO
 		AuthenticationDTO auth = new AuthenticationDTO();
 		// running encryption method on the password value
@@ -69,6 +74,7 @@ public class AccountController {
 		if(login.getLogin().equals("lui")|| login.getPassword().equals("1234")) {
 			// get a connection grant token
 			// from security Service
+			System.out.println("Logged");
 			auth.setGrantToken("gtsergfbvsnbrshsfbgfbs");
 		}
 		else {
@@ -92,8 +98,9 @@ public class AccountController {
 	 * @param grantToken
 	 */	
 	@PostMapping(path="refreshToken",consumes=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CHECKPOINT)
-public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
+	@ResponseStatus(value = HttpStatus.ACCEPTED )
+public @ResponseBody AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
+		System.out.println("refresh token ");
 		AuthenticationDTO auth = new AuthenticationDTO();
 		// the client send us a tokenDTO
 		// we test the refresh and the grant
@@ -105,11 +112,12 @@ public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 			auth.setRefreshToken("qfqsdfqsdfsfdgsghshsgh");
 			auth.setExpirationDate(LocalDateTime.now().plusHours(1).toString());
 			// and send them back tu client
+			System.out.println("found and refreshed");
 			return auth;
 		}
 		else {
 			// we should 
-			System.err.println(auth.toString());
+			System.err.println("ha ba non");
 			return auth;
 		}
 

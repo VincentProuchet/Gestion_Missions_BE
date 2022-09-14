@@ -74,7 +74,14 @@ public class NatureController {
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Nature update(@PathVariable int id, @RequestBody Nature nature) {
-		return natureService.update(id, nature);
+		if(this.IntegrityControl(id)) {
+			return natureService.update(id, nature);
+		}
+		else {
+			// ici on est censé lever une erreur et donc retourner un errorDTO 
+			return new Nature();
+		}
+		
 	}
 	
 	/**
@@ -84,7 +91,19 @@ public class NatureController {
 	 */
 	@DeleteMapping(path = "{id}")
 	public void delete(@PathVariable int id) {
+		//this.IntegrityControl(nature); 
+		//c'est pour ça que j'insiste sur le fait de passer
+		// des objets en body
 		natureService.delete(id);
+	}
+	/**
+	* ici controle si la nature est ou non déjà assignée 
+	* à au moins une mission
+	@param nature
+	 */
+	private boolean IntegrityControl(int nature) {
+	
+		return true;
 	}
 	
 }

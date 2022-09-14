@@ -3,6 +3,7 @@ package diginamic.gdm.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @NoArgsConstructor
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class LoginDTO {
 	/**identifiant de connexion */
+	
 	private String login;
 	
 	/** mot de passe  */

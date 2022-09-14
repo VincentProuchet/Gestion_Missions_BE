@@ -1,9 +1,6 @@
 package diginamic.gdm.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * @author Vincent
@@ -12,10 +9,8 @@ import lombok.Setter;
  * notez que les identifiants et mots de passes n'y sont pas 
  * pour des raisons évidentes de sécurités
  */
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+
+@Data
 public class AuthenticationDTO {
 	
 	/** grantToken  provided by the authentication service 
