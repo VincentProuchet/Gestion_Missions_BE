@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ public class AccountController {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
+	private PasswordEncoder passwordEncoder;
 	
 
 	/**
@@ -41,7 +44,7 @@ public class AccountController {
 	@PostMapping(path = "signup")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void signup(@RequestBody Collaborator collaborator) {
-		
+		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		collaboratorService.create(collaborator);
 	}
 
@@ -51,12 +54,14 @@ public class AccountController {
 	 * 
 	 * @param login
 	 */
-	@PostMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED)	
 	public @ResponseBody AuthenticationDTO logIn(@RequestBody LoginDTO login) {
 		if(login.getLogin() == null && login.getPassword()==null) {
+			System.err.println("Bad Json");
 			return null;
 		}
+		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		// we instanciate an authenticationDTO
 		AuthenticationDTO auth = new AuthenticationDTO();
 		// running encryption method on the password value

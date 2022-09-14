@@ -2,6 +2,8 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Collaborator;
@@ -48,6 +50,43 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		current.setManager(collaborator.getManager());
 		this.collaboratorRepository.save(current);
 		return current;
+	}
+
+	@Override
+	public void createUser(UserDetails user) {
+		Collaborator col = new Collaborator();
+		
+		
+	}
+
+	@Override
+	public void updateUser(UserDetails user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUser(String username) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changePassword(String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean userExists(String username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
