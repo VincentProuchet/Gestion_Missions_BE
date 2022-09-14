@@ -54,8 +54,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
 	@Override
 	public void createUser(UserDetails user) {
-		Collaborator col = new Collaborator();
-		
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -88,5 +87,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

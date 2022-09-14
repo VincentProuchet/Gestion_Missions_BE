@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +55,7 @@ public class AccountController {
 	 * 
 	 * @param login
 	 */
-	@PostMapping(path = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED)	
 	public @ResponseBody AuthenticationDTO logIn(@RequestBody LoginDTO login) {
 		if(login.getLogin() == null && login.getPassword()==null) {

@@ -1,41 +1,20 @@
 package diginamic.gdm.security;
 
-import java.security.Security;
-
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.ldap.EmbeddedLdapServerContextSourceFactoryBean;
-import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
+import org.springframework.security.config.web.servlet.headers.HeadersSecurityMarker;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.server.SecurityWebFilterChain;
 
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.services.CollaboratorService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 /**
  * Security Configuration this is where we declare
@@ -54,9 +33,16 @@ public class GDMSecurityConfig {
 	AuthenticationEntryPoint entryPoint;
 	// private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((auth) -> 
-		auth.antMatchers("/**").permitAll()
+		System.err.println("Filter Chain");
+		http.authorizeHttpRequests((auth) ->
+		auth
+		.antMatchers("signin").permitAll()
+		.antMatchers("refreshToken").permitAll()
+		.antMatchers(HttpMethod.POST, "/auth/").permitAll()
+		.antMatchers(HttpMethod.GET,"/city/").permitAll()
+		//auth.antMatchers("/").permitAll()
 		// .antMatchers("/signin/").permitAll()
 		// .antMatchers("/auth").permitAll()
 		// .antMatchers("refreshToken/").permitAll()
@@ -91,30 +77,22 @@ public class GDMSecurityConfig {
 	 */
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		if (true) {
+		if (false) {
 			return (web) -> {
 			};
 
 		}
 
-		return (web) -> web.ignoring().antMatchers(HttpMethod.POST, "login").antMatchers(HttpMethod.GET)
-				.antMatchers(HttpMethod.PUT).antMatchers(HttpMethod.DELETE);
+		return (web) -> web.ignoring()
+				// il FAUT mettre le slash avant
+				
+				.antMatchers(HttpMethod.GET,"/nature/")
+				//.antMatchers(HttpMethod.GET,"/city/")
+				//.antMatchers(HttpMethod.POST, "/signin/")
+				//.antMatchers(HttpMethod.GET)
+				//.antMatchers(HttpMethod.PUT).antMatchers(HttpMethod.DELETE)
+				;
 	}
 
 	
-
-	
-
-	/*
-	 * @Bean public void collaborators(AuthenticationManagerBuilder auth) {
-	 * Collaborator user = new Collaborator(); user.setUserName("franck");
-	 * user.password("password");
-	 * 
-	 * 
-	 * collaboratorService.create(user);
-	 * 
-	 * }
-	 */
-
- 
 }

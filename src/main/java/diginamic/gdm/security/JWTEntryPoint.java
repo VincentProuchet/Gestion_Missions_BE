@@ -22,6 +22,7 @@ public class JWTEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
+		System.out.println("In entry point");
 		authException.printStackTrace();
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,authException.getMessage());
 	}
