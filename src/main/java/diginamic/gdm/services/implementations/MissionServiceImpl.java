@@ -1,7 +1,9 @@
 package diginamic.gdm.services.implementations;
 
 import java.util.List;
+import java.util.Set;
 
+import diginamic.gdm.dao.Nature;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Mission;
@@ -63,6 +65,11 @@ public class MissionServiceImpl implements MissionService {
 	public void updateStatus(int id, Status status) {
 		Mission mission = read(id);
 		mission.setStatus(status);
+	}
+
+	@Override
+	public List<Mission> getMissionWhithGivenNature(Nature nature) {
+		return missionRepository.findByNatureIs(nature);
 	}
 
 }
