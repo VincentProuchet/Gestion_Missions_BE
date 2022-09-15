@@ -1,10 +1,5 @@
 package diginamic.gdm.dto;
 
-public class NatureDTO {
-
-}
-package diginamic.gdm.dto;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
