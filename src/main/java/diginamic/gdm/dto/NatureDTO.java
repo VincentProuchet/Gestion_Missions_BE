@@ -34,10 +34,10 @@ public class NatureDTO implements DTO<Nature> {
 	/** % prime taux de prime à sur la montant total de la mission  */
 	private float bonusPercentage;
 	/**  début de validité de la nature  */
-	private String dateOfValidity = null;
+	private LocalDateTime dateOfValidity = null;
 	/** endValidity  fin de validité de la nature
 	 * une nature en cours de validité à cette valeur nulle*/
-	private String endOfValidity = null;
+	private LocalDateTime endOfValidity = null;
 	
 	public NatureDTO(Nature nature) {
 		this.id = nature.getId();
