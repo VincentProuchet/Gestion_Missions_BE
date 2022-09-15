@@ -21,3 +21,5 @@ alter table mission add constraint FKp1fl8aea4a7vp0pr45epiyqgr foreign key (natu
 alter table mission add constraint FKbico4il1r20n6dr3pf35xu3bh foreign key (start_cityid) references city (id);
 -- changeset liquibase:2
 INSERT INTO `city` (`id`, `name`) VALUES (1, 'Montpellier');
+-- changeset liquibase: --Vincent inset on sampled user
+INSERT INTO `collaborator` (`dtype`, `email`, `first_name`, `is_active`, `last_name`, `password`, `role`, `user_name`, `managerid`) VALUES (1,  NULL, NULL, 1, NULL, '1111', NULL, 'vin', NULL)

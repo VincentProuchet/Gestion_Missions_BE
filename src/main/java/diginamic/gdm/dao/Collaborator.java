@@ -59,7 +59,7 @@ public class Collaborator  {
 	/** manager : the manager of this collaborator */
 	@ManyToOne
 	@JoinColumn(name = "managerID")
-	private Manager manager = null;
+	private Collaborator manager = null;
 
 	public Collaborator(int id, String lastName,String firstName, String email, Role role ) {
 		this.id = id;

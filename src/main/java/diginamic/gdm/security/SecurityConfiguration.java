@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import diginamic.gdm.dao.Administrator;
 import diginamic.gdm.dao.Collaborator;
@@ -32,12 +35,32 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-	protected HttpSecurity securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/nature").hasRole(ADMIN)
+	public SecurityFilterChain springSecurityfilterChain(HttpSecurity http) throws Exception {
+		System.err.println("Filter Chain");
+		http.authorizeRequests()
+			.antMatchers("/nature").hasRole(ADMIN)
 			.antMatchers("/expense/type").hasAnyRole(ADMIN, COLLABORATOR, MANAGER)
 			.antMatchers("/city").permitAll()
-			.and().formLogin();
-		return http;
+			.and()
+			.formLogin();
+		
+								
+//			http.sessionManagement()
+//				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//				.maximumSessions(1).expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
+//				;
+//			http.logout() 
+//			// le logout 
+//			// s'appelle par la route /logout
+//			.invalidateHttpSession(true)
+//			//.logoutUrl(LOGOUT_PAGE).permitAll()
+			
+		
+			;
+			
+			;
+			return http.build();
+		
 	}
 
 	@Bean

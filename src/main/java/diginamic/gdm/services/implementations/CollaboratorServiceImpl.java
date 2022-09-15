@@ -57,9 +57,13 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Collaborator> user = collaboratorRepository.findByUserName(username);
-		user.orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "));
-		return user.map(UserDetailsImpl::new).get();
+		System.err.println("fetching username");		
+		UserDetailsImpl details =
+				new  UserDetailsImpl(collaboratorRepository.findByUserName(username)
+						.orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "))
+				);
+		return details;
+	
 	}
 
 }
