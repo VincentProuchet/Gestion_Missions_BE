@@ -85,4 +85,13 @@ public interface NatureService {
     boolean canBeUpdated(int id, Nature nature);
 
 
+    /**
+     * To be deleted, created or modified, this must be false
+     * If true, the nature must be render invalid instead
+     *
+     * @param nature
+     * @return true if a mission has this nature
+     */
+    boolean isThisNatureInUse(Nature nature);
+
 }

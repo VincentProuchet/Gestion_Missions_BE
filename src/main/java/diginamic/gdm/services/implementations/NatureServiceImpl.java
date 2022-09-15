@@ -49,20 +49,12 @@ public class NatureServiceImpl implements NatureService {
 
     @Override
     public Nature update(int id, Nature nature) {
-        // if a nature with the same description exists and is currently active
-        // if it is in use
-        // create a new nature with the same description and valid starting today, with the new data
-        // disable the found nature
-        // else
-        // update the found nature
-        // else
-        // create a new nature with the same description and valid starting today, with the new data
 
         // validity checks, needs to throw an exception
         if (!isAValidNature(nature)) {
             return null;
         }
-        if (!canBeUpdated(id, nature)){
+        if (!canBeUpdated(id, nature)) {
             return null;
         }
 
@@ -107,7 +99,21 @@ public class NatureServiceImpl implements NatureService {
         // else
         // throw exception cant completely delete a used nature
         Nature nature = read(id);
-        this.natureRepository.delete(nature);
+
+        if (!isThisNatureInUse(nature)) {
+            this.natureRepository.delete(nature);
+            return;
+        }
+
+        if (nature.getEndOfValidity() == null) {
+
+            nature.setEndOfValidity(LocalDateTime.now());
+            natureRepository.save(nature);
+
+        } else {
+            //throws an exception
+            return;
+        }
     }
 
     @Override
@@ -119,7 +125,9 @@ public class NatureServiceImpl implements NatureService {
     public boolean isAValidNature(Nature nature) {
         LocalDateTime endDate = nature.getEndOfValidity();
         LocalDateTime startDate = nature.getDateOfValidity();
-        return ((endDate == null) || (endDate.compareTo(startDate) >= 0));
+        boolean areDatesValid = ((startDate != null) && (endDate == null) || (endDate.compareTo(startDate) >= 0));
+        boolean requiredDataIsPresent = nature.getDescription() != null && nature.getDescription() != "";
+        return areDatesValid && requiredDataIsPresent;
     }
 
     @Override
@@ -149,23 +157,11 @@ public class NatureServiceImpl implements NatureService {
 
         // check that the given nature id is the last with the given description
         // both data comes from the DB, so a check on IDs is enough
-        if (!(orderedListOfNatures.get(0).getId() == registeredNature.getId())) {
-            return false;
-        }
-
-        return true;
+        return orderedListOfNatures.get(0).getId() == registeredNature.getId();
     }
 
-
-
-    /**
-     * To be deleted, created or modified, this must be false
-     * If true, the nature must be render invalid instead
-     *
-     * @param nature
-     * @return true if a mission has this nature
-     */
-    private boolean isThisNatureInUse(Nature nature) {
+    @Override
+    public boolean isThisNatureInUse(Nature nature) {
         return !missionService.getMissionWhithGivenNature(nature).isEmpty();
     }
 
