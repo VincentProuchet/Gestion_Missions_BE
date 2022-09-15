@@ -59,4 +59,27 @@ public interface MissionService {
 	 */
 	void updateStatus(int id, Status status);
 
+	/**
+	 * Check the validity of the given data
+	 *
+	 * @param mission
+	 * @return true if the mission is correctly formed
+	 */
+	boolean isThisMissionValid(Mission mission);
+
+	/**
+	 * Check if the mission status is INIT or REJECTED
+	 *
+	 * @param mission
+	 * @return true if the status allows the update
+	 */
+	boolean canBeUpdated(Mission mission);
+
+	/**
+	 * Check if the mission status is INIT or REJECTED
+	 * @param mission
+	 * @return
+	 */
+	boolean canBeDeleted(Mission mission);
+
 }
