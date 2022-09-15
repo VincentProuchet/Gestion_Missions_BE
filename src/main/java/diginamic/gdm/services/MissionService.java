@@ -2,10 +2,8 @@ package diginamic.gdm.services;
 
 
 import java.util.List;
-import java.util.Set;
 
 import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Nature;
 import diginamic.gdm.dao.Status;
 
 /**
@@ -62,11 +60,26 @@ public interface MissionService {
 	void updateStatus(int id, Status status);
 
 	/**
-	 * Get all the missions with the specified nature
+	 * Check the validity of the given data
 	 *
-	 * @param nature
-	 * @return the list of said missions
+	 * @param mission
+	 * @return true if the mission is correctly formed
 	 */
-	List<Mission> getMissionWhithGivenNature(Nature nature);
+	boolean isThisMissionValid(Mission mission);
+
+	/**
+	 * Check if the mission status is INIT or REJECTED
+	 *
+	 * @param mission
+	 * @return true if the status allows the update
+	 */
+	boolean canBeUpdated(Mission mission);
+
+	/**
+	 * Check if the mission status is INIT or REJECTED
+	 * @param mission
+	 * @return
+	 */
+	boolean canBeDeleted(Mission mission);
 
 }

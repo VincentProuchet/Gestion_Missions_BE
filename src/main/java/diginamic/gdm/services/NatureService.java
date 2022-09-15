@@ -2,6 +2,7 @@ package diginamic.gdm.services;
 
 import diginamic.gdm.dao.Nature;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -58,6 +59,25 @@ public interface NatureService {
      */
     List<Nature> getActiveNatures();
 
+    /**
+     * Check if a nature was or is active at the given date
+     *  if the date is null, returns true if the nature is currently active
+     *
+     * @param nature
+     * @param date
+     * @return
+     */
+    boolean isNatureActive(Nature nature, LocalDateTime date);
+
+    /**
+     * Returns true if the nature is currently active
+     *
+     * @param nature
+     * @return
+     */
+    default boolean isNatureActive(Nature nature) {
+        return isNatureActive(nature, null);
+    }
     /**
      * The end date must be later than the start date, or null
      *

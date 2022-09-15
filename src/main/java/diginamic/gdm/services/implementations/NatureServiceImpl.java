@@ -1,6 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import diginamic.gdm.dao.Nature;
+import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
@@ -25,7 +26,7 @@ public class NatureServiceImpl implements NatureService {
      */
     private NatureRepository natureRepository;
 
-    private MissionService missionService;
+    private MissionRepository missionRepository;
 
     @Override
     public List<Nature> list() {
@@ -122,10 +123,20 @@ public class NatureServiceImpl implements NatureService {
     }
 
     @Override
+    public boolean isNatureActive(Nature nature, LocalDateTime date) {
+        LocalDateTime endDateOfValidity = nature.getEndOfValidity();
+        LocalDateTime startDateOfValidity = nature.getDateOfValidity();
+
+        boolean currentlyValidIfDateIsNull = date == null && (endDateOfValidity == null || endDateOfValidity.isAfter(LocalDateTime.now()));
+        boolean isDateInValidityPeriod = date != null && (endDateOfValidity == null || date.isBefore(endDateOfValidity)) && date.isAfter(startDateOfValidity);
+        return currentlyValidIfDateIsNull || isDateInValidityPeriod;
+    }
+
+    @Override
     public boolean isAValidNature(Nature nature) {
         LocalDateTime endDate = nature.getEndOfValidity();
         LocalDateTime startDate = nature.getDateOfValidity();
-        boolean areDatesValid = ((startDate != null) && ((endDate == null) || (endDate.compareTo(startDate) >= 0)));
+        boolean areDatesValid = ((startDate != null) && ((endDate == null) || (endDate.compareTo(startDate) > 0)));
         boolean requiredDataIsPresent = nature.getDescription() != null && nature.getDescription() != "";
         return areDatesValid && requiredDataIsPresent;
     }
@@ -162,7 +173,7 @@ public class NatureServiceImpl implements NatureService {
 
     @Override
     public boolean isThisNatureInUse(Nature nature) {
-        return !missionService.getMissionWhithGivenNature(nature).isEmpty();
+        return !missionRepository.findByNatureIs(nature).isEmpty();
     }
 
 }

@@ -263,6 +263,21 @@ class NatureServiceImplTest {
 
     }
 
+    @Test
+    void isNatureActive() {
+        Nature nature1 = natureRepository.findByDescription("nature1name").get(0);
+        Nature nature2 = natureRepository.findByDescription("nature2name").get(0);
+        assertTrue(natureService.isNatureActive(nature1));
+        assertFalse(natureService.isNatureActive(nature2));
+
+        assertFalse(natureService.isNatureActive(nature1, LocalDateTime.of(1999, 01,01,01,01)));
+
+        assertFalse(natureService.isNatureActive(nature2, LocalDateTime.of(1999, 01,01,01,01)));
+        assertFalse(natureService.isNatureActive(nature2, LocalDateTime.now()));
+
+        assertTrue(natureService.isNatureActive(nature2, LocalDateTime.of(2021,01,01,01,01)));
+    }
+
 
 
 }
