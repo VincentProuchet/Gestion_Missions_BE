@@ -1,5 +1,6 @@
 package diginamic.gdm.dto;
 
+import diginamic.gdm.dao.ExpenseType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ExpenseTypeDTO {
+public class ExpenseTypeDTO implements DTO<ExpenseType>{
 
-	
 	/**
 	 * Database id
 	 */
@@ -26,5 +26,14 @@ public class ExpenseTypeDTO {
 	 * Expense type name identifier.
 	 */
 	private String name = "";
+	
+	public ExpenseTypeDTO(ExpenseType expenseType) {
+		this.id = expenseType.getId();
+		this.name = expenseType.getName();
+	}
+	
+	public ExpenseType instantiate() {
+		return new ExpenseType(id, name); 
+	}
 	
 }

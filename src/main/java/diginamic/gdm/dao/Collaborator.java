@@ -1,6 +1,5 @@
 package diginamic.gdm.dao;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +43,7 @@ public class Collaborator implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	/** lastName */
 	private String lastName;
 	/** firstName */
@@ -52,13 +52,17 @@ public class Collaborator implements UserDetails {
 	private String email;
 	/** password : remember to add security */
 	private String password;
+	/** collaborator role */
+	private Role role;
+
+	/** missions : the missions this collaborator is in charge of */
+	@OneToMany(mappedBy = "collaborator")
+	private Set<Mission> missions = new HashSet<Mission>();
+
 	/** manager : the manager of this collaborator */
 	@ManyToOne
 	@JoinColumn(name = "managerID")
 	private Manager manager;
-	/** missions : the missions this collaborator is in charge of */
-	@OneToMany(mappedBy = "collaborator")
-	private Set<Mission> missions = new HashSet<Mission>();
 
 	/// Spring Security /////
 	// everything under that point is here for the sake of spring Security

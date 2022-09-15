@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.ExpenseType;
+import diginamic.gdm.dto.ExpenseTypeDTO;
 import diginamic.gdm.services.ExpenseTypeService;
 import lombok.AllArgsConstructor;
 
@@ -39,8 +40,8 @@ public class ExpenseTypeController {
 	 * @return A list of all expense types
 	 */
 	@GetMapping
-	public List<ExpenseType> list() {
-		return expenseTypeService.list();
+	public List<ExpenseTypeDTO> list() {
+		return expenseTypeService.list().stream().map(expenseType -> new ExpenseTypeDTO(expenseType)).toList();
 	}
 	
 	/**
@@ -50,8 +51,8 @@ public class ExpenseTypeController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody ExpenseType expenseType) {
-		expenseTypeService.create(expenseType);
+	public void create(@RequestBody ExpenseTypeDTO expenseType) {
+		expenseTypeService.create(expenseType.instantiate());
 	}
 	
 	/**
@@ -61,20 +62,20 @@ public class ExpenseTypeController {
 	 * @return The registered expense type corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public ExpenseType read(@PathVariable int id) {
-		return expenseTypeService.read(id);
+	public ExpenseTypeDTO read(@PathVariable int id) {
+		return new ExpenseTypeDTO(expenseTypeService.read(id));
 	}
 	
 	/**
 	 * Updates the data for a specific registered expense type.
 	 * 
 	 * @param id The id corresponding to the expense type to update
-	 * @param expenseType The expense type within the request body with modified info
+	 * @param expenseTypeDTO The expense type within the request body with modified info
 	 * @return The resulting expense type with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ExpenseType update(@PathVariable int id, @RequestBody ExpenseType expenseType) {
-		return expenseTypeService.update(id, expenseType);
+	public ExpenseTypeDTO update(@PathVariable int id, @RequestBody ExpenseTypeDTO expenseTypeDTO) {
+		return new ExpenseTypeDTO(expenseTypeService.update(id, expenseTypeDTO.instantiate()));
 	}
 	
 	/**

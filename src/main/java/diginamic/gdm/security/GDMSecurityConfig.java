@@ -40,7 +40,7 @@ public class GDMSecurityConfig {
 		auth
 		.antMatchers("signin").permitAll()
 		.antMatchers("refreshToken").permitAll()
-		.antMatchers(HttpMethod.POST, "/auth/").permitAll()
+		.antMatchers(HttpMethod.POST, "auth").permitAll()
 		.antMatchers(HttpMethod.GET,"/city/").permitAll()
 		//auth.antMatchers("/").permitAll()
 		// .antMatchers("/signin/").permitAll()

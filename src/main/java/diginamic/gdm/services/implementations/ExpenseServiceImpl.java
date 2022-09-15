@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Expense;
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.services.ExpenseService;
+import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
 
 /**
@@ -22,6 +24,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 	 * The {@link ExpenseRepository} dependency.
 	 */
 	private ExpenseRepository expenseRepository;
+	
+	/**
+	 * The {@link MissionService} dependency;
+	 */
+	private MissionService missionService;
 
 	@Override
 	public List<Expense> list() {
@@ -29,7 +36,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public void create(Expense expense) {
+	public void create(int missionId, Expense expense) {
+		Mission mission = this.missionService.read(missionId);
+		expense.setMission(mission);
 		this.expenseRepository.save(expense);
 	}
 	
