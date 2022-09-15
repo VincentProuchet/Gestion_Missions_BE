@@ -1,9 +1,10 @@
 package diginamic.gdm.services;
 
-import java.io.ObjectInputFilter.Status;
+
 import java.util.List;
 
 import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Status;
 
 /**
  * Interface to be implemented by a mission service class.
@@ -37,10 +38,11 @@ public interface MissionService {
 	/**
 	 * Updates the data for a specific registered mission.
 	 * 
+	 * @param id The id corresponding to the mission to update
 	 * @param mission The mission to update with modified info
 	 * @return The resulting mission with updated info
 	 */
-	Mission update(Mission mission);
+	Mission update(int id, Mission mission);
 	
 	/**
 	 * Deletes a specific registered mission.

@@ -26,12 +26,21 @@ public interface NatureService {
 	void create(Nature nature);
 	
 	/**
+	 * Gets a specific registered mission nature.
+	 * 
+	 * @param id The id corresponding to the nature to get
+	 * @return The registered nature corresponding to the given id
+	 */
+	Nature read(int id);
+	
+	/**
 	 * Updates the data for a specific registered mission nature.
 	 * 
+	 * @param id The id corresponding to the nature to update
 	 * @param nature The nature to update with modified info
 	 * @return The resulting nature with updated info
 	 */
-	Nature update(Nature nature);
+	Nature update(int id, Nature nature);
 	
 	/**
 	 * Deletes a specific registered mission nature.

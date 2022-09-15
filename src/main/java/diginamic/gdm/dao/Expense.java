@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which reprensents a Collaborator
+ * Entity which represents a Collaborator
  * 
  * @author Joseph
  *
