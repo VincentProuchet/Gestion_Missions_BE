@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
  * @author DorianBoel
  */
 @RestController
-@RequestMapping(path = "expense_type", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "expense/type", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ExpenseTypeController {
 	

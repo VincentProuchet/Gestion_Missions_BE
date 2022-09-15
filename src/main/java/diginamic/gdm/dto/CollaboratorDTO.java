@@ -44,7 +44,7 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	}
 	
 	public Collaborator instantiate() {
-		return new Collaborator(id, lastName, firstName, email, "", role, null, null);
+		return new Collaborator(id, lastName, firstName, email, role);
 	}
 	
 }

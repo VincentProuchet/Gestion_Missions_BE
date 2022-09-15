@@ -30,7 +30,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Collaborator {
+public class Collaborator  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -41,8 +41,14 @@ public class Collaborator {
 	private String firstName;
 	/** email : identification mail address */
 	private String email;
+	
+	/** userName */
+	private String userName;
 	/** password : remember to add security */
 	private String password;
+	/** isActive */
+	private boolean isActive;
+	
 	/** collaborator role */
 	private Role role;
 
@@ -53,6 +59,14 @@ public class Collaborator {
 	/** manager : the manager of this collaborator */
 	@ManyToOne
 	@JoinColumn(name = "managerID")
-	private Manager manager;
+	private Manager manager = null;
 
+	public Collaborator(int id, String lastName,String firstName, String email, Role role ) {
+		this.id = id;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.email = email;
+		this.role = role ;
+		//id, lastName, firstName, email, "", role, null, null
+	}
 }

@@ -20,4 +20,4 @@ alter table mission add constraint FKkphcdkjbvempgsuqcogqkig08 foreign key (end_
 alter table mission add constraint FKp1fl8aea4a7vp0pr45epiyqgr foreign key (natureid) references nature (id);
 alter table mission add constraint FKbico4il1r20n6dr3pf35xu3bh foreign key (start_cityid) references city (id);
 -- changeset liquibase:2
-INSERT INTO `bzwk9ynwpwabpm66pepf`.`city` (`id`, `name`) VALUES (1, 'Montpellier');
+INSERT INTO `city` (`id`, `name`) VALUES (1, 'Montpellier');
