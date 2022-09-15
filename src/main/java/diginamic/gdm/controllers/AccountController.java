@@ -103,7 +103,7 @@ public class AccountController {
 	 * Hence the first value is ALLWAYS NULL 
 	 * @param grantToken
 	 */	
-	@PostMapping(path="refreshToken",consumes=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path="refreshToken",consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED )
 public @ResponseBody AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 		System.out.println("refresh token ");
@@ -138,7 +138,7 @@ public @ResponseBody AuthenticationDTO getToken(@RequestBody AuthenticationDTO g
 	 * THIS fonction say No
 	 * @param auth
 	 */
-	@PostMapping(path = "auth", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "auth", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	public boolean authenticate(@RequestBody AuthenticationDTO auth) {
 		// login comparing exchange toke

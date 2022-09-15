@@ -1,6 +1,5 @@
 package diginamic.gdm.dao;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,9 +36,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Collaborator implements UserDetails {
-	/** serialVersionUID */
-	private static final long serialVersionUID = 1L;
+public class Collaborator {
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,8 +49,8 @@ public class Collaborator implements UserDetails {
 	private String firstName;
 	/** email : identification mail address */
 	private String email;
-	/** password : remember to add security */
-	private String password;
+
+	private User details;
 	/** collaborator role */
 	private Role role;
 
@@ -65,31 +63,6 @@ public class Collaborator implements UserDetails {
 	@JoinColumn(name = "managerID")
 	private Manager manager;
 
-	/// Spring Security /////
-	// everything under that point is here for the sake of spring Security
-	/**
-	 * userName credentials used for login no need to panic we can copie emails or
-	 * anything here its a good practice since its would allow users to use anything
-	 * to authenticate and still have an email or any other names
-	 * can't be null so they are all a banana
-	 */
-	private String userName = "Banane";
-
-	/** Indicate if an account is valid or not revoked */
-	private boolean accountActive = true;
-
-	private boolean accountBanned = false;
-
-	private boolean accountExpired = false;
-	/**
-	 * to use for password regeneration users would have to ask for a new password
-	 */
-	private boolean passwordValid = true;
-	
-	/**
-	 * Yheay I decided to separate access tokens from the UserDetails
-	 * but we still need to hook these together
-	 */
 	@OneToOne
 	private UserAccess access;
 	
@@ -103,35 +76,5 @@ public class Collaborator implements UserDetails {
 		this.authority.add(new SimpleGrantedAuthority(this.getClass().getName()));
 	}
 	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {		
-		
-		return this.authority;
-	}
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return this.userName;
-	}
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 }

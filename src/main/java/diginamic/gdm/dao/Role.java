@@ -6,7 +6,8 @@ package diginamic.gdm.dao;
  * @author DorianBoel
  */
 public enum Role {
-
+	
+	//USER("user",Object.class),
 	COLLABORATOR("collaborator", Collaborator.class),
 	MANAGER("manager", Manager.class),
 	ADMIN("admin", Administrator.class);
