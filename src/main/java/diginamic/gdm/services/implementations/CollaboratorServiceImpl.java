@@ -3,7 +3,6 @@ package diginamic.gdm.services.implementations;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
-public class CollaboratorServiceImpl implements CollaboratorService, UserDetailsService {
+public class CollaboratorServiceImpl implements CollaboratorService {
 
 	/**
 	 * The {@link CollaboratorRepository} dependency.
@@ -57,26 +56,12 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.err.println("fetching username");
-		
-		
-		System.err.println("we have something");
 		Collaborator result =collaboratorRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "));
-		//ollaborator result = giveMEMockData();
+		System.err.println("we have something");
 		System.err.println("shit looks good");		
 		return result;
 	
 	}
 	
-	/**
-	 * for dev Only MUST be deleted in productions
-	 * @return
-	 */
-	public Collaborator giveMEMockData() {
-		System.err.println("making mock data");
-		Collaborator coll = new Collaborator();
-		coll.giveMeMockData();
-			
-		return coll;
-	}
 
 }

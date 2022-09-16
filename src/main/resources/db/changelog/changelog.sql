@@ -1,11 +1,13 @@
 -- liquibase formatted sql
 -- changeset liquibase:1
-drop table if exists city;
-drop table if exists collaborator;
-drop table if exists expense;
-drop table if exists expense_type;
-drop table if exists mission;
-drop table if exists nature;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+DROP TABLE if exists`collaborator`;
+DROP TABLE if exists`city`;
+DROP TABLE if exists`nature`;
+DROP TABLE if exists`mission`;
+DROP TABLE if exists`expense_type`;
+DROP TABLE if exists`expense`;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 create table collaborator (id integer not null auto_increment, email varchar(255), first_name varchar(255), last_name varchar(255),user_name varchar(255), password varchar(255), role integer,is_active boolean, managerid integer, primary key (id)) engine=InnoDB;
 create table city (id integer not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
 create table expense (id integer not null auto_increment, cost decimal(19,2), date datetime(6), tva float, expense_typeid integer, missionid integer, primary key (id)) engine=InnoDB;

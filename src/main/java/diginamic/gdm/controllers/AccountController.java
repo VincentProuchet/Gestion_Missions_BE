@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dto.AuthenticationDTO;
 import diginamic.gdm.dto.LoginDTO;
@@ -36,7 +37,7 @@ public class AccountController {
 	 * 
 	 * @param collaborator The new collaborator whose account to register
 	 */
-	@PostMapping(path = "signup")
+	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void signup(@RequestBody Collaborator collaborator) {
 		
@@ -49,8 +50,8 @@ public class AccountController {
 	 * 
 	 * @param login
 	 */
-	@PostMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CHECKPOINT)
+	@PostMapping(path = GDMRoutes.SIGNIN, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	public AuthenticationDTO logIn(@RequestBody LoginDTO login) {
 		// we instanciate an authenticationDTO
 		AuthenticationDTO auth = new AuthenticationDTO();
@@ -91,8 +92,8 @@ public class AccountController {
 	 * Hence the first value is ALLWAYS NULL 
 	 * @param grantToken
 	 */	
-	@PostMapping(path="refreshToken",consumes=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CHECKPOINT)
+	@PostMapping(path=GDMRoutes.AUTH+"/"+GDMRoutes.REFRESH ,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 		AuthenticationDTO auth = new AuthenticationDTO();
 		// the client send us a tokenDTO
@@ -124,9 +125,28 @@ public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 	 * THIS fonction say No
 	 * @param auth
 	 */
-	@PostMapping(path = "auth", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = GDMRoutes.AUTH+"/"+GDMRoutes.AUTH, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	public boolean authenticate(@RequestBody AuthenticationDTO auth) {
+		// login comparing exchange toke
+		if (auth.getExchangeToken().equals("sdghrzhsfdgfdgdfsqergsgfg"))
+			return true;
+		else
+			/**
+			// this is not an error
+			// the exchange token is either 
+			 * invalid 
+			 * or expired 
+			 * yes we can test it but what about 
+			 * really old tokens that got wiped out of the database ?
+			 * so we don't throw an error
+			 * we just say NO
+			 */		
+			return false;
+	}
+	@PostMapping(path = GDMRoutes.AUTH+"/"+GDMRoutes.REFRESH, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+	public boolean refresh(@RequestBody AuthenticationDTO auth) {
 		// login comparing exchange toke
 		if (auth.getExchangeToken().equals("sdghrzhsfdgfdgdfsqergsgfg"))
 			return true;

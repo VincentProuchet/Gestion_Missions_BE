@@ -17,6 +17,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -43,11 +44,11 @@ public class Collaborator implements UserDetails {
 	
 	/** serialVersionUID */
 	private static final long serialVersionUID = -2542617641751124157L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	/** lastName */
-	
 	@Column(name ="last_name")
 	private String lastName;
 	/** firstName */
@@ -56,25 +57,6 @@ public class Collaborator implements UserDetails {
 	/** email : identification mail address */
 	@Column(name ="email")
 	private String email;
-	
-	/** userName */
-	@Column(name = "user_name")
-	private String userName;
-	/** password : remember to add security */
-	@Column(name = "password")
-	private String password;
-	/** isActive */
-	@Column(name = "is_active")
-	private boolean isActive = true;
-	
-	/** authorities  not srtored because role already does that*/
-	@Transient
-	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-
-	
-	/** collaborator role */
-	@Column(name ="role")
-	private Role role;
 
 	/** missions : the missions this collaborator is in charge of */
 	@OneToMany(mappedBy = "collaborator",fetch = FetchType.LAZY)
@@ -84,6 +66,37 @@ public class Collaborator implements UserDetails {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "managerid")
 	private Collaborator manager = null;
+	
+	/***
+	 * Security
+	 */
+	/** userName */
+	@Column(name = "user_name")
+	private String userName;
+	/** password : remember to add security */
+	@Column(name = "password")
+	private String password;
+	/** isActive */
+	@Column(name = "is_active")
+	private boolean isActive = true;
+	/** collaborator role */
+	@Column(name ="role")
+	private Role role;
+	
+	/** authentification informations  
+	 * for 
+	 * login 
+	 * transaction
+	 * refresh
+	 * self contain it creation date
+	 */
+	@OneToOne 
+	private SecurityToken auth;
+	/** authorities  not stored because role already does that*/
+	@Transient
+	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+	
+	
 
 	public Collaborator(int id, String lastName,String firstName, String email, Role role ) {
 		System.err.println("making a collaborator");

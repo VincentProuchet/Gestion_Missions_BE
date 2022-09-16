@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dto.MissionDTO;
@@ -26,7 +27,7 @@ import lombok.AllArgsConstructor;
  * @author DorianBoel
  */
 @RestController
-@RequestMapping(path = "mission", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = GDMRoutes.MISSION, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class MissionController {
 	
@@ -94,7 +95,7 @@ public class MissionController {
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
-	@PutMapping(path = "{id}/valider")
+	@PutMapping(path = "{id}/"+GDMRoutes.VALIDER)
 	public void validate(@PathVariable int id) {
 		missionService.updateStatus(id, Status.VALIDATED);
 	}
@@ -104,7 +105,7 @@ public class MissionController {
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
-	@PutMapping(path = "{id}/rejeter")
+	@PutMapping(path = "{id}/"+GDMRoutes.REJETER)
 	public void reject(@PathVariable int id) {
 		missionService.updateStatus(id, Status.REJECTED);
 	}

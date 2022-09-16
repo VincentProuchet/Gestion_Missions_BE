@@ -2,6 +2,8 @@ package diginamic.gdm.services;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import diginamic.gdm.dao.Collaborator;
 
 /**
@@ -9,7 +11,7 @@ import diginamic.gdm.dao.Collaborator;
  * 
  * @author DorianBoel
  */
-public interface CollaboratorService {
+public interface CollaboratorService extends UserDetailsService{
 
 	/**
 	 * Gets the full list of registered collaborators.
