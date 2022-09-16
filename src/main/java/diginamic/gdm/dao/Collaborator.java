@@ -60,7 +60,7 @@ public class Collaborator implements UserDetails {
 	/** isActive */
 	private boolean isActive = true;
 	
-	/** authorities */
+	/** authorities  not srtored because role already does that*/
 	@Transient
 	private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
@@ -100,7 +100,7 @@ public class Collaborator implements UserDetails {
 		this.isActive = user.isActive();
 		this.email =user.getEmail();
 		this.role = user.getRole() ;
-		this.addAuthorities(this.role.toString());
+		this.addAuthorities(this.role.LABEL);
 	}
 	
 	
@@ -119,7 +119,7 @@ public class Collaborator implements UserDetails {
 		this.email = "qsfgqf@hotmail.com";
 		this.role = Role.ADMIN ;
 		this.isActive = true;
-		this.addAuthorities(this.role.toString());
+		this.addAuthorities(this.role.LABEL);
 	}
 	
 	
@@ -132,13 +132,18 @@ public class Collaborator implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		if(this.authorities.size()<1) {
-			this.authorities.add(new SimpleGrantedAuthority(this.getClass().getName()));
+			this.authorities.add(new SimpleGrantedAuthority(this.role.LABEL));
 		}
 		return authorities;
 	}
+	/**
+	 * This is to simplify the Authority 
+	 * attribution for Spring Sécurity
+	 * @param authority
+	 */
 	public void  addAuthorities(String authority) {
 		this.authorities.add(new SimpleGrantedAuthority(authority));
-	}
+		}
 	
 	
 

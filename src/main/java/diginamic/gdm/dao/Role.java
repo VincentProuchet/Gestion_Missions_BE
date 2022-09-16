@@ -7,23 +7,20 @@ package diginamic.gdm.dao;
  */
 public enum Role {
 
-	COLLABORATOR("collaborator", Collaborator.class),
-	MANAGER("manager", Manager.class),
-	ADMIN("admin", Administrator.class);
+	COLLABORATOR("COLLAB"),
+	MANAGER("MAN" ),
+	ADMIN("ADMIN");
+	
 	
 	/**
 	 * The name of the role
 	 */
 	public final String LABEL;
 	
-	/**
-	 * The class entity associated with this specific role
-	 */
-	public final Class<? extends Collaborator> AS_CLASS;
 	
-	private Role(String label, Class<? extends Collaborator> cl) {
-		LABEL = label;
-		AS_CLASS = cl;
+	private Role(String label) {
+	LABEL = label;
 	}
+
 	
 }

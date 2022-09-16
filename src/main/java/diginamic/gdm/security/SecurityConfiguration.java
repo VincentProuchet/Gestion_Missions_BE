@@ -6,18 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import diginamic.gdm.dao.Administrator;
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Manager;
-import diginamic.gdm.services.implementations.UserDetailsImpl;
+import diginamic.gdm.dao.Role;
 
 @Configuration
 public class SecurityConfiguration {
@@ -25,9 +19,9 @@ public class SecurityConfiguration {
 	//private static final String ADMIN = Administrator.class.getName();
 	//private static final String MANAGER = Manager.class.getName();
 	//private static final String COLLABORATOR = Collaborator.class.getName();
-	private static final String ADMIN = "ADMIN";
-		private static final String MANAGER = "MAN";
-		private static final String COLLABORATOR = "COL";
+	private static final String ADMIN = Role.ADMIN.LABEL;
+		private static final String MANAGER = Role.MANAGER.LABEL;
+		private static final String COLLABORATOR = Role.COLLABORATOR.LABEL;
 	//private static final String USER = UserDetailsImpl.class.getName();
 	@Autowired
 	private UserDetailsService userDetailsService;
