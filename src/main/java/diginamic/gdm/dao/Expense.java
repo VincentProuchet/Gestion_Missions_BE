@@ -40,7 +40,7 @@ public class Expense {
 	/** tva : the applicable TVA */
 	private Float tva;
 
-	/** mission : the mission which requiered this expense */
+	/** mission : the mission which required this expense */
 	@ManyToOne
 	@JoinColumn(name = "missionID")
 	private Mission mission;

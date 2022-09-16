@@ -109,10 +109,6 @@ class MissionServiceImplTest {
         Nature nature1 = natureRepository.findAll().get(0);
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
 
-        List<Mission> allMissions = missionRepository.findAll();
-        List<Mission> collaboratorsMissions = missionRepository.findByCollaboratorOrderByStartDateDesc(collaborator);
-        List<Mission> missionsToCome = missionRepository.findByCollaboratorAndEndDateAfterOrderByStartDate(collaborator, LocalDateTime.now());
-
         Mission m3 = new Mission();
         m3.setBonus(new BigDecimal(100));
         m3.setMissionTransport(Transport.Flight);
@@ -124,36 +120,55 @@ class MissionServiceImplTest {
         m3.setCollaborator(collaborator);
 
 
-        missionService.create(m3);
+        missionService.create(m3, true);
         assertEquals(missionRepository.findByCollaboratorOrderByStartDateDesc(collaborator).size(), 2);
 
         m3.setStartDate(LocalDateTime.now().plusDays(29));
         m3.setEndDate(LocalDateTime.now().plusDays(35));
-        missionService.create(m3);
+        missionService.create(m3, true);
         assertEquals(missionRepository.findByCollaboratorOrderByStartDateDesc(collaborator).size(), 3);
     }
 
     @Test
     void delete() {
-        missionRepository.findAll().stream().forEach(mission -> {missionService.delete(mission.getId());});
+        missionRepository.findAll().stream().forEach(mission -> {
+            missionService.delete(mission.getId());
+        });
 
         assertEquals(missionRepository.findAll().size(), 0);
-    }
-/*
-
-    @Test
-    void read() {
     }
 
     @Test
     void update() {
+        Collaborator collaborator = collaboratorRepository.findAll().get(0);
+        Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
+        m1.setMissionTransport(Transport.Carshare);
+        missionService.update(m1.getId(), m1, true);
+        assertFalse(missionRepository.findById(m1.getId()).get().getMissionTransport() == Transport.Carshare);
+
+        Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
+        LocalDateTime oldEndDateM2 = m2.getEndDate();
+        LocalDateTime newEndDateM2 = LocalDateTime.now().plusDays(22);
+        m2.setEndDate(newEndDateM2);
+        Mission updatedMission = missionService.update(m2.getId(), m2, true);
+        assertFalse(missionRepository.findById(m2.getId()).get().getEndDate().isEqual(oldEndDateM2));
+
+        LocalDateTime invalidDate = LocalDateTime.now().plusDays(14);
+        m2.setEndDate(invalidDate);
+        missionService.update(m2.getId(), m2, true);
+        assertFalse(missionRepository.findById(m2.getId()).get().getEndDate().isEqual(invalidDate));
+
     }
-
-
     @Test
     void updateStatus() {
+        List<Mission> allMissions = missionRepository.findAll();
+        Mission m1 = allMissions.get(0);
+        assertTrue(m1.getStatus() != Status.REJECTED);
+        missionService.updateStatus(m1.getId(), Status.REJECTED);
+        assertTrue(missionRepository.findById(m1.getId()).get().getStatus() == Status.REJECTED);
+
     }
-*/
+
     @Test
     void isThisMissionValid() {
 
@@ -161,10 +176,6 @@ class MissionServiceImplTest {
         Nature nature1 = natureRepository.findAll().get(0);
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
 
-        List<Mission> allMissions = missionRepository.findAll();
-        List<Mission> collaboratorsMissions = missionRepository.findByCollaboratorOrderByStartDateDesc(collaborator);
-        List<Mission> missionsToCome = missionRepository.findByCollaboratorAndEndDateAfterOrderByStartDate(collaborator, LocalDateTime.now());
-
         Mission m3 = new Mission();
         m3.setBonus(new BigDecimal(100));
         m3.setMissionTransport(Transport.Flight);
@@ -175,19 +186,19 @@ class MissionServiceImplTest {
         m3.setEndDate(LocalDateTime.now().plusDays(35));
         m3.setCollaborator(collaborator);
 
-        assertTrue(missionService.isThisMissionValid(m3));
+        assertTrue(missionService.isThisMissionValid(m3, true));
 
         m3.setStartDate(LocalDateTime.now().plusDays(5));
         m3.setEndDate(LocalDateTime.now().plusDays(7));
-        assertFalse(missionService.isThisMissionValid(m3));
+        assertFalse(missionService.isThisMissionValid(m3, true));
 
         m3.setMissionTransport(Transport.Car);
-        assertTrue(missionService.isThisMissionValid(m3));
+        assertTrue(missionService.isThisMissionValid(m3, true));
 
         m3.setEndDate(LocalDateTime.now().plusDays(11));
-        assertFalse(missionService.isThisMissionValid(m3));
+        assertFalse(missionService.isThisMissionValid(m3, true));
 
         m3.setEndDate(LocalDateTime.now());
-        assertFalse(missionService.isThisMissionValid(m3));
+        assertFalse(missionService.isThisMissionValid(m3, true));
     }
 }

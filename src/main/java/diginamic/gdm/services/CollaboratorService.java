@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
 
 /**
  * Interface to be implemented by a collaborator service class.
@@ -23,7 +24,7 @@ public interface CollaboratorService extends UserDetailsService{
 	/**
 	 * Saves a new {@link Collaborator} instance.
 	 * 
-	 * @param mission The new collaborator to be registered
+	 * @param collaborator The new collaborator to be registered
 	 */
 	void create(Collaborator collaborator);
 	
@@ -43,5 +44,24 @@ public interface CollaboratorService extends UserDetailsService{
 	 * @return The resulting collaborator with updated info
 	 */
 	Collaborator update(int id, Collaborator collaborator);
+
+
+	/**
+	 * Add a new mission to a collaborator
+	 *
+	 * @param mission
+	 * @param collaborator
+	 * @return
+	 */
+	boolean addMission(Mission mission, Collaborator collaborator);
+
+	/**
+	 * Reassign an existing mission to another collaborator
+	 *
+	 * @param mission
+	 * @param collaborator
+	 * @return
+	 */
+	Mission reassignMission(Mission mission, Collaborator collaborator);
 	
 }

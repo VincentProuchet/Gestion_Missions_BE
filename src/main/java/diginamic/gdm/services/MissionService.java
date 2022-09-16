@@ -22,11 +22,24 @@ public interface MissionService {
 	
 	/**
 	 * Saves a new {@link Mission} instance.
-	 * 
+	 *
 	 * @param mission The new mission to be registered
+	 * @return
 	 */
-	void create(Mission mission);
-	
+	default boolean create(Mission mission) {
+		return create(mission, false);
+	}
+
+
+	/**
+	 * Saves a new {@link Mission} instance.
+	 *
+	 * @param allowWE allow to work in WE
+	 * @param mission The new mission to be registered
+	 * @return true if the mission has been created, false otherwise
+	 */
+	boolean create(Mission mission, boolean allowWE);
+
 	/**
 	 * Gets a specific registered mission.
 	 * 
@@ -37,12 +50,26 @@ public interface MissionService {
 	
 	/**
 	 * Updates the data for a specific registered mission.
-	 * 
+	 * Does not allow to add or remove expenses, use the appropriate service for this
+	 *
+	 * @param allowWE allow to work in WE
+	 * @param id The id corresponding to the mission to update
+	 * @param mission The mission to update with modified info
+	 * @return The resulting mission with updated info, null if not possible (replace with exceptions)
+	 */
+	Mission update(int id, Mission mission, boolean allowWE);
+
+	/**
+	 * Updates the data for a specific registered mission.
+	 * Does not allow to add or remove expenses, use the appropriate service for this
+	 *
 	 * @param id The id corresponding to the mission to update
 	 * @param mission The mission to update with modified info
 	 * @return The resulting mission with updated info
 	 */
-	Mission update(int id, Mission mission);
+	default Mission update(int id, Mission mission) {
+		return update(id, mission, false);
+	}
 	
 	/**
 	 * Deletes a specific registered mission.
@@ -60,12 +87,23 @@ public interface MissionService {
 	void updateStatus(int id, Status status);
 
 	/**
-	 * Check the validity of the given data
+	 * Check the validity of the mission request
 	 *
 	 * @param mission
 	 * @return true if the mission is correctly formed
 	 */
-	boolean isThisMissionValid(Mission mission);
+	default boolean isThisMissionValid(Mission mission) {
+		return isThisMissionValid(mission, false);
+	}
+
+	/**
+	 * Check the validity of the mission request, allow a date in WE
+	 *
+	 * @param allowWE allow to work in WE
+	 * @param mission
+	 * @return true if the mission is correctly formed
+	 */
+	boolean isThisMissionValid(Mission mission, boolean allowWE);
 
 	/**
 	 * Check if the mission status is INIT or REJECTED
@@ -76,10 +114,18 @@ public interface MissionService {
 	boolean canBeUpdated(Mission mission);
 
 	/**
-	 * Check if the mission status is INIT or REJECTED
+	 * returns true, but check if the mission status is INIT or REJECTED
 	 * @param mission
 	 * @return
 	 */
 	boolean canBeDeleted(Mission mission);
+
+	/**
+	 * Check if the mission has been realized
+	 *
+	 * @param id
+	 * @return
+	 */
+	boolean isMissionDone(int id);
 
 }
