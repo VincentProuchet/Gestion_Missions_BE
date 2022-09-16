@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Collaborator implements UserDetails {
 	
 	/** serialVersionUID */
@@ -47,17 +47,24 @@ public class Collaborator implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	/** lastName */
+	
+	@Column(name ="last_name")
 	private String lastName;
 	/** firstName */
+	@Column(name ="first_name")
 	private String firstName;
 	/** email : identification mail address */
+	@Column(name ="email")
 	private String email;
 	
 	/** userName */
+	@Column(name = "user_name")
 	private String userName;
 	/** password : remember to add security */
+	@Column(name = "password")
 	private String password;
 	/** isActive */
+	@Column(name = "is_active")
 	private boolean isActive = true;
 	
 	/** authorities  not srtored because role already does that*/
@@ -66,6 +73,7 @@ public class Collaborator implements UserDetails {
 
 	
 	/** collaborator role */
+	@Column(name ="role")
 	private Role role;
 
 	/** missions : the missions this collaborator is in charge of */
@@ -74,7 +82,7 @@ public class Collaborator implements UserDetails {
 
 	/** manager : the manager of this collaborator */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "managerID")
+	@JoinColumn(name = "managerid")
 	private Collaborator manager = null;
 
 	public Collaborator(int id, String lastName,String firstName, String email, Role role ) {
