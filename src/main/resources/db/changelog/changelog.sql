@@ -21,8 +21,13 @@ alter table mission add constraint FKp1fl8aea4a7vp0pr45epiyqgr foreign key (natu
 alter table mission add constraint FKbico4il1r20n6dr3pf35xu3bh foreign key (start_cityid) references city (id);
 -- changeset liquibase:2
 INSERT INTO `city` (`id`, `name`) VALUES (1, 'Montpellier');
--- changeset liquibase:3     -- Vincent adding users
+-- changeset liquibase:3     -- Vincent-- adding users
 INSERT INTO `collaborator` (`email`, `first_name`, `is_active`, `last_name`, `password`, `role`, `user_name`, `managerid`) VALUES (  'taragazief@gmail.com'	,'vincent', 1, 'prouchet', '1111', 0, 'vin', null);
 INSERT INTO `collaborator` (`email`, `first_name`, `is_active`, `last_name`, `password`, `role`, `user_name`, `managerid`) VALUES (  'taragazief@gmail.com'	,'vincent', 1, 'prouchet', '1111', 0, 'vit', 1);
 INSERT INTO `collaborator` (`email`, `first_name`, `is_active`, `last_name`, `password`, `role`, `user_name`, `managerid`) VALUES (  'taragazief@gmail.com'	,'vincent', 1, 'prouchet', '1111', 0, 'vi', 1);
 INSERT INTO `collaborator` (`email`, `first_name`, `is_active`, `last_name`, `password`, `role`, `user_name`, `managerid`) VALUES (  'taragazief@gmail.com'	,'vincent', 1, 'prouchet', '1111', 0, 'vic', 1);
+-- changeset ligquibase:4     --Vincent -- adding expenseType values 
+INSERT INTO `expense_type` ( `name`) VALUES ( 'transport');
+INSERT INTO `expense_type` ( `name`) VALUES ( 'hébergement');
+INSERT INTO `expense_type` ( `name`) VALUES ( 'fourniture de bureau');
+INSERT INTO `expense_type` ( `name`) VALUES ( 'matériel informatique');
