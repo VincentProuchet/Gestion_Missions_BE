@@ -146,4 +146,10 @@ public class MissionServiceImpl implements MissionService {
         return true;
     }
 
+    @Override
+    public boolean isMissionDone(int id) {
+        Mission mission = missionRepository.findById(id).get();
+        return mission.getStatus() == Status.VALIDATED && mission.getEndDate().isBefore(LocalDateTime.now());
+    }
+
 }

@@ -20,12 +20,22 @@ public interface ExpenseService {
 	
 	/**
 	 * Saves a new {@link Expense} instance.
-	 * 
-	 * @param missionId The id corresponding to the mission to
-	 * which to add a new expense
+	 *
 	 * @param expense The new expense to be registered
+	 * @return the newly created expense, or null (to replace with exceptions)
 	 */
-	void create(int missionId, Expense expense);
+	Expense create(Expense expense);
+
+	/**
+	 * TODO
+	 *
+	 * @param missionId
+	 * @param expense
+	 * @return
+	 */
+	default Expense create(int missionId, Expense expense) {
+		return create(expense);
+	}
 	
 	/**
 	 * Gets a specific registered expense.
@@ -37,6 +47,7 @@ public interface ExpenseService {
 	
 	/**
 	 * Updates the data for a specific registered expense.
+	 * Does not allow to change the mission of the expense
 	 * 
 	 * @param id The id corresponding to the expense to update
 	 * @param expense The expense to update with modified info
@@ -50,5 +61,13 @@ public interface ExpenseService {
 	 * @param id The id corresponding to the expense to delete
 	 */
 	void delete(int id);
+
+	/**
+	 * Check the validity of an expense
+	 *
+	 * @param expense
+	 * @return
+	 */
+	boolean isExpenseValid(Expense expense);
 	
 }

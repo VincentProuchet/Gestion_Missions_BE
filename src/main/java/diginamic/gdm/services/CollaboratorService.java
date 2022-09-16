@@ -22,7 +22,7 @@ public interface CollaboratorService {
 	/**
 	 * Saves a new {@link Collaborator} instance.
 	 * 
-	 * @param mission The new collaborator to be registered
+	 * @param collaborator The new collaborator to be registered
 	 */
 	void create(Collaborator collaborator);
 	

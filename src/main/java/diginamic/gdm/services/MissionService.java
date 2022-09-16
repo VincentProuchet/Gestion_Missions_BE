@@ -50,6 +50,7 @@ public interface MissionService {
 	
 	/**
 	 * Updates the data for a specific registered mission.
+	 * Does not allow to add or remove expenses, use the appropriate service for this
 	 *
 	 * @param allowWE allow to work in WE
 	 * @param id The id corresponding to the mission to update
@@ -60,6 +61,7 @@ public interface MissionService {
 
 	/**
 	 * Updates the data for a specific registered mission.
+	 * Does not allow to add or remove expenses, use the appropriate service for this
 	 *
 	 * @param id The id corresponding to the mission to update
 	 * @param mission The mission to update with modified info
@@ -117,5 +119,13 @@ public interface MissionService {
 	 * @return
 	 */
 	boolean canBeDeleted(Mission mission);
+
+	/**
+	 * Check if the mission has been realized
+	 *
+	 * @param id
+	 * @return
+	 */
+	boolean isMissionDone(int id);
 
 }
