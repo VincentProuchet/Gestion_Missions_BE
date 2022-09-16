@@ -2,6 +2,8 @@ package diginamic.gdm.dao;
 
 import javax.persistence.Entity;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Entity which represents an Administrator
  * 
@@ -9,6 +11,8 @@ import javax.persistence.Entity;
  *
  */
 @Entity
+@AllArgsConstructor
 public class Administrator extends Collaborator {
+	
 
 }

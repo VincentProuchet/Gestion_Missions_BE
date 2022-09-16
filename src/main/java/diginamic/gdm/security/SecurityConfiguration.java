@@ -22,9 +22,12 @@ import diginamic.gdm.services.implementations.UserDetailsImpl;
 @Configuration
 public class SecurityConfiguration {
 
-	private static final String ADMIN = Administrator.class.getName();
-	private static final String MANAGER = Manager.class.getName();
-	private static final String COLLABORATOR = Collaborator.class.getName();
+	//private static final String ADMIN = Administrator.class.getName();
+	//private static final String MANAGER = Manager.class.getName();
+	//private static final String COLLABORATOR = Collaborator.class.getName();
+	private static final String ADMIN = "ADMIN";
+		private static final String MANAGER = "MAN";
+		private static final String COLLABORATOR = "COL";
 	//private static final String USER = UserDetailsImpl.class.getName();
 	@Autowired
 	private UserDetailsService userDetailsService;

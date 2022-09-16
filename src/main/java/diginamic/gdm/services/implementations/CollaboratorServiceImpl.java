@@ -1,7 +1,6 @@
 package diginamic.gdm.services.implementations;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,13 +56,27 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.err.println("fetching username");		
-		UserDetailsImpl details =
-				new  UserDetailsImpl(collaboratorRepository.findByUserName(username)
-						.orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "))
-				);
-		return details;
+		System.err.println("fetching username");
+		
+		
+		System.err.println("we have something");
+		Collaborator result =collaboratorRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "));
+		//ollaborator result = giveMEMockData();
+		System.err.println("shit looks good");		
+		return result;
 	
+	}
+	
+	/**
+	 * for dev Only MUST be deleted in productions
+	 * @return
+	 */
+	public Collaborator giveMEMockData() {
+		System.err.println("making mock data");
+		Collaborator coll = new Collaborator();
+		coll.giveMeMockData();
+			
+		return coll;
 	}
 
 }

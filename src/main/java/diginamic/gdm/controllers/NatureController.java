@@ -41,6 +41,7 @@ public class NatureController {
 	 */
 	@GetMapping
 	public List<NatureDTO> list() {
+		System.err.println("get Natures");
 		return natureService.list().stream().map(nature -> new NatureDTO(nature)).toList();
 	}
 	

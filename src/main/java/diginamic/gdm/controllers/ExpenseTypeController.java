@@ -41,6 +41,7 @@ public class ExpenseTypeController {
 	 */
 	@GetMapping
 	public List<ExpenseTypeDTO> list() {
+		System.err.println("get Expenses types");
 		return expenseTypeService.list().stream().map(expenseType -> new ExpenseTypeDTO(expenseType)).toList();
 	}
 	

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,26 +57,26 @@ public class Mission {
 	/**
 	 * nature : the nature of the mission, contains common details about the mission
 	 */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "natureID")
 	private Nature nature;
 
 	/** startCity : the city where the collaborator is initially */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "startCityID")
 	private City startCity;
 
 	/** startCity : the city where the mission holds place */
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "endCityID")
 	private City endCity;
 
 	/** expenses : business expenses for the mission */
-	@OneToMany(mappedBy = "mission")
+	@OneToMany(mappedBy = "mission", fetch = FetchType.LAZY)
 	private Set<Expense> expenses = new HashSet<Expense>();
 
 	/** collaborator : the collaborator this mission is due to */
-	@ManyToOne
+	@ManyToOne (fetch = FetchType.EAGER)
 	@JoinColumn(name = "collaboratorID")
 	private Collaborator collaborator;
 
