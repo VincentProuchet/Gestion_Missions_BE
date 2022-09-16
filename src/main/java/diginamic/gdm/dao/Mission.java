@@ -2,24 +2,19 @@ package diginamic.gdm.dao;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Entity which reprensents a Collaborator
@@ -72,11 +67,12 @@ public class Mission {
 	private City endCity;
 
 	/** expenses : business expenses for the mission */
-	@OneToMany(mappedBy = "mission", fetch = FetchType.LAZY)
-	private Set<Expense> expenses = new HashSet<Expense>();
+	@OneToMany(mappedBy = "mission")
+	@Fetch(FetchMode.JOIN)
+	private Set<Expense> expenses = new HashSet<>();
 
 	/** collaborator : the collaborator this mission is due to */
-	@ManyToOne (fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "collaboratorID")
 	private Collaborator collaborator;
 
