@@ -106,8 +106,8 @@ public interface NatureService {
 
 
     /**
-     * To be deleted, created or modified, this must be false
-     * If true, the nature must be render invalid instead
+     * For a nature to be deleted, created or modified, this must be false
+     * If true, the nature must be rendered inactive instead
      *
      * @param nature
      * @return true if a mission has this nature

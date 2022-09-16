@@ -3,6 +3,7 @@ package diginamic.gdm.services;
 import java.util.List;
 
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
 
 /**
  * Interface to be implemented by a collaborator service class.
@@ -41,5 +42,24 @@ public interface CollaboratorService {
 	 * @return The resulting collaborator with updated info
 	 */
 	Collaborator update(int id, Collaborator collaborator);
+
+
+	/**
+	 * Add a new mission to a collaborator
+	 *
+	 * @param mission
+	 * @param collaborator
+	 * @return
+	 */
+	boolean addMission(Mission mission, Collaborator collaborator);
+
+	/**
+	 * Reassign an existing mission to another collaborator
+	 *
+	 * @param mission
+	 * @param collaborator
+	 * @return
+	 */
+	Mission reassignMission(Mission mission, Collaborator collaborator);
 	
 }

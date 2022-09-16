@@ -2,6 +2,8 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.services.MissionService;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Collaborator;
@@ -22,6 +24,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	 * The {@link CollaboratorRepository} dependency.
 	 */
 	private CollaboratorRepository collaboratorRepository;
+
+	private MissionService missionService;
 	
 	@Override
 	public List<Collaborator> list() {
@@ -48,6 +52,18 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		current.setManager(collaborator.getManager());
 		this.collaboratorRepository.save(current);
 		return current;
+	}
+
+	@Override
+	public boolean addMission(Mission mission, Collaborator collaborator) {
+		mission.setCollaborator(collaborator);
+		return missionService.create(mission);
+	}
+
+	@Override
+	public Mission reassignMission(Mission mission, Collaborator collaborator) {
+		mission.setCollaborator(collaborator);
+		return missionService.update(mission.getId(), mission);
 	}
 
 }

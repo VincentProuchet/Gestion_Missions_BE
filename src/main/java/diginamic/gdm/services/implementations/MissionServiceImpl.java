@@ -35,17 +35,19 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public void create(Mission mission) {
+    public boolean create(Mission mission, boolean allowWE) {
 
         mission.setId(0);
 
-		if (!isThisMissionValid(mission)){
-			return;
-		}
+        if (!isThisMissionValid(mission, allowWE)) {
+            return false;
+        }
 
         mission.setStatus(Status.INIT);
 
-		this.missionRepository.save(mission);
+        this.missionRepository.save(mission);
+
+        return true;
     }
 
     @Override
@@ -54,16 +56,16 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public Mission update(int id, Mission mission) {
+    public Mission update(int id, Mission mission, boolean allowWE) {
 
         //throws exception
         if (id != mission.getId()) {
             return null;
         }
-        if (!isThisMissionValid(mission)){
+        if (!isThisMissionValid(mission, allowWE)) {
             return null;
         }
-        if (!canBeUpdated(mission)){
+        if (!canBeUpdated(mission)) {
             return null;
         }
 
@@ -75,9 +77,9 @@ public class MissionServiceImpl implements MissionService {
         current.setStartCity(mission.getStartCity());
         current.setEndCity(mission.getEndCity());
         current.setNature(mission.getNature());
-		current.setStatus(Status.INIT);
-        this.missionRepository.save(current);
-        return current;
+        current.setStatus(Status.INIT);
+        Mission updatedMission = this.missionRepository.save(current);
+        return updatedMission;
     }
 
     @Override
@@ -90,10 +92,11 @@ public class MissionServiceImpl implements MissionService {
     public void updateStatus(int id, Status status) {
         Mission mission = read(id);
         mission.setStatus(status);
+        missionRepository.save(mission);
     }
 
     @Override
-    public boolean isThisMissionValid(Mission mission) {
+    public boolean isThisMissionValid(Mission mission, boolean allowWE) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime startDate = mission.getStartDate();
         LocalDateTime endDate = mission.getEndDate();
@@ -106,7 +109,7 @@ public class MissionServiceImpl implements MissionService {
         // start and end not in WE
         DayOfWeek startDay = startDate.getDayOfWeek();
         DayOfWeek endDay = endDate.getDayOfWeek();
-        boolean areDatesNotInWE = startDay != DayOfWeek.SATURDAY && startDay != DayOfWeek.SUNDAY && endDay != DayOfWeek.SATURDAY && endDay != DayOfWeek.SUNDAY;
+        boolean areDatesNotInWE = allowWE || (startDay != DayOfWeek.SATURDAY && startDay != DayOfWeek.SUNDAY && endDay != DayOfWeek.SATURDAY && endDay != DayOfWeek.SUNDAY);
 
         // nature, start and end cities are mandatory
         boolean requiredDataIsPresent = mission.getNature() != null && mission.getStartCity() != null && mission.getEndCity() != null;

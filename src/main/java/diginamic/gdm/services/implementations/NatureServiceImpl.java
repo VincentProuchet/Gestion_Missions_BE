@@ -134,9 +134,10 @@ public class NatureServiceImpl implements NatureService {
 
     @Override
     public boolean isAValidNature(Nature nature) {
-        LocalDateTime endDate = nature.getEndOfValidity();
-        LocalDateTime startDate = nature.getDateOfValidity();
-        boolean areDatesValid = ((startDate != null) && ((endDate == null) || (endDate.compareTo(startDate) > 0)));
+        LocalDateTime endDateOfValidity = nature.getEndOfValidity();
+        LocalDateTime startDateOfValidity = nature.getDateOfValidity();
+
+        boolean areDatesValid = ((startDateOfValidity != null) && ((endDateOfValidity == null) || (endDateOfValidity.compareTo(startDateOfValidity) > 0)));
         boolean requiredDataIsPresent = nature.getDescription() != null && nature.getDescription() != "";
         return areDatesValid && requiredDataIsPresent;
     }
