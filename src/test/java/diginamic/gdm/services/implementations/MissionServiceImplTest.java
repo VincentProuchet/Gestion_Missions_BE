@@ -1,6 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import diginamic.gdm.dao.*;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.*;
 import diginamic.gdm.services.MissionService;
 import org.junit.jupiter.api.AfterEach;
@@ -105,7 +106,7 @@ class MissionServiceImplTest {
     }
 
     @Test
-    void create() {
+    void create() throws BadRequestException {
 
         City city1 = cityRepository.findAll().get(0);
         Nature nature1 = natureRepository.findAll().get(0);
@@ -122,7 +123,7 @@ class MissionServiceImplTest {
         m3.setCollaborator(collaborator);
 
 
-        missionService.create(m3, true);
+        assertThrows(BadRequestException.class, () -> missionService.create(m3, true));
         assertEquals(missionRepository.findByCollaboratorOrderByStartDateDesc(collaborator).size(), 2);
 
         m3.setStartDate(LocalDateTime.now().plusDays(29));
@@ -133,40 +134,45 @@ class MissionServiceImplTest {
 
     @Test
     void delete() {
-        missionRepository.findAll().forEach(mission -> missionService.delete(mission.getId()));
+        missionRepository.findAll().forEach(mission -> {
+            try {
+                missionService.delete(mission.getId());
+            } catch (BadRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         assertEquals(missionRepository.findAll().size(), 0);
     }
 
     @Test
-    void update() {
+    void update() throws BadRequestException {
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
         Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
         m1.setMissionTransport(Transport.Carshare);
-        missionService.update(m1.getId(), m1, true);
+        assertThrows(BadRequestException.class, () -> missionService.update(m1.getId(), m1, true));
         assertNotSame(missionRepository.findById(m1.getId()).get().getMissionTransport(), Transport.Carshare);
 
         Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
         LocalDateTime oldEndDateM2 = m2.getEndDate();
         LocalDateTime newEndDateM2 = LocalDateTime.now().plusDays(22);
         m2.setEndDate(newEndDateM2);
-        Mission updatedMission = missionService.update(m2.getId(), m2, true);
+        missionService.update(m2.getId(), m2, true);
         assertFalse(missionRepository.findById(m2.getId()).get().getEndDate().isEqual(oldEndDateM2));
 
         LocalDateTime invalidDate = LocalDateTime.now().plusDays(14);
         m2.setEndDate(invalidDate);
-        missionService.update(m2.getId(), m2, true);
+        assertThrows(BadRequestException.class, () -> missionService.update(m2.getId(), m2, true));
         assertFalse(missionRepository.findById(m2.getId()).get().getEndDate().isEqual(invalidDate));
 
     }
     @Test
-    void updateStatus() {
+    void updateStatus() throws BadRequestException {
         List<Mission> allMissions = missionRepository.findAll();
         Mission m1 = allMissions.get(0);
         assertNotSame(m1.getStatus(), Status.REJECTED);
         missionService.updateStatus(m1.getId(), Status.REJECTED);
-        assertNotSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.REJECTED);
-
+        assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.REJECTED);
     }
 
     @Test
@@ -204,7 +210,7 @@ class MissionServiceImplTest {
 
     @Test
     @Transactional
-    void missionsToValidate() {
+    void missionsToValidate() throws BadRequestException {
 
 
         Collaborator collaborator1 = collaboratorRepository.findAll().get(0);

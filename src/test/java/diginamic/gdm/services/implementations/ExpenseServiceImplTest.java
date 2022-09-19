@@ -1,6 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import diginamic.gdm.dao.*;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.*;
 import diginamic.gdm.services.ExpenseService;
 import diginamic.gdm.services.ExpenseTypeService;
@@ -163,7 +164,7 @@ class ExpenseServiceImplTest {
     }
 
     @Test
-    void create() {
+    void create() throws BadRequestException {
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
         Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
         Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
@@ -176,7 +177,7 @@ class ExpenseServiceImplTest {
         invalidExpense.setMission(m2);
 
         assertEquals(expenseRepository.findAll().size(), 2);
-        expenseService.create(invalidExpense);
+        assertThrows(BadRequestException.class, () -> expenseService.create(invalidExpense));
         assertEquals(expenseRepository.findAll().size(), 2);
 
         Expense invalidExpense2 = new Expense();
@@ -187,7 +188,7 @@ class ExpenseServiceImplTest {
         invalidExpense2.setMission(m1);
 
         assertEquals(expenseRepository.findAll().size(), 2);
-        expenseService.create(invalidExpense2);
+        assertThrows(BadRequestException.class, () -> expenseService.create(invalidExpense2));
         assertEquals(expenseRepository.findAll().size(), 2);
 
         Expense validExpense = new Expense();
@@ -205,7 +206,7 @@ class ExpenseServiceImplTest {
     }
 
     @Test
-    void update() {
+    void update() throws BadRequestException {
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
         Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
         Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
@@ -217,12 +218,13 @@ class ExpenseServiceImplTest {
         LocalDateTime invalidDate = expense1.getMission().getEndDate().plusDays(2);
         LocalDateTime oldDate = expense1.getDate();
         expense1.setDate(invalidDate);
-        expenseService.update(expense1.getId(), expense1);
+
+        assertThrows(BadRequestException.class, () -> expenseService.update(expense1.getId(), expense1));
         assertTrue(expenseRepository.findById(expense1.getId()).get().getDate().isEqual(oldDate));
         expense1.setDate(oldDate);
 
         expense1.setMission(m2);
-        expenseService.update(expense1.getId(), expense1);
+        assertThrows(BadRequestException.class, () -> expenseService.update(expense1.getId(), expense1));
         assertTrue(expenseRepository.findById(expense1.getId()).get().getMission().getId() != m2.getId());
         expense1.setMission(m1);
 
@@ -235,7 +237,13 @@ class ExpenseServiceImplTest {
 
     @Test
     void delete() {
-        expenseRepository.findAll().stream().forEach(expense -> expenseService.delete(expense.getId()));
+        expenseRepository.findAll().stream().forEach(expense -> {
+            try {
+                expenseService.delete(expense.getId());
+            } catch (BadRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         assertEquals(expenseRepository.findAll().size(), 0);
     }

@@ -2,6 +2,7 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,7 +53,7 @@ public class MissionController {
 	 * @return A list of all missions
 	 */
 	@GetMapping(path = "manager/{idManager}")
-	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) {
+	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) throws BadRequestException {
 		// get the identity of the manager
 		return missionService.missionsToValidate(idManager).stream().map(mission -> new MissionDTO(mission)).toList();
 	}
@@ -64,7 +65,7 @@ public class MissionController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody MissionDTO mission) {
+	public void create(@RequestBody MissionDTO mission) throws BadRequestException {
 		// make this creation is asked by the collaborator it is assigned to
 		missionService.create(mission.instantiate());
 	}
@@ -76,7 +77,7 @@ public class MissionController {
 	 * @return The registered mission corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public MissionDTO read(@PathVariable int id) {
+	public MissionDTO read(@PathVariable int id) throws BadRequestException {
 		// only a collaborator or his manager can ask for this
 		return new MissionDTO(missionService.read(id));
 	}
@@ -89,7 +90,7 @@ public class MissionController {
 	 * @return The resulting mission with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) {
+	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) throws BadRequestException {
 		//
 		return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
 	}
@@ -100,7 +101,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to delete
 	 */
 	@DeleteMapping(path = "{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws BadRequestException {
 		missionService.delete(id);
 	}
 	
@@ -110,7 +111,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to validate
 	 */
 	@PutMapping(path = "{id}/valider")
-	public void validate(@PathVariable int id) {
+	public void validate(@PathVariable int id) throws BadRequestException {
 		missionService.updateStatus(id, Status.VALIDATED);
 	}
 	
@@ -120,7 +121,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to validate
 	 */
 	@PutMapping(path = "{id}/rejeter")
-	public void reject(@PathVariable int id) {
+	public void reject(@PathVariable int id) throws BadRequestException {
 		missionService.updateStatus(id, Status.REJECTED);
 	}
 	

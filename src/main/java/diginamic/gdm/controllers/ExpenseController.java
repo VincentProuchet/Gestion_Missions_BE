@@ -2,6 +2,7 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +52,7 @@ public class ExpenseController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody ExpenseDTO expense) {
+	public void create(@RequestBody ExpenseDTO expense) throws BadRequestException {
 		expenseService.create(expense.getIdMission(), expense.instantiate());
 	}
 	
@@ -62,7 +63,7 @@ public class ExpenseController {
 	 * @return The registered expense corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public ExpenseDTO read(@PathVariable int id) {
+	public ExpenseDTO read(@PathVariable int id) throws BadRequestException {
 		return new ExpenseDTO(expenseService.read(id));
 	}
 	
@@ -74,7 +75,7 @@ public class ExpenseController {
 	 * @return The resulting expense with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ExpenseDTO update(@PathVariable int id, @RequestBody ExpenseDTO expenseDTO) {
+	public ExpenseDTO update(@PathVariable int id, @RequestBody ExpenseDTO expenseDTO) throws BadRequestException {
 		return new ExpenseDTO(expenseService.update(id, expenseDTO.instantiate()));
 	}
 	
@@ -84,7 +85,7 @@ public class ExpenseController {
 	 * @param id The id corresponding to the expense to delete
 	 */
 	@DeleteMapping(path = "{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws BadRequestException {
 		expenseService.delete(id);
 	}
 	

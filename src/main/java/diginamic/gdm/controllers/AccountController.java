@@ -44,7 +44,7 @@ public class AccountController {
 	}
 
 	/**
-	 * take crédential search database and valid or not the connection by a
+	 * take credential search database and valid or not the connection by a
 	 * connection grant token
 	 * 
 	 * @param login

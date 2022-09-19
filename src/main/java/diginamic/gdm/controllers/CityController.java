@@ -2,6 +2,7 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,7 +63,7 @@ public class CityController {
 	 * @return The registered city corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public CityDTO read(@PathVariable int id) {
+	public CityDTO read(@PathVariable int id) throws BadRequestException {
 		return new CityDTO(cityService.read(id));
 	}
 	
@@ -74,7 +75,7 @@ public class CityController {
 	 * @return The resulting city with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) {
+	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) throws BadRequestException {
 		return new CityDTO(cityService.update(id, cityDTO.instantiate()));
 	}
 	
@@ -84,7 +85,7 @@ public class CityController {
 	 * @param id The id of the city to delete
 	 */
 	@DeleteMapping(path = "{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws BadRequestException {
 		cityService.delete(id);
 	}
 	

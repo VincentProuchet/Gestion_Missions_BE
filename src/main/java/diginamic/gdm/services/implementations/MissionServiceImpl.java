@@ -4,6 +4,8 @@ import diginamic.gdm.dao.Manager;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dao.Transport;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.ManagerRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.services.MissionService;
@@ -16,6 +18,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation for {@link MissionService}.
@@ -41,12 +44,12 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public boolean create(Mission mission, boolean allowWE) {
+    public boolean create(Mission mission, boolean allowWE) throws BadRequestException {
 
         mission.setId(0);
 
         if (!isThisMissionValid(mission, allowWE)) {
-            return false;
+            throw new BadRequestException("This mission does not have all the required data, or the dates are not allowed (WE or collaborator already in mission) ", ErrorCodes.missionInvalid);
         }
 
         mission.setStatus(Status.INIT);
@@ -57,22 +60,22 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public Mission read(int id) {
-        return this.missionRepository.findById(id).orElseThrow();
+    public Mission read(int id) throws BadRequestException {
+        return this.missionRepository.findById(id).orElseThrow(() -> new BadRequestException("Mission id not found", ErrorCodes.missionNotFound));
     }
 
     @Override
-    public Mission update(int id, Mission mission, boolean allowWE) {
+    public Mission update(int id, Mission mission, boolean allowWE) throws BadRequestException {
 
         //throws exception
         if (id != mission.getId()) {
-            return null;
+            throw new BadRequestException("The id is inconsistent with the given mission", ErrorCodes.idInconsistent);
         }
         if (!isThisMissionValid(mission, allowWE)) {
-            return null;
+            throw new BadRequestException("This mission does not have all the required data, or the dates are not allowed (WE or collaborator already in mission) ", ErrorCodes.missionInvalid);
         }
         if (!canBeUpdated(mission)) {
-            return null;
+            throw new BadRequestException("This mission can't be updated : make sure its status is INIT or REJECTED, or consider create it if it does not exist", ErrorCodes.missionInvalid);
         }
 
         Mission current = read(id);
@@ -89,13 +92,13 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws BadRequestException {
         Mission mission = read(id);
         this.missionRepository.delete(mission);
     }
 
     @Override
-    public void updateStatus(int id, Status status) {
+    public void updateStatus(int id, Status status) throws BadRequestException {
         Mission mission = read(id);
         mission.setStatus(status);
         missionRepository.save(mission);
@@ -142,7 +145,7 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public boolean canBeUpdated(Mission mission) {
         Status status = mission.getStatus();
-        return status == Status.INIT || status == Status.REJECTED;
+        return (status == Status.INIT || status == Status.REJECTED) && missionRepository.findById(mission.getId()).isPresent();
     }
 
     @Override
@@ -154,13 +157,17 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public boolean isMissionDone(int id) {
-        Mission mission = missionRepository.findById(id).get();
+        Optional<Mission> optionalMission = missionRepository.findById(id);
+        if (optionalMission.isEmpty()){
+            return false;
+        }
+        Mission mission = optionalMission.get();
         return mission.getStatus() == Status.VALIDATED && mission.getEndDate().isBefore(LocalDateTime.now());
     }
 
     @Override
-    public List<Mission> missionsToValidate(int idManager) {
-        Manager manager = managerRepository.findById(idManager).orElseThrow();
+    public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
+        Manager manager = managerRepository.findById(idManager).orElseThrow(()->new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
         List<Mission> missionsToValidate = new ArrayList<>();
         manager.getTeam().stream().forEach(collaborator -> {
             missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION));

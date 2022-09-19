@@ -2,6 +2,8 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.City;
@@ -37,12 +39,12 @@ public class CityServiceImpl implements CityService {
 	}
 	
 	@Override
-	public City read(int id) {
-		return this.cityRepository.findById(id).orElseThrow();
+	public City read(int id) throws BadRequestException {
+		return this.cityRepository.findById(id).orElseThrow(() -> new BadRequestException("City not found", ErrorCodes.cityNotFound));
 	}
 
 	@Override
-	public City update(int id, City city) {
+	public City update(int id, City city) throws BadRequestException {
 		City current = read(id);
 		current.setName(city.getName());
 		this.cityRepository.save(current);
@@ -50,7 +52,7 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws BadRequestException {
 		City city = read(id);
 		this.cityRepository.delete(city);
 	}

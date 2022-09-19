@@ -3,6 +3,8 @@ package diginamic.gdm.services.implementations;
 import java.util.List;
 
 import diginamic.gdm.dao.Mission;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.services.MissionService;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	}
 	
 	@Override
-	public Collaborator read(int id) {
-		return this.collaboratorRepository.findById(id).orElseThrow();
+	public Collaborator read(int id) throws BadRequestException {
+		return this.collaboratorRepository.findById(id).orElseThrow(() -> new BadRequestException("Collaborator not found", ErrorCodes.collaboratorNotFound));
 	}
 
 	@Override
@@ -58,13 +60,13 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	}
 
 	@Override
-	public boolean addMission(Mission mission, Collaborator collaborator) {
+	public boolean addMission(Mission mission, Collaborator collaborator) throws BadRequestException {
 		mission.setCollaborator(collaborator);
 		return missionService.create(mission);
 	}
 
 	@Override
-	public Mission reassignMission(Mission mission, Collaborator collaborator) {
+	public Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException {
 		mission.setCollaborator(collaborator);
 		return missionService.update(mission.getId(), mission);
 	}

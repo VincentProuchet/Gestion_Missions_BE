@@ -3,6 +3,7 @@ package diginamic.gdm.services.implementations;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
 import diginamic.gdm.dao.Transport;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -159,7 +160,7 @@ class NatureServiceImplTest {
 
 
     @Test
-    void delete() {
+    void delete() throws BadRequestException {
         int idNature1 = natureRepository.findByDescription("nature1Name").get(0).getId();
         int idNature2 = natureRepository.findByDescription("nature2Name").get(0).getId();
 
@@ -171,6 +172,7 @@ class NatureServiceImplTest {
         assertNull(optionalNature1Before.get().getEndOfValidity());
         assertTrue(natureService.isThisNatureInUse(optionalNature1Before.get()));
         natureService.delete(idNature1);
+        assertThrows(BadRequestException.class, () -> natureService.delete(idNature1));
 
         Optional<Nature> optionalNature1 = natureRepository.findById(idNature1);
         assertTrue(optionalNature1.isPresent());
@@ -183,7 +185,7 @@ class NatureServiceImplTest {
         assertFalse(natureService.isThisNatureInUse(natureRepository.findByDescription("nature2Name").get(0)));
     }
     @Test
-    void create() {
+    void create() throws BadRequestException {
 
         Nature nature3 = new Nature();
         nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
@@ -201,7 +203,7 @@ class NatureServiceImplTest {
         nature1Bis.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
         nature1Bis.setCharged(false);
 
-        natureService.create(nature1Bis);
+        assertThrows(BadRequestException.class, () -> natureService.create(nature1Bis));
         assertTrue(natureRepository.findByDescription("nature1Name").get(0).isCharged());
 
 
@@ -210,7 +212,7 @@ class NatureServiceImplTest {
         invalidNature1.setEndOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
         nature1Bis.setDescription("invalidNature1name");
 
-        natureService.create(invalidNature1);
+        assertThrows(BadRequestException.class, () -> natureService.create(invalidNature1));
         assertEquals(natureRepository.findByDescription("invalidNature1name").size(), 0);
 
     }
@@ -223,7 +225,7 @@ class NatureServiceImplTest {
     }
 
     @Test
-    void update() {
+    void update() throws BadRequestException {
         Nature nature3 = new Nature();
         nature3.setId(3);
         nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
@@ -231,7 +233,7 @@ class NatureServiceImplTest {
         nature3.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
         nature3.setCharged(false);
 
-        natureService.update(nature3.getId(), nature3);
+        assertThrows(BadRequestException.class, () -> natureService.update(nature3.getId(), nature3));
         assertFalse(natureRepository.findById(nature3.getId()).isPresent());
         assertEquals(natureRepository.findByDescription("nature3name").size(), 0);
 
@@ -244,7 +246,7 @@ class NatureServiceImplTest {
         int idNature2 = natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature2.getDescription()).get(0).getId();
         nature2.setId(idNature2);
 
-        natureService.update(1000, nature2);
+        assertThrows(BadRequestException.class, () -> natureService.update(1000, nature2));
         assertFalse(natureRepository.findById(1000).isPresent());
 
 

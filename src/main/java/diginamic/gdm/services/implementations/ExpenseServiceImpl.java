@@ -3,9 +3,12 @@ package diginamic.gdm.services.implementations;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.MissionRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,10 +49,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense create(Expense expense) {
+	public Expense create(Expense expense) throws BadRequestException {
 
 		if (!isExpenseValid(expense)){
-			return null;
+			throw new BadRequestException("Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB", ErrorCodes.expenseInvalid);
 		}
 
 		Expense actualExpense = this.expenseRepository.save(expense);
@@ -57,20 +60,20 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 	
 	@Override
-	public Expense read(int id) {
-		return this.expenseRepository.findById(id).orElseThrow();
+	public Expense read(int id) throws BadRequestException {
+		return this.expenseRepository.findById(id).orElseThrow(()->new BadRequestException("Expense not found", ErrorCodes.expenseNotFound));
 	}
 
 	@Override
-	public Expense update(int id, Expense expense) {
+	public Expense update(int id, Expense expense) throws BadRequestException {
 		Expense current = read(expense.getId());
 
-		if (current == null || id != expense.getId()){
-			return null;
+		if (id != expense.getId()){
+			throw new BadRequestException("Expense id inconsistent", ErrorCodes.idInconsistent);
 		}
 
 		if (!isExpenseValid(expense)) {
-			return null;
+			throw new BadRequestException("Expense invalid : ", ErrorCodes.expenseInvalid);
 		}
 
 		if ( expense.getMission().getId() != current.getMission().getId()
@@ -88,7 +91,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws BadRequestException {
 		Expense expense = read(id);
 		Mission mission = expense.getMission();
 		mission.setExpenses(mission.getExpenses().stream().filter(expense1 -> expense1.getId() != id).collect(Collectors.toSet()));
@@ -104,7 +107,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (mission == null) {
 			return false;
 		}
-		Mission actualMission = missionService.read(mission.getId());
+		Optional<Mission> actualMissionOptional = missionRepository.findById(mission.getId());
+		if (actualMissionOptional.isEmpty()){
+			return false;
+		}
+		Mission actualMission = actualMissionOptional.get();
 
 		boolean existsAndIsValid = actualMission != null && missionService.isMissionDone(actualMission.getId());
 

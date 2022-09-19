@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.RandomStringUtils;
 
+import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +33,7 @@ public class SecurityToken {
 	@Column(name = "grant_token")
 	private String grant;
 	@Column(name = "auth_token")
-	private String authentification;
+	private String authentication;
 	@Column(name = "refresh_token")
 	private String refresh;
 	/** creation date for the security Token */
@@ -54,7 +54,7 @@ public class SecurityToken {
 		this.grant = RandomStringUtils.random(6, false, true);
 		this.issued = LocalDateTime.now();
 		this.refresh = null;
-		this.authentification = null;
+		this.authentication = null;
 	}
 	/** set token value 
 	 * authentication 
@@ -67,7 +67,7 @@ public class SecurityToken {
 		this.grant = null;
 		this.issued = LocalDateTime.now();
 		this.refresh = RandomStringUtils.random(6, false, true);
-		this.authentification = RandomStringUtils.random(6, false, true);
+		this.authentication = RandomStringUtils.random(6, false, true);
 	}
 	/**
 	 * a logout doens't mean destruction of a toke
@@ -81,6 +81,6 @@ public class SecurityToken {
 		this.grant = null;
 		this.issued = LocalDateTime.now();
 		this.refresh = null;
-		this.authentification = null;
+		this.authentication = null;
 	}
 }

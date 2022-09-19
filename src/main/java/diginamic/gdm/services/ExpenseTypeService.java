@@ -3,6 +3,7 @@ package diginamic.gdm.services;
 import java.util.List;
 
 import diginamic.gdm.dao.ExpenseType;
+import diginamic.gdm.exceptions.BadRequestException;
 
 /**
  * Interface to be implemented by an expense type service class
@@ -31,7 +32,7 @@ public interface ExpenseTypeService {
 	 * @param id The id corresponding to the expense type to get
 	 * @return The registered expense type corresponding to the given id
 	 */
-	ExpenseType read(int id);
+	ExpenseType read(int id) throws BadRequestException;
 	
 	/**
 	 * Updates the data for a specific registered expense type.
@@ -40,13 +41,13 @@ public interface ExpenseTypeService {
 	 * @param expenseType The expense type to update with modified info
 	 * @return The resulting expense type with updated info
 	 */
-	ExpenseType update(int id, ExpenseType expenseType);
+	ExpenseType update(int id, ExpenseType expenseType) throws BadRequestException;
 	
 	/**
 	 * Deletes a specific registered expense type.
 	 * 
 	 * @param id The id of the expense type to delete
 	 */
-	void delete(int id);
+	void delete(int id) throws BadRequestException;
 	
 }

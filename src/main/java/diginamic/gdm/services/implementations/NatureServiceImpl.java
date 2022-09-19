@@ -1,6 +1,8 @@
 package diginamic.gdm.services.implementations;
 
 import diginamic.gdm.dao.Nature;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.MissionService;
@@ -36,29 +38,33 @@ public class NatureServiceImpl implements NatureService {
     }
 
     @Override
-    public void create(Nature nature) {
-        if (!isAValidNature(nature) || !canBeAdded(nature)) {
-            //should throw an exception
-            return;
+    public void create(Nature nature) throws BadRequestException {
+        if (!canBeAdded(nature)) {
+            throw new BadRequestException("A nature with this name already exists", ErrorCodes.natureInvalid);
+        }
+        if (!isAValidNature(nature)) {
+            throw new BadRequestException("This nature is invalid : check the coherence of dates and the description is present", ErrorCodes.natureInvalid);
         }
 
         this.natureRepository.save(nature);
     }
 
     @Override
-    public Nature read(int id) {
-        return this.natureRepository.findById(id).orElseThrow();
+    public Nature read(int id) throws BadRequestException {
+        return this.natureRepository.findById(id).orElseThrow(()->new BadRequestException("Nature not found", ErrorCodes.natureNotFound));
     }
 
     @Override
-    public Nature update(int id, Nature nature) {
+    public Nature update(int id, Nature nature) throws BadRequestException {
 
-        // validity checks, needs to throw an exception
+        if (id != nature.getId()) {
+            throw new BadRequestException("The id is inconsistent with the given nature", ErrorCodes.idInconsistent);
+        }
         if (!isAValidNature(nature)) {
-            return null;
+            throw new BadRequestException("This nature is invalid : check the coherence of dates and the description is present", ErrorCodes.natureInvalid);
         }
         if (!canBeUpdated(id, nature)) {
-            return null;
+            throw new BadRequestException("This nature can't be updated : consider create it instead, or get the latest version of it before updating", ErrorCodes.natureInvalid);
         }
 
         Nature registeredNature = natureRepository.findById(id).get();
@@ -92,7 +98,7 @@ public class NatureServiceImpl implements NatureService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws BadRequestException {
         // if not used
         // delete from DB
         // return
@@ -114,8 +120,7 @@ public class NatureServiceImpl implements NatureService {
             natureRepository.save(nature);
 
         } else {
-            //throws an exception
-            return;
+            throw new BadRequestException("This nature is in use and is already inactive, it can't be deleted", ErrorCodes.natureCantBeDeleted);
         }
     }
 
