@@ -42,7 +42,19 @@ public class MissionController {
 	 */
 	@GetMapping
 	public List<MissionDTO> list() {
+		// get the identity of the collaborator, send only their missions
 		return missionService.list().stream().map(mission -> new MissionDTO(mission)).toList();
+	}
+
+	/**
+	 * Gets the list of missions waiting for validation, only for a manager, and only the missions of his team members
+	 *
+	 * @return A list of all missions
+	 */
+	@GetMapping(path = "manager/{idManager}")
+	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) {
+		// get the identity of the manager
+		return missionService.missionsToValidate(idManager).stream().map(mission -> new MissionDTO(mission)).toList();
 	}
 	
 	/**
@@ -53,6 +65,7 @@ public class MissionController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void create(@RequestBody MissionDTO mission) {
+		// make this creation is asked by the collaborator it is assigned to
 		missionService.create(mission.instantiate());
 	}
 	
@@ -64,6 +77,7 @@ public class MissionController {
 	 */
 	@GetMapping(path = "{id}")
 	public MissionDTO read(@PathVariable int id) {
+		// only a collaborator or his manager can ask for this
 		return new MissionDTO(missionService.read(id));
 	}
 	
@@ -76,6 +90,7 @@ public class MissionController {
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) {
+		//
 		return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
 	}
 	

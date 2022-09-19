@@ -1,10 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import diginamic.gdm.dao.*;
-import diginamic.gdm.repository.CityRepository;
-import diginamic.gdm.repository.CollaboratorRepository;
-import diginamic.gdm.repository.MissionRepository;
-import diginamic.gdm.repository.NatureRepository;
+import diginamic.gdm.repository.*;
 import diginamic.gdm.services.MissionService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,11 +36,13 @@ class MissionServiceImplTest {
 
     @Autowired
     private CollaboratorRepository collaboratorRepository;
+    @Autowired
+    private ManagerRepository managerRepository;
 
     @BeforeEach
     void init() {
         Nature nature1 = new Nature();
-        nature1.setDateOfValidity(LocalDateTime.of(2000, Month.JANUARY, 24, 01, 01, 01));
+        nature1.setDateOfValidity(LocalDateTime.of(2000, Month.JANUARY, 24, 1, 1, 1));
         nature1.setDescription("nature1Name");
         nature1.setEndOfValidity(null);
         nature1.setCharged(true);
@@ -131,9 +133,7 @@ class MissionServiceImplTest {
 
     @Test
     void delete() {
-        missionRepository.findAll().stream().forEach(mission -> {
-            missionService.delete(mission.getId());
-        });
+        missionRepository.findAll().forEach(mission -> missionService.delete(mission.getId()));
 
         assertEquals(missionRepository.findAll().size(), 0);
     }
@@ -144,7 +144,7 @@ class MissionServiceImplTest {
         Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
         m1.setMissionTransport(Transport.Carshare);
         missionService.update(m1.getId(), m1, true);
-        assertFalse(missionRepository.findById(m1.getId()).get().getMissionTransport() == Transport.Carshare);
+        assertNotSame(missionRepository.findById(m1.getId()).get().getMissionTransport(), Transport.Carshare);
 
         Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
         LocalDateTime oldEndDateM2 = m2.getEndDate();
@@ -163,9 +163,9 @@ class MissionServiceImplTest {
     void updateStatus() {
         List<Mission> allMissions = missionRepository.findAll();
         Mission m1 = allMissions.get(0);
-        assertTrue(m1.getStatus() != Status.REJECTED);
+        assertNotSame(m1.getStatus(), Status.REJECTED);
         missionService.updateStatus(m1.getId(), Status.REJECTED);
-        assertTrue(missionRepository.findById(m1.getId()).get().getStatus() == Status.REJECTED);
+        assertNotSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.REJECTED);
 
     }
 
@@ -200,5 +200,45 @@ class MissionServiceImplTest {
 
         m3.setEndDate(LocalDateTime.now());
         assertFalse(missionService.isThisMissionValid(m3, true));
+    }
+
+    @Test
+    @Transactional
+    void missionsToValidate() {
+
+
+        Collaborator collaborator1 = collaboratorRepository.findAll().get(0);
+        Collaborator collaborator2 = new Collaborator();
+        Manager manager = new Manager();
+        collaborator1.setManager(manager);
+        collaborator2.setManager(manager);
+        manager.setTeam(Stream.of(collaborator1, collaborator2).collect(Collectors.toSet()));
+        manager = managerRepository.save(manager);
+        collaborator1 = collaboratorRepository.save(collaborator1);
+        collaborator2 = collaboratorRepository.save(collaborator2);
+
+        assertEquals(collaboratorRepository.findAll().size(), 3);
+        assertEquals(managerRepository.findAll().get(0).getTeam().size(), 2);
+
+
+        Mission m1 = new Mission();
+        m1.setBonus(new BigDecimal(36));
+        m1.setMissionTransport(Transport.Car);
+        m1.setCollaborator(collaborator1);
+        m1.setStatus(Status.WAITING_VALIDATION);
+        missionRepository.save(m1);
+
+        Mission m2 = new Mission();
+        m2.setBonus(new BigDecimal(100));
+        m2.setMissionTransport(Transport.Flight);
+        m2.setCollaborator(collaborator2);
+        m2.setStatus(Status.WAITING_VALIDATION);
+        missionRepository.save(m2);
+
+        assertEquals(missionRepository.findAll().size(), 4);
+
+        List<Mission> missionsToValidate = missionService.missionsToValidate(manager.getId());
+        assertEquals(missionsToValidate.size(), 2);
+        assertTrue(missionsToValidate.stream().allMatch(mission -> mission.getStatus() == Status.WAITING_VALIDATION));
     }
 }

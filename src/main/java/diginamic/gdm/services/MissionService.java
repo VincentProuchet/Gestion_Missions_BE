@@ -128,4 +128,11 @@ public interface MissionService {
 	 */
 	boolean isMissionDone(int id);
 
+	/**
+	 * Get the list of missions to validate of the team of a given manager
+	 * @param idManager
+	 * @return
+	 */
+	List<Mission> missionsToValidate(int idManager);
+
 }

@@ -1,8 +1,10 @@
 package diginamic.gdm.services.implementations;
 
+import diginamic.gdm.dao.Manager;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dao.Transport;
+import diginamic.gdm.repository.ManagerRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +33,7 @@ public class MissionServiceImpl implements MissionService {
     private MissionRepository missionRepository;
 
     private NatureService natureService;
+    private ManagerRepository managerRepository;
 
     @Override
     public List<Mission> list() {
@@ -152,6 +156,16 @@ public class MissionServiceImpl implements MissionService {
     public boolean isMissionDone(int id) {
         Mission mission = missionRepository.findById(id).get();
         return mission.getStatus() == Status.VALIDATED && mission.getEndDate().isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public List<Mission> missionsToValidate(int idManager) {
+        Manager manager = managerRepository.findById(idManager).orElseThrow();
+        List<Mission> missionsToValidate = new ArrayList<>();
+        manager.getTeam().stream().forEach(collaborator -> {
+            missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION));
+        });
+        return missionsToValidate;
     }
 
 }
