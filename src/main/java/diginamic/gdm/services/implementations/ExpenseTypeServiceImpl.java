@@ -9,6 +9,8 @@ import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.services.ExpenseTypeService;
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
+
 /**
  * Implementation for {@link ExpenseTypeService}.
  * 
@@ -16,6 +18,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 
 	/**

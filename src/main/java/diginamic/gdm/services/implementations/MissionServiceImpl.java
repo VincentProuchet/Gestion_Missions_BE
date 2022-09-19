@@ -9,6 +9,7 @@ import diginamic.gdm.services.NatureService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class MissionServiceImpl implements MissionService {
 
     /**

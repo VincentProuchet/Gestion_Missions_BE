@@ -68,7 +68,7 @@ public class Mission {
 
 	/** expenses : business expenses for the mission */
 	@OneToMany(mappedBy = "mission")
-	@Fetch(FetchMode.JOIN)
+	//@Fetch(FetchMode.JOIN)
 	private Set<Expense> expenses = new HashSet<>();
 
 	/** collaborator : the collaborator this mission is due to */
