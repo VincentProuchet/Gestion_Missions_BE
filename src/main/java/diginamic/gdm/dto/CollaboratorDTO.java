@@ -1,7 +1,11 @@
 package diginamic.gdm.dto;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
+
 import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +29,16 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	/** firstName prénom */
 	private String firstName = null;
 	
+	/** password */
+	private String password =null;
+	/** newPassword for an eventual implementation of password update*/
+	private String newPassword =null;
+	
+	/** userName */
+	private String userName = null;
+	
 	/** role */
-	private Role role = Role.COLLABORATOR;
+	private Collection<GrantedAuthority> roles;
 	
 	/** email */
 	private String email = null;
@@ -38,13 +50,26 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 		this.id = collaborator.getId();
 		this.lastName = collaborator.getLastName();
 		this.firstName = collaborator.getFirstName();
-		this.role = collaborator.getRole();
 		this.email = collaborator.getEmail();
-		this.email = collaborator.getEmail();
+		this.roles = collaborator.getAuthorities();
 	}
+	
 	
 	public Collaborator instantiate() {
 		return new Collaborator();
+	}
+	
+	/**
+	 * this give the granted authoritiesList of the object 
+	 * from the role (wich is not a list)
+	 * @return ArrayList of GrantedAuthorities
+	 */
+	public ArrayList<GrantedAuthority> getAuthorities() {
+		ArrayList<GrantedAuthority> au = new ArrayList<>();
+		for (GrantedAuthority gA : this.roles) {
+			au.add(gA);
+		}
+		return au;
 	}
 	
 }

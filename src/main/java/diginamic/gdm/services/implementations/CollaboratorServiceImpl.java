@@ -3,6 +3,7 @@ package diginamic.gdm.services.implementations;
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
-public class CollaboratorServiceImpl implements CollaboratorService {
+public class CollaboratorServiceImpl implements CollaboratorService, UserDetailsService {
 
 	/**
 	 * The {@link CollaboratorRepository} dependency.
@@ -54,8 +55,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
 	@Override
 	public void createUser(UserDetails user) {
-		// TODO Auto-generated method stub
-		
+		this.create((Collaborator) user);
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
+		//Collaborator coll = this.collaboratorRepository.findByUsername(username);
 		return null;
 	}
 

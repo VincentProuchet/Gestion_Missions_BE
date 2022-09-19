@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -50,7 +51,7 @@ import lombok.AllArgsConstructor;
  */
 @Configuration
 @AllArgsConstructor
-@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class GDMSecurityConfig {
 	
 	private static String SESSION_SESSION_COOKIE_NAME ="JSESSIONID";
@@ -130,10 +131,10 @@ public class GDMSecurityConfig {
 				// il FAUT mettre le slash avant
 
 				//.antMatchers(HttpMethod.GET, "/nature/")
-		// .antMatchers(HttpMethod.GET)
-		// .antMatchers(HttpMethod.POST)
-		// .antMatchers(HttpMethod.PUT)
-		// .antMatchers(HttpMethod.DELETE)
+		 .antMatchers(HttpMethod.GET)
+		 .antMatchers(HttpMethod.POST)
+		 .antMatchers(HttpMethod.PUT)
+		 .antMatchers(HttpMethod.DELETE)
 		;
 	}
 

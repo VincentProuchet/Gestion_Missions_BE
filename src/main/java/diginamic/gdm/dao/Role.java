@@ -1,30 +1,36 @@
 package diginamic.gdm.dao;
 
+import org.springframework.security.core.GrantedAuthority;
+
 /**
  * Represents a collaborator's role/function
  * 
  * @author DorianBoel
  */
-public enum Role {
+public enum Role implements GrantedAuthority {
+
+	USER("USER"),
+	COLLABORATOR("COLLAB"),
+	MANAGER("MAN" ),
+	ADMIN("ADMIN");
 	
-	//USER("user",Object.class),
-	COLLABORATOR("collaborator", Collaborator.class),
-	MANAGER("manager", Manager.class),
-	ADMIN("admin", Administrator.class);
 	
 	/**
 	 * The name of the role
 	 */
 	public final String LABEL;
 	
-	/**
-	 * The class entity associated with this specific role
-	 */
-	public final Class<? extends Collaborator> AS_CLASS;
 	
-	private Role(String label, Class<? extends Collaborator> cl) {
-		LABEL = label;
-		AS_CLASS = cl;
+	private Role(String label) {
+	LABEL = label;
 	}
+
+
+	@Override
+	public String getAuthority() {
+		
+		return this.LABEL;
+	}
+
 	
 }

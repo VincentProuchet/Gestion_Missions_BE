@@ -46,6 +46,7 @@ public class AccountController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void signup(@RequestBody Collaborator collaborator) {
 		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		
 		collaboratorService.create(collaborator);
 	}
 
