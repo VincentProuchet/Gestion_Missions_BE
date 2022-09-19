@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.services.CityService;
@@ -26,7 +27,7 @@ import lombok.AllArgsConstructor;
  * @author DorianBoel
  */
 @RestController
-@RequestMapping(path = "city", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = GDMRoutes.CITY, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CityController {
 	
