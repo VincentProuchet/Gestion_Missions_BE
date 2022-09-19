@@ -157,8 +157,8 @@ public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) thr
 	 * @return
 	 */
 	public String EncryptThat(String password) {
-		//return passwordEncoder.encode(password);
-		return password;
+		return passwordEncoder.encode(password);
+		
 	}
 	
 	

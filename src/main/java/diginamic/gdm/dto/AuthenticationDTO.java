@@ -60,12 +60,12 @@ public class AuthenticationDTO {
 	this.grant = token.getGrant();
 		/** authentication Token for  transactions
 		 * THEY MUST have an expiration date */
-	this.authentication = token.getGrant();
+	this.authentication = token.getAuthentification();
 		/** refresh token 
 		 *  token used for reconnection or after 
 		 * expiration of exchange token 
 		 */
-	this.refresh = token.getAuthentification() ;
+	this.refresh = token.getRefresh() ;
 		
 		/** expirationDate  of exchange Token*/
 	this.creationDate = token.getIssued();
