@@ -9,6 +9,8 @@ import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.CityService;
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
+
 /**
  * Implementation for {@link CityService}.
  * 
@@ -16,6 +18,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class CityServiceImpl implements CityService {
 
 	/**

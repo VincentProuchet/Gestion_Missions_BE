@@ -11,6 +11,8 @@ import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.services.CollaboratorService;
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
+
 /**
  * Implementation for {@link CollaboratorService}.
  * 
@@ -18,6 +20,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class CollaboratorServiceImpl implements CollaboratorService {
 
 	/**

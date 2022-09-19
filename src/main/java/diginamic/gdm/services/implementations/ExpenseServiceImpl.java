@@ -16,6 +16,8 @@ import diginamic.gdm.services.ExpenseService;
 import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
+
 /**
  * Implementation for {@link ExpenseService}.
  * 
@@ -23,6 +25,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class ExpenseServiceImpl implements ExpenseService {
 	
 	/**
@@ -50,9 +53,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 
 		Expense actualExpense = this.expenseRepository.save(expense);
-		Mission mission = missionRepository.findById(actualExpense.getMission().getId()).get();
-		Set<Expense> expenses = mission.getExpenses();
-		expenses.add(expense); // does mission need to be updated?
 		return actualExpense;
 	}
 	
