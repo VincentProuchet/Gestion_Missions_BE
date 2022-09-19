@@ -13,7 +13,7 @@ public final class GDMRoutes {
 	//public static final String  = "";
 	/// les routes
 	public static final String SIGNIN  = "signin";
-	public static final String SIGNUP  = "login";
+	public static final String SIGNUP  = "signup";
 	public static final String LOGOUT ="logout";
 	public static final String AUTH  = "auth";
 	public static final String REFRESH = "refresh";

@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ExpenseDTO implements DTO<Expense> {
+public class ExpenseDTO extends TransactionDTO implements DTO<Expense> {
 
 	/**
 	 * Database id

@@ -15,10 +15,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CityDTO implements DTO<City> {
+public class CityDTO extends TransactionDTO implements DTO<City> {
 	
 	/** id */
 	private int id;
+	
 
 	/** name : the name of the city */
 	private String name;

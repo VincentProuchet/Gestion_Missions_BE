@@ -17,7 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NatureDTO implements DTO<Nature> {
+public class NatureDTO extends TransactionDTO implements DTO<Nature> {
 	
 	/** id */
 	private int id=0; 

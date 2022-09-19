@@ -16,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CollaboratorDTO implements DTO<Collaborator> {
+public class CollaboratorDTO extends TransactionDTO implements DTO<Collaborator> {
 	
 	/** id */
 	private int id = 0;

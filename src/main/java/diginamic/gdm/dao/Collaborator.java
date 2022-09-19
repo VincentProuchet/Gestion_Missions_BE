@@ -22,6 +22,7 @@ import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which reprensents a Collaborator
+ * Entity which represents a Collaborator
  * 
  * @author Joseph
  *
@@ -99,6 +100,7 @@ public class Collaborator implements UserDetails {
 	
 
 	public Collaborator(int id, String lastName,String firstName, String email, Role role ) {
+	
 		System.err.println("making a collaborator");
 		this.id = id;
 		this.lastName = lastName;
@@ -113,6 +115,7 @@ public class Collaborator implements UserDetails {
 	 * @param user
 	 */
 	public Collaborator(Collaborator user) {
+	
 		this.id = user.getId();
 		this.lastName = user.getLastName();
 		this.firstName =user.getFirstName();

@@ -11,5 +11,5 @@ package diginamic.gdm;
 public final class GDMVars {
 
 	/** Durée de vie des tokens */
-	public final static Long TOKEN_LIFE = 2 * 60 * 60L; // ici 2H
+	public final static Long TOKEN_LIFE = 7200L; // ici 2H
 }

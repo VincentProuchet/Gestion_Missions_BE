@@ -37,9 +37,10 @@ public class SecurityTokenServiceImpl implements SecurityTokenService {
 	public SecurityToken getGranted(SecurityToken auth, Long validitySeconds) throws Exception {
 		SecurityToken token = this.securityRepository.findByGrant(auth.getGrant())
 				.orElseThrow(() -> new Exception(" le login n'as pas été validé "));
-		if (token.getIssued().plusSeconds(validitySeconds).isAfter(LocalDateTime.now())) {
-			throw new Exception("Le token est périmé");
+		if (LocalDateTime.now().isAfter(token.getIssued().plusSeconds(validitySeconds))) {
+			throw new Exception("Le grant est périmé");
 		}
+		System.out.println("granted");
 		token.granted();
 		this.securityRepository.save(token);
 		return token;
@@ -50,7 +51,7 @@ public class SecurityTokenServiceImpl implements SecurityTokenService {
 		SecurityToken token = this.securityRepository.findByAuthentification(auth.getAuthentification())
 				.orElseThrow(() -> new Exception(" Le token n'existe pas"));
 		// si le token est trop vieux
-		if (token.getIssued().plusSeconds(validitySeconds).isAfter(LocalDateTime.now())) {
+		if (LocalDateTime.now().isAfter(token.getIssued().plusSeconds(validitySeconds))) {
 			//throw new Exception("Le token est périmé");
 			System.out.println("Le token est périmé");
 			return null;

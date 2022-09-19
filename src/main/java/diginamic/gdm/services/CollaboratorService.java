@@ -64,4 +64,11 @@ public interface CollaboratorService extends UserDetailsService{
 	 */
 	Mission reassignMission(Mission mission, Collaborator collaborator);
 	
+	/**this is user for login
+	 * not that the service is NOT responsible for password comparison
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	Collaborator getByUsername(String userName);
 }

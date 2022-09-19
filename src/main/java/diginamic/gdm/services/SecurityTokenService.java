@@ -25,13 +25,21 @@ public interface SecurityTokenService {
 	 *  
 	 *  this was designed to allow user to login with a platform
 	 *  from another platform (login with ... git,facebook, google) 
-	 * 
+
+	 * @param auth SecurityToken
+	 * @param validitySeconds
+	 * @return Security Token
+	 * @throws Exception
 	 */
 	public SecurityToken getGranted(SecurityToken auth, Long validitySeconds) throws Exception ;
 	/**
 	 * Here we check the validity of your authentication token 
 	 * if if ok, it will give you back your token
 	 * make sure to NOT send back the refresh and issued to the FE 
+	 * @param auth SecurityToken
+	 * @param validitySeconds
+	 * @return
+	 * @throws Exception
 	 */
 	public SecurityToken Authenticate(SecurityToken auth, Long validitySeconds) throws Exception ;
 	
@@ -42,6 +50,10 @@ public interface SecurityTokenService {
 	 *note that all values are refreshed 
 	 *meaning the refresh value is only used once for authentication
 	 *the less your refresh is exchanged the less risk you have.
+	 * @param auth
+	 * @param validitySeconds
+	 * @return
+	 * @throws Exception
 	 */
 	public SecurityToken Refresh(SecurityToken auth, Long validitySeconds) throws Exception;
 	/**

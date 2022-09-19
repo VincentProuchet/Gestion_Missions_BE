@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import diginamic.gdm.dto.AuthenticationDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -82,5 +83,12 @@ public class SecurityToken {
 		this.issued = LocalDateTime.now();
 		this.refresh = null;
 		this.authentification = null;
+	}
+	public SecurityToken(AuthenticationDTO auth) {
+		this.grant = auth.getGrant();
+		this.issued =  auth.getCreationDate();
+		this.refresh = auth.getRefresh();
+		this.authentification = auth.getAuthentication();
+		
 	}
 }

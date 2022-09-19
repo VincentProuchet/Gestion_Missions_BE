@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.City;
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dto.AuthenticationDTO;
 import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.services.CityService;
+import diginamic.gdm.services.CollaboratorService;
 import lombok.AllArgsConstructor;
 
 /**
@@ -33,7 +36,8 @@ public class CityController {
 	 * The {@link CityService} dependency.
 	 */
 	private CityService cityService;
-
+	private AccountController accountController;
+	private CollaboratorService collaboratorService;
 	/**
 	 * Gets the full list of registered cities.
 	 * 
@@ -48,11 +52,15 @@ public class CityController {
 	 * Saves a new {@link City} instance.
 	 * 
 	 * @param cityDTO The new city within the request body to be registered
+	 * @throws Exception 
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody CityDTO cityDTO) {
-		cityService.create(cityDTO.instantiate());
+	public void create(@RequestBody CityDTO city) throws Exception {
+		System.out.println(city.getAuthentication());
+		Collaborator collaborator = collaboratorService.read(accountController.authenticate(city.getAuthentication()));
+		
+		cityService.create(city.instantiate());
 	}
 	
 	/**

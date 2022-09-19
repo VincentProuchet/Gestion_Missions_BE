@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MissionDTO implements DTO<Mission> {
+public class MissionDTO extends TransactionDTO implements DTO<Mission> {
 	
 	/** id */
 	private int id;

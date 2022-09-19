@@ -61,7 +61,16 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.err.println("fetching username");
-		Collaborator result =collaboratorRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "));
+		Collaborator result = collaboratorRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "));
+		System.err.println("we have something");
+		System.err.println("shit looks good");		
+		return result;
+	
+	}
+	@Override
+	public Collaborator getByUsername(String username) throws UsernameNotFoundException {
+		System.err.println("fetching username");
+		Collaborator result = collaboratorRepository.findByUserName(username).orElseThrow(()-> new UsernameNotFoundException( username + " Non trouvé "));
 		System.err.println("we have something");
 		System.err.println("shit looks good");		
 		return result;
