@@ -90,7 +90,7 @@ public class Collaborator implements UserDetails {
 	 * refresh
 	 * self contain it creation date
 	 */
-	@OneToOne 
+	@OneToOne (mappedBy = "collaborator")
 	private SecurityToken auth;
 	/** authorities  not stored because role already does that*/
 	@Transient

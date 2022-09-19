@@ -1,6 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,33 +21,31 @@ public class SecurityTokenServiceImpl implements SecurityTokenService {
 	private CollaboratorRepository collaboratorRepository;
 	private SecurityTokeRepository securityRepository;
 
+	
 	public SecurityToken login(Collaborator user) throws Exception {
-
-		SecurityToken token = this.securityRepository.findByCollaborator(user)
-				.orElseThrow(() -> new Exception("user not found"));
-		// ici soit on a quelque chose soit on à une exception
-		// with OAuth2 respect we normally should only issue an grant
-		token.setGrant(RandomStringUtils.random(6, false, true));
-		// and generate the others in another function
-		token.setIssued(LocalDateTime.now());
+		SecurityToken token;
+		// we get the token or create a new one
+		token = this.securityRepository.findByCollaborator(user).orElseGet(() -> new SecurityToken());
+			// we set its parameters 
+			token.newGrant(user);
+			// and save it
+			securityRepository.save(token);						
 		return token;
 	}
 
+	
 	public SecurityToken getGranted(SecurityToken auth, Long validitySeconds) throws Exception {
 		SecurityToken token = this.securityRepository.findByGrant(auth.getGrant())
 				.orElseThrow(() -> new Exception(" le login n'as pas été validé "));
 		if (token.getIssued().plusSeconds(validitySeconds).isAfter(LocalDateTime.now())) {
-			this.deleteToken(token);
 			throw new Exception("Le token est périmé");
 		}
-		token.setGrant(null);
-		// a brand new token
-		token.setAuthentification(RandomStringUtils.random(6, false, true));
-		token.setRefresh(RandomStringUtils.random(6, false, true));
-		token.setIssued(LocalDateTime.now());
+		token.granted();
+		this.securityRepository.save(token);
 		return token;
 	}
 
+	
 	public SecurityToken Authenticate(SecurityToken auth, Long validitySeconds) throws Exception {
 		SecurityToken token = this.securityRepository.findByAuthentification(auth.getAuthentification())
 				.orElseThrow(() -> new Exception(" Le token n'existe pas"));
@@ -61,21 +60,21 @@ public class SecurityTokenServiceImpl implements SecurityTokenService {
 
 	public SecurityToken Refresh(SecurityToken auth, Long validitySeconds) throws Exception {
 		SecurityToken token = this.securityRepository.findByRefresh(auth.getRefresh())
-				.orElseThrow(() -> new Exception(" les token n'exite pas "));
-		//// a refresh of the token
-		token.setAuthentification(RandomStringUtils.random(6, false, true));
-		token.setRefresh(RandomStringUtils.random(6, false, true));
-		token.setIssued(LocalDateTime.now());
-
+				.orElseThrow(() -> new Exception(" le token n'exite pas "));
+		
+		// we could decide that a refresh would have a limited 
+		// validity but we didn't
+	
+		token.granted(); // here is your refreshed token
+		this.securityRepository.save(token);
 		return token;
 	}	
-
-	public void deleteToken(SecurityToken token) {
-		this.securityRepository.delete(token);
-	}
 	
-	public boolean logout(SecurityToken token) {
-		this.deleteToken(token);
+	public boolean logout(SecurityToken auth) throws Exception {
+		SecurityToken token = this.securityRepository.findByAuthentification(auth.getAuthentification())
+				.orElseThrow(() -> new Exception(" Le token n'existe pas"));
+		token.logOut();
+		this.securityRepository.save(token);
 		return true;
 	}
 }

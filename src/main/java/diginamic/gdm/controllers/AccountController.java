@@ -92,7 +92,7 @@ public class AccountController {
 	 * Hence the first value is ALLWAYS NULL 
 	 * @param grantToken
 	 */	
-	@PostMapping(path=GDMRoutes.AUTH+"/"+GDMRoutes.REFRESH ,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path=GDMRoutes.AUTH+"/"+GDMRoutes.GRANT ,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
 public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 		AuthenticationDTO auth = new AuthenticationDTO();
@@ -104,7 +104,7 @@ public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 			// we get new token
 			auth.setExchangeToken("sdghrzhsfdgfdgdfsqergsgfg");
 			auth.setRefreshToken("qfqsdfqsdfsfdgsghshsgh");
-			auth.setExpirationDate(LocalDateTime.now().plusHours(1).toString());
+			auth.setIssuedDate(LocalDateTime.now().plusHours(1));
 			// and send them back tu client
 			return auth;
 		}
