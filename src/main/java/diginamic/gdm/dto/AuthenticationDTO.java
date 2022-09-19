@@ -33,8 +33,8 @@ public class AuthenticationDTO {
 	 */
 	private String refreshToken;
 	
-	/** expirationDate  of exchange Token*/
-	private LocalDateTime IssuedDate;
+	/** Creation Date  of exchange Token*/
+	private LocalDateTime creationDate;
 	
 	@Override
 	public String toString() {
@@ -45,7 +45,7 @@ public class AuthenticationDTO {
 				.append("\n exchange Token : \n")
 				.append(this.exchangeToken)
 				.append("\n expire : \n")
-				.append(this.IssuedDate)
+				.append(this.creationDate)
 				.append("\n refresh Token : \n")
 				.append(this.refreshToken)
 				.toString();
