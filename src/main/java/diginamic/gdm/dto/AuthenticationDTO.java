@@ -1,5 +1,7 @@
 package diginamic.gdm.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +34,7 @@ public class AuthenticationDTO {
 	private String refreshToken;
 	
 	/** expirationDate  of exchange Token*/
-	private String expirationDate;
+	private LocalDateTime IssuedDate;
 	
 	@Override
 	public String toString() {
@@ -43,7 +45,7 @@ public class AuthenticationDTO {
 				.append("\n exchange Token : \n")
 				.append(this.exchangeToken)
 				.append("\n expire : \n")
-				.append(this.expirationDate)
+				.append(this.IssuedDate)
 				.append("\n refresh Token : \n")
 				.append(this.refreshToken)
 				.toString();
