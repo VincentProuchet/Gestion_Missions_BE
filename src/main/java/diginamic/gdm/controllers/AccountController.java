@@ -103,7 +103,7 @@ public AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
 			// we get new token
 			auth.setExchangeToken("sdghrzhsfdgfdgdfsqergsgfg");
 			auth.setRefreshToken("qfqsdfqsdfsfdgsghshsgh");
-			auth.setExpirationDate(LocalDateTime.now().plusHours(1).toString());
+			auth.setCreationDate(LocalDateTime.now().plusHours(1));
 			// and send them back tu client
 			return auth;
 		}
