@@ -37,7 +37,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
+import diginamic.gdm.Enums.Role;
+import diginamic.gdm.dao.Roles;
 import diginamic.gdm.services.CollaboratorService;
+import diginamic.gdm.services.RoleService;
 import lombok.AllArgsConstructor;
 
 /**
@@ -72,10 +75,14 @@ public class GDMSecurityConfig {
 	AuthenticationEntryPoint entryPoint;
 	@Autowired
 	AuthenticationManager authManager;
+	@Autowired
+	RoleService roleService;
 	
 
 	@Bean
 	public SecurityFilterChain springSecurityfilterChain(HttpSecurity http) throws Exception {
+		
+		roleService.saveAutorities();
 		System.err.println("Filter Chain");
 		http.authorizeRequests()
 			.antMatchers("/signin").permitAll()

@@ -78,14 +78,17 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 
 	@Override
 	public boolean userExists(String username) {
-		// TODO Auto-generated method stub
+		Collaborator coll = this.collaboratorRepository.findByUsername(username);
+		if(coll!=null) {
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//Collaborator coll = this.collaboratorRepository.findByUsername(username);
-		return null;
+		Collaborator coll = this.collaboratorRepository.findByUsername(username);
+		return coll;
 	}
 
 	

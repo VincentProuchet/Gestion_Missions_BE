@@ -1,20 +1,22 @@
 package diginamic.gdm.controllers;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.GDMRoutes;
+import diginamic.gdm.GDMVars;
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Roles;
 import diginamic.gdm.dto.AuthenticationDTO;
 import diginamic.gdm.dto.LoginDTO;
 import diginamic.gdm.services.CollaboratorService;
@@ -34,19 +36,23 @@ public class AccountController {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
-	private PasswordEncoder passwordEncoder;
 	
+	private BCryptPasswordEncoder passwordEncoder;
 
 	/**
 	 * Registers a new user account
 	 * 
 	 * @param collaborator The new collaborator whose account to register
 	 */
-	@PostMapping(path = "signup")
+	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void signup(@RequestBody Collaborator collaborator) {
-		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		
+		// we use a compression algorythm
+		collaborator.setPassword(this.EncryptThat(collaborator.getPassword()));
+		Collection<Roles> roles = collaborator.getAuthorities();
+		for (Roles role : roles) {
+			System.err.println(role);
+		}
 		collaboratorService.create(collaborator);
 	}
 
@@ -55,107 +61,30 @@ public class AccountController {
 	 * connection grant token
 	 * 
 	 * @param login
+	 * @throws Exception 
 	 */
-	@GetMapping(path = "signin", consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.ACCEPTED)	
-	public @ResponseBody AuthenticationDTO logIn(@RequestBody LoginDTO login) {
-		if(login.getLogin() == null && login.getPassword()==null) {
-			System.err.println("Bad Json");
-			return null;
-		}
-		this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		// we instanciate an authenticationDTO
-		AuthenticationDTO auth = new AuthenticationDTO();
-		// running encryption method on the password value
-		// looking like that
-		
-		// login.setPassword(encryptThat(login.getPassword()));
-		
-		// do credential search		
-		// wich should look like something like this :
-		
-		// if(collaboratorService.list().stream()
-		//.filter(c->(c.getEmail().equals(login.getLogin())
-		// and yes there should be an encryption method before the comparison.
-		//			||c.getPassword().equals(login.getPassword()))));
-		if(login.getLogin().equals("lui")|| login.getPassword().equals("1234")) {
-			// get a connection grant token
-			// from security Service
-			System.out.println("Logged");
-			auth.setGrantToken("gtsergfbvsnbrshsfbgfbs");
-		}
-		else {
-			// we shoud have an error 
-			System.err.println("login invalid");
-		}
-		// send back the grant token
-		return auth;
-
-	}
-
-	/**
-	 * take grantToke given by login Procedure
-	 * or a refreshToken
-	 * checks it and give back 
-	 * a token for transaction
-	 * a token for refresh
-	 * 
-	 * the refresh or the grant MUST ALLWAYS be a sole value
-	 * Hence the first value is ALLWAYS NULL 
-	 * @param grantToken
-	 */	
-	@GetMapping(path="refreshToken",consumes=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.ACCEPTED )
-public @ResponseBody AuthenticationDTO getToken(@RequestBody AuthenticationDTO grantToken) {
-		System.out.println("refresh token ");
-		AuthenticationDTO auth = new AuthenticationDTO();
-		// the client send us a tokenDTO
-		// we test the refresh and the grant
-		if (grantToken.getRefreshToken().equals("gtsergfbvsnbrshsfbgfbs") || grantToken.getGrantToken() .equals("qfqsdfqsdfsfdgsghshsgh") )
-		{
-			// if one of them is valid 
-			// we get new token
-			auth.setExchangeToken("sdghrzhsfdgfdgdfsqergsgfg");
-			auth.setRefreshToken("qfqsdfqsdfsfdgsghshsgh");
-			auth.setExpirationDate(LocalDateTime.now().plusHours(1).toString());
-			// and send them back tu client
-			System.out.println("found and refreshed");
-			return auth;
-		}
-		else {
-			// we should 
-			System.err.println("ha ba non");
-			return auth;
-		}
-
-}
-
-	/**
-	 * authentification is an automated process separate from the login
-	 * and I'm thinking about if this is really the place for that function 
-	 * who wont be called from outside but only from inside
-	 * 
-	 * keep in mind that the refreshToken is only send once
-	 * THIS fonction say No
-	 * @param auth
-	 */
-	@GetMapping(path = "auth", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = GDMRoutes.SIGNIN, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
-	public boolean authenticate(@RequestBody AuthenticationDTO auth) {
-		// login comparing exchange toke
-		if (auth.getExchangeToken().equals("sdghrzhsfdgfdgdfsqergsgfg"))
-			return true;
-		else
-			/**
-			// this is not an error
-			// the exchange token is either 
-			 * invalid 
-			 * or expired 
-			 * yes we can test it but what about 
-			 * really old tokens that got wiped out of the database ?
-			 * so we don't throw an error
-			 * we just say NO
-			 */		
-			return false;
+	public AuthenticationDTO logIn(@RequestBody LoginDTO login) throws Exception {
+		AuthenticationDTO dtoToken;
+		return null;
+		
+		
+		
+
 	}
+
+
+	/**
+	 * this is a  function for password Encryption
+	 * for making things easier to test
+	 * @param password
+	 * @return
+	 */
+	public String EncryptThat(String password) {
+		return passwordEncoder.encode(password);
+		
+	}
+	
+	
 }
