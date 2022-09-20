@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,25 +53,6 @@ public class AccountController {
 		}
 		collaboratorService.create(collaborator);
 	}
-
-	/**
-	 * take credential search database and valid or not the connection by a
-	 * connection grant token
-	 * 
-	 * @param login
-	 * @throws Exception 
-	 */
-//	@PostMapping(path = GDMRoutes.SIGNIN, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	@ResponseStatus(value = HttpStatus.ACCEPTED)
-//	public AuthenticationDTO logIn(@RequestBody LoginDTO login) throws Exception {
-//		AuthenticationDTO dtoToken;
-//		return null;
-//		
-//		
-//		
-//
-//	}
-
 
 	/**
 	 * this is a  function for password Encryption

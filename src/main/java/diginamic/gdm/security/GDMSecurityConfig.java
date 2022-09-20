@@ -38,6 +38,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
+import diginamic.gdm.GDMRoles;
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.Roles;
@@ -75,10 +76,11 @@ public class GDMSecurityConfig {
 		roleService.saveAutorities();
 		System.err.println("Filter Chain");
 		http.authorizeRequests()
-			.antMatchers("/"+GDMRoutes.SIGNUP).permitAll()
+			.antMatchers(HttpMethod.POST,"/"+GDMRoutes.SIGNUP).permitAll()
 			.antMatchers("/"+GDMRoutes.ERRORS).permitAll()
-			.anyRequest()			
-			.authenticated();
+				
+			//.authenticated()
+			;
 			
 		http.authenticationProvider(authProvider) 
 			.formLogin()
@@ -89,7 +91,7 @@ public class GDMSecurityConfig {
 		http.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 			.maximumSessions(1)
-			// in case of a new loggin, the existing session is closed
+			// in case of a new login, the existing session is closed
 			.expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
 			;
 		http.logout() 
@@ -110,11 +112,11 @@ public class GDMSecurityConfig {
 		System.err.println("webignoring");
 		return (web) -> web.ignoring()
 				// il FAUT mettre le slash avant
-//				.antMatchers(HttpMethod.POST, "/"+GDMRoutes.SIGNUP)
-//		 .antMatchers(HttpMethod.GET)
-//		 .antMatchers(HttpMethod.POST)
-//		 .antMatchers(HttpMethod.PUT)
-//		 .antMatchers(HttpMethod.DELETE)
+		.antMatchers("/"+GDMRoutes.SIGNUP)
+//		.antMatchers(HttpMethod.GET)
+//		.antMatchers(HttpMethod.POST)
+//		.antMatchers(HttpMethod.PUT)
+//		.antMatchers(HttpMethod.DELETE)
 		;
 	}
 
