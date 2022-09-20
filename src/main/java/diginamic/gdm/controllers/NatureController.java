@@ -44,7 +44,7 @@ public class NatureController {
 	 * @return A list of all natures
 	 */
 	@GetMapping
-	@Secured(GDMRoles.COLLABORATOR)
+	@Secured({GDMRoles.COLLABORATOR,GDMRoles.MANAGER,GDMRoles.ADMIN})
 	public List<NatureDTO> list() {
 		return natureService.list().stream().map(nature -> new NatureDTO(nature)).toList();
 	}

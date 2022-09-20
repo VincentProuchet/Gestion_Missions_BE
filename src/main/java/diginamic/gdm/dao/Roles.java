@@ -32,14 +32,14 @@ public class Roles implements GrantedAuthority {
 	 * The name of the role
 	 */
 	
-	public String LABEL;
+	public String label;
 	//private static RoleService service;
 	
 
 	@Override
 	public String getAuthority() {
 		
-		return this.LABEL;
+		return this.label;
 	}
 
 	

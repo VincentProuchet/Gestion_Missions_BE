@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.Enums.Role;
@@ -34,7 +35,7 @@ public class RoleServiceImpl implements RoleService {
 			this.repository.save(role);
 			role2 = role;
 		} else {
-			role2.LABEL = role.LABEL;
+			role2.label = role.label;
 			this.repository.save(role2);
 		}
 		return role;
@@ -57,13 +58,13 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Roles read(int id) throws Exception {
 		
-		return this.repository.findById(id).orElseThrow(()-> new Exception("")) ;
+		return this.repository.findById(id).orElseThrow(()-> new Exception(" authoritie not found ")) ;
 	}
 
 	@Override
-	public Roles read(String label) {
-		// TODO Auto-generated method stub
-		return null;
+	public Roles read(String label) throws Exception {
+		
+		return this.repository.findByLabel(label).orElseThrow(()-> new Exception(" authoritie not found "));
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -24,12 +25,6 @@ public class GDMAuthentication implements AuthenticationProvider {
 	@Autowired
 	private CollaboratorService collaboratorService;
 	
-	//JdbcUserDetailsManager UserManager;
-	//private Collaborator collaboratorDAO;
-	// SessionAuthenticationStrategy sessionStrategy;
-	// RememberMeServices rememberMeServices;
-	// ApplicationEventPublisher AEP;
-	// AuthenticationSuccessHandler successHandler;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -39,30 +34,36 @@ public class GDMAuthentication implements AuthenticationProvider {
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			return SecurityContextHolder.getContext().getAuthentication();
 		}
-		// if auth est null
-		if (auth == null) {
-			System.err.println("Bad Json");
-			return null;
-		}
-		System.err.println(auth);
 		String username = (String) auth.getPrincipal();
 		
 		if(username!=null) {
 			Collaborator coll = (Collaborator) collaboratorService.loadUserByUsername(username);
 			if (coll!=null) {
+				if(!coll.isActive()) {
+					throw new BadCredentialsException("le compte n'est pas activé");
+				}
 				String password = (String) auth.getCredentials();
 				if(passwordEncoder.matches(password, coll.getPassword())) {
 					UsernamePasswordAuthenticationToken userToken =  new UsernamePasswordAuthenticationToken(coll.getUsername(),null, coll.getAuthorities());
+					System.err.println("authenticated with granted authorities");
+					for (GrantedAuthority authority : userToken.getAuthorities()) {
+						System.err.println(authority.getAuthority());
+					}					
 					return userToken;					
 				}
 			}
 		}
-		throw new BadCredentialsException("les informations de commptes sont incorrectes");
+		
+		throw new BadCredentialsException("les informations de compte sont incorrectes");
 	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		// TODO Auto-generated method stub
+		
+		if(authentication.getGenericSuperclass()== UsernamePasswordAuthenticationToken.class ){
+			System.out.println("authentication compatibility valid");
+			return true;
+		}
 		return true;
 	}
 

@@ -57,6 +57,7 @@ import lombok.AllArgsConstructor;
  */
 @Configuration
 @AllArgsConstructor
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = false, prePostEnabled = true)
 public class GDMSecurityConfig {
 	
@@ -76,8 +77,9 @@ public class GDMSecurityConfig {
 		roleService.saveAutorities();
 		System.err.println("Filter Chain");
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST,"/"+GDMRoutes.SIGNUP).permitAll()
-			.antMatchers("/"+GDMRoutes.ERRORS).permitAll()
+		//.anyRequest().permitAll();
+			//.antMatchers(HttpMethod.POST,"/"+GDMRoutes.SIGNUP).permitAll()
+			//.antMatchers("/"+GDMRoutes.ERRORS).permitAll()
 				
 			//.authenticated()
 			;
@@ -89,7 +91,7 @@ public class GDMSecurityConfig {
 			;
 		
 		http.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+			.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 			.maximumSessions(1)
 			// in case of a new login, the existing session is closed
 			.expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
@@ -113,10 +115,10 @@ public class GDMSecurityConfig {
 		return (web) -> web.ignoring()
 				// il FAUT mettre le slash avant
 		.antMatchers("/"+GDMRoutes.SIGNUP)
-		.antMatchers(HttpMethod.GET)
-		.antMatchers(HttpMethod.POST)
-		.antMatchers(HttpMethod.PUT)
-		.antMatchers(HttpMethod.DELETE)
+//		.antMatchers(HttpMethod.GET)
+//		.antMatchers(HttpMethod.POST)
+//		.antMatchers(HttpMethod.PUT)
+//		.antMatchers(HttpMethod.DELETE)
 		;
 	}
 
