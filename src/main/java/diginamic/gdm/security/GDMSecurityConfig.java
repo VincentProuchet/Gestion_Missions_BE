@@ -59,18 +59,8 @@ import lombok.AllArgsConstructor;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class GDMSecurityConfig {
 	
-	private static String SESSION_SESSION_COOKIE_NAME ="JSESSIONID";
 
-	@Autowired
-	CollaboratorService collaboratorService;
-	@Autowired
-	private BCryptPasswordEncoder  passwordEncoder;
-	
-	
-//	@Autowired
-//	SecurityContextHolder securityContext;
-//	@Autowired
-//	RequestCache resquestCache;
+
 	@Autowired
 	AuthenticationEntryPoint entryPoint;
 	@Autowired
@@ -86,43 +76,28 @@ public class GDMSecurityConfig {
 		System.err.println("Filter Chain");
 		http.authorizeRequests()
 			.antMatchers("/"+GDMRoutes.SIGNUP).permitAll()
-			.antMatchers("/city/").permitAll()
-			.antMatchers(HttpMethod.GET,"/"+GDMRoutes.NATURE).hasAnyAuthority(Role.ADMIN.LABEL,Role.USER.LABEL)
+			.antMatchers("/"+GDMRoutes.ERRORS).permitAll()
 			.anyRequest()			
 			.authenticated();
 			
-			
-			//.httpBasic(Customizer.withDefaults())
-			
 		http.authenticationProvider(authProvider) 
-		// le login s'appelle 
-		// par la route /login
 			.formLogin()
-			//.loginPage(LOGIN_PAGE)
+			//.loginPage(LOGIN_PAGE) // pour definir la login page
 			.permitAll()
-			//.failureForwardUrl(LOGOUT_PAGE).permitAll();
 			;
 		
 		http.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-			.maximumSessions(1).expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
+			.maximumSessions(1)
+			// in case of a new loggin, the existing session is closed
+			.expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
 			;
 		http.logout() 
-		// le logout 
-		// s'appelle par la route /logout
 		.invalidateHttpSession(true)
-		//.logoutUrl(LOGOUT_PAGE).permitAll()
-		.deleteCookies(SESSION_SESSION_COOKIE_NAME)
 		;
 		
-		;
 		return http.build();
 	}
-//	@Bean
-//	 public void logIn(AuthenticationManagerBuilder auth){
-//		System.out.println("I m in");
-//		
-//	}
 
 	/**
 	 * this is where we configure the method and path that can be accessed from
@@ -135,8 +110,7 @@ public class GDMSecurityConfig {
 		System.err.println("webignoring");
 		return (web) -> web.ignoring()
 				// il FAUT mettre le slash avant
-
-				.antMatchers(HttpMethod.POST, "/"+GDMRoutes.SIGNUP)
+//				.antMatchers(HttpMethod.POST, "/"+GDMRoutes.SIGNUP)
 //		 .antMatchers(HttpMethod.GET)
 //		 .antMatchers(HttpMethod.POST)
 //		 .antMatchers(HttpMethod.PUT)

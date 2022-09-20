@@ -3,13 +3,16 @@ package diginamic.gdm.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import diginamic.gdm.GDMRoutes;
 
 public class GDMErrorController implements ErrorController {
 
 
-	  @RequestMapping("/error")
+	  @RequestMapping( "/"+GDMRoutes.ERRORS)
 	  @ResponseBody
 	  String error(HttpServletRequest request) {
 	    return ""
@@ -21,7 +24,7 @@ public class GDMErrorController implements ErrorController {
 
 	  
 	  public String getErrorPath() {
-	    return "/error";
+	    return "/"+GDMRoutes.ERRORS;
 	  }
 	
 }

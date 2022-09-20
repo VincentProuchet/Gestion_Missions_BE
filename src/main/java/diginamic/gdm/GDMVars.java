@@ -8,8 +8,9 @@ package diginamic.gdm;
  * @author Vincent
  *
  */
-public final class GDMVars {
+public abstract class GDMVars {
 
 	/** Durée de vie des tokens */
 	public final static Long TOKEN_LIFE = 7200L; // ici 2H
+	public final static String SESSION_SESSION_COOKIE_NAME ="JSESSIONID";
 }
