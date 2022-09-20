@@ -18,7 +18,10 @@ import java.util.Set;
 public class Manager extends Collaborator {
 
 
-    @OneToMany(mappedBy = "manager")
+ 
+	/** serialVersionUID */
+	private static final long serialVersionUID = -3424216385400607728L;
+	@OneToMany(mappedBy = "manager")
     private Set<Collaborator> team = new HashSet<Collaborator>();
 
 }

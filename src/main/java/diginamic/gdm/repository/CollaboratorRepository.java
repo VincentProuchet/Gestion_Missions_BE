@@ -1,11 +1,10 @@
 package diginamic.gdm.repository;
 
-import diginamic.gdm.dao.Manager;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import diginamic.gdm.dao.Collaborator;
-
-import java.util.List;
 
 public interface CollaboratorRepository extends JpaRepository<Collaborator, Integer>  {
 	

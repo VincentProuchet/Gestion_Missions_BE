@@ -1,11 +1,9 @@
 package diginamic.gdm.controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +12,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.GDMRoutes;
-import diginamic.gdm.GDMVars;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Roles;
-import diginamic.gdm.dto.AuthenticationDTO;
-import diginamic.gdm.dto.LoginDTO;
 import diginamic.gdm.services.CollaboratorService;
 import lombok.AllArgsConstructor;
 
