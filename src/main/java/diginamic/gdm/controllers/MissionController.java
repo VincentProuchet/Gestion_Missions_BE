@@ -3,8 +3,10 @@ package diginamic.gdm.controllers;
 import java.util.List;
 
 import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.services.ScheduledTasksService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +40,11 @@ public class MissionController {
 	 * The {@link MissionService} dependency.
 	 */
 	private MissionService missionService;
+
+	/**
+	 * The {@link ScheduledTasksService} dependency.
+	 */
+	private ScheduledTasksService scheduledTasksService;
 
 	/**
 	 * Gets the full list of registered missions.
@@ -135,6 +142,20 @@ public class MissionController {
 	@Secured(GDMRoles.MANAGER)
 	public void reject(@PathVariable int id) throws BadRequestException {
 		missionService.updateStatus(id, Status.REJECTED);
+	}
+
+	/**
+	 * First draft for the night computing
+	 * TODO need unit and global tests, and rework following the DB security update
+	 * @throws BadRequestException
+	 */
+	@Scheduled(fixedRate = 1000)
+	public void testNightComputing() throws BadRequestException {
+		System.out.println("computing");
+		/*
+		scheduledTasksService.computeBonusForCompletedMissions();
+		scheduledTasksService.changeMissionStatus();
+		*/
 	}
 	
 }

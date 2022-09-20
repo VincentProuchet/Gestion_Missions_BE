@@ -136,4 +136,18 @@ public interface MissionService {
 	 */
 	List<Mission> missionsToValidate(int idManager) throws BadRequestException;
 
+	/**
+	 * Get all the missions with INIT status
+	 *
+	 * @return
+	 */
+	List<Mission> missionsToPutInWaitingValidation();
+
+	/**
+	 * Get all completed missions, ie with status validated and end date passed
+	 *
+	 * @return
+	 */
+	List<Mission> completedMissions();
+
 }

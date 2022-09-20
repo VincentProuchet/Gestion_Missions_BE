@@ -20,5 +20,9 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
 
     List<Mission> findByCollaboratorAndStatus(Collaborator collaborator, Status status);
 
+    List<Mission> findByStatusAndEndDateBeforeOrderByEndDateDesc(Status status, LocalDateTime currentDate);
+
+    List<Mission> findByStatus(Status status);
+
 
 }
