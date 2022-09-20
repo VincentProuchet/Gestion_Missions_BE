@@ -5,6 +5,7 @@ import java.util.List;
 import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.GDMRoles;
 import diginamic.gdm.GDMRoutes;
+import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.services.CityService;
@@ -42,6 +45,7 @@ public class CityController {
 	 * @return A list of all cities
 	 */
 	@GetMapping
+	@Secured(GDMRoles.COLLABORATOR)
 	public List<CityDTO> list() {
 		return cityService.list().stream().map(city -> new CityDTO(city)).toList();
 	}
@@ -53,6 +57,7 @@ public class CityController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
+	@Secured(GDMRoles.ADMIN)
 	public void create(@RequestBody CityDTO cityDTO) {
 		cityService.create(cityDTO.instantiate());
 	}
@@ -64,6 +69,7 @@ public class CityController {
 	 * @return The registered city corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
+	@Secured(GDMRoles.COLLABORATOR)
 	public CityDTO read(@PathVariable int id) throws BadRequestException {
 		return new CityDTO(cityService.read(id));
 	}
@@ -76,6 +82,7 @@ public class CityController {
 	 * @return The resulting city with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@Secured(GDMRoles.ADMIN)
 	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) throws BadRequestException {
 		return new CityDTO(cityService.update(id, cityDTO.instantiate()));
 	}
@@ -86,6 +93,7 @@ public class CityController {
 	 * @param id The id of the city to delete
 	 */
 	@DeleteMapping(path = "{id}")
+	@Secured(GDMRoles.ADMIN)
 	public void delete(@PathVariable int id) throws BadRequestException {
 		cityService.delete(id);
 	}

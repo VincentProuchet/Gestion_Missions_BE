@@ -38,7 +38,7 @@ class MissionServiceImplTest {
     @Autowired
     private CollaboratorRepository collaboratorRepository;
     @Autowired
-    private ManagerRepository managerRepository;
+    private CollaboratorRepository managerRepository;
 
     @BeforeEach
     void init() {
@@ -215,7 +215,7 @@ class MissionServiceImplTest {
 
         Collaborator collaborator1 = collaboratorRepository.findAll().get(0);
         Collaborator collaborator2 = new Collaborator();
-        Manager manager = new Manager();
+        Collaborator manager = new Collaborator();
         collaborator1.setManager(manager);
         collaborator2.setManager(manager);
         manager.setTeam(Stream.of(collaborator1, collaborator2).collect(Collectors.toSet()));
@@ -224,7 +224,7 @@ class MissionServiceImplTest {
         collaborator2 = collaboratorRepository.save(collaborator2);
 
         assertEquals(collaboratorRepository.findAll().size(), 3);
-        assertEquals(managerRepository.findAll().get(0).getTeam().size(), 2);
+        assertEquals(managerRepository.findById(manager.getId()).get().getTeam().size(), 2);
 
 
         Mission m1 = new Mission();

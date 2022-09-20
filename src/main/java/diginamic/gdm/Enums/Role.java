@@ -2,6 +2,7 @@ package diginamic.gdm.Enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import diginamic.gdm.GDMRoles;
 import lombok.Getter;
 /**
  * @author Vincent
@@ -10,18 +11,18 @@ import lombok.Getter;
 @Getter
 public enum Role implements GrantedAuthority {
 
-	ADMIN(1,"ADMINISTRATOR"),
-	MANAGER(2000,"MANAGER" ),
-	COLLABORATOR(3000,"COLLABORATOR"),
-	USER(4000,"USER"),
-	ANON(5000,"ANONYM"),
+	ADMIN(1,GDMRoles.ADMIN),
+	MANAGER(2000,GDMRoles.MANAGER),
+	COLLABORATOR(3000,GDMRoles.COLLABORATOR),
+	USER(4000,GDMRoles.USER),
+	ANON(5000,GDMRoles.ANON),
 	;
 	
-	private int id;
+	private final int id;
 	/**
 	 * The name of the role
 	 */
-	public String LABEL;
+	public final String LABEL;
 	
 	
 	private Role(int id, String label) {
