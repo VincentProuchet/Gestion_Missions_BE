@@ -1,14 +1,21 @@
 package diginamic.gdm.Enums;
 
-import lombok.Getter;
-@Getter
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
 
-	ANON(1000,"ANONYM"),
-	USER(2000,"USER"),
+import lombok.Getter;
+/**
+ * @author Vincent
+ *
+ */
+@Getter
+public enum Role implements GrantedAuthority {
+
+	ADMIN(1,"ADMINISTRATOR"),
+	MANAGER(2000,"MANAGER" ),
 	COLLABORATOR(3000,"COLLABORATOR"),
-	MANAGER(4000,"MANAGER" ),
-	ADMIN(5000,"ADMINISTRATOR");
+	USER(4000,"USER"),
+	ANON(5000,"ANONYM"),
+	;
 	
 	private int id;
 	/**
@@ -20,5 +27,12 @@ public enum Role {
 	private Role(int id, String label) {
 		this.id = id;
 		this.LABEL = label;
+	}
+
+
+	@Override
+	public String getAuthority() {
+		
+		return this.LABEL;
 	}
 }

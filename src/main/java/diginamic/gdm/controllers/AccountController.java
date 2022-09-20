@@ -44,6 +44,7 @@ public class AccountController {
 	 * 
 	 * @param collaborator The new collaborator whose account to register
 	 */
+	
 	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void signup(@RequestBody Collaborator collaborator) {
@@ -63,16 +64,16 @@ public class AccountController {
 	 * @param login
 	 * @throws Exception 
 	 */
-	@PostMapping(path = GDMRoutes.SIGNIN, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.ACCEPTED)
-	public AuthenticationDTO logIn(@RequestBody LoginDTO login) throws Exception {
-		AuthenticationDTO dtoToken;
-		return null;
-		
-		
-		
-
-	}
+//	@PostMapping(path = GDMRoutes.SIGNIN, consumes = MediaType.APPLICATION_JSON_VALUE)
+//	@ResponseStatus(value = HttpStatus.ACCEPTED)
+//	public AuthenticationDTO logIn(@RequestBody LoginDTO login) throws Exception {
+//		AuthenticationDTO dtoToken;
+//		return null;
+//		
+//		
+//		
+//
+//	}
 
 
 	/**

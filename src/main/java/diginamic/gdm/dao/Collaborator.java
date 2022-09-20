@@ -15,12 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 /**
  * Entity which reprensents a Collaborator
@@ -63,6 +66,7 @@ public class Collaborator implements UserDetails {
 	 * authorities role implements GrantedAuthority
 	 */
 	@ManyToMany
+	@Fetch( FetchMode.JOIN)
 	private Collection<Roles> authorities;
 
 	/** missions : the missions this collaborator is in charge of */
@@ -101,8 +105,7 @@ public class Collaborator implements UserDetails {
 	}
 
 	@Override
-	public Collection<Roles> getAuthorities() {
-		
+	public Collection<Roles> getAuthorities() {		
 		return this.authorities;
 	}
 

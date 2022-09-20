@@ -2,6 +2,7 @@ package diginamic.gdm.services.implementations;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,10 @@ import diginamic.gdm.repository.RoleRepository;
 import diginamic.gdm.services.RoleService;
 import lombok.AllArgsConstructor;
 
+/**
+ * @author Vincent
+ *
+ */
 @Service
 @AllArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -41,6 +46,24 @@ public class RoleServiceImpl implements RoleService {
 			rols.add(new Roles(r.getId(),r.getLABEL()));
 			this.repository.saveAll(rols);
 		}
+	}
+
+	@Override
+	public List<Roles> all() {
+		
+		return this.repository.findAll();
+	}
+
+	@Override
+	public Roles read(int id) throws Exception {
+		
+		return this.repository.findById(id).orElseThrow(()-> new Exception("")) ;
+	}
+
+	@Override
+	public Roles read(String label) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

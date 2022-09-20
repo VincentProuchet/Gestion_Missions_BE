@@ -38,7 +38,7 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	private String userName = null;
 	
 	/** role */
-	private Collection<GrantedAuthority> roles;
+	private Collection<? extends GrantedAuthority> roles;
 	
 	/** email */
 	private String email = null;
@@ -46,6 +46,9 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	 * de passer toute la */
 	private CollaboratorDTO manager = null;
 	
+	/** Constructeur
+	 * @param collaborator
+	 */
 	public CollaboratorDTO(Collaborator collaborator) {
 		this.id = collaborator.getId();
 		this.lastName = collaborator.getLastName();
@@ -59,17 +62,5 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 		return new Collaborator();
 	}
 	
-	/**
-	 * this give the granted authoritiesList of the object 
-	 * from the role (wich is not a list)
-	 * @return ArrayList of GrantedAuthorities
-	 */
-	public ArrayList<GrantedAuthority> getAuthorities() {
-		ArrayList<GrantedAuthority> au = new ArrayList<>();
-		for (GrantedAuthority gA : this.roles) {
-			au.add(gA);
-		}
-		return au;
-	}
 	
 }

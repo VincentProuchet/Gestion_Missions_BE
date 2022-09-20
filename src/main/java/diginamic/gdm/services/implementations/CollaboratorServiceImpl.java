@@ -2,6 +2,8 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class CollaboratorServiceImpl implements CollaboratorService, UserDetailsService {
 
 	/**

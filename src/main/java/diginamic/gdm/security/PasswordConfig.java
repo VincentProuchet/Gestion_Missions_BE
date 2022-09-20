@@ -13,7 +13,6 @@ import lombok.AllArgsConstructor;
 @Configuration
 @AllArgsConstructor
 public class PasswordConfig {
-	CollaboratorService collaboratorService;
 	
 	@Bean
 	public BCryptPasswordEncoder bcCryptPasswordEncoder() {
@@ -25,17 +24,6 @@ public class PasswordConfig {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		System.err.println("auth provider");
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		// on lui dit comment gérer les compte utilisateurs et c'est l'extension de
-		// l'interface UserDetail service
-		authenticationProvider.setUserDetailsService(collaboratorService);
-		// on doit lui indiquer quel alghorythme doit être utilisé pour les mots de
-		// passes
-		authenticationProvider.setPasswordEncoder(PasswordConfig.passwordEncoder());
-		return authenticationProvider;
-	}
+	
 
 }

@@ -2,19 +2,13 @@ package diginamic.gdm.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.services.CollaboratorService;
@@ -24,12 +18,14 @@ import lombok.NoArgsConstructor;
 @Configuration
 @AllArgsConstructor
 @NoArgsConstructor
-public class GDMAuthentication implements AuthenticationManager {
+public class GDMAuthentication implements AuthenticationProvider {
 
-	UserDetailsService userManager;
-	CollaboratorService collaboratorService;
-	JdbcUserDetailsManager UserManager;
-	private Collaborator collaboratorDAO;
+	//UserDetailsService userManager;
+	@Autowired
+	private CollaboratorService collaboratorService;
+	
+	//JdbcUserDetailsManager UserManager;
+	//private Collaborator collaboratorDAO;
 	// SessionAuthenticationStrategy sessionStrategy;
 	// RememberMeServices rememberMeServices;
 	// ApplicationEventPublisher AEP;
@@ -62,6 +58,12 @@ public class GDMAuthentication implements AuthenticationManager {
 			}
 		}
 		throw new BadCredentialsException("les informations de commptes sont incorrectes");
+	}
+
+	@Override
+	public boolean supports(Class<?> authentication) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

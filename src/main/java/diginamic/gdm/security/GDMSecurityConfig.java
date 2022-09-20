@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -37,6 +38,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
+import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.Roles;
 import diginamic.gdm.services.CollaboratorService;
@@ -64,7 +66,7 @@ public class GDMSecurityConfig {
 	@Autowired
 	CollaboratorService collaboratorService;
 	@Autowired
-	private PasswordEncoder  passwordEncoder;
+	private BCryptPasswordEncoder  passwordEncoder;
 	
 	
 //	@Autowired
@@ -74,7 +76,7 @@ public class GDMSecurityConfig {
 	@Autowired
 	AuthenticationEntryPoint entryPoint;
 	@Autowired
-	AuthenticationManager authManager;
+	GDMAuthentication authProvider;
 	@Autowired
 	RoleService roleService;
 	
@@ -85,17 +87,16 @@ public class GDMSecurityConfig {
 		roleService.saveAutorities();
 		System.err.println("Filter Chain");
 		http.authorizeRequests()
-			.antMatchers("/signin").permitAll()
-			.antMatchers("/refreshToken").permitAll()
-			.antMatchers("/auth").permitAll()
+			.antMatchers("/"+GDMRoutes.SIGNUP).permitAll()
 			.antMatchers("/city/").permitAll()
+			.antMatchers(HttpMethod.GET,"/"+GDMRoutes.NATURE).hasAnyAuthority(Role.ADMIN.LABEL,Role.USER.LABEL)
 			.anyRequest()			
 			.authenticated();
 			
 			
 			//.httpBasic(Customizer.withDefaults())
 			
-		http.authenticationManager(authManager) 
+		http.authenticationProvider(authProvider) 
 		// le login s'appelle 
 		// par la route /login
 			.formLogin()
@@ -137,11 +138,11 @@ public class GDMSecurityConfig {
 		return (web) -> web.ignoring()
 				// il FAUT mettre le slash avant
 
-				//.antMatchers(HttpMethod.GET, "/nature/")
-		 .antMatchers(HttpMethod.GET)
-		 .antMatchers(HttpMethod.POST)
-		 .antMatchers(HttpMethod.PUT)
-		 .antMatchers(HttpMethod.DELETE)
+				.antMatchers(HttpMethod.POST, "/"+GDMRoutes.SIGNUP)
+//		 .antMatchers(HttpMethod.GET)
+//		 .antMatchers(HttpMethod.POST)
+//		 .antMatchers(HttpMethod.PUT)
+//		 .antMatchers(HttpMethod.DELETE)
 		;
 	}
 
