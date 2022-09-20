@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which reprensents the nature of an expense
+ * Entity which represents the nature of an expense
  * 
  * @author Joseph
  *

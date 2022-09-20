@@ -23,6 +23,9 @@ public class CityDTO implements DTO<City> {
 	/** name : the name of the city */
 	private String name;
 	
+	/** Constructeur
+	 * @param city
+	 */
 	public CityDTO(City city) {
 		id = city.getId();
 		name = city.getName();

@@ -11,7 +11,8 @@ package diginamic.gdm;
 public abstract class GDMVars {
 
 	/** Durée de vie des tokens */
-	public final static Long TOKEN_LIFE = 7200L; // ici 2H
+	public final static int TOKEN_LIFE = 7200; // ici 2H
 	public final static long SHEDULED_INTERVAL =  7200000L;
 	public final static String SESSION_SESSION_COOKIE_NAME ="JSESSIONID";
+	public final static String LOGINPAGE = "/login.html";
 }

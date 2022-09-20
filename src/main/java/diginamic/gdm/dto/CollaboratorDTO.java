@@ -1,6 +1,5 @@
 package diginamic.gdm.dto;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 
+ 
  * @author Vincent
  *
  */

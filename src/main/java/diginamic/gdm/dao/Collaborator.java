@@ -26,10 +26,12 @@ import lombok.Setter;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 /**
- * Entity which reprensents a Collaborator
- * 
+ * Entity which represents a Collaborator implement UserDetails from SpringSecurity
+ * project Document
+ * the differentiation between different types of user
+ * is made by the list of Roles 
+ * who are also used by spring security for userAccess 
  * @author Joseph
- *
  */
 @Entity
 @NoArgsConstructor
@@ -40,6 +42,7 @@ public class Collaborator implements UserDetails {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = -2542617641751124157L;
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -118,7 +121,7 @@ public class Collaborator implements UserDetails {
 		return this.authorities;
 	}
 	/**
-	 * This is to simplify the Authority attribution for Spring Sécurity
+	 * This is to simplify the Authority attribution for Spring Security
 	 * 
 	 * @param authority
 	 */

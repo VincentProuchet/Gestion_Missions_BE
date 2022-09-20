@@ -20,7 +20,7 @@ import org.hibernate.type.LocalDateTimeType;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 /**
- * Entity which reprensents a Collaborator
+ * Entity which represents a Collaborator
  * 
  * @author Joseph
  *
@@ -31,6 +31,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 @Getter
 @Setter
 public class Mission {
+	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

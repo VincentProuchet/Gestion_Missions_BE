@@ -30,6 +30,9 @@ public abstract class GDMRoutes {
 	public static final String EXPENSE = "expense";
 	public static final String TYPE = "type";
 	public static final String CITY = "city";
+	public static final String FAVICON = "/favicon.ico";
+	
+	
 }
 	
 	
