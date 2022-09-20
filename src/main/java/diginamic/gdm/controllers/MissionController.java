@@ -151,8 +151,8 @@ public class MissionController {
 	 */
 	@Scheduled(fixedRate = 1000)
 	public void testNightComputing() throws BadRequestException {
-		System.out.println("computing");
-		/*
+		/*System.out.println("computing");
+		
 		scheduledTasksService.computeBonusForCompletedMissions();
 		scheduledTasksService.changeMissionStatus();
 		*/
