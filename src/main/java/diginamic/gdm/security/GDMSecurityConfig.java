@@ -57,7 +57,7 @@ import lombok.AllArgsConstructor;
  */
 @Configuration
 @AllArgsConstructor
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = false, prePostEnabled = true)
 public class GDMSecurityConfig {
 	
 
@@ -113,10 +113,10 @@ public class GDMSecurityConfig {
 		return (web) -> web.ignoring()
 				// il FAUT mettre le slash avant
 		.antMatchers("/"+GDMRoutes.SIGNUP)
-//		.antMatchers(HttpMethod.GET)
-//		.antMatchers(HttpMethod.POST)
-//		.antMatchers(HttpMethod.PUT)
-//		.antMatchers(HttpMethod.DELETE)
+		.antMatchers(HttpMethod.GET)
+		.antMatchers(HttpMethod.POST)
+		.antMatchers(HttpMethod.PUT)
+		.antMatchers(HttpMethod.DELETE)
 		;
 	}
 
