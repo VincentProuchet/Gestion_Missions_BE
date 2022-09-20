@@ -60,9 +60,7 @@ import lombok.AllArgsConstructor;
 public class GDMSecurityConfig {
 	
 	private static String SESSION_SESSION_COOKIE_NAME ="JSESSIONID";
-	private static String INDEX_PAGE = "/index";
-	private static String LOGIN_PAGE = "/login";
-	private static String LOGOUT_PAGE = "/login";
+
 	@Autowired
 	CollaboratorService collaboratorService;
 	@Autowired

@@ -63,10 +63,10 @@ public class Collaborator implements UserDetails {
 	private boolean isActive = true;
 
 	/**
-	 * authorities role implements GrantedAuthority
+	 * authorities Roles implements GrantedAuthority
 	 */
 	@ManyToMany
-	@Fetch( FetchMode.JOIN)
+	@Fetch(FetchMode.JOIN)
 	private Collection<Roles> authorities;
 
 	/** missions : the missions this collaborator is in charge of */
@@ -78,6 +78,13 @@ public class Collaborator implements UserDetails {
 	@JoinColumn(name = "managerid")
 	private Collaborator manager = null;
 
+	/** Constructeur
+	 * @param id
+	 * @param lastName
+	 * @param firstName
+	 * @param email
+	 * @param role
+	 */
 	public Collaborator(int id, String lastName, String firstName, String email, Roles role) {
 		this.id = id;
 		this.lastName = lastName;
@@ -108,7 +115,6 @@ public class Collaborator implements UserDetails {
 	public Collection<Roles> getAuthorities() {		
 		return this.authorities;
 	}
-
 	/**
 	 * This is to simplify the Authority attribution for Spring Sécurity
 	 * 
