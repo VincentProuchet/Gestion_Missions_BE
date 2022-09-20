@@ -7,6 +7,7 @@ import diginamic.gdm.services.ScheduledTasksService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.GDMRoles;
+import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dto.MissionDTO;
@@ -29,7 +32,7 @@ import lombok.AllArgsConstructor;
  * @author DorianBoel
  */
 @RestController
-@RequestMapping(path = "mission", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = GDMRoutes.MISSION, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class MissionController {
 	
@@ -49,6 +52,7 @@ public class MissionController {
 	 * @return A list of all missions
 	 */
 	@GetMapping
+	@Secured(GDMRoles.COLLABORATOR)
 	public List<MissionDTO> list() {
 		// get the identity of the collaborator, send only their missions
 		return missionService.list().stream().map(mission -> new MissionDTO(mission)).toList();
@@ -59,7 +63,8 @@ public class MissionController {
 	 *
 	 * @return A list of all missions
 	 */
-	@GetMapping(path = "manager/{idManager}")
+	@GetMapping(path = GDMRoutes.MANAGER+"/{idManager}")
+	@Secured(GDMRoles.COLLABORATOR)
 	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) throws BadRequestException {
 		// get the identity of the manager
 		return missionService.missionsToValidate(idManager).stream().map(mission -> new MissionDTO(mission)).toList();
@@ -72,6 +77,7 @@ public class MissionController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
+	@Secured(GDMRoles.COLLABORATOR)
 	public void create(@RequestBody MissionDTO mission) throws BadRequestException {
 		// make this creation is asked by the collaborator it is assigned to
 		missionService.create(mission.instantiate());
@@ -84,6 +90,7 @@ public class MissionController {
 	 * @return The registered mission corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
+	@Secured(GDMRoles.COLLABORATOR)
 	public MissionDTO read(@PathVariable int id) throws BadRequestException {
 		// only a collaborator or his manager can ask for this
 		return new MissionDTO(missionService.read(id));
@@ -97,8 +104,10 @@ public class MissionController {
 	 * @return The resulting mission with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@Secured(GDMRoles.COLLABORATOR)
 	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) throws BadRequestException {
-		//
+		//Be aware that only mission with a certain status can be modified
+		// and update should'nt take the status from client
 		return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
 	}
 	
@@ -108,6 +117,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to delete
 	 */
 	@DeleteMapping(path = "{id}")
+	@Secured(GDMRoles.COLLABORATOR)
 	public void delete(@PathVariable int id) throws BadRequestException {
 		missionService.delete(id);
 	}
@@ -117,7 +127,8 @@ public class MissionController {
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
-	@PutMapping(path = "{id}/valider")
+	@PutMapping(path = "{id}/"+GDMRoutes.VALIDER)
+	@Secured(GDMRoles.MANAGER)
 	public void validate(@PathVariable int id) throws BadRequestException {
 		missionService.updateStatus(id, Status.VALIDATED);
 	}
@@ -127,7 +138,8 @@ public class MissionController {
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
-	@PutMapping(path = "{id}/rejeter")
+	@PutMapping(path = "{id}/"+GDMRoutes.REJETER)
+	@Secured(GDMRoles.MANAGER)
 	public void reject(@PathVariable int id) throws BadRequestException {
 		missionService.updateStatus(id, Status.REJECTED);
 	}

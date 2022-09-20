@@ -2,6 +2,11 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
@@ -23,7 +28,7 @@ import javax.transaction.Transactional;
 @Service
 @AllArgsConstructor
 @Transactional
-public class CollaboratorServiceImpl implements CollaboratorService {
+public class CollaboratorServiceImpl implements CollaboratorService, UserDetailsService {
 
 	/**
 	 * The {@link CollaboratorRepository} dependency.
@@ -58,6 +63,46 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		this.collaboratorRepository.save(current);
 		return current;
 	}
+
+	@Override
+	public void createUser(UserDetails user) {
+		this.create((Collaborator) user);
+	}
+
+	@Override
+	public void updateUser(UserDetails user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUser(String username) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void changePassword(String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean userExists(String username) {
+		Collaborator coll = this.collaboratorRepository.findByUsername(username);
+		if(coll!=null) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Collaborator coll = this.collaboratorRepository.findByUsername(username);
+		return coll;
+	}
+
+	
 
 	@Override
 	public boolean addMission(Mission mission, Collaborator collaborator) throws BadRequestException {

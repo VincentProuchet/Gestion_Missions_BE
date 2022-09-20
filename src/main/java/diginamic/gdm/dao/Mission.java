@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.type.LocalDateTimeType;
+
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 /**
  * Entity which reprensents a Collaborator
@@ -75,5 +78,4 @@ public class Mission {
 	@ManyToOne
 	@JoinColumn(name = "collaboratorID")
 	private Collaborator collaborator;
-
 }

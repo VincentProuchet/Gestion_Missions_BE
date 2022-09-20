@@ -4,7 +4,6 @@ import diginamic.gdm.dao.*;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CollaboratorRepository;
-import diginamic.gdm.repository.ManagerRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.MissionService;
@@ -18,6 +17,22 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Status;
+import diginamic.gdm.dao.Transport;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
+import diginamic.gdm.repository.CollaboratorRepository;
+import diginamic.gdm.repository.MissionRepository;
+import diginamic.gdm.services.MissionService;
+import diginamic.gdm.services.NatureService;
+import lombok.AllArgsConstructor;
 
 /**
  * Implementation for {@link MissionService}.
@@ -36,7 +51,7 @@ public class MissionServiceImpl implements MissionService {
 
     private NatureService natureService;
     private NatureRepository natureRepository;
-    private ManagerRepository managerRepository;
+    private CollaboratorRepository managerRepository;
 
     CollaboratorRepository collaboratorRepository;
 
@@ -175,7 +190,7 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
-        Manager manager = managerRepository.findById(idManager).orElseThrow(()->new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
+        Collaborator manager = managerRepository.findById(idManager).orElseThrow(()->new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
         List<Mission> missionsToValidate = new ArrayList<>();
         manager.getTeam().stream().forEach(collaborator -> {
             missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION));
@@ -185,7 +200,12 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public List<Mission> missionsToPutInWaitingValidation() {
-        return missionRepository.findByStatusAndEndDateBeforeOrderByEndDateDesc(Status.INIT, LocalDateTime.now());
+        return missionRepository.findByStatus(Status.INIT);
+    }
+
+    @Override
+    public List<Mission> completedMissions() {
+        return missionRepository.findByStatusAndEndDateBeforeOrderByEndDateDesc(Status.VALIDATED, LocalDateTime.now());
     }
 
 }

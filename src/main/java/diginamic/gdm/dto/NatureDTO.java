@@ -1,5 +1,4 @@
 package diginamic.gdm.dto;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -55,4 +54,5 @@ public class NatureDTO implements DTO<Nature> {
 		return new Nature(id, givesBonus, charged, tjm, bonusPercentage, dateOfValidity, endOfValidity, description);
 	}
 	
+
 }

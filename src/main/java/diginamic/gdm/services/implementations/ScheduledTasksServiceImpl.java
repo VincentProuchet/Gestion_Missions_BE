@@ -9,6 +9,7 @@ import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
 import diginamic.gdm.services.ScheduledTasksService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+@Service
 @AllArgsConstructor
 @Transactional
 public class ScheduledTasksServiceImpl implements ScheduledTasksService {

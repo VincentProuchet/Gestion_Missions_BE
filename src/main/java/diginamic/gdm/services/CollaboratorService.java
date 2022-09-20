@@ -2,6 +2,8 @@ package diginamic.gdm.services;
 
 import java.util.List;
 
+import org.springframework.security.provisioning.UserDetailsManager;
+
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
@@ -11,7 +13,7 @@ import diginamic.gdm.exceptions.BadRequestException;
  * 
  * @author DorianBoel
  */
-public interface CollaboratorService {
+public interface CollaboratorService extends UserDetailsManager {
 
 	/**
 	 * Gets the full list of registered collaborators.

@@ -22,5 +22,7 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
 
     List<Mission> findByStatusAndEndDateBeforeOrderByEndDateDesc(Status status, LocalDateTime currentDate);
 
+    List<Mission> findByStatus(Status status);
+
 
 }
