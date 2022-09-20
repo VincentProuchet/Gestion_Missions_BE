@@ -9,7 +9,9 @@ package diginamic.gdm;
  * @author Vincent
  *
  */
+
 public abstract class GDMRoutes {
+
 	//public static final String  = "";
 	/// les routes
 	public static final String SIGNIN  = "signin";

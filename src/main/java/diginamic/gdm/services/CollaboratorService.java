@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.security.provisioning.UserDetailsManager;
 
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.exceptions.BadRequestException;
 
 /**
  * Interface to be implemented by a collaborator service class.
@@ -23,7 +25,7 @@ public interface CollaboratorService extends UserDetailsManager {
 	/**
 	 * Saves a new {@link Collaborator} instance.
 	 * 
-	 * @param mission The new collaborator to be registered
+	 * @param collaborator The new collaborator to be registered
 	 */
 	void create(Collaborator collaborator);
 	
@@ -33,7 +35,7 @@ public interface CollaboratorService extends UserDetailsManager {
 	 * @param id The id corresponding to the collaborator to get
 	 * @return The registered collaborator corresponding to the given id
 	 */
-	Collaborator read(int id);
+	Collaborator read(int id) throws BadRequestException;
 	
 	/**
 	 * Updates the data for a specific registered collaborator.
@@ -43,5 +45,24 @@ public interface CollaboratorService extends UserDetailsManager {
 	 * @return The resulting collaborator with updated info
 	 */
 	Collaborator update(int id, Collaborator collaborator);
+
+
+	/**
+	 * Add a new mission to a collaborator
+	 *
+	 * @param mission
+	 * @param collaborator
+	 * @return
+	 */
+	boolean addMission(Mission mission, Collaborator collaborator) throws BadRequestException;
+
+	/**
+	 * Reassign an existing mission to another collaborator
+	 *
+	 * @param mission
+	 * @param collaborator
+	 * @return
+	 */
+	Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException;
 	
 }

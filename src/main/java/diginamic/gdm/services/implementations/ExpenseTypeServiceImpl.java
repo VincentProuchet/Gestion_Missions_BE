@@ -2,12 +2,16 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.ExpenseType;
 import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.services.ExpenseTypeService;
 import lombok.AllArgsConstructor;
+
+import javax.transaction.Transactional;
 
 /**
  * Implementation for {@link ExpenseTypeService}.
@@ -16,6 +20,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 
 	/**
@@ -34,12 +39,12 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	}
 	
 	@Override
-	public ExpenseType read(int id) {
-		return this.expenseTypeRepository.findById(id).orElseThrow();
+	public ExpenseType read(int id) throws BadRequestException {
+		return this.expenseTypeRepository.findById(id).orElseThrow(()->new BadRequestException("Expense Type not found", ErrorCodes.expenseTypeNotFound));
 	}
 
 	@Override
-	public ExpenseType update(int id, ExpenseType expenseType) {
+	public ExpenseType update(int id, ExpenseType expenseType) throws BadRequestException {
 		ExpenseType current = read(expenseType.getId());
 		current.setName(expenseType.getName());
 		this.expenseTypeRepository.save(current);
@@ -47,7 +52,7 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws BadRequestException {
 		ExpenseType expenseType = read(id);
 		this.expenseTypeRepository.delete(expenseType);
 	}

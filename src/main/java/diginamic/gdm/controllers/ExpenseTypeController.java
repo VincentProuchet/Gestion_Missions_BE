@@ -2,6 +2,7 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,7 +63,7 @@ public class ExpenseTypeController {
 	 * @return The registered expense type corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public ExpenseTypeDTO read(@PathVariable int id) {
+	public ExpenseTypeDTO read(@PathVariable int id) throws BadRequestException {
 		return new ExpenseTypeDTO(expenseTypeService.read(id));
 	}
 	
@@ -74,7 +75,7 @@ public class ExpenseTypeController {
 	 * @return The resulting expense type with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ExpenseTypeDTO update(@PathVariable int id, @RequestBody ExpenseTypeDTO expenseTypeDTO) {
+	public ExpenseTypeDTO update(@PathVariable int id, @RequestBody ExpenseTypeDTO expenseTypeDTO) throws BadRequestException {
 		return new ExpenseTypeDTO(expenseTypeService.update(id, expenseTypeDTO.instantiate()));
 	}
 	
@@ -84,7 +85,7 @@ public class ExpenseTypeController {
 	 * @param id The id of the expense type to delete
 	 */
 	@DeleteMapping(path = "{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws BadRequestException {
 		expenseTypeService.delete(id);
 	}
 	

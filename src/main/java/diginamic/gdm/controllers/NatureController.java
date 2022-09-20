@@ -2,6 +2,7 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,7 +52,7 @@ public class NatureController {
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void create(@RequestBody NatureDTO nature) {
+	public void create(@RequestBody NatureDTO nature) throws BadRequestException {
 		natureService.create(nature.instantiate());
 	}
 	
@@ -62,7 +63,7 @@ public class NatureController {
 	 * @return The registered nature corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	public NatureDTO read(@PathVariable int id) {
+	public NatureDTO read(@PathVariable int id) throws BadRequestException {
 		return new NatureDTO(natureService.read(id));
 	}
 	
@@ -74,7 +75,7 @@ public class NatureController {
 	 * @return The resulting nature with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public NatureDTO update(@PathVariable int id, @RequestBody NatureDTO natureDTO) {
+	public NatureDTO update(@PathVariable int id, @RequestBody NatureDTO natureDTO) throws BadRequestException {
 		return new NatureDTO(natureService.update(id, natureDTO.instantiate()));
 	}
 	
@@ -84,7 +85,7 @@ public class NatureController {
 	 * @param id The id corresponding to the nature to delete
 	 */
 	@DeleteMapping(path = "{id}")
-	public void delete(@PathVariable int id) {
+	public void delete(@PathVariable int id) throws BadRequestException {
 		natureService.delete(id);
 	}
 	

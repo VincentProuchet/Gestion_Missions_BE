@@ -52,6 +52,8 @@ public class Collaborator implements UserDetails {
 	/** email : identification mail address */
 	@Column(name = "email")
 	private String email;
+	 @OneToMany(mappedBy = "manager")
+	    private Set<Collaborator> team = new HashSet<Collaborator>();
 
 	/** userName */
 	private String username = "robert";

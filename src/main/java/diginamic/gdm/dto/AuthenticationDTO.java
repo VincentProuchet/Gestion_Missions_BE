@@ -1,6 +1,11 @@
 package diginamic.gdm.dto;
 
-import lombok.Data;
+import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Vincent
@@ -9,8 +14,10 @@ import lombok.Data;
  * notez que les identifiants et mots de passes n'y sont pas 
  * pour des raisons évidentes de sécurités
  */
-
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class AuthenticationDTO {
 	
 	/** grantToken  provided by the authentication service 
@@ -26,8 +33,8 @@ public class AuthenticationDTO {
 	 */
 	private String refreshToken;
 	
-	/** expirationDate  of exchange Token*/
-	private String expirationDate;
+	/** Creation Date  of exchange Token*/
+	private LocalDateTime creationDate;
 	
 	@Override
 	public String toString() {
@@ -38,7 +45,7 @@ public class AuthenticationDTO {
 				.append("\n exchange Token : \n")
 				.append(this.exchangeToken)
 				.append("\n expire : \n")
-				.append(this.expirationDate)
+				.append(this.creationDate)
 				.append("\n refresh Token : \n")
 				.append(this.refreshToken)
 				.toString();

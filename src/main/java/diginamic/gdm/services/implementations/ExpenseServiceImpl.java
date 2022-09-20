@@ -1,7 +1,15 @@
 package diginamic.gdm.services.implementations;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
+import diginamic.gdm.repository.MissionRepository;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Expense;
@@ -11,6 +19,8 @@ import diginamic.gdm.services.ExpenseService;
 import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
+
 /**
  * Implementation for {@link ExpenseService}.
  * 
@@ -18,6 +28,7 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
+@Transactional
 public class ExpenseServiceImpl implements ExpenseService {
 	
 	/**
@@ -30,26 +41,47 @@ public class ExpenseServiceImpl implements ExpenseService {
 	 */
 	private MissionService missionService;
 
+	private MissionRepository missionRepository;
+
 	@Override
 	public List<Expense> list() {
 		return this.expenseRepository.findAll();
 	}
 
 	@Override
-	public void create(int missionId, Expense expense) {
-		Mission mission = this.missionService.read(missionId);
-		expense.setMission(mission);
-		this.expenseRepository.save(expense);
+	public Expense create(Expense expense) throws BadRequestException {
+
+		if (!isExpenseValid(expense)){
+			throw new BadRequestException("Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB", ErrorCodes.expenseInvalid);
+		}
+
+		Expense actualExpense = this.expenseRepository.save(expense);
+		return actualExpense;
 	}
 	
 	@Override
-	public Expense read(int id) {
-		return this.expenseRepository.findById(id).orElseThrow();
+	public Expense read(int id) throws BadRequestException {
+		return this.expenseRepository.findById(id).orElseThrow(()->new BadRequestException("Expense not found", ErrorCodes.expenseNotFound));
 	}
 
 	@Override
-	public Expense update(int id, Expense expense) {
+	public Expense update(int id, Expense expense) throws BadRequestException {
 		Expense current = read(expense.getId());
+
+		if (id != expense.getId()){
+			throw new BadRequestException("Expense id inconsistent", ErrorCodes.idInconsistent);
+		}
+
+		if (!isExpenseValid(expense)) {
+			throw new BadRequestException("Expense invalid : ", ErrorCodes.expenseInvalid);
+		}
+
+		if ( expense.getMission().getId() != current.getMission().getId()
+				|| current.getMission().getExpenses().stream().allMatch(expense1 -> expense1.getId() != id)) {
+			return null;
+		}
+
+
 		current.setDate(expense.getDate());
 		current.setTva(expense.getTva());
 		current.setCost(expense.getCost());
@@ -59,9 +91,42 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws BadRequestException {
 		Expense expense = read(id);
+		Mission mission = expense.getMission();
+		mission.setExpenses(mission.getExpenses().stream().filter(expense1 -> expense1.getId() != id).collect(Collectors.toSet()));
+
 		this.expenseRepository.delete(expense);
+	}
+
+	@Override
+	public boolean isExpenseValid(Expense expense) {
+		Mission mission = expense.getMission();
+
+		// does this mission exist?
+		if (mission == null) {
+			return false;
+		}
+		Optional<Mission> actualMissionOptional = missionRepository.findById(mission.getId());
+		if (actualMissionOptional.isEmpty()){
+			return false;
+		}
+		Mission actualMission = actualMissionOptional.get();
+
+		boolean existsAndIsValid = actualMission != null && missionService.isMissionDone(actualMission.getId());
+
+		// is the date valid?
+		LocalDateTime date = expense.getDate();
+		if (date == null) {
+			return false;
+		}
+
+		boolean isDateInMissionPeriod = date != null && date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate());
+
+		// required data
+		boolean isRequiredDataPresent = expense.getExpenseType() != null && expense.getCost().compareTo(new BigDecimal(0)) >= 0 && expense.getTva() >= 0;
+
+		return existsAndIsValid && isDateInMissionPeriod && isRequiredDataPresent;
 	}
 
 }
