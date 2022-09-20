@@ -2,7 +2,6 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
-import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -18,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.GDMRoles;
 import diginamic.gdm.GDMRoutes;
-import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CityService;
 import lombok.AllArgsConstructor;
 

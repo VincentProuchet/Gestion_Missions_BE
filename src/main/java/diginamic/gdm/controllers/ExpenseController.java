@@ -44,7 +44,7 @@ public class ExpenseController {
 	 * @return A list of all expenses
 	 */
 	@GetMapping
-	@Secured(GDMRoles.COLLABORATOR)
+	@Secured({GDMRoles.COLLABORATOR})
 	public List<ExpenseDTO> list() {
 		return expenseService.list().stream().map(expense -> new ExpenseDTO(expense)).toList();
 	}
