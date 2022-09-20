@@ -64,8 +64,8 @@ public interface NatureService {
      * Check if a nature was or is active at the given date
      *  if the date is null, returns true if the nature is currently active
      *
-     * @param nature
-     * @param date
+     * @param nature must not be null
+     * @param date if null, the date is now
      * @return
      */
     boolean isNatureActive(Nature nature, LocalDateTime date);
@@ -73,7 +73,7 @@ public interface NatureService {
     /**
      * Returns true if the nature is currently active
      *
-     * @param nature
+     * @param nature must not be null
      * @return
      */
     default boolean isNatureActive(Nature nature) {

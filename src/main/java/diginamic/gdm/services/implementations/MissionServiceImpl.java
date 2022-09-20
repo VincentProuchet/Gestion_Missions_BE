@@ -1,13 +1,12 @@
 package diginamic.gdm.services.implementations;
 
-import diginamic.gdm.dao.Manager;
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Status;
-import diginamic.gdm.dao.Transport;
+import diginamic.gdm.dao.*;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
+import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.repository.ManagerRepository;
 import diginamic.gdm.repository.MissionRepository;
+import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
 import lombok.AllArgsConstructor;
@@ -36,7 +35,10 @@ public class MissionServiceImpl implements MissionService {
     private MissionRepository missionRepository;
 
     private NatureService natureService;
+    private NatureRepository natureRepository;
     private ManagerRepository managerRepository;
+
+    CollaboratorRepository collaboratorRepository;
 
     @Override
     public List<Mission> list() {
@@ -110,7 +112,9 @@ public class MissionServiceImpl implements MissionService {
         LocalDateTime startDate = mission.getStartDate();
         LocalDateTime endDate = mission.getEndDate();
         // the mission has a collaborator
+        // TODO change this for exceptions !!!!
         boolean hasCollaborator = mission.getCollaborator() != null;
+        Collaborator collaborator = collaboratorRepository.findById(mission.getCollaborator().getId()).get();
 
         // dates not null, start before end, start after now
         boolean areDatesValid = ((startDate != null) && (endDate != null) && endDate.isAfter(startDate) && startDate.isAfter(now));
@@ -121,16 +125,20 @@ public class MissionServiceImpl implements MissionService {
         boolean areDatesNotInWE = allowWE || (startDay != DayOfWeek.SATURDAY && startDay != DayOfWeek.SUNDAY && endDay != DayOfWeek.SATURDAY && endDay != DayOfWeek.SUNDAY);
 
         // nature, start and end cities are mandatory
-        boolean requiredDataIsPresent = mission.getNature() != null && mission.getStartCity() != null && mission.getEndCity() != null;
+        // TODO change this with exceptions, or else there will be NULLPOINTEREXCEPTIONS !!!
+        boolean requiredDataIsPresent = mission.getNature() != null;
+        Optional<Nature> natureOptional = natureRepository.findById(mission.getNature().getId());
+        requiredDataIsPresent = requiredDataIsPresent && mission.getStartCity() != null && mission.getEndCity() != null;
+        Nature nature = natureOptional.get();
 
         // if the transport is Flight, the mission must be created at least a week before the start
         boolean flightAdvanceNotice = mission.getMissionTransport() != Transport.Flight || startDate.isAfter(now.plusDays(7));
 
         // the mission s nature must be active at the date of start
-        boolean isNatureActive = natureService.isNatureActive(mission.getNature(), startDate);
+        boolean isNatureActive = natureService.isNatureActive(nature, startDate);
 
         // the mission cant be in the same time as another one
-        List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterOrderByStartDate(mission.getCollaborator(), startDate);
+        List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterOrderByStartDate(collaborator, startDate);
         int missionsCount = missions.size();
         boolean isCollaboratorAvailable = true;
         // in case of an update, avoid to compare to self
@@ -173,6 +181,11 @@ public class MissionServiceImpl implements MissionService {
             missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION));
         });
         return missionsToValidate;
+    }
+
+    @Override
+    public List<Mission> missionsToPutInWaitingValidation() {
+        return missionRepository.findByStatusAndEndDateBeforeOrderByEndDateDesc(Status.INIT, LocalDateTime.now());
     }
 
 }
