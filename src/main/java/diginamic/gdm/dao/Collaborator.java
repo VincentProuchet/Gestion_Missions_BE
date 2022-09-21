@@ -1,7 +1,9 @@
 package diginamic.gdm.dao;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,7 +21,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dto.CollaboratorDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -60,7 +61,7 @@ public class Collaborator implements UserDetails {
 	    private Set<Collaborator> team = new HashSet<Collaborator>();
 
 	/** userName */
-	 @Column(nullable = false,unique = true)
+	@Column(nullable = false,unique = true)
 	private String username = "robert";
 	/** password : remember to add security */
 	@Column(name = "password")
@@ -74,7 +75,7 @@ public class Collaborator implements UserDetails {
 	 */
 	@ManyToMany
 	@Fetch(FetchMode.JOIN)
-	private Collection<Roles> authorities;
+	private Collection<Roles> authorities ;
 
 	/** missions : the missions this collaborator is in charge of */
 	@OneToMany(mappedBy = "collaborator", fetch = FetchType.LAZY)
@@ -152,27 +153,24 @@ public class Collaborator implements UserDetails {
 	public Collection<Roles> getAuthorities() {		
 		return this.authorities;
 	}
+	
 	/**
 	 * This is to simplify the Authority attribution for Spring Security
-	 * 
-	 * @param authority
+	 * yhea it look complicated for what it does 
+	 * its due to the Collection being and immutable
+	 *  and we can't bypass that because of the UserDetail implementation 
+	 * @param Roles authority
 	 */
-	public void addAuthorities(Roles authority) {
-		
-		this.authorities.add(authority);
+	public void addAuthorities(Roles... authority) {
+		List<Roles> construct = new ArrayList<>();
+		for (Roles role : authority) {
+			
+			construct.add(role);
+		}
+		System.err.println("adding autohorities to user " + this.getFirstName());
+		this.authorities = construct;
 	}
-	/**
-	 * This is to simplify the Authority attribution for Spring Security
-	 * 
-	 * @param authority
-	 */
-	public void addAuthorities(Role authority) {
-		
-		
-		
-		this.authorities.add(new Roles(authority));
-	}
-
+	
 	@Override
 	public String getPassword() {
 		return password;

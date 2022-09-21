@@ -3,13 +3,13 @@ package diginamic.gdm.dao;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import diginamic.gdm.Enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Represents a collaborator's role/function
@@ -35,9 +35,7 @@ public class Roles implements GrantedAuthority {
 	 * The name of the role
 	 */	
 	public String label;
-	//private static RoleService service;
-	
-
+		
 	@Override
 	public String getAuthority() {
 		
@@ -47,6 +45,5 @@ public class Roles implements GrantedAuthority {
 		this.id = role.getId();
 		this.label = role.getLABEL();
 	}
-
 	
 }

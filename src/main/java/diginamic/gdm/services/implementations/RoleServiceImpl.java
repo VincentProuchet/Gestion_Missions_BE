@@ -1,10 +1,8 @@
 package diginamic.gdm.services.implementations;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.Enums.Role;
@@ -40,13 +38,22 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return role;
 	}
+	
+	/**
+	 * This was coded to save all instances of Role enum 
+	 * in one go
+	 * it may not be useful in the end
+	 * but it was usefull for testing
+	 */
 	public void saveAutorities() {
 		
 		ArrayList<Roles> rols = new ArrayList<Roles>();
 		for (Role r : Role.values()) {
 			rols.add(new Roles(r.getId(),r.getLABEL()));
 			this.repository.saveAll(rols);
+			
 		}
+		System.err.println("roles saved");
 	}
 
 	@Override

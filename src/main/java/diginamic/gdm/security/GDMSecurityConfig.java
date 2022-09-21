@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
 import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.RoleService;
 import lombok.AllArgsConstructor;
 
 /**
@@ -42,7 +41,7 @@ public class GDMSecurityConfig {
 		
 		http.authenticationProvider(authProvider) 
 		.formLogin()
-		//.loginPage(GDMVars.LOGINPAGE)// pour definir la login page
+		.loginPage(GDMVars.LOGINPAGE)// pour definir la login page
 		.permitAll()
 		;
 		http.rememberMe().key("RememberMe").tokenValiditySeconds(GDMVars.TOKEN_LIFE);

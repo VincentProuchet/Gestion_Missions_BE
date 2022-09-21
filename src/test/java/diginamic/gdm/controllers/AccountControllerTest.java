@@ -20,11 +20,7 @@ public class AccountControllerTest {
 		Collaborator coll = new Collaborator();
 		coll.setUsername("mario");
 		coll.setPassword("1111");
-		coll.setManager(coll);
-		coll.addAuthorities(Role.ADMIN);
-		coll.addAuthorities(Role.COLLABORATOR);
-		
-		
+		coll.setManager(coll);		
 		controller.signup(coll);
 		// TODO not really a test
 		assert(true);

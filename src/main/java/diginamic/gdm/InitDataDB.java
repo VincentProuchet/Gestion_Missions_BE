@@ -1,5 +1,6 @@
 package diginamic.gdm;
 
+import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.*;
 import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.repository.MissionRepository;
@@ -52,9 +53,6 @@ public class InitDataDB {
 
     @EventListener
     public void initDB(ContextRefreshedEvent event) throws Exception {
-    	
-    	//roleService.saveAutorities();
-    	
         System.out.println("init mock data");
 
         // 5 cities
@@ -67,19 +65,13 @@ public class InitDataDB {
         }
 
         // 3 roles
-        Roles user = new Roles();
-        user.setLabel(GDMRoles.COLLABORATOR);
-        user.setId(3);
+        Roles user = new Roles(Role.COLLABORATOR);
         user = roleService.create(user);
 
-        Roles managerRole = new Roles();
-        managerRole.setLabel(GDMRoles.MANAGER);
-        managerRole.setId(2);
+        Roles managerRole = new Roles(Role.MANAGER);
         managerRole = roleService.create(managerRole);
 
-        Roles adminRole = new Roles();
-        adminRole.setLabel(GDMRoles.ADMIN);
-        adminRole.setId(1);
+        Roles adminRole = new Roles(Role.ADMIN);
         adminRole = roleService.create(adminRole);
 
         // 5 collaborators, 2 managers, 1 admin
@@ -89,9 +81,8 @@ public class InitDataDB {
         manager1.setEmail("manager1@mail");
         manager1.setPassword(passwordEncoder.encode("man1password"));
         manager1.setFirstName("manager1firstname");
-        manager1.setUsername("manager1lastname");
         manager1.setLastName("manager1lastname");
-        
+        manager1.setUsername("manager1lastname");
         manager1.setActive(true);
 
         // manager2 for the managers (himself included...) and the admin

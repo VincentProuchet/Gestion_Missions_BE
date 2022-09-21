@@ -2,8 +2,6 @@ package diginamic.gdm.dto;
 
 import java.util.Collection;
 
-import org.springframework.security.core.GrantedAuthority;
-
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Roles;
 import lombok.AllArgsConstructor;
