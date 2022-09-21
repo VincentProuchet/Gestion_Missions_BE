@@ -7,5 +7,12 @@ package diginamic.gdm.dao;
  *
  */
 public enum Transport {
-	Flight, Car, Train, Carshare
+	/** Flight */
+	Flight,
+	/** Car */
+	Car,
+	/** Train */
+	Train,
+	/** Carshare */
+	Carshare
 }

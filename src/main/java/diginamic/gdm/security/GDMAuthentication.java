@@ -21,10 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GDMAuthentication implements AuthenticationProvider {
 
-	//UserDetailsService userManager;
 	@Autowired
 	private CollaboratorService collaboratorService;
-	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -32,6 +30,7 @@ public class GDMAuthentication implements AuthenticationProvider {
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		// if a security context already exist
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			System.out.println("Authenticated");
 			return SecurityContextHolder.getContext().getAuthentication();
 		}
 		String username = (String) auth.getPrincipal();
@@ -52,19 +51,13 @@ public class GDMAuthentication implements AuthenticationProvider {
 					return userToken;					
 				}
 			}
-		}
-		
+		}		
 		throw new BadCredentialsException("les informations de compte sont incorrectes");
 	}
 
 	@Override
-	public boolean supports(Class<?> authentication) {
-		
-		if(authentication.getGenericSuperclass()== UsernamePasswordAuthenticationToken.class ){
-			System.out.println("authentication compatibility valid");
-			return true;
-		}
-		return true;
+	public boolean supports(Class<?> authentication) {		
+		return authentication.equals(UsernamePasswordAuthenticationToken.class);
 	}
 
 }

@@ -1,6 +1,5 @@
 package diginamic.gdm.dto;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 
+ * for sending user
  * @author Vincent
  *
  */
@@ -28,22 +27,16 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	private String lastName = null;
 	/** firstName prénom */
 	private String firstName = null;
-	
-	/** password */
-	private String password =null;
-	/** newPassword for an eventual implementation of password update*/
-	private String newPassword =null;
-	
 	/** userName */
-	private String userName = null;
-	
+	private String userName = null;	
 	/** role */
-	private Collection<? extends GrantedAuthority> roles;
-	
+	private Collection<? extends GrantedAuthority> roles;	
 	/** email */
 	private String email = null;
-	/** manager  le manager a un collaborateur null pour éviter
-	 * de passer toute la */
+	/**
+	 * manager  le manager a un collaborateur null pour éviter
+	 * de passer toute la 
+	 */
 	private CollaboratorDTO manager = null;
 	
 	/** Constructeur
@@ -58,6 +51,9 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	}
 	
 	
+	/**
+	 *
+	 */
 	public Collaborator instantiate() {
 		return new Collaborator();
 	}

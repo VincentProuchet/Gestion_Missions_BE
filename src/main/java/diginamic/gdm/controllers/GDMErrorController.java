@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import diginamic.gdm.GDMRoutes;
 
+/**
+ * used has a default error controller
+ * you can change it for customized error 
+ * @author Vincent
+ *
+ */
 public class GDMErrorController implements ErrorController {
 
 
@@ -23,7 +29,10 @@ public class GDMErrorController implements ErrorController {
 	  }
 
 	  
-	  public String getErrorPath() {
+	  /**
+	 * @return
+	 */
+	public String getErrorPath() {
 	    return "/"+GDMRoutes.ERRORS;
 	  }
 	

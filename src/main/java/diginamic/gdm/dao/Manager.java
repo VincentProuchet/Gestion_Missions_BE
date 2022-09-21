@@ -11,10 +11,15 @@ import java.util.Set;
 
 /**
  * Entity which represents a Manager
- * 
+ * we stopped used those because it caused 
+ * the Spring security to not bing able to convert
+ * from entities coming form the database to be converter 
+ * to their precious UserDetails
+ * Its kept here as a Grim reminder    
  * @author Joseph
  *
 */
+@Deprecated 
 public class Manager extends Collaborator {
 
 

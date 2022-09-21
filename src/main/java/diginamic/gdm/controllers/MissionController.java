@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.GDMRoles;
 import diginamic.gdm.GDMRoutes;
+import diginamic.gdm.GDMVars;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dto.MissionDTO;
@@ -149,7 +150,7 @@ public class MissionController {
 	 * TODO need unit and global tests, and rework following the DB security update
 	 * @throws BadRequestException
 	 */
-	@Scheduled(fixedRate = 1000)
+	@Scheduled(fixedRate = GDMVars.SHEDULED_INTERVAL)
 	public void testNightComputing() throws BadRequestException {
 		/*System.out.println("computing");
 		

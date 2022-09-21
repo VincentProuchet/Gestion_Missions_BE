@@ -44,7 +44,7 @@ public class ExpenseController {
 	 * @return A list of all expenses
 	 */
 	@GetMapping
-	@Secured(GDMRoles.COLLABORATOR)
+	@Secured({GDMRoles.COLLABORATOR})
 	public List<ExpenseDTO> list() {
 		return expenseService.list().stream().map(expense -> new ExpenseDTO(expense)).toList();
 	}
@@ -72,6 +72,20 @@ public class ExpenseController {
 	public ExpenseDTO read(@PathVariable int id) throws BadRequestException {
 		return new ExpenseDTO(expenseService.read(id));
 	}
+	/**
+	 * Gets a specific registered expense.
+	 * 
+	 * @param id The id corresponding to the expense to get
+	 * @return The registered expense corresponding to the given id
+	 */
+	@GetMapping(path = "/"+GDMRoutes.MISSION+"/{id}")
+	@Secured(GDMRoles.COLLABORATOR)
+	public ExpenseDTO readByMission(@PathVariable int id) throws BadRequestException {
+		
+		// TODO because as is it just send the one expense of the id
+		return new ExpenseDTO(expenseService.read(id));
+	}
+	
 	
 	/**
 	 * Updates the data for a specific registered expense.

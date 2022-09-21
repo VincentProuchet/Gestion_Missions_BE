@@ -28,7 +28,7 @@ import javax.transaction.Transactional;
 @Service
 @AllArgsConstructor
 @Transactional
-public class CollaboratorServiceImpl implements CollaboratorService, UserDetailsService {
+public class CollaboratorServiceImpl implements CollaboratorService {
 
 	/**
 	 * The {@link CollaboratorRepository} dependency.
@@ -64,41 +64,12 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 		return current;
 	}
 
-	@Override
-	public void createUser(UserDetails user) {
-		this.create((Collaborator) user);
-	}
 
-	@Override
-	public void updateUser(UserDetails user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteUser(String username) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void changePassword(String oldPassword, String newPassword) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean userExists(String username) {
-		Collaborator coll = this.collaboratorRepository.findByUsername(username);
-		if(coll!=null) {
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Collaborator coll = this.collaboratorRepository.findByUsername(username);
+		Collaborator coll = this.collaboratorRepository
+				.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(" Username not found ")) ;
 		return coll;
 	}
 

@@ -19,10 +19,7 @@ public class PasswordConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public static PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
-	}
+
 
 	
 
