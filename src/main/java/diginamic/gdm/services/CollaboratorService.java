@@ -65,4 +65,23 @@ public interface CollaboratorService extends UserDetailsService {
 	 */
 	Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException;
 	
+	/**
+	 * Collaborator from username
+	 * to not mistake from UserDetail from username
+	 * @param userName 
+	 * @return Collaborator
+	 * @throws Exception
+	 */
+	Collaborator findByUserName(String userName)throws Exception;
+	
+	/**
+	 * Let you get Collaborator data from
+	 * the user in  the SecurityContext
+	 * 
+	 * You NEED to have a user connected
+	 * 
+	 * @return Connected Collaborator
+	 * @throws Exception
+	 */
+	public Collaborator getConnectedUser()throws Exception ;
 }

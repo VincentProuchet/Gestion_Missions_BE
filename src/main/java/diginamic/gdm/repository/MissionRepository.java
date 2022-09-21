@@ -1,15 +1,14 @@
 package diginamic.gdm.repository;
 
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Nature;
-import diginamic.gdm.dao.Status;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import diginamic.gdm.dao.Mission;
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Nature;
+import diginamic.gdm.dao.Status;
 
 public interface MissionRepository extends JpaRepository<Mission, Integer> {
 

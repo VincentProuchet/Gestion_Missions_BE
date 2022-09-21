@@ -12,28 +12,22 @@ public class AccountControllerTest {
 
 	@Autowired
 	private AccountController controller;
+	
 	@Test
 	void signup() {
 		
 		
 		Collaborator coll = new Collaborator();
 		coll.setUsername("mario");
+		coll.setPassword("1111");
+		coll.setManager(coll);
+		coll.addAuthorities(Role.ADMIN);
+		coll.addAuthorities(Role.COLLABORATOR);
 		
-//		
-//				0,
-//				"Patrick",
-//				"Robert",
-//				"PRobert@hotmail.com",
-//				[null],
-//				"mario",
-//				"1111",
-//				1,
-//				[],
-//				
-				
-				//);
 		
+		controller.signup(coll);
+		// TODO not really a test
+		assert(true);
 	}
-	
-	
+
 }

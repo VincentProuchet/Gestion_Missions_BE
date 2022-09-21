@@ -19,11 +19,12 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import diginamic.gdm.Enums.Role;
+import diginamic.gdm.dto.CollaboratorDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 /**
  * Entity which represents a Collaborator implement UserDetails from SpringSecurity
@@ -115,6 +116,36 @@ public class Collaborator implements UserDetails {
 		this.email = user.getEmail();
 		this.authorities = user.getAuthorities();
 	}
+	/**
+	 * Constructeur used for mapping from the DTO
+	 *  
+	 * @param user
+	 */
+	public Collaborator(CollaboratorDTO user) {
+		this.id = user.getId();
+		this.lastName = user.getLastName();
+		this.firstName = user.getFirstName();
+		this.email = user.getEmail();
+		this.authorities = user.getRoles();
+		if(user.getManager()!= null) {
+			this.manager = new Collaborator(user.getManager(),false);
+		}
+		
+	}
+	/**
+	 * Constructeur used for map
+	 * this one is made to avoid StackOverflow
+	 * @param user
+	 */
+	public Collaborator(CollaboratorDTO user,boolean withManager) {
+		this.id = user.getId();
+		this.lastName = user.getLastName();
+		this.firstName = user.getFirstName();
+		this.email = user.getEmail();
+		if(user.getManager()!= null && withManager) {
+			this.manager = new Collaborator(user.getManager(),false);
+		}
+	}
 
 	@Override
 	public Collection<Roles> getAuthorities() {		
@@ -126,7 +157,19 @@ public class Collaborator implements UserDetails {
 	 * @param authority
 	 */
 	public void addAuthorities(Roles authority) {
+		
 		this.authorities.add(authority);
+	}
+	/**
+	 * This is to simplify the Authority attribution for Spring Security
+	 * 
+	 * @param authority
+	 */
+	public void addAuthorities(Role authority) {
+		
+		
+		
+		this.authorities.add(new Roles(authority));
 	}
 
 	@Override

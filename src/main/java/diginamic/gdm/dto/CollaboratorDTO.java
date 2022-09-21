@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,10 +28,10 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	private String lastName = null;
 	/** firstName prénom */
 	private String firstName = null;
-	/** userName */
-	private String userName = null;	
+	
+	private String userName = null;
 	/** role */
-	private Collection<? extends GrantedAuthority> roles;	
+	private Collection<Roles> roles;	
 	/** email */
 	private String email = null;
 	/**
@@ -46,8 +47,30 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 		this.id = collaborator.getId();
 		this.lastName = collaborator.getLastName();
 		this.firstName = collaborator.getFirstName();
+		this.userName = collaborator.getUsername();
 		this.email = collaborator.getEmail();
 		this.roles = collaborator.getAuthorities();
+		if(collaborator.getManager()!= null) {
+		this.manager = new CollaboratorDTO(collaborator.getManager(),false );			
+		}
+	}
+	
+	/**
+	 * Alternate 
+	 *  Constructeur
+	 *  made to get mangers of a user
+	 *  made to avoid the stackOverflow 
+	 * @param collaborator
+	 * @param withManager
+	 */
+	public CollaboratorDTO(Collaborator collaborator,Boolean withManager) {
+		this.id = collaborator.getId();
+		this.lastName = collaborator.getLastName();
+		this.firstName = collaborator.getFirstName();
+		this.email = collaborator.getEmail();		
+		if(withManager) {
+			this.manager = new CollaboratorDTO(collaborator.getManager(),false);			
+		}
 	}
 	
 	
@@ -55,7 +78,8 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	 *
 	 */
 	public Collaborator instantiate() {
-		return new Collaborator();
+		
+		return new Collaborator(this);
 	}
 	
 	

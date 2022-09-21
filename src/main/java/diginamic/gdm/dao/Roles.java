@@ -1,8 +1,6 @@
 package diginamic.gdm.dao;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -42,6 +40,10 @@ public class Roles implements GrantedAuthority {
 	public String getAuthority() {
 		
 		return this.label;
+	}
+	public Roles(Role role) {
+		this.id = role.getId();
+		this.label = role.getLABEL();
 	}
 
 	

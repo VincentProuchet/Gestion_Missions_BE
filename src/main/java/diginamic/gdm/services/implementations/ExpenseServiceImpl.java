@@ -4,22 +4,21 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.exceptions.ErrorCodes;
-import diginamic.gdm.repository.MissionRepository;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Expense;
 import diginamic.gdm.dao.Mission;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.ExpenseRepository;
+import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.services.ExpenseService;
 import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
-
-import javax.transaction.Transactional;
 
 /**
  * Implementation for {@link ExpenseService}.

@@ -4,21 +4,22 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import diginamic.gdm.GDMRoles;
+import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
-import diginamic.gdm.services.MissionService;
-import org.springframework.stereotype.Service;
-
-import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.services.CollaboratorService;
+import diginamic.gdm.services.MissionService;
 import lombok.AllArgsConstructor;
-
-import javax.transaction.Transactional;
 
 /**
  * Implementation for {@link CollaboratorService}.
@@ -85,6 +86,19 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	public Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException {
 		mission.setCollaborator(collaborator);
 		return missionService.update(mission.getId(), mission);
+	}
+
+	@Override
+	public Collaborator findByUserName(String userName) throws UsernameNotFoundException {
+		return this.collaboratorRepository.findByUsername(userName).orElseThrow(()-> new UsernameNotFoundException(" Can't find connected username") );
+	}
+
+	@Secured({GDMRoles.ADMIN,GDMRoles.MANAGER,GDMRoles.COLLABORATOR})
+	public Collaborator getConnectedUser()throws Exception {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
+		String username = (String) auth.getPrincipal();
+		return collaboratorRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException(" Can't find connected username") );
+		
 	}
 
 }

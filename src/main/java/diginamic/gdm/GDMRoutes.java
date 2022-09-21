@@ -4,8 +4,7 @@ package diginamic.gdm;
  * Classe utilitaire qui n'a d'autre but que de conserver tout
  * ce que l'on a en texte clair ou variables globales dans le code
  * ici ce sont les routes
- * 
- * 
+ *  
  * @author Vincent
  *
  */
@@ -18,6 +17,8 @@ public abstract class GDMRoutes {
 	public static final String SIGNUP  = "signup";
 	/** LOGOUT */
 	public static final String LOGOUT ="logout";	
+	/** COLLABORATOR */
+	public static final String COLLABORATOR = "collaborator";
 	/** ERRORS */
 	public static final String ERRORS = "error";		
 	/** NATURE */

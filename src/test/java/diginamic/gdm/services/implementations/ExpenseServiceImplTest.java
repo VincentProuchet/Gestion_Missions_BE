@@ -1,18 +1,10 @@
 package diginamic.gdm.services.implementations;
 
-import diginamic.gdm.dao.*;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.repository.*;
-import diginamic.gdm.services.ExpenseService;
-import diginamic.gdm.services.ExpenseTypeService;
-import org.apache.catalina.Store;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -20,7 +12,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import diginamic.gdm.dao.City;
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Expense;
+import diginamic.gdm.dao.ExpenseType;
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Nature;
+import diginamic.gdm.dao.Status;
+import diginamic.gdm.dao.Transport;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.repository.CityRepository;
+import diginamic.gdm.repository.CollaboratorRepository;
+import diginamic.gdm.repository.ExpenseRepository;
+import diginamic.gdm.repository.ExpenseTypeRepository;
+import diginamic.gdm.repository.MissionRepository;
+import diginamic.gdm.repository.NatureRepository;
+import diginamic.gdm.services.ExpenseService;
 
 @SpringBootTest
 class ExpenseServiceImplTest {
