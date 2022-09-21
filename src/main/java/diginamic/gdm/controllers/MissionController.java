@@ -152,8 +152,8 @@ public class MissionController {
 	 */
 	@Scheduled(fixedRate = GDMVars.SHEDULED_INTERVAL)
 	public void testNightComputing() throws BadRequestException {
-		System.out.println("computing");
-		/*
+		/*System.out.println("computing");
+		
 		scheduledTasksService.computeBonusForCompletedMissions();
 		scheduledTasksService.changeMissionStatus();
 		*/
