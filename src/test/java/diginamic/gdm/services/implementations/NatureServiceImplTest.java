@@ -51,13 +51,13 @@ class NatureServiceImplTest {
         natureRepository.save(nature2);
 
         Mission m1 = new Mission();
-        m1.setBonus(new BigDecimal(36));
+        m1.setBonus(BigDecimal.valueOf(36));
         m1.setMissionTransport(Transport.Car);
         m1.setNature(nature1);
         missionRepository.save(m1);
 
         Mission m2 = new Mission();
-        m2.setBonus(new BigDecimal(100));
+        m2.setBonus(BigDecimal.valueOf(100));
         m2.setMissionTransport(Transport.Flight);
         m2.setNature(nature1);
         missionRepository.save(m2);

@@ -135,7 +135,7 @@ public class InitDataDB {
 
         // basic nature
         Nature newNature = new Nature();
-        newNature.setTjm(new BigDecimal(200));
+        newNature.setTjm(BigDecimal.valueOf(200));
         newNature.setDescription("Hard work type 1");
         newNature.setDateOfValidity(lastYear);
         newNature.setEndOfValidity(null);
@@ -147,7 +147,7 @@ public class InitDataDB {
 
         // basic nature, more money
         Nature newNature2 = new Nature();
-        newNature2.setTjm(new BigDecimal(500));
+        newNature2.setTjm(BigDecimal.valueOf(500));
         newNature2.setDescription("Hard work type 2");
         newNature2.setDateOfValidity(lastYear);
         newNature2.setEndOfValidity(null);
@@ -159,7 +159,7 @@ public class InitDataDB {
 
         // non charged nature
         Nature newNature3 = new Nature();
-        newNature3.setTjm(new BigDecimal(0));
+        newNature3.setTjm(BigDecimal.valueOf(0));
         newNature3.setDescription("Formation");
         newNature3.setDateOfValidity(lastYear);
         newNature3.setEndOfValidity(null);
@@ -172,7 +172,7 @@ public class InitDataDB {
 
         // time limited nature
         Nature newNature4 = new Nature();
-        newNature4.setTjm(new BigDecimal(50));
+        newNature4.setTjm(BigDecimal.valueOf(50));
         newNature4.setDescription("Promotional work");
         newNature4.setDateOfValidity(previousWeek(now));
         newNature4.setEndOfValidity(nextWeek(now));
@@ -184,7 +184,7 @@ public class InitDataDB {
 
         // ended nature with same description
         Nature newNature5 = new Nature();
-        newNature5.setTjm(new BigDecimal(50));
+        newNature5.setTjm(BigDecimal.valueOf(50));
         newNature5.setDescription("Promotional work");
         newNature5.setDateOfValidity(previousWeek(lastYear));
         newNature5.setEndOfValidity(nextWeek(lastYear));
@@ -196,7 +196,7 @@ public class InitDataDB {
 
         // ended nature
         Nature newNature6 = new Nature();
-        newNature6.setTjm(new BigDecimal(50));
+        newNature6.setTjm(BigDecimal.valueOf(50));
         newNature6.setDescription("Deprecated work");
         newNature6.setDateOfValidity(previousMonth(lastYear));
         newNature6.setEndOfValidity(nextMonth(lastYear));
@@ -334,7 +334,7 @@ public class InitDataDB {
         for (int i = 0; i < 10; i++) {
             Mission mission = completedMissions.get(i % completedMissions.size());
             Expense expense = new Expense();
-            expense.setCost(new BigDecimal(10 * i));
+            expense.setCost(BigDecimal.valueOf(10 * i));
             expense.setMission(mission);
             expense.setDate(mission.getStartDate().plusDays(1));
             expense.setExpenseType(expenseTypes.get(i % expenseTypes.size()));

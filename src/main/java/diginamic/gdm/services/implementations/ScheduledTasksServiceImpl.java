@@ -36,7 +36,7 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
             Nature nature = mission.getNature();
 
-            BigDecimal bonus = new BigDecimal(workedDays(mission.getStartDate(), mission.getEndDate()) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
+            BigDecimal bonus = BigDecimal.valueOf(workedDays(mission) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
 
             mission.setBonus(bonus);
             mission.setHasBonusBeenEvaluated(true);
@@ -55,14 +55,10 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
     }
 
-    /**
-     * Return the number of days between start and end, excluding the WEs
-     *
-     * @param start must not be a Saturday or a Sunday
-     * @param end   idem
-     * @return
-     */
-    private long workedDays(LocalDateTime start, LocalDateTime end) {
+    @Override
+    public long workedDays(Mission mission) {
+        LocalDateTime start = mission.getStartDate();
+        LocalDateTime end = mission.getEndDate();
 
         long totalDays = start.until(end, ChronoUnit.DAYS);
         long weekendDays = (totalDays / 7) * 2;
@@ -71,6 +67,6 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
             weekendDays += 2;
         }
 
-        return weekendDays;
+        return totalDays - weekendDays;
     }
 }

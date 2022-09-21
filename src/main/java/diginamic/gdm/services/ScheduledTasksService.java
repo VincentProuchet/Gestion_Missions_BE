@@ -1,5 +1,6 @@
 package diginamic.gdm.services;
 
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
 
 public interface ScheduledTasksService {
@@ -15,6 +16,15 @@ public interface ScheduledTasksService {
      * set the ended status for just ended missions
      */
     void changeMissionStatus() throws BadRequestException;
+
+
+    /**
+     * Return the number of days between start and end, excluding the WEs
+     *
+     * @param mission to evaluate
+     * @return a number of days
+     */
+    long workedDays(Mission mission);
 
     //TODO send a mail to the manager
 }
