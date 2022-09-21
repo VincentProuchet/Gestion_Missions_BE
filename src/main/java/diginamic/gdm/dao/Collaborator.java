@@ -60,6 +60,7 @@ public class Collaborator implements UserDetails {
 	    private Set<Collaborator> team = new HashSet<Collaborator>();
 
 	/** userName */
+	 @Column(nullable = false,unique = true)
 	private String username = "robert";
 	/** password : remember to add security */
 	@Column(name = "password")
@@ -127,7 +128,7 @@ public class Collaborator implements UserDetails {
 		this.firstName = user.getFirstName();
 		this.email = user.getEmail();
 		this.authorities = user.getRoles();
-		if(user.getManager()!= null) {
+		if(user.getManager()!= null) { // just in case
 			this.manager = new Collaborator(user.getManager(),false);
 		}
 		
@@ -142,7 +143,7 @@ public class Collaborator implements UserDetails {
 		this.lastName = user.getLastName();
 		this.firstName = user.getFirstName();
 		this.email = user.getEmail();
-		if(user.getManager()!= null && withManager) {
+		if(user.getManager()!= null && withManager) {// for stackOverFlow prevention
 			this.manager = new Collaborator(user.getManager(),false);
 		}
 	}

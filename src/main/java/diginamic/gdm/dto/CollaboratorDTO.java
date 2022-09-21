@@ -28,8 +28,10 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	private String lastName = null;
 	/** firstName prénom */
 	private String firstName = null;
-	
-	private String userName = null;
+	/** Username not in camel due to necessities from the front-end 
+	 * so please don change it to camelCase
+	 * */
+	private String username = null;
 	/** role */
 	private Collection<Roles> roles;	
 	/** email */
@@ -47,7 +49,7 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 		this.id = collaborator.getId();
 		this.lastName = collaborator.getLastName();
 		this.firstName = collaborator.getFirstName();
-		this.userName = collaborator.getUsername();
+		this.username = collaborator.getUsername();
 		this.email = collaborator.getEmail();
 		this.roles = collaborator.getAuthorities();
 		if(collaborator.getManager()!= null) {
@@ -75,10 +77,10 @@ public class CollaboratorDTO implements DTO<Collaborator> {
 	
 	
 	/**
-	 *
+	 * return an instance of a Collaborator class 
+	 * from the currentDTO 
 	 */
-	public Collaborator instantiate() {
-		
+	public Collaborator instantiate() {		
 		return new Collaborator(this);
 	}
 	

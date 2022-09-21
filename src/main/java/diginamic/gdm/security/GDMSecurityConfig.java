@@ -33,16 +33,13 @@ public class GDMSecurityConfig {
 		
 	@Autowired
 	private GDMAuthentication authProvider;
-	@Autowired
-	private RoleService roleService;
+
 	@Autowired
 	CollaboratorService userService;	
 
 	@Bean
 	public SecurityFilterChain springSecurityfilterChain(HttpSecurity http) throws Exception {
 		
-		roleService.saveAutorities();
-		System.err.println("Filter Chain");
 		http.authenticationProvider(authProvider) 
 		.formLogin()
 		//.loginPage(GDMVars.LOGINPAGE)// pour definir la login page

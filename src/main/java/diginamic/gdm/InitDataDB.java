@@ -52,6 +52,9 @@ public class InitDataDB {
 
     @EventListener
     public void initDB(ContextRefreshedEvent event) throws Exception {
+    	
+    	//roleService.saveAutorities();
+    	
         System.out.println("init mock data");
 
         // 5 cities
@@ -86,7 +89,9 @@ public class InitDataDB {
         manager1.setEmail("manager1@mail");
         manager1.setPassword(passwordEncoder.encode("man1password"));
         manager1.setFirstName("manager1firstname");
+        manager1.setUsername("manager1lastname");
         manager1.setLastName("manager1lastname");
+        
         manager1.setActive(true);
 
         // manager2 for the managers (himself included...) and the admin
@@ -96,6 +101,7 @@ public class InitDataDB {
         manager2.setPassword(passwordEncoder.encode("man2password"));
         manager2.setFirstName("manager2firstname");
         manager2.setLastName("manager2lastname");
+        manager2.setUsername("manager2lastname");
         manager2.setActive(true);
 
         manager1.setManager(manager2);
@@ -109,6 +115,7 @@ public class InitDataDB {
         admin.setPassword(passwordEncoder.encode("adminpassword"));
         admin.setFirstName("adminfirstname");
         admin.setLastName("adminlastname");
+        admin.setUsername("adminlastname");
         admin.setActive(true);
         admin.setManager(manager2);
 
@@ -125,6 +132,7 @@ public class InitDataDB {
             newColl.setPassword(passwordEncoder.encode("" + i + i + i + i));
             newColl.setFirstName("coll" + i + "firstname");
             newColl.setLastName("coll" + i + "lastname");
+            newColl.setUsername("coll" + i + "lastname");
             newColl.setActive(true);
             newColl.setManager(manager1);
             newColl = collaboratorService.create(newColl);
