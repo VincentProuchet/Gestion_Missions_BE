@@ -61,7 +61,7 @@ public class MissionDTO implements DTO<Mission> {
     }
     
     public Mission instantiate() {
-    	return new Mission(id, start, end, bonus, transport, status, nature.instantiate(), startCity, arrivalCity, null, collaborator.instantiate());
+    	return new Mission(id, start, end, bonus, false, transport, status, nature.instantiate(), startCity, arrivalCity, null, collaborator.instantiate());
     }
 
 }

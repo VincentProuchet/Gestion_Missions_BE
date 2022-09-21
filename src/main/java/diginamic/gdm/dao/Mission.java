@@ -46,6 +46,10 @@ public class Mission {
 	/** bonus : the bonus for the collaborator */
 	private BigDecimal bonus;
 
+	/** hasBonusBeenEvaluated : a technical data to make it easier to get missions missing a bonus
+	 * it is true only after the night computing has set the value of bonus */
+	private boolean hasBonusBeenEvaluated = false;
+
 	/** missionTransport : the type of transport for the mission */
 	@Enumerated(EnumType.STRING)
 	private Transport missionTransport;

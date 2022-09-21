@@ -123,7 +123,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		boolean isDateInMissionPeriod = date != null && date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate());
 
 		// required data
-		boolean isRequiredDataPresent = expense.getExpenseType() != null && expense.getCost().compareTo(new BigDecimal(0)) >= 0 && expense.getTva() >= 0;
+		boolean isRequiredDataPresent = expense.getExpenseType() != null && expense.getCost().compareTo(BigDecimal.valueOf(0)) >= 0 && expense.getTva() >= 0;
 
 		return existsAndIsValid && isDateInMissionPeriod && isRequiredDataPresent;
 	}

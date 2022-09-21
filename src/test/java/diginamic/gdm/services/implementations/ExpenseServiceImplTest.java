@@ -86,7 +86,7 @@ class ExpenseServiceImplTest {
         expenseType = expenseTypeRepository.save(expenseType);
 
         Mission m1 = new Mission();
-        m1.setBonus(new BigDecimal(36));
+        m1.setBonus(BigDecimal.valueOf(36));
         m1.setMissionTransport(Transport.Car);
         m1.setNature(nature1);
         m1.setStartCity(city1);
@@ -98,7 +98,7 @@ class ExpenseServiceImplTest {
         m1 = missionRepository.save(m1);
 
         Mission m2 = new Mission();
-        m2.setBonus(new BigDecimal(100));
+        m2.setBonus(BigDecimal.valueOf(100));
         m2.setMissionTransport(Transport.Flight);
         m2.setNature(nature1);
         m2.setStartCity(city1);
@@ -111,7 +111,7 @@ class ExpenseServiceImplTest {
 
         Set<Expense> expensesM1 = new HashSet<>();
         Expense expense1 = new Expense();
-        expense1.setCost(new BigDecimal(30));
+        expense1.setCost(BigDecimal.valueOf(30));
         expense1.setDate(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10).plusDays(3));
         expense1.setTva(0.2f);
         expense1.setExpenseType(expenseType);
@@ -119,7 +119,7 @@ class ExpenseServiceImplTest {
         expensesM1.add(expense1);
 
         Expense expense2 = new Expense();
-        expense2.setCost(new BigDecimal(30));
+        expense2.setCost(BigDecimal.valueOf(30));
         expense2.setDate(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10).plusDays(3));
         expense2.setTva(0.2f);
         expense2.setExpenseType(expenseType);
@@ -158,7 +158,7 @@ class ExpenseServiceImplTest {
 
 
         Expense invalidExpense = new Expense();
-        invalidExpense.setCost(new BigDecimal(30));
+        invalidExpense.setCost(BigDecimal.valueOf(30));
         invalidExpense.setDate(m2.getStartDate().plusDays(3));
         invalidExpense.setTva(0.2f);
         invalidExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
@@ -167,7 +167,7 @@ class ExpenseServiceImplTest {
         assertFalse(expenseService.isExpenseValid(invalidExpense));
 
         Expense invalidExpense2 = new Expense();
-        invalidExpense2.setCost(new BigDecimal(30));
+        invalidExpense2.setCost(BigDecimal.valueOf(30));
         invalidExpense2.setDate(m1.getEndDate().plusDays(10));
         invalidExpense2.setTva(0.2f);
         invalidExpense2.setExpenseType(expenseTypeRepository.findAll().get(0));
@@ -183,7 +183,7 @@ class ExpenseServiceImplTest {
         Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
 
         Expense invalidExpense = new Expense();
-        invalidExpense.setCost(new BigDecimal(30));
+        invalidExpense.setCost(BigDecimal.valueOf(30));
         invalidExpense.setDate(m2.getStartDate().plusDays(3));
         invalidExpense.setTva(0.2f);
         invalidExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
@@ -194,7 +194,7 @@ class ExpenseServiceImplTest {
         assertEquals(expenseRepository.findAll().size(), 2);
 
         Expense invalidExpense2 = new Expense();
-        invalidExpense2.setCost(new BigDecimal(30));
+        invalidExpense2.setCost(BigDecimal.valueOf(30));
         invalidExpense2.setDate(m1.getEndDate().plusDays(10));
         invalidExpense2.setTva(0.2f);
         invalidExpense2.setExpenseType(expenseTypeRepository.findAll().get(0));
@@ -205,7 +205,7 @@ class ExpenseServiceImplTest {
         assertEquals(expenseRepository.findAll().size(), 2);
 
         Expense validExpense = new Expense();
-        validExpense.setCost(new BigDecimal(30));
+        validExpense.setCost(BigDecimal.valueOf(30));
         validExpense.setDate(m1.getStartDate().plusDays(10));
         validExpense.setTva(0.2f);
         validExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
@@ -241,9 +241,9 @@ class ExpenseServiceImplTest {
         assertTrue(expenseRepository.findById(expense1.getId()).get().getMission().getId() != m2.getId());
         expense1.setMission(m1);
 
-        expense1.setCost(new BigDecimal(2000));
+        expense1.setCost(BigDecimal.valueOf(2000));
         expenseService.update(expense1.getId(), expense1);
-        assertTrue(expenseRepository.findById(expense1.getId()).get().getCost().compareTo(new BigDecimal(2000)) == 0);
+        assertTrue(expenseRepository.findById(expense1.getId()).get().getCost().compareTo(BigDecimal.valueOf(2000)) == 0);
 
 
     }

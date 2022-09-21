@@ -24,7 +24,7 @@ public interface ExpenseTypeService {
 	 * 
 	 * @param expenseType The new expense type to be registered
 	 */
-	void create(ExpenseType expenseType);
+	ExpenseType create(ExpenseType expenseType);
 	
 	/**
 	 * Gets a specific registered expense type.

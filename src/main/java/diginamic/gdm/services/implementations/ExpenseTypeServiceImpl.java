@@ -34,8 +34,8 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	}
 
 	@Override
-	public void create(ExpenseType expenseType) {
-		this.expenseTypeRepository.save(expenseType);
+	public ExpenseType create(ExpenseType expenseType) {
+		return this.expenseTypeRepository.save(expenseType);
 	}
 	
 	@Override

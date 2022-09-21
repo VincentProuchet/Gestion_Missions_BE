@@ -3,6 +3,7 @@ package diginamic.gdm.dao;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import diginamic.gdm.Enums.Role;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Roles implements GrantedAuthority {

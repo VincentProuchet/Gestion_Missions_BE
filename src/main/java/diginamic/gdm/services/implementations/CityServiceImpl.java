@@ -34,8 +34,8 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public void create(City city) {
-		this.cityRepository.save(city);
+	public City create(City city) {
+		return this.cityRepository.save(city);
 	}
 	
 	@Override

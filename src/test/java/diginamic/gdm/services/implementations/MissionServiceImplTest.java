@@ -68,7 +68,7 @@ class MissionServiceImplTest {
         collaboratorRepository.save(collaborator);
 
         Mission m1 = new Mission();
-        m1.setBonus(new BigDecimal(36));
+        m1.setBonus(BigDecimal.valueOf(36));
         m1.setMissionTransport(Transport.Car);
         m1.setNature(nature1);
         m1.setStartCity(city1);
@@ -80,7 +80,7 @@ class MissionServiceImplTest {
         missionRepository.save(m1);
 
         Mission m2 = new Mission();
-        m2.setBonus(new BigDecimal(100));
+        m2.setBonus(BigDecimal.valueOf(100));
         m2.setMissionTransport(Transport.Flight);
         m2.setNature(nature1);
         m2.setStartCity(city1);
@@ -113,7 +113,7 @@ class MissionServiceImplTest {
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
 
         Mission m3 = new Mission();
-        m3.setBonus(new BigDecimal(100));
+        m3.setBonus(BigDecimal.valueOf(100));
         m3.setMissionTransport(Transport.Flight);
         m3.setNature(nature1);
         m3.setStartCity(city1);
@@ -183,7 +183,7 @@ class MissionServiceImplTest {
         Collaborator collaborator = collaboratorRepository.findAll().get(0);
 
         Mission m3 = new Mission();
-        m3.setBonus(new BigDecimal(100));
+        m3.setBonus(BigDecimal.valueOf(100));
         m3.setMissionTransport(Transport.Flight);
         m3.setNature(nature1);
         m3.setStartCity(city1);
@@ -228,14 +228,14 @@ class MissionServiceImplTest {
 
 
         Mission m1 = new Mission();
-        m1.setBonus(new BigDecimal(36));
+        m1.setBonus(BigDecimal.valueOf(36));
         m1.setMissionTransport(Transport.Car);
         m1.setCollaborator(collaborator1);
         m1.setStatus(Status.WAITING_VALIDATION);
         missionRepository.save(m1);
 
         Mission m2 = new Mission();
-        m2.setBonus(new BigDecimal(100));
+        m2.setBonus(BigDecimal.valueOf(100));
         m2.setMissionTransport(Transport.Flight);
         m2.setCollaborator(collaborator2);
         m2.setStatus(Status.WAITING_VALIDATION);

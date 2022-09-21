@@ -30,18 +30,19 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
     public void computeBonusForCompletedMissions() {
 
         //compute bonuses for completed missions : workedDays*tjm*%bonus/100
-        List<Mission> completedMissions = missionService.completedMissions();
+        List<Mission> completedMissions = missionService.completedMissionsToCompute();
 
         for (Mission mission : completedMissions) {
 
             Nature nature = mission.getNature();
 
-            BigDecimal bonus = new BigDecimal(workedDays(mission.getStartDate(), mission.getEndDate()) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
+            BigDecimal bonus = BigDecimal.valueOf(workedDays(mission) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
 
             mission.setBonus(bonus);
+            mission.setHasBonusBeenEvaluated(true);
 
         }
-        //send a mail to the manager
+        // send a mail to the manager
     }
 
     @Override
@@ -49,21 +50,15 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
         //update missions statuses INIT becomes WAITING_VALIDATION
         List<Mission> missionsWithStatusInit = missionService.missionsToPutInWaitingValidation();
         for (Mission mission : missionsWithStatusInit) {
-            mission.setStatus(Status.WAITING_VALIDATION);
-            missionService.update(mission.getId(), mission);
+            missionService.updateStatus(mission.getId(), Status.WAITING_VALIDATION);
         }
-        //maybe VALIDATED and date passed becomes DONE?
 
     }
 
-    /**
-     * Return the number of days between start and end, excluding the WEs
-     *
-     * @param start must not be a Saturday or a Sunday
-     * @param end   idem
-     * @return
-     */
-    private long workedDays(LocalDateTime start, LocalDateTime end) {
+    @Override
+    public long workedDays(Mission mission) {
+        LocalDateTime start = mission.getStartDate();
+        LocalDateTime end = mission.getEndDate();
 
         long totalDays = start.until(end, ChronoUnit.DAYS);
         long weekendDays = (totalDays / 7) * 2;
@@ -72,6 +67,6 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
             weekendDays += 2;
         }
 
-        return weekendDays;
+        return totalDays - weekendDays;
     }
 }

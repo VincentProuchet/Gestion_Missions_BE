@@ -26,7 +26,7 @@ public interface NatureService {
      *
      * @param nature The new nature to be registered
      */
-    void create(Nature nature) throws BadRequestException;
+    Nature create(Nature nature) throws BadRequestException;
 
     /**
      * Gets a specific registered mission nature.
