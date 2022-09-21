@@ -30,7 +30,7 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
     public void computeBonusForCompletedMissions() {
 
         //compute bonuses for completed missions : workedDays*tjm*%bonus/100
-        List<Mission> completedMissions = missionService.completedMissions();
+        List<Mission> completedMissions = missionService.completedMissionsToCompute();
 
         for (Mission mission : completedMissions) {
 
@@ -39,9 +39,10 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
             BigDecimal bonus = new BigDecimal(workedDays(mission.getStartDate(), mission.getEndDate()) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
 
             mission.setBonus(bonus);
+            mission.setHasBonusBeenEvaluated(true);
 
         }
-        //send a mail to the manager
+        // send a mail to the manager
     }
 
     @Override
@@ -52,7 +53,6 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
             mission.setStatus(Status.WAITING_VALIDATION);
             missionService.update(mission.getId(), mission);
         }
-        //maybe VALIDATED and date passed becomes DONE?
 
     }
 

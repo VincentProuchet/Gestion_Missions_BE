@@ -12,6 +12,7 @@ public interface ScheduledTasksService {
 
     /**
      * Change the status INIT of missions to WAITING_VALIDATION
+     * set the ended status for just ended missions
      */
     void changeMissionStatus() throws BadRequestException;
 

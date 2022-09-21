@@ -43,8 +43,8 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 	}
 
 	@Override
-	public void create(Collaborator collaborator) {
-		this.collaboratorRepository.save(collaborator);
+	public Collaborator create(Collaborator collaborator) {
+		return this.collaboratorRepository.save(collaborator);
 	}
 	
 	@Override
@@ -105,7 +105,7 @@ public class CollaboratorServiceImpl implements CollaboratorService, UserDetails
 	
 
 	@Override
-	public boolean addMission(Mission mission, Collaborator collaborator) throws BadRequestException {
+	public Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException {
 		mission.setCollaborator(collaborator);
 		return missionService.create(mission);
 	}

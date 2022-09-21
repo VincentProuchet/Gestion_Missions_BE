@@ -27,7 +27,7 @@ public interface MissionService {
 	 * @param mission The new mission to be registered
 	 * @return
 	 */
-	default boolean create(Mission mission) throws BadRequestException {
+	default Mission create(Mission mission) throws BadRequestException {
 		return create(mission, false);
 	}
 
@@ -39,7 +39,7 @@ public interface MissionService {
 	 * @param mission The new mission to be registered
 	 * @return true if the mission has been created, false otherwise
 	 */
-	boolean create(Mission mission, boolean allowWE) throws BadRequestException;
+	Mission create(Mission mission, boolean allowWE) throws BadRequestException;
 
 	/**
 	 * Gets a specific registered mission.
@@ -144,10 +144,16 @@ public interface MissionService {
 	List<Mission> missionsToPutInWaitingValidation();
 
 	/**
-	 * Get all completed missions, ie with status validated and end date passed
+	 * Get all completed missions which bonus has not been set, ie with status validated and end date passed and hasBonusBeenEvaluated to false
+	 *
+	 * @return
+	 */
+	List<Mission> completedMissionsToCompute();
+
+	/**
+	 * Get all completed missions , ie with status validated and end date passed
 	 *
 	 * @return
 	 */
 	List<Mission> completedMissions();
-
 }

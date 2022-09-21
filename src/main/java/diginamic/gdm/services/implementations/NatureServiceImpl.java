@@ -38,7 +38,7 @@ public class NatureServiceImpl implements NatureService {
     }
 
     @Override
-    public void create(Nature nature) throws BadRequestException {
+    public Nature create(Nature nature) throws BadRequestException {
         if (!canBeAdded(nature)) {
             throw new BadRequestException("A nature with this name already exists", ErrorCodes.natureInvalid);
         }
@@ -46,7 +46,7 @@ public class NatureServiceImpl implements NatureService {
             throw new BadRequestException("This nature is invalid : check the coherence of dates and the description is present", ErrorCodes.natureInvalid);
         }
 
-        this.natureRepository.save(nature);
+        return this.natureRepository.save(nature);
     }
 
     @Override

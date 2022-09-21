@@ -27,7 +27,7 @@ public interface CollaboratorService extends UserDetailsManager {
 	 * 
 	 * @param collaborator The new collaborator to be registered
 	 */
-	void create(Collaborator collaborator);
+	Collaborator create(Collaborator collaborator);
 	
 	/**
 	 * Gets a specific registered collaborator.
@@ -54,7 +54,7 @@ public interface CollaboratorService extends UserDetailsManager {
 	 * @param collaborator
 	 * @return
 	 */
-	boolean addMission(Mission mission, Collaborator collaborator) throws BadRequestException;
+	Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException;
 
 	/**
 	 * Reassign an existing mission to another collaborator

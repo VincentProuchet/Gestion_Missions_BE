@@ -24,7 +24,7 @@ public interface CityService {
 	 * 
 	 * @param city The new city to be registered
 	 */
-	void create(City city);
+	City create(City city);
 	
 	/**
 	 * Gets a specific registered city.

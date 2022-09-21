@@ -18,22 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Status;
-import diginamic.gdm.dao.Transport;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.exceptions.ErrorCodes;
-import diginamic.gdm.repository.CollaboratorRepository;
-import diginamic.gdm.repository.MissionRepository;
-import diginamic.gdm.services.MissionService;
-import diginamic.gdm.services.NatureService;
-import lombok.AllArgsConstructor;
-
 /**
  * Implementation for {@link MissionService}.
  *
@@ -44,16 +28,14 @@ import lombok.AllArgsConstructor;
 @Transactional
 public class MissionServiceImpl implements MissionService {
 
+    CollaboratorRepository collaboratorRepository;
     /**
      * The {@link MissionRepository} dependency.
      */
     private MissionRepository missionRepository;
-
     private NatureService natureService;
     private NatureRepository natureRepository;
     private CollaboratorRepository managerRepository;
-
-    CollaboratorRepository collaboratorRepository;
 
     @Override
     public List<Mission> list() {
@@ -61,7 +43,7 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public boolean create(Mission mission, boolean allowWE) throws BadRequestException {
+    public Mission create(Mission mission, boolean allowWE) throws BadRequestException {
 
         mission.setId(0);
 
@@ -71,9 +53,7 @@ public class MissionServiceImpl implements MissionService {
 
         mission.setStatus(Status.INIT);
 
-        this.missionRepository.save(mission);
-
-        return true;
+        return this.missionRepository.save(mission);
     }
 
     @Override
@@ -181,7 +161,7 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public boolean isMissionDone(int id) {
         Optional<Mission> optionalMission = missionRepository.findById(id);
-        if (optionalMission.isEmpty()){
+        if (optionalMission.isEmpty()) {
             return false;
         }
         Mission mission = optionalMission.get();
@@ -190,7 +170,7 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
-        Collaborator manager = managerRepository.findById(idManager).orElseThrow(()->new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
+        Collaborator manager = managerRepository.findById(idManager).orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
         List<Mission> missionsToValidate = new ArrayList<>();
         manager.getTeam().stream().forEach(collaborator -> {
             missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION));
@@ -204,8 +184,13 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
+    public List<Mission> completedMissionsToCompute() {
+        return missionRepository.findByStatusAndEndDateBeforeAndHasBonusBeenEvaluatedFalse(Status.VALIDATED, LocalDateTime.now());
+    }
+
+    @Override
     public List<Mission> completedMissions() {
-        return missionRepository.findByStatusAndEndDateBeforeOrderByEndDateDesc(Status.VALIDATED, LocalDateTime.now());
+        return missionRepository.findByStatusAndEndDateBefore(Status.VALIDATED, LocalDateTime.now());
     }
 
 }
