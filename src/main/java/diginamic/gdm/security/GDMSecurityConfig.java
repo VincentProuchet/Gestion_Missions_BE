@@ -79,7 +79,7 @@ public class GDMSecurityConfig {
 		.deleteCookies(GDMVars.SESSION_SESSION_COOKIE_NAME)
 		;
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST, GDMRoutes.SIGNUP).permitAll()
+			//.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()
 			.antMatchers(HttpMethod.GET, GDMRoutes.FAVICON).permitAll()
 			
 			.anyRequest().authenticated()

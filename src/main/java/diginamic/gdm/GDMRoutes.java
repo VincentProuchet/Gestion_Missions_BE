@@ -12,24 +12,31 @@ package diginamic.gdm;
 
 public abstract class GDMRoutes {
 
-	//public static final String  = "";
-	/// les routes
-	
+	/** SIGNIN */
 	public static final String SIGNIN  = "signin";
+	/** SIGNUP */
 	public static final String SIGNUP  = "signup";
-	public static final String LOGOUT ="logout";
-	
-	public static final String ERRORS = "error";
-		
+	/** LOGOUT */
+	public static final String LOGOUT ="logout";	
+	/** ERRORS */
+	public static final String ERRORS = "error";		
+	/** NATURE */
 	public static final String NATURE = "nature";
+	/** MANAGER */
 	public static final String MANAGER = "manager";
+	/** VALIDER */
 	public static final String VALIDER = "valider";
+	/** REJETER */
 	public static final String REJETER = "rejeter";
-	public static final String MISSION = "mission";
-	
+	/** MISSION */
+	public static final String MISSION = "mission";	
+	/** EXPENSE */
 	public static final String EXPENSE = "expense";
+	/** TYPE */
 	public static final String TYPE = "type";
+	/** CITY */
 	public static final String CITY = "city";
+	/** FAVICON */
 	public static final String FAVICON = "/favicon.ico";
 	
 	
