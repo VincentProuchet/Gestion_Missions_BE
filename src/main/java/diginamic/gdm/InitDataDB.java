@@ -44,7 +44,7 @@ public class InitDataDB {
     private BCryptPasswordEncoder passwordEncoder;
 
     {
-        now = nextWorkedDay(LocalDateTime.now());
+        now = nextWorkedDay(LocalDateTime.now().plusDays(1));
         lastYear = nextWorkedDay(now.minusYears(1));
         nextYear = nextWorkedDay(now.plusYears(1));
 
@@ -345,19 +345,19 @@ public class InitDataDB {
     }
 
     private LocalDateTime previousWeek(LocalDateTime date) {
-        return date.minusWeeks(1);
+        return nextWorkedDay(date.minusWeeks(1));
     }
 
     private LocalDateTime nextWeek(LocalDateTime date) {
-        return date.plusWeeks(1);
+        return nextWorkedDay(date.plusWeeks(1));
     }
 
     private LocalDateTime previousMonth(LocalDateTime date) {
-        return date.minusMonths(1);
+        return nextWorkedDay(date.minusMonths(1));
     }
 
     private LocalDateTime nextMonth(LocalDateTime date) {
-        return date.plusMonths(1);
+        return nextWorkedDay(date.plusMonths(1));
     }
 
     private LocalDateTime nextWorkedDay(LocalDateTime date) {

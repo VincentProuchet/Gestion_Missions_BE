@@ -81,11 +81,12 @@ public interface MissionService {
 
 	/**
 	 * Updates the current status for a specific mission.
-	 * 
-	 * @param id The id corresponding to the mission whose status to update
+	 *
+	 * @param id     The id corresponding to the mission whose status to update
 	 * @param status The new status to be applied to the mission
+	 * @return
 	 */
-	void updateStatus(int id, Status status) throws BadRequestException;
+	Mission updateStatus(int id, Status status) throws BadRequestException;
 
 	/**
 	 * Check the validity of the mission request

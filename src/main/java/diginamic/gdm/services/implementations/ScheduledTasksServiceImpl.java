@@ -50,8 +50,7 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
         //update missions statuses INIT becomes WAITING_VALIDATION
         List<Mission> missionsWithStatusInit = missionService.missionsToPutInWaitingValidation();
         for (Mission mission : missionsWithStatusInit) {
-            mission.setStatus(Status.WAITING_VALIDATION);
-            missionService.update(mission.getId(), mission);
+            missionService.updateStatus(mission.getId(), Status.WAITING_VALIDATION);
         }
 
     }

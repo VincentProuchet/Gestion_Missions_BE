@@ -95,10 +95,10 @@ public class MissionServiceImpl implements MissionService {
     }
 
     @Override
-    public void updateStatus(int id, Status status) throws BadRequestException {
+    public Mission updateStatus(int id, Status status) throws BadRequestException {
         Mission mission = read(id);
         mission.setStatus(status);
-        missionRepository.save(mission);
+        return missionRepository.save(mission);
     }
 
     @Override
