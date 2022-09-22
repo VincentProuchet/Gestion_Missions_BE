@@ -23,22 +23,15 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Roles create(Roles role) {
-		return this.repository.save(role);
-	}
+		return this.repository.findByLabel(role.getLabel())
+				.orElseGet(()-> this.repository.save(role));
+		}
 
 	@Override
 	public Roles update(Roles role) {
-		Roles role2 = this.repository.getReferenceById(role.getId());
-		if (role2 == null) {
-			this.repository.save(role);
-			role2 = role;
-		} else {
-			role2.label = role.label;
-			this.repository.save(role2);
-		}
-		return role;
-	}
-	
+		return this.repository.findByLabel(role.getLabel())
+				.orElseGet(()-> this.repository.save(role));
+	}	
 	/**
 	 * This was coded to save all instances of Role enum 
 	 * in one go
@@ -49,11 +42,8 @@ public class RoleServiceImpl implements RoleService {
 		
 		ArrayList<Roles> rols = new ArrayList<Roles>();
 		for (Role r : Role.values()) {
-			rols.add(new Roles(r.getId(),r.getLABEL()));
-			this.repository.saveAll(rols);
-			
+				this.create(new Roles(r));	
 		}
-		System.err.println("roles saved");
 	}
 
 	@Override

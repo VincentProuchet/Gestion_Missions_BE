@@ -108,11 +108,22 @@ public class InitDataDB {
         admin.setLastName("adminlastname");
         admin.setUsername("adminlastname");
         admin.setActive(true);
-        admin.setManager(manager2);
+        admin.setManager(admin);
+        
+        Collaborator admin1 = new Collaborator();
+        admin1.setAuthorities(Arrays.asList(adminRole, user));
+        admin1.setEmail("m-itsumi@mail");
+        admin1.setPassword(passwordEncoder.encode("1111"));
+        admin1.setFirstName("Marion");
+        admin1.setLastName("Istumi");
+        admin1.setUsername("mario");
+        admin1.setActive(true);
+        admin1.setManager(admin);
 
         manager2 = collaboratorService.create(manager2);
         manager1 = collaboratorService.create(manager1);
         admin = collaboratorService.create(admin);
+        admin1 = collaboratorService.create(admin);
 
         // the 5 workers
         List<Collaborator> collaborators = new ArrayList<>(5);

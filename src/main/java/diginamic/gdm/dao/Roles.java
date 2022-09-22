@@ -1,7 +1,12 @@
 package diginamic.gdm.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -34,7 +39,10 @@ public class Roles implements GrantedAuthority {
 	/**
 	 * The name of the role
 	 */	
+	@Column(nullable = false,unique = true)
 	public String label;
+	@ManyToMany(mappedBy = "authorities")
+	private List<Collaborator> users = new ArrayList<Collaborator>();
 		
 	@Override
 	public String getAuthority() {
