@@ -42,11 +42,11 @@ public class Mission {
 	private int id;
 
 	/** startDate : the date of the start of the mission */
-	//@Column(nullable = false)
+	@Column(nullable = false)
 	private LocalDateTime startDate;
 
-	/** startDate : the date of the end of the mission */
-	//@Column(nullable = false)
+	/** endDate : the date of the end of the mission */
+	@Column(nullable = false)
 	private LocalDateTime endDate;
 
 	/** bonus : the bonus for the collaborator */
@@ -68,20 +68,17 @@ public class Mission {
 	 * nature : the nature of the mission, contains common details about the mission
 	 */
 	@ManyToOne
-	@JoinColumn(name = "natureID")
-	//@Column(nullable = false)
+	@JoinColumn(name = "natureID",nullable = false)
 	private Nature nature;
 
 	/** startCity : the city where the collaborator is initially */
 	@ManyToOne
-	@JoinColumn(name = "startCityID")
-	//@Column(nullable = false)
+	@JoinColumn(name = "startCityID",nullable = false)
 	private City startCity;
 
 	/** startCity : the city where the mission holds place */
 	@ManyToOne
-	@JoinColumn(name = "endCityID")
-	//@Column(nullable = false)
+	@JoinColumn(name = "endCityID",nullable = false)
 	private City endCity;
 
 	/** expenses : business expenses for the mission */
@@ -91,7 +88,6 @@ public class Mission {
 
 	/** collaborator : the collaborator this mission is due to */
 	@ManyToOne
-	@JoinColumn(name = "collaboratorID")
-	//@Column(nullable = false)
+	@JoinColumn(name = "collaboratorID", nullable = false)
 	private Collaborator collaborator;
 }

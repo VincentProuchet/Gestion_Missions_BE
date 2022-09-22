@@ -1,9 +1,7 @@
 package diginamic.gdm.dao;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -28,11 +26,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Entity which represents a Collaborator implement UserDetails from SpringSecurity
- * project Document
- * the differentiation between different types of user
- * is made by the list of Roles 
- * who are also used by spring security for userAccess 
+ * Entity which represents a Collaborator implement UserDetails from
+ * SpringSecurity project Document the differentiation between different types
+ * of user is made by the list of Roles who are also used by spring security for
+ * userAccess
+ * 
  * @author Joseph
  */
 @Entity
@@ -61,11 +59,11 @@ public class Collaborator implements UserDetails {
 	private Set<Collaborator> team = new HashSet<Collaborator>();
 
 	/** userName */
-	@Column(nullable = false,unique = true)
+	@Column(nullable = false, unique = true)
 	private String username = "robert";
 	/** password : remember to add security */
-	@Column(name = "password")
-	private String password = "patrick";
+	@Column(name = "password",nullable = false)
+	private String password = String.valueOf(Math.random()*2000);
 	/** isActive */
 	@Column(name = "is_active")
 	private boolean isActive = true;
@@ -75,7 +73,7 @@ public class Collaborator implements UserDetails {
 	 */
 	@ManyToMany
 	@Fetch(FetchMode.JOIN)
-	private Collection<Roles> authorities ;
+	private Collection<Roles> authorities;
 
 	/** missions : the missions this collaborator is in charge of */
 	@OneToMany(mappedBy = "collaborator", fetch = FetchType.LAZY)
@@ -86,7 +84,9 @@ public class Collaborator implements UserDetails {
 	@JoinColumn(name = "managerid")
 	private Collaborator manager = null;
 
-	/** Constructeur
+	/**
+	 * Constructeur
+	 * 
 	 * @param id
 	 * @param lastName
 	 * @param firstName
@@ -118,9 +118,10 @@ public class Collaborator implements UserDetails {
 		this.email = user.getEmail();
 		this.authorities = user.getAuthorities();
 	}
+
 	/**
 	 * Constructeur used for mapping from the DTO
-	 *  
+	 * 
 	 * @param user
 	 */
 	public Collaborator(CollaboratorDTO user) {
@@ -129,48 +130,73 @@ public class Collaborator implements UserDetails {
 		this.firstName = user.getFirstName();
 		this.email = user.getEmail();
 		this.authorities = user.getRoles();
-		if(user.getManager()!= null) { // just in case
-			this.manager = new Collaborator(user.getManager(),false);
+		if (user.getManager() != null) { // just in case
+			this.manager = new Collaborator(user.getManager(), false);
 		}
-		
+
 	}
+
 	/**
-	 * Constructeur used for map
-	 * this one is made to avoid StackOverflow
+	 * Constructeur used for map this one is made to avoid StackOverflow
+	 * 
 	 * @param user
 	 */
-	public Collaborator(CollaboratorDTO user,boolean withManager) {
+	public Collaborator(CollaboratorDTO user, boolean withManager) {
 		this.id = user.getId();
 		this.lastName = user.getLastName();
 		this.firstName = user.getFirstName();
 		this.email = user.getEmail();
-		if(user.getManager()!= null && withManager) {// for stackOverFlow prevention
-			this.manager = new Collaborator(user.getManager(),false);
+		if (user.getManager() != null && withManager) {// for stackOverFlow prevention
+			this.manager = new Collaborator(user.getManager(), false);
 		}
 	}
 
 	@Override
-	public Collection<Roles> getAuthorities() {		
+	public Collection<Roles> getAuthorities() {
 		return this.authorities;
 	}
-	
+
 	/**
-	 * This is to simplify the Authority attribution for Spring Security
-	 * yhea it look complicated for what it does 
-	 * its due to the Collection being and immutable
-	 *  and we can't bypass that because of the UserDetail implementation 
-	 * @param Roles authority
+	 * This is to simplify the Authority attribution for Spring Security yhea it
+	 * look complicated for what it does its due to the Collection being and
+	 * immutable and we can't bypass that because of the UserDetail implementation
+	 * this take authorities already the user already have and add it the one passed
+	 * as parameters * @param Roles authority
 	 */
 	public void addAuthorities(Roles... authority) {
-		List<Roles> construct = new ArrayList<>();
-		for (Roles role : authority) {
-			
+		Set<Roles> construct = new HashSet<Roles>();
+		for (Roles role : this.authorities) {
 			construct.add(role);
 		}
-		System.err.println("adding autohorities to user " + this.getFirstName());
+
+		for (Roles role : authority) {
+
+			construct.add(role);
+		}
 		this.authorities = construct;
 	}
-	
+
+	/**
+	 * This is to simplify the Authority attribution for Spring Security yhea it
+	 * look complicated for what it does its due to the Collection being and
+	 * immutable and we can't bypass that because of the UserDetail implementation
+	 * this take authorities already the user already have and add it the one passed
+	 * as parameters * @param Roles authority
+	 */
+	public void removeAuthorities(Roles authority) {
+		Set<Roles> construct = new HashSet<Roles>();
+		// we reconstruct the authorithy collection
+		for (Roles role : this.authorities) {
+			// as long as the authority to add is NOT the one we want to remove
+			if (!role.getLabel().equals(authority.getLabel())) {
+				// its add to the new collection
+				construct.add(role);
+			}
+		}
+		// and we ovewrite the new 
+		this.authorities = construct;
+	}
+
 	@Override
 	public String getPassword() {
 		return password;

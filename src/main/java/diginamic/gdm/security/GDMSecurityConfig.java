@@ -41,7 +41,7 @@ public class GDMSecurityConfig {
 		
 		http.authenticationProvider(authProvider) 
 		.formLogin()
-		.loginPage(GDMVars.LOGINPAGE)// pour definir la login page
+		//.loginPage(GDMVars.LOGINPAGE)// pour definir la login page
 		.permitAll()
 		;
 		http.rememberMe().key("RememberMe").tokenValiditySeconds(GDMVars.TOKEN_LIFE);

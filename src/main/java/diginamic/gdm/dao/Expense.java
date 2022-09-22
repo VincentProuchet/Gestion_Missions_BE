@@ -48,7 +48,6 @@ public class Expense {
 
 	/** expenseType : the nature of this expense */
 	@ManyToOne
-	@JoinColumn(name = "expenseTypeID")
-	//@Column(nullable = false)
+	@JoinColumn(name = "expenseTypeID",nullable = false)
 	private ExpenseType expenseType;
 }

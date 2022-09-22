@@ -32,21 +32,23 @@ public class Nature {
 	private int id;
 
 	/** givesBonus : does a mission with this nature give a bonus? */
-	//@Column(nullable = false)
+	@Column(nullable = false)
 	private boolean givesBonus =false;
 
 	/** charged : is this mission charged to the client */
-	//@Column(nullable = false)
+	@Column(nullable = false)
 	private boolean charged = true;
 
 	/** tjm : the amount charged per working day to the client */
+	@Column(nullable = false)
 	private BigDecimal tjm = BigDecimal.valueOf(0) ;
 
 	/** bonusPercentage : the percentage of the charge which */
+	@Column(nullable = false)
 	private Float bonusPercentage = 0f;
 
 	/** dateOfValidity : the date at which this nature can be used */
-	//@Column(nullable = false)
+	@Column(nullable = false)
 	private LocalDateTime dateOfValidity;
 
 	/**
@@ -56,6 +58,6 @@ public class Nature {
 	private LocalDateTime endOfValidity = null;
 
 	/** description : the name of the nature */
-	//@Column(nullable = false)
+	@Column(nullable = false)
 	private String description;
 }

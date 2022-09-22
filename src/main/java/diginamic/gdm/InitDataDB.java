@@ -74,12 +74,12 @@ public class InitDataDB {
         Roles adminRole = new Roles(Role.ADMIN);
         adminRole = roleService.create(adminRole);
 
-        // 5 collaborators, 2 managers, 1 admin
+        // 5 collaborators, 2 managers, 2 admin
         // manager1 for the workers
         Collaborator manager1 = new Collaborator();
         manager1.setAuthorities(Arrays.asList(managerRole, user));
         manager1.setEmail("manager1@mail");
-        manager1.setPassword(passwordEncoder.encode("man1password"));
+        manager1.setPassword(passwordEncoder.encode("1111"));
         manager1.setFirstName("manager1firstname");
         manager1.setLastName("manager1lastname");
         manager1.setUsername("manager1lastname");
@@ -89,7 +89,7 @@ public class InitDataDB {
         Collaborator manager2 = new Collaborator();
         manager2.setAuthorities(Arrays.asList(managerRole, user));
         manager2.setEmail("manager2@mail");
-        manager2.setPassword(passwordEncoder.encode("man2password"));
+        manager2.setPassword(passwordEncoder.encode("1111"));
         manager2.setFirstName("manager2firstname");
         manager2.setLastName("manager2lastname");
         manager2.setUsername("manager2lastname");
@@ -103,7 +103,7 @@ public class InitDataDB {
         Collaborator admin = new Collaborator();
         admin.setAuthorities(Arrays.asList(adminRole, user));
         admin.setEmail("admin@mail");
-        admin.setPassword(passwordEncoder.encode("adminpassword"));
+        admin.setPassword(passwordEncoder.encode("1111"));
         admin.setFirstName("adminfirstname");
         admin.setLastName("adminlastname");
         admin.setUsername("adminlastname");
@@ -118,12 +118,12 @@ public class InitDataDB {
         admin1.setLastName("Istumi");
         admin1.setUsername("mario");
         admin1.setActive(true);
-        admin1.setManager(admin);
+        admin1.setManager(manager2);
 
         manager2 = collaboratorService.create(manager2);
         manager1 = collaboratorService.create(manager1);
         admin = collaboratorService.create(admin);
-        admin1 = collaboratorService.create(admin);
+        admin1 = collaboratorService.create(admin1);
 
         // the 5 workers
         List<Collaborator> collaborators = new ArrayList<>(5);
@@ -131,10 +131,10 @@ public class InitDataDB {
             Collaborator newColl = new Collaborator();
             newColl.setAuthorities(Arrays.asList(user));
             newColl.setEmail("coll" + i + "@mail");
-            newColl.setPassword(passwordEncoder.encode("" + i + i + i + i));
             newColl.setFirstName("coll" + i + "firstname");
             newColl.setLastName("coll" + i + "lastname");
             newColl.setUsername("coll" + i + "lastname");
+            newColl.setPassword(passwordEncoder.encode(""+ i + i + i + i));
             newColl.setActive(true);
             newColl.setManager(manager1);
             newColl = collaboratorService.create(newColl);
