@@ -10,16 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -74,7 +71,7 @@ public class GDMSecurityConfig {
 		//.loginPage(GDMVars.LOGINPAGE)
 		// here you vcan tell it to use a custom made login page
 		//.loginProcessingUrl(GDMRoutes.LOGIN)
-		.successHandler(successHandler())
+		//.successHandler(successHandler())
 		.failureHandler(failureHandler())
 		.permitAll()		
 		;
@@ -114,23 +111,7 @@ public class GDMSecurityConfig {
 		;
 	}
 	
-	/**
-	 * athuentication success handling
-	 * @return
-	 */
-	@Bean
-	public AuthenticationSuccessHandler successHandler() {
-	    return new AuthenticationSuccessHandler() {
-	        @Override
-	        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-	                HttpServletResponse httpServletResponse, Authentication authentication)
-	                throws IOException, ServletException {
-	            httpServletResponse.getWriter().append("OK");
-	            httpServletResponse.setStatus(200);
-	        }
-	    };
-	}
-	
+
 	/**
 	 * bean for login failure handling
 	 * @return
@@ -147,6 +128,7 @@ public class GDMSecurityConfig {
 	        }
 	    };
 	}
+
 	
 	
 

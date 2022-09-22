@@ -114,7 +114,7 @@ public class InitDataDB {
         admin1.setAuthorities(Arrays.asList(adminRole, user));
         admin1.setEmail("m-itsumi@mail");
         admin1.setPassword(passwordEncoder.encode("1111"));
-        admin1.setFirstName("Marion");
+        admin1.setFirstName("Mario");
         admin1.setLastName("Istumi");
         admin1.setUsername("mario");
         admin1.setActive(true);
