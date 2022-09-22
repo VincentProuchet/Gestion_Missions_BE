@@ -3,6 +3,7 @@ package diginamic.gdm.services;
 
 import java.util.List;
 
+import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.exceptions.BadRequestException;
@@ -16,16 +17,25 @@ public interface MissionService {
 	
 	/**
 	 * Gets the full list of registered missions.
+	 * For test and debug purposes
 	 * 
 	 * @return A list of all missions
 	 */
 	List<Mission> list();
+
+	/**
+	 * Get all the missions of a given collaborator
+	 *
+	 * @param collaborator the collaborator
+	 * @return the list of missions
+	 */
+	List<Mission> getMissionsOfCollaborator(Collaborator collaborator);
 	
 	/**
 	 * Saves a new {@link Mission} instance.
 	 *
 	 * @param mission The new mission to be registered
-	 * @return
+	 * @return the created mission in DB
 	 */
 	default Mission create(Mission mission) throws BadRequestException {
 		return create(mission, false);
@@ -84,14 +94,14 @@ public interface MissionService {
 	 *
 	 * @param id     The id corresponding to the mission whose status to update
 	 * @param status The new status to be applied to the mission
-	 * @return
+	 * @return the updated mission in DB
 	 */
 	Mission updateStatus(int id, Status status) throws BadRequestException;
 
 	/**
 	 * Check the validity of the mission request
 	 *
-	 * @param mission
+	 * @param mission the mission
 	 * @return true if the mission is correctly formed
 	 */
 	default boolean isThisMissionValid(Mission mission) {
@@ -102,7 +112,7 @@ public interface MissionService {
 	 * Check the validity of the mission request, allow a date in WE
 	 *
 	 * @param allowWE allow to work in WE
-	 * @param mission
+	 * @param mission the mission
 	 * @return true if the mission is correctly formed
 	 */
 	boolean isThisMissionValid(Mission mission, boolean allowWE);
@@ -110,51 +120,51 @@ public interface MissionService {
 	/**
 	 * Check if the mission status is INIT or REJECTED
 	 *
-	 * @param mission
+	 * @param mission the mission
 	 * @return true if the status allows the update
 	 */
 	boolean canBeUpdated(Mission mission);
 
 	/**
 	 * returns true, but check if the mission status is INIT or REJECTED
-	 * @param mission
-	 * @return
+	 * @param mission the mission
+	 * @return true if deleted
 	 */
 	boolean canBeDeleted(Mission mission);
 
 	/**
-	 * Check if the mission has been realized
+	 * Check if the mission has been completed
 	 *
-	 * @param id
-	 * @return
+	 * @param id mission id
+	 * @return true if completed
 	 */
 	boolean isMissionDone(int id);
 
 	/**
 	 * Get the list of missions to validate of the team of a given manager
-	 * @param idManager
-	 * @return
+	 * @param idManager the manager
+	 * @return the list of missions with status WAITING_VALIDATION
 	 */
 	List<Mission> missionsToValidate(int idManager) throws BadRequestException;
 
 	/**
 	 * Get all the missions with INIT status
 	 *
-	 * @return
+	 * @return the list of missions with status INIT
 	 */
 	List<Mission> missionsToPutInWaitingValidation();
 
 	/**
 	 * Get all completed missions which bonus has not been set, ie with status validated and end date passed and hasBonusBeenEvaluated to false
 	 *
-	 * @return
+	 * @return the list of missions with status VALIDATED and end date passed and hasBonusBeenEvaluated to false
 	 */
 	List<Mission> completedMissionsToCompute();
 
 	/**
 	 * Get all completed missions , ie with status validated and end date passed
 	 *
-	 * @return
+	 * @return the list of missions with status VALIDATED and end date passed
 	 */
 	List<Mission> completedMissions();
 }

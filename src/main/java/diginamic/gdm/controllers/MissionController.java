@@ -2,7 +2,9 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.ScheduledTasksService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,7 +38,12 @@ import lombok.AllArgsConstructor;
 @RequestMapping(path = GDMRoutes.MISSION, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class MissionController {
-	
+
+	/**
+	 * The {@link CollaboratorService} dependency.
+	 */
+	private CollaboratorService collaboratorService;
+
 	/**
 	 * The {@link MissionService} dependency.
 	 */
@@ -48,27 +55,34 @@ public class MissionController {
 	private ScheduledTasksService scheduledTasksService;
 
 	/**
-	 * Gets the full list of registered missions.
+	 * The list of missions assigned to the connected user
 	 * 
 	 * @return A list of all missions
 	 */
 	@GetMapping
 	@Secured(GDMRoles.COLLABORATOR)
-	public List<MissionDTO> list() {
+	public List<MissionDTO> list() throws Exception {
 		// get the identity of the collaborator, send only their missions
-		return missionService.list().stream().map(mission -> new MissionDTO(mission)).toList();
+		Collaborator user = collaboratorService.getConnectedUser();
+		return missionService.getMissionsOfCollaborator(user).stream().map(MissionDTO::new).toList();
 	}
 
 	/**
 	 * Gets the list of missions waiting for validation, only for a manager, and only the missions of his team members
 	 *
+	 * @param idManager TODO this param is redundant, is it really more secure to keep it?
 	 * @return A list of all missions
 	 */
 	@GetMapping(path = GDMRoutes.MANAGER+"/{idManager}")
 	@Secured(GDMRoles.COLLABORATOR)
-	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) throws BadRequestException {
+	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) throws Exception {
 		// get the identity of the manager
-		return missionService.missionsToValidate(idManager).stream().map(mission -> new MissionDTO(mission)).toList();
+		Collaborator user = collaboratorService.getConnectedUser();
+
+		if (user.getId() == idManager){
+			return missionService.missionsToValidate(idManager).stream().map(MissionDTO::new).toList();
+		}
+		throw new Exception("it is not allowed to get the missions waiting validation if you are not the manager");
 	}
 	
 	/**
@@ -79,9 +93,15 @@ public class MissionController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.COLLABORATOR)
-	public void create(@RequestBody MissionDTO mission) throws BadRequestException {
-		// make this creation is asked by the collaborator it is assigned to
-		missionService.create(mission.instantiate());
+	public void create(@RequestBody MissionDTO mission) throws Exception {
+		// make sure this creation is asked by the collaborator it is assigned to
+		Collaborator user = collaboratorService.getConnectedUser();
+
+		if (user.getId() == mission.getCollaborator().getId()){
+			missionService.create(mission.instantiate());
+			return;
+		}
+		throw new Exception("it is not allowed to create a mission for someone else");
 	}
 	
 	/**
@@ -106,10 +126,19 @@ public class MissionController {
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured(GDMRoles.COLLABORATOR)
-	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) throws BadRequestException {
+	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) throws Exception {
 		//Be aware that only mission with a certain status can be modified
 		// and update should'nt take the status from client
-		return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
+
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(id);
+		Collaborator assignee = mission.getCollaborator();
+
+		if (user.getId() == assignee.getId()){
+			return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
+		}
+		throw new Exception("it is not allowed to update a mission for someone else if you are not the manager");
+
 	}
 	
 	/**
@@ -119,8 +148,17 @@ public class MissionController {
 	 */
 	@DeleteMapping(path = "{id}")
 	@Secured(GDMRoles.COLLABORATOR)
-	public void delete(@PathVariable int id) throws BadRequestException {
-		missionService.delete(id);
+	public void delete(@PathVariable int id) throws Exception {
+
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(id);
+
+		if (user.getId() == mission.getCollaborator().getId()) {
+
+			missionService.delete(id);
+			return;
+		}
+		throw new Exception("it is not allowed to delete a mission for someone else");
 	}
 	
 	/**
@@ -130,8 +168,16 @@ public class MissionController {
 	 */
 	@PutMapping(path = "{id}/"+GDMRoutes.VALIDER)
 	@Secured(GDMRoles.MANAGER)
-	public void validate(@PathVariable int id) throws BadRequestException {
-		missionService.updateStatus(id, Status.VALIDATED);
+	public void validate(@PathVariable int id) throws Exception {
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(id);
+
+		if (user.getId() == mission.getCollaborator().getManager().getId()) {
+			missionService.updateStatus(id, Status.VALIDATED);
+			return;
+		}
+		throw new Exception("it is not allowed to validate a mission for someone not in your team");
+
 	}
 	
 	/**
@@ -141,22 +187,33 @@ public class MissionController {
 	 */
 	@PutMapping(path = "{id}/"+GDMRoutes.REJETER)
 	@Secured(GDMRoles.MANAGER)
-	public void reject(@PathVariable int id) throws BadRequestException {
-		missionService.updateStatus(id, Status.REJECTED);
+	public void reject(@PathVariable int id) throws Exception {
+
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(id);
+
+		if (user.getId() == mission.getCollaborator().getManager().getId()) {
+			missionService.updateStatus(id, Status.VALIDATED);
+			return;
+		}
+		throw new Exception("it is not allowed to reject a mission for someone not in your team");
 	}
 
 	/**
 	 * First draft for the night computing
-	 * TODO need unit and global tests, and rework following the DB security update
+	 *
 	 * @throws BadRequestException
 	 */
+
+	@PutMapping(path = "GDMRoutes.TESTNIGHTCOMPUTING")
+	@Secured(GDMRoles.MANAGER)
 	@Scheduled(fixedRate = GDMVars.SHEDULED_INTERVAL)
 	public void testNightComputing() throws BadRequestException {
-		/*System.out.println("computing");
+		System.out.println("computing");
 		
 		scheduledTasksService.computeBonusForCompletedMissions();
 		scheduledTasksService.changeMissionStatus();
-		*/
+
 	}
 	
 }

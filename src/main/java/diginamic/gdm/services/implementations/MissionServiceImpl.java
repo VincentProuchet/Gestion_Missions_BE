@@ -1,20 +1,6 @@
 package diginamic.gdm.services.implementations;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Nature;
-import diginamic.gdm.dao.Status;
-import diginamic.gdm.dao.Transport;
+import diginamic.gdm.dao.*;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CollaboratorRepository;
@@ -23,6 +9,14 @@ import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation for {@link MissionService}.
@@ -46,6 +40,11 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public List<Mission> list() {
         return missionRepository.findAll();
+    }
+
+    @Override
+    public List<Mission> getMissionsOfCollaborator(Collaborator collaborator) {
+        return missionRepository.findByCollaborator(collaborator);
     }
 
     @Override
@@ -178,9 +177,7 @@ public class MissionServiceImpl implements MissionService {
     public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
         Collaborator manager = managerRepository.findById(idManager).orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
         List<Mission> missionsToValidate = new ArrayList<>();
-        manager.getTeam().stream().forEach(collaborator -> {
-            missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION));
-        });
+        manager.getTeam().forEach(collaborator -> missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION)));
         return missionsToValidate;
     }
 
