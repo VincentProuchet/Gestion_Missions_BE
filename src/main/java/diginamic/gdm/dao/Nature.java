@@ -3,6 +3,7 @@ package diginamic.gdm.dao;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,26 +32,30 @@ public class Nature {
 	private int id;
 
 	/** givesBonus : does a mission with this nature give a bonus? */
-	private boolean givesBonus;
+	//@Column(nullable = false)
+	private boolean givesBonus =false;
 
 	/** charged : is this mission charged to the client */
-	private boolean charged;
+	//@Column(nullable = false)
+	private boolean charged = true;
 
 	/** tjm : the amount charged per working day to the client */
-	private BigDecimal tjm;
+	private BigDecimal tjm = BigDecimal.valueOf(0) ;
 
 	/** bonusPercentage : the percentage of the charge which */
-	private Float bonusPercentage;
+	private Float bonusPercentage = 0f;
 
 	/** dateOfValidity : the date at which this nature can be used */
+	//@Column(nullable = false)
 	private LocalDateTime dateOfValidity;
 
 	/**
 	 * endOfValidity : the nature can't be used past this date if null, the nature
 	 * is currently valid
 	 */
-	private LocalDateTime endOfValidity;
+	private LocalDateTime endOfValidity = null;
 
 	/** description : the name of the nature */
+	//@Column(nullable = false)
 	private String description;
 }

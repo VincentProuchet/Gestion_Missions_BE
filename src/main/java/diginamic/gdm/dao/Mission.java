@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,9 +42,11 @@ public class Mission {
 	private int id;
 
 	/** startDate : the date of the start of the mission */
+	//@Column(nullable = false)
 	private LocalDateTime startDate;
 
 	/** startDate : the date of the end of the mission */
+	//@Column(nullable = false)
 	private LocalDateTime endDate;
 
 	/** bonus : the bonus for the collaborator */
@@ -63,25 +69,29 @@ public class Mission {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "natureID")
+	//@Column(nullable = false)
 	private Nature nature;
 
 	/** startCity : the city where the collaborator is initially */
 	@ManyToOne
 	@JoinColumn(name = "startCityID")
+	//@Column(nullable = false)
 	private City startCity;
 
 	/** startCity : the city where the mission holds place */
 	@ManyToOne
 	@JoinColumn(name = "endCityID")
+	//@Column(nullable = false)
 	private City endCity;
 
 	/** expenses : business expenses for the mission */
 	@OneToMany(mappedBy = "mission")
-	//@Fetch(FetchMode.JOIN)
+	@Fetch(FetchMode.JOIN)
 	private Set<Expense> expenses = new HashSet<>();
 
 	/** collaborator : the collaborator this mission is due to */
 	@ManyToOne
 	@JoinColumn(name = "collaboratorID")
+	//@Column(nullable = false)
 	private Collaborator collaborator;
 }

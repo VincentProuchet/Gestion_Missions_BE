@@ -1,5 +1,6 @@
 package diginamic.gdm.dao;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class ExpenseType {
 	private int id;
 	
 	/** name : the name of the type of expense */
+	@Column(nullable = false,unique = true)
 	private String name;
 
 }
