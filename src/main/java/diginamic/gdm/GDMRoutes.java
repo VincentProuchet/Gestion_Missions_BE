@@ -39,6 +39,8 @@ public abstract class GDMRoutes {
 	public static final String CITY = "city";
 	/** FAVICON */
 	public static final String FAVICON = "/favicon.ico";
+
+	public static final String TESTNIGHTCOMPUTING = "testNightComputing";
 	
 	
 }
