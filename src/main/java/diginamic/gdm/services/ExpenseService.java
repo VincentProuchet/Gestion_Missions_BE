@@ -3,6 +3,7 @@ package diginamic.gdm.services;
 import java.util.List;
 
 import diginamic.gdm.dao.Expense;
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
 
 /**
@@ -14,11 +15,18 @@ public interface ExpenseService {
 
 	/**
 	 * Gets the full list of registered expenses.
+	 * For test purposes
 	 * 
 	 * @return A list of all expenses
 	 */
 	List<Expense> list();
-	
+
+	/**
+	 * Gets the full list of registered expenses.
+	 *
+	 * @return A list of all expenses
+	 */
+	List<Expense> getExpensesOfMission(Mission mission);
 	/**
 	 * Saves a new {@link Expense} instance.
 	 *
@@ -26,17 +34,6 @@ public interface ExpenseService {
 	 * @return the newly created expense, or null (to replace with exceptions)
 	 */
 	Expense create(Expense expense) throws BadRequestException;
-
-	/**
-	 * TODO
-	 *
-	 * @param missionId
-	 * @param expense
-	 * @return
-	 */
-	default Expense create(int missionId, Expense expense) throws BadRequestException {
-		return create(expense);
-	}
 	
 	/**
 	 * Gets a specific registered expense.
@@ -66,8 +63,8 @@ public interface ExpenseService {
 	/**
 	 * Check the validity of an expense
 	 *
-	 * @param expense
-	 * @return
+	 * @param expense the expense to validate
+	 * @return true if the expense is correctly formed
 	 */
 	boolean isExpenseValid(Expense expense);
 	

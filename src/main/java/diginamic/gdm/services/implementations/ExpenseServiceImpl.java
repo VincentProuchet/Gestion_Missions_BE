@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import diginamic.gdm.dao.Collaborator;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Expense;
@@ -48,14 +49,18 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
+	public List<Expense> getExpensesOfMission(Mission mission) {
+		return expenseRepository.findByMission(mission);
+	}
+
+	@Override
 	public Expense create(Expense expense) throws BadRequestException {
 
 		if (!isExpenseValid(expense)){
 			throw new BadRequestException("Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB", ErrorCodes.expenseInvalid);
 		}
 
-		Expense actualExpense = this.expenseRepository.save(expense);
-		return actualExpense;
+		return this.expenseRepository.save(expense);
 	}
 	
 	@Override
@@ -112,7 +117,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 		Mission actualMission = actualMissionOptional.get();
 
-		boolean existsAndIsValid = actualMission != null && missionService.isMissionDone(actualMission.getId());
+		boolean existsAndIsValid = missionService.isMissionDone(actualMission.getId());
 
 		// is the date valid?
 		LocalDateTime date = expense.getDate();
@@ -120,7 +125,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 			return false;
 		}
 
-		boolean isDateInMissionPeriod = date != null && date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate());
+		boolean isDateInMissionPeriod = date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate());
 
 		// required data
 		boolean isRequiredDataPresent = expense.getExpenseType() != null && expense.getCost().compareTo(BigDecimal.valueOf(0)) >= 0 && expense.getTva() >= 0;
