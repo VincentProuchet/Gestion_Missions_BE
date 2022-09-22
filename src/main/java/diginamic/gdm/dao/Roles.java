@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -41,8 +42,6 @@ public class Roles implements GrantedAuthority {
 	 */	
 	@Column(nullable = false,unique = true)
 	public String label;
-	@ManyToMany(mappedBy = "authorities")
-	private List<Collaborator> users = new ArrayList<Collaborator>();
 		
 	@Override
 	public String getAuthority() {

@@ -35,7 +35,7 @@ import lombok.Setter;
  */
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Getter
 @Setter
 public class Collaborator implements UserDetails {
@@ -55,15 +55,15 @@ public class Collaborator implements UserDetails {
 	/** email : identification mail address */
 	@Column(name = "email")
 	private String email;
-	@OneToMany(mappedBy = "manager")
+	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
 	private Set<Collaborator> team = new HashSet<Collaborator>();
 
 	/** userName */
 	@Column(nullable = false, unique = true)
 	private String username = "robert";
 	/** password : remember to add security */
-	@Column(name = "password",nullable = false)
-	private String password = String.valueOf(Math.random()*2000);
+	@Column(name = "password", nullable = false)
+	private String password = String.valueOf(Math.random() * 2000);
 	/** isActive */
 	@Column(name = "is_active")
 	private boolean isActive = true;
@@ -80,8 +80,8 @@ public class Collaborator implements UserDetails {
 	private Set<Mission> missions = new HashSet<Mission>();
 
 	/** manager : the manager of this collaborator */
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "managerid")
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Collaborator manager = null;
 
 	/**
@@ -117,6 +117,28 @@ public class Collaborator implements UserDetails {
 		this.isActive = user.isActive();
 		this.email = user.getEmail();
 		this.authorities = user.getAuthorities();
+		if (user.getManager() != null) {
+			this.manager = new Collaborator(user.getManager(), false);
+		}
+	}
+
+	/**
+	 * Constructeur used for map this one exist to prevent stackOverflow
+	 * 
+	 * @param user
+	 */
+	public Collaborator(Collaborator user, boolean withManager) {
+		this.id = user.getId();
+		this.lastName = user.getLastName();
+		this.firstName = user.getFirstName();
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.isActive = user.isActive();
+		this.email = user.getEmail();
+		this.authorities = user.getAuthorities();
+		if (user.getManager() != null && withManager) {
+			this.manager = new Collaborator(user.getManager(), false);
+		}
 	}
 
 	/**
@@ -193,7 +215,7 @@ public class Collaborator implements UserDetails {
 				construct.add(role);
 			}
 		}
-		// and we ovewrite the new 
+		// and we ovewrite the new
 		this.authorities = construct;
 	}
 
@@ -225,6 +247,24 @@ public class Collaborator implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return isActive;
+	}
+
+	public Collaborator(int id, String lastName, String firstName, String email, Set<Collaborator> team,
+			String username, String password, boolean isActive, Collection<Roles> authorities, Set<Mission> missions,
+			Collaborator manager) {
+		super();
+		this.id = id;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.email = email;
+		this.team = team;
+		this.username = username;
+		this.password = password;
+		this.isActive = isActive;
+		this.authorities = authorities;
+		this.missions = missions;
+		if (manager != null)
+			this.manager = new Collaborator(manager, false);
 	}
 
 }
