@@ -2,7 +2,11 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.services.CollaboratorService;
+import diginamic.gdm.services.MissionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -38,15 +42,20 @@ public class ExpenseController {
 	 */
 	private ExpenseService expenseService;
 
+	private MissionService missionService;
+
+	private CollaboratorService collaboratorService;
+
 	/**
 	 * Gets the full list of registered expenses.
+	 * For test purposes
 	 * 
 	 * @return A list of all expenses
 	 */
 	@GetMapping
 	@Secured({GDMRoles.COLLABORATOR})
-	public List<ExpenseDTO> list() {
-		return expenseService.list().stream().map(expense -> new ExpenseDTO(expense)).toList();
+	public List<ExpenseDTO> list() throws Exception {
+		return expenseService.list().stream().map(ExpenseDTO::new).toList();
 	}
 	
 	/**
@@ -57,8 +66,13 @@ public class ExpenseController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.COLLABORATOR)
-	public void create(@RequestBody ExpenseDTO expense) throws BadRequestException {
-		expenseService.create(expense.getIdMission(), expense.instantiate());
+	public void create(@RequestBody ExpenseDTO expense) throws Exception {
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(expense.getIdMission());
+		if(mission.getCollaborator().getId() == user.getId()){
+			expenseService.create(expense.instantiate());
+		}
+		throw new Exception("Only the assignee can create an expense for a mission");
 	}
 	
 	/**
@@ -69,21 +83,31 @@ public class ExpenseController {
 	 */
 	@GetMapping(path = "{id}")
 	@Secured(GDMRoles.COLLABORATOR)
-	public ExpenseDTO read(@PathVariable int id) throws BadRequestException {
-		return new ExpenseDTO(expenseService.read(id));
+	public ExpenseDTO read(@PathVariable int id) throws Exception {
+		Collaborator user = collaboratorService.getConnectedUser();
+		Expense expense = expenseService.read(id);
+		Mission mission = expense.getMission();
+		if(mission.getCollaborator().getId() == user.getId()){
+			return new ExpenseDTO(expense);
+		}
+		throw new Exception("Only the assignee can see an expense of a mission");
 	}
 	/**
-	 * Gets a specific registered expense.
+	 * Gets the expenses associated to a given mission
 	 * 
-	 * @param id The id corresponding to the expense to get
-	 * @return The registered expense corresponding to the given id
+	 * @param id The id of the mission
+	 * @return the list of expenses of the mission
 	 */
-	@GetMapping(path = "/"+GDMRoutes.MISSION+"/{id}")
+	@GetMapping(path = "/"+GDMRoutes.MISSION)
 	@Secured(GDMRoles.COLLABORATOR)
-	public ExpenseDTO readByMission(@PathVariable int id) throws BadRequestException {
-		
-		// TODO because as is it just send the one expense of the id
-		return new ExpenseDTO(expenseService.read(id));
+	public List<ExpenseDTO> readByMission(@PathVariable int id) throws Exception {
+
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(id);
+		if(mission.getCollaborator().getId() == user.getId()){
+			return expenseService.getExpensesOfMission(mission).stream().map(ExpenseDTO::new).toList();
+		}
+		throw new Exception("Only the assignee can see the expenses of a mission");
 	}
 	
 	
@@ -96,8 +120,14 @@ public class ExpenseController {
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured(GDMRoles.COLLABORATOR)
-	public ExpenseDTO update(@PathVariable int id, @RequestBody ExpenseDTO expenseDTO) throws BadRequestException {
-		return new ExpenseDTO(expenseService.update(id, expenseDTO.instantiate()));
+	public ExpenseDTO update(@PathVariable int id, @RequestBody ExpenseDTO expenseDTO) throws Exception {
+
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = expenseService.read(id).getMission();
+		if(mission.getCollaborator().getId() == user.getId()){
+			return new ExpenseDTO(expenseService.update(id, expenseDTO.instantiate()));
+		}
+		throw new Exception("Only the assignee can update the expenses of a mission");
 	}
 	
 	/**
@@ -107,8 +137,13 @@ public class ExpenseController {
 	 */
 	@DeleteMapping(path = "{id}")
 	@Secured(GDMRoles.COLLABORATOR)
-	public void delete(@PathVariable int id) throws BadRequestException {
-		expenseService.delete(id);
+	public void delete(@PathVariable int id) throws Exception {
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = expenseService.read(id).getMission();
+		if(mission.getCollaborator().getId() == user.getId()){
+			expenseService.delete(id);
+		}
+		throw new Exception("Only the assignee can delete the expenses of a mission");
 	}
 	
 }
