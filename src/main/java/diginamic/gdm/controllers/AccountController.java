@@ -43,14 +43,14 @@ public class AccountController {
 	 * 
 	 * @param collaborator The new collaborator whose account to register
 	 */
-
+	
 	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
+	@Secured({GDMRoles.ADMIN})
 	public void signup(@RequestBody Collaborator collaborator) {
 		// we use a compression algorythm
 		collaborator.setPassword(this.EncryptThat(collaborator.getPassword()));
-		Collection<Roles> roles = collaborator.getAuthorities();
-		for (Roles role : roles) {
+		for (Roles role : collaborator.getAuthorities()) {
 			System.err.println(role);
 		}
 		collaboratorService.create(collaborator);

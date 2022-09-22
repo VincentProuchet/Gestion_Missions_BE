@@ -17,6 +17,8 @@ public abstract class GDMRoutes {
 	public static final String SIGNUP  = "signup";
 	/** LOGOUT */
 	public static final String LOGOUT ="logout";	
+	/** LOGIN */
+	public static final String LOGIN ="login";	
 	/** COLLABORATOR */
 	public static final String COLLABORATOR = "collaborator";
 	/** ERRORS */

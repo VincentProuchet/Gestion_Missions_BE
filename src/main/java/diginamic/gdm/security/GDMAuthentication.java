@@ -16,6 +16,13 @@ import diginamic.gdm.services.CollaboratorService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+/**
+ * a custom authentication provider 
+ * for injection in GDMSecurity 
+ * and its filterChain
+ * @author Vincent
+ *
+ */
 @Configuration
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,16 +33,22 @@ public class GDMAuthentication implements AuthenticationProvider {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
+	/**
+	 *	Authentication method
+	 *this is here that you can catch the authentication 
+	 *and do the magic
+	 */
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		// if a security context already exist
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			System.out.println("Authenticated");
+			System.out.println("allready authenticated");
 			return SecurityContextHolder.getContext().getAuthentication();
 		}
 		String username = (String) auth.getPrincipal();
 		
 		if(username!=null) {
+			System.out.println("user auth : "+ auth.getName() +auth.getCredentials()+ auth.getPrincipal() );
 			Collaborator coll = (Collaborator) collaboratorService.loadUserByUsername(username);
 			if (coll!=null) {
 				if(!coll.isActive()) {

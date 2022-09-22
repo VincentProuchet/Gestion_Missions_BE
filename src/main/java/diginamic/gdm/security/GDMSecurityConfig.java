@@ -1,5 +1,11 @@
 package diginamic.gdm.security;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +15,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -36,13 +46,37 @@ public class GDMSecurityConfig {
 	@Autowired
 	CollaboratorService userService;	
 
+	/**
+	 * configuration spring security
+	 * @param http
+	 * @return
+	 * @throws Exception
+	 */
 	@Bean
 	public SecurityFilterChain springSecurityfilterChain(HttpSecurity http) throws Exception {
 		
+		http
+		.csrf().disable()// apparemment il faut au moins ça 
+		//si on se connecte depuis autre chose que le login tout fait de spring security
+		.authorizeRequests()
+		// this one was for testing before creation of mock data
+		//.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()
+		
+		.antMatchers(HttpMethod.GET, GDMRoutes.FAVICON).permitAll()
+		.antMatchers(HttpMethod.POST, GDMRoutes.LOGIN).permitAll()
+		// all other request need authentication
+		.anyRequest().authenticated()
+		;
 		http.authenticationProvider(authProvider) 
+		// here you say you use a form for login 
 		.formLogin()
-		//.loginPage(GDMVars.LOGINPAGE)// pour definir la login page
-		.permitAll()
+		// here you can provide your homemade login form
+		//.loginPage(GDMVars.LOGINPAGE)
+		// here you vcan tell it to use a custom made login page
+		//.loginProcessingUrl(GDMRoutes.LOGIN)
+		.successHandler(successHandler())
+		.failureHandler(failureHandler())
+		.permitAll()		
 		;
 		http.rememberMe().key("RememberMe").tokenValiditySeconds(GDMVars.TOKEN_LIFE);
 		http.sessionManagement()
@@ -51,19 +85,12 @@ public class GDMSecurityConfig {
 		// in case of a new login, the existing session is closed
 		.expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
 		;
-		http.logout() 
+		http.logout()
+		.clearAuthentication(true)
 		.invalidateHttpSession(true)
 		.deleteCookies(GDMVars.SESSION_SESSION_COOKIE_NAME)
 		;
-		http.authorizeRequests()
-			//.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()
-			.antMatchers(HttpMethod.GET, GDMRoutes.FAVICON).permitAll()
-			
-			.anyRequest().authenticated()
-			;
-		http.httpBasic();
-			
-		
+		http.httpBasic();		
 		return http.build();
 	}
 
@@ -78,18 +105,48 @@ public class GDMSecurityConfig {
 		System.err.println("webignoring");
 		return (web) -> web.ignoring()
 				// il FAUT mettre le slash avant
-		.antMatchers("/"+GDMRoutes.SIGNUP)
-//		.antMatchers(HttpMethod.GET)
-//		.antMatchers(HttpMethod.POST)
+		//.antMatchers("/"+GDMRoutes.SIGNUP)
+		//.antMatchers(HttpMethod.GET)
+	//			.antMatchers(HttpMethod.POST,"/"+GDMRoutes.LOGIN)
 //		.antMatchers(HttpMethod.PUT)
 //		.antMatchers(HttpMethod.DELETE)
 	
 		;
 	}
-	public void configure(AuthenticationManagerBuilder auth)throws Exception{
-		auth.authenticationProvider(authProvider);
+	
+	/**
+	 * athuentication success handling
+	 * @return
+	 */
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+	    return new AuthenticationSuccessHandler() {
+	        @Override
+	        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
+	                HttpServletResponse httpServletResponse, Authentication authentication)
+	                throws IOException, ServletException {
+	            httpServletResponse.getWriter().append("OK");
+	            httpServletResponse.setStatus(200);
+	        }
+	    };
 	}
 	
+	/**
+	 * bean for login failure handling
+	 * @return
+	 */
+	@Bean
+	public AuthenticationFailureHandler failureHandler() {
+	    return new AuthenticationFailureHandler() {
+	        @Override
+	        public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
+	                HttpServletResponse httpServletResponse, AuthenticationException e)
+	                throws IOException, ServletException {
+	            httpServletResponse.getWriter().append("Authentication failure");
+	            httpServletResponse.setStatus(401);
+	        }
+	    };
+	}
 	
 	
 
