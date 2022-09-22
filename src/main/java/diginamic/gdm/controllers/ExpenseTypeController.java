@@ -44,9 +44,9 @@ public class ExpenseTypeController {
 	 * @return A list of all expense types
 	 */
 	@GetMapping
-	@Secured(GDMRoles.COLLABORATOR)
+	@Secured({GDMRoles.COLLABORATOR, GDMRoles.ADMIN})
 	public List<ExpenseTypeDTO> list() {
-		return expenseTypeService.list().stream().map(expenseType -> new ExpenseTypeDTO(expenseType)).toList();
+		return expenseTypeService.list().stream().map(ExpenseTypeDTO::new).toList();
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class ExpenseTypeController {
 	 * @return The registered expense type corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	@Secured(GDMRoles.COLLABORATOR)
+	@Secured({GDMRoles.COLLABORATOR, GDMRoles.ADMIN})
 	public ExpenseTypeDTO read(@PathVariable int id) throws BadRequestException {
 		return new ExpenseTypeDTO(expenseTypeService.read(id));
 	}

@@ -166,7 +166,7 @@ public class MissionController {
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
-	@PutMapping(path = "{id}/"+GDMRoutes.VALIDER)
+	@PutMapping(path = "{id}/" + GDMRoutes.VALIDER)
 	@Secured(GDMRoles.MANAGER)
 	public void validate(@PathVariable int id) throws Exception {
 		Collaborator user = collaboratorService.getConnectedUser();
@@ -205,8 +205,8 @@ public class MissionController {
 	 * @throws BadRequestException
 	 */
 
-	@PutMapping(path = "GDMRoutes.TESTNIGHTCOMPUTING")
-	@Secured(GDMRoles.MANAGER)
+	@GetMapping(path = GDMRoutes.TESTNIGHTCOMPUTING)
+	@Secured(GDMRoles.ADMIN)
 	@Scheduled(fixedRate = GDMVars.SHEDULED_INTERVAL)
 	public void testNightComputing() throws BadRequestException {
 		System.out.println("computing");

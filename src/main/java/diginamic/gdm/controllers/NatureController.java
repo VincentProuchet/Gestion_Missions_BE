@@ -46,7 +46,7 @@ public class NatureController {
 	@GetMapping
 	@Secured({GDMRoles.COLLABORATOR,GDMRoles.MANAGER,GDMRoles.ADMIN})
 	public List<NatureDTO> list() {
-		return natureService.list().stream().map(nature -> new NatureDTO(nature)).toList();
+		return natureService.list().stream().map(NatureDTO::new).toList();
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class NatureController {
 	 * @return The registered nature corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
-	@Secured({GDMRoles.COLLABORATOR})
+	@Secured({GDMRoles.COLLABORATOR, GDMRoles.ADMIN})
 	public NatureDTO read(@PathVariable int id) throws BadRequestException {
 		return new NatureDTO(natureService.read(id));
 	}
