@@ -17,4 +17,17 @@ public class UpdateControllerAdvice {
     public @ResponseBody BadRequestDTO updateFailed(BadRequestException badRequestException, WebRequest request){
         return new BadRequestDTO(badRequestException.getMessage(), badRequestException.getCode());
     }
+
+    /**
+     * this method has to disappear
+     * @param exception the exceptio
+     * @param request the request
+     * @return the communication exception
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = {Exception.class})
+    public @ResponseBody BadRequestDTO updateFailed(Exception exception, WebRequest request){
+        return new BadRequestDTO(exception.getMessage(), "generic");
+    }
+
 }
