@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import diginamic.gdm.dto.CityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,10 @@ public class City {
 
 	/** name : the name of the city */
 	private String name;
+	
+	public City(CityDTO city) {
+		this.id = city.getId();
+		this.name = city.getName();
+	}
 
 }

@@ -2,8 +2,10 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
+import diginamic.gdm.dao.City;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.services.CityService;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.ScheduledTasksService;
 import org.springframework.http.HttpStatus;
@@ -48,6 +50,9 @@ public class MissionController {
 	 * The {@link MissionService} dependency.
 	 */
 	private MissionService missionService;
+	
+	/** cityService */
+	private CityService cityService;
 
 	/**
 	 * The {@link ScheduledTasksService} dependency.
@@ -93,15 +98,27 @@ public class MissionController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.COLLABORATOR)
-	public void create(@RequestBody MissionDTO mission) throws Exception {
+	public MissionDTO create(@RequestBody MissionDTO mission) throws Exception {
 		// make sure this creation is asked by the collaborator it is assigned to
 		Collaborator user = collaboratorService.getConnectedUser();
-
-		if (user.getId() == mission.getCollaborator().getId()){
-			missionService.create(mission.instantiate());
-			return;
+		City startCity;
+		City arrivalCiTy;
+		try {
+			startCity = cityService.read(mission.getStartCity());
+		} catch (BadRequestException e) {
+			startCity = new City(mission.getStartCity());
+			arrivalCiTy = cityService.create(startCity);
 		}
-		throw new Exception("it is not allowed to create a mission for someone else");
+		try {
+			arrivalCiTy = cityService.read(mission.getArrivalCity());
+		} catch (BadRequestException e) {
+			arrivalCiTy = new City(mission.getArrivalCity());
+			arrivalCiTy = cityService.create(arrivalCiTy);
+		}
+		
+			return new MissionDTO(missionService.create( new Mission(mission,startCity,arrivalCiTy,user)));
+			
+		//throw new Exception("it is not allowed to create a mission for someone else");
 	}
 	
 	/**
@@ -133,7 +150,7 @@ public class MissionController {
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = missionService.read(id);
 		Collaborator assignee = mission.getCollaborator();
-
+		
 		if (user.getId() == assignee.getId()){
 			return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
 		}
