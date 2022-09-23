@@ -3,6 +3,7 @@ package diginamic.gdm.services;
 import java.util.List;
 
 import diginamic.gdm.dao.City;
+import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.exceptions.BadRequestException;
 
 /**
@@ -33,6 +34,24 @@ public interface CityService {
 	 * @return The registered city corresponding to the given id
 	 */
 	City read(int id) throws BadRequestException;
+
+	/**
+	 * Gets a specific registered city.
+	 * 
+	 * @param name The name corresponding to the city to get
+	 * @return The registered city corresponding to the given id
+	 */
+	City read(String name) throws BadRequestException;
+
+	/**
+	 * Updates the data for a specific registered city.
+	 * 
+	 * @param id The id corresponding to the city to update
+	 * @param city The city to update with modified info
+	 * @return The resulting city with updated info
+	 */
+	
+	City read(CityDTO city) throws BadRequestException;
 
 	/**
 	 * Updates the data for a specific registered city.

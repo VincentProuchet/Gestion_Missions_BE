@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import diginamic.gdm.dto.MissionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -90,4 +91,22 @@ public class Mission {
 	@ManyToOne
 	@JoinColumn(name = "collaboratorID", nullable = false)
 	private Collaborator collaborator;
+	
+	public Mission(MissionDTO m, City start, City arrival,Collaborator collaborator) {
+		
+		super();
+		this.id = m.getId();
+		this.startDate = m.getStart();
+		this.endDate = m.getEnd();
+		this.bonus = m.getBonus();
+		this.missionTransport = m.getTransport();
+		this.nature = m.getNature().instantiate();
+		this.startCity = start;
+		this.endCity = arrival;
+		this.collaborator = collaborator;
+	}
+
+	
+	
+	
 }

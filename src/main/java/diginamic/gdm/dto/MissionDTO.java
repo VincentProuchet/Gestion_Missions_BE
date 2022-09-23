@@ -30,9 +30,9 @@ public class MissionDTO implements DTO<Mission> {
 	/** end */
 	private LocalDateTime end = null;
 	/** startCity */
-	private City startCity;
+	private CityDTO startCity;
     /** arrivalCity */
-    private City arrivalCity;
+    private CityDTO arrivalCity;
     /** bonus */
     private BigDecimal bonus;
     /** transport */
@@ -50,8 +50,10 @@ public class MissionDTO implements DTO<Mission> {
     	this.id = mission.getId();
     	this.start = mission.getStartDate();
     	this.end = mission.getEndDate();
-    	this.startCity = mission.getStartCity();
-    	this.arrivalCity = mission.getEndCity();
+    	this.startCity = new CityDTO(mission.getStartCity());
+//    	this.startCity = mission.getStartCity().getName();
+    	this.arrivalCity = new CityDTO(mission.getEndCity());
+ //   	this.arrivalCity = mission.getEndCity().getName();
     	this.bonus = mission.getBonus();
     	this.transport = mission.getMissionTransport();
     	this.status = mission.getStatus();
@@ -59,9 +61,15 @@ public class MissionDTO implements DTO<Mission> {
     	this.collaborator = new CollaboratorDTO(mission.getCollaborator());
     	this.expenses = mission.getExpenses().stream().map(expense -> new ExpenseDTO(expense)).toList();
     }
+/**
+ * I had to rewritte it bu please don't use it it will only give you an empty Mission
+ */
+	@Override
+	public Mission instantiate() {
+		
+		return new Mission();
+	}
     
-    public Mission instantiate() {
-    	return new Mission(id, start, end, bonus, false, transport, status, nature.instantiate(), startCity, arrivalCity, null, collaborator.instantiate());
-    }
+ 
 
 }

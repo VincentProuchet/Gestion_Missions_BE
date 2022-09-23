@@ -7,6 +7,7 @@ import diginamic.gdm.exceptions.ErrorCodes;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.City;
+import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.CityService;
 import lombok.AllArgsConstructor;
@@ -55,6 +56,37 @@ public class CityServiceImpl implements CityService {
 	public void delete(int id) throws BadRequestException {
 		City city = read(id);
 		this.cityRepository.delete(city);
+	}
+
+	@Override
+	public City read(String name) throws BadRequestException {
+		// we first search it
+		return this.cityRepository.findByName(name).orElseThrow(() -> new BadRequestException("City not found", ErrorCodes.cityNotFound));
+		
+	}
+
+	@Override
+	public City read(CityDTO city) throws BadRequestException {
+		City city2;
+		// attempt to find it by id
+		try {
+			System.err.println("search by id");
+			 city2  = this.read(city.getId());
+			
+		} catch (BadRequestException e) {
+			// attemp to find it by name
+			try {
+				System.err.println("id not found  search by name");
+				city2 = read(city.getName());
+				
+			} catch (BadRequestException e2) {
+				// creation of a new city
+			System.err.println("create a new city");
+				city2 = this.create(new City(city));
+			}
+			
+		}		
+		return city2;
 	}
 
 }
