@@ -14,9 +14,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -29,6 +33,14 @@ import lombok.AllArgsConstructor;
  * @Beans related to security and how the spring security will accept or reject
  *        request
  * 
+ * @author Vincent
+ *
+ */
+/**
+ * @author Vincent
+ *
+ */
+/**
  * @author Vincent
  *
  */
@@ -57,8 +69,7 @@ public class GDMSecurityConfig {
 		//si on se connecte depuis autre chose que le login tout fait de spring security
 		.authorizeRequests()
 		// this one was for testing before creation of mock data
-		//.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()
-		
+		//.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()		
 		.antMatchers(HttpMethod.GET, GDMRoutes.FAVICON).permitAll()
 		.antMatchers(HttpMethod.POST, GDMRoutes.LOGIN).permitAll()
 		// all other request need authentication
@@ -69,9 +80,9 @@ public class GDMSecurityConfig {
 		.formLogin()
 		// here you can provide your homemade login form
 		//.loginPage(GDMVars.LOGINPAGE)
-		// here you vcan tell it to use a custom made login page
+		// here you can tell it to use a custom made login page
 		//.loginProcessingUrl(GDMRoutes.LOGIN)
-		//.successHandler(successHandler())
+		.successHandler(successHandler())
 		.failureHandler(failureHandler())
 		.permitAll()		
 		;
@@ -110,7 +121,22 @@ public class GDMSecurityConfig {
 	
 		;
 	}
-	
+	/**
+	 * authentication success handling
+	 * @return
+	 */
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+	    return new AuthenticationSuccessHandler() {
+	        @Override
+	        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
+	                HttpServletResponse httpServletResponse, Authentication authentication)
+	                throws IOException, ServletException{
+	            httpServletResponse.getWriter().append("OK");
+	            httpServletResponse.setStatus(200);
+	        }
+	    };
+	}
 
 	/**
 	 * bean for login failure handling
@@ -130,7 +156,19 @@ public class GDMSecurityConfig {
 	}
 
 	
-	
+//	@Bean
+	/**Made to circumvent the CORS trouble we got when trying to connect backend to frontEnd 
+	 * @return
+	 */
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurer() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/login").allowedOrigins("http://localhost:4200");
+//			}
+//		};
+//	}
+
 
 
 	
