@@ -1,5 +1,7 @@
 package diginamic.gdm.security;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -55,10 +60,10 @@ public class GDMSecurityConfig {
 		.invalidateHttpSession(true)
 		.deleteCookies(GDMVars.SESSION_SESSION_COOKIE_NAME)
 		;
+		http.cors();
 		http.authorizeRequests()
-			//.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()
+			.antMatchers("/"+GDMRoutes.SIGNUP+"/**").permitAll()
 			.antMatchers(HttpMethod.GET, GDMRoutes.FAVICON).permitAll()
-			
 			.anyRequest().authenticated()
 			;
 		http.httpBasic();
@@ -86,6 +91,23 @@ public class GDMSecurityConfig {
 	
 		;
 	}
+	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration configuration = new CorsConfiguration();
+	    configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+	    configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH"));
+	    configuration.setAllowCredentials(true);
+	    //the below three lines will add the relevant CORS response headers
+	    //configuration.addAllowedOrigin("*");
+	    configuration.addAllowedHeader("*");
+	    configuration.addAllowedMethod("*");
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", configuration);
+	    return source;
+	}
+	
+	
 	public void configure(AuthenticationManagerBuilder auth)throws Exception{
 		auth.authenticationProvider(authProvider);
 	}

@@ -55,7 +55,7 @@ public class InitDataDB {
     public void initDB(ContextRefreshedEvent event) throws Exception {
         System.out.println("init mock data");
 
-        // 5 cities
+       /* // 5 cities
         List<City> cities = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
             City newCity = new City();
@@ -351,7 +351,7 @@ public class InitDataDB {
             expense.setTva((float) i);
             expense = expenseRepository.save(expense);
             expenses.add(expense);
-        }
+        }*/
     }
 
     private LocalDateTime previousWeek(LocalDateTime date) {
