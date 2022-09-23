@@ -1,13 +1,6 @@
 package diginamic.gdm.services.implementations;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
@@ -15,6 +8,12 @@ import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.NatureService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation for {@link NatureService}.
@@ -52,7 +51,7 @@ public class NatureServiceImpl implements NatureService {
 
     @Override
     public Nature read(int id) throws BadRequestException {
-        return this.natureRepository.findById(id).orElseThrow(()->new BadRequestException("Nature not found", ErrorCodes.natureNotFound));
+        return this.natureRepository.findById(id).orElseThrow(() -> new BadRequestException("Nature not found", ErrorCodes.natureNotFound));
     }
 
     @Override
@@ -78,11 +77,20 @@ public class NatureServiceImpl implements NatureService {
             registeredNature.setEndOfValidity(now);
             nature.setDateOfValidity(now);
             nature.setId(0);
-            natureRepository.save(nature);
+            activeNature = natureRepository.save(nature);
+
+            // update missions that referred to this nature
+            List<Mission> futureMissions = missionRepository.findByNatureAndStartDateAfter(registeredNature, now);
+
+            for (Mission mission : futureMissions) {
+                mission.setNature(activeNature);
+                missionRepository.save(mission);
+            }
+
             natureRepository.save(registeredNature);
-            activeNature = nature;
+
         } else {
-            // if a nature is not used but is not active, it will be updated either way
+            // if a nature is not used, it will be updated either way, active or not
             registeredNature.setGivesBonus(nature.isGivesBonus());
             registeredNature.setCharged(nature.isCharged());
             registeredNature.setTjm(nature.getTjm());
@@ -108,6 +116,7 @@ public class NatureServiceImpl implements NatureService {
         // set endDate to now
         // else
         // throw exception cant completely delete a used nature
+        LocalDateTime now = LocalDateTime.now();
         Nature nature = read(id);
 
         if (!isThisNatureInUse(nature)) {
@@ -115,14 +124,18 @@ public class NatureServiceImpl implements NatureService {
             return;
         }
 
-        if (nature.getEndOfValidity() == null) {
+        List<Mission> missions = missionRepository.findByNatureOrderByStartDateDesc(nature);
 
-            nature.setEndOfValidity(LocalDateTime.now());
-            natureRepository.save(nature);
-
-        } else {
-            throw new BadRequestException("This nature is in use and is already inactive, it can't be deleted", ErrorCodes.natureCantBeDeleted);
+        Mission lastMission = missions.get(0);
+        if (lastMission.getStartDate().isAfter(now)) {
+            throw new BadRequestException("This nature will be used in the future, it can't be deleted, but it can be updated", ErrorCodes.natureCantBeDeleted);
         }
+
+        if (nature.getEndOfValidity() != null) {
+            throw new BadRequestException("This nature is in use and is already inactive, or it will be deactivated, it can't be deleted", ErrorCodes.natureCantBeDeleted);
+        }
+        nature.setEndOfValidity(now);
+        natureRepository.save(nature);
     }
 
     @Override
@@ -146,7 +159,7 @@ public class NatureServiceImpl implements NatureService {
         LocalDateTime startDateOfValidity = nature.getDateOfValidity();
 
         boolean areDatesValid = ((startDateOfValidity != null) && ((endDateOfValidity == null) || (endDateOfValidity.compareTo(startDateOfValidity) > 0)));
-        boolean requiredDataIsPresent = nature.getDescription() != null && nature.getDescription() != "";
+        boolean requiredDataIsPresent = nature.getDescription() != null && !nature.getDescription().equals("");
         return areDatesValid && requiredDataIsPresent;
     }
 
