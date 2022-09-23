@@ -15,4 +15,5 @@ public abstract class GDMVars {
 	public final static long SHEDULED_INTERVAL =  7200000L;
 	public final static String SESSION_SESSION_COOKIE_NAME ="JSESSIONID";
 	public final static String LOGINPAGE = "/login.html";
+	public final static int MAX_AUTHORIZED_SESSION = 1;
 }

@@ -1,8 +1,10 @@
 package diginamic.gdm.security;
 
 import java.io.IOException;
+import java.net.CookieStore;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,9 +18,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -92,6 +97,7 @@ public class GDMSecurityConfig {
 		.expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
 		;
 		http.logout()
+		.addLogoutHandler(logoutHandler())
 		.clearAuthentication(true)
 		.invalidateHttpSession(true)
 		.deleteCookies(GDMVars.SESSION_SESSION_COOKIE_NAME)
@@ -151,6 +157,33 @@ public class GDMSecurityConfig {
 	            httpServletResponse.setStatus(401);
 	        }
 	    };
+	}
+	
+	public LogoutHandler logoutHandler() {
+		return new LogoutHandler() {
+			
+			@Override
+			public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+				System.err.println("Login out");
+				Cookie[] cookies  =  request.getCookies();
+				for (Cookie cookie : cookies) {
+					if(cookie.getName()==GDMVars.SESSION_SESSION_COOKIE_NAME) {
+						System.out.println("cookie !!!!!!");
+					}
+				}
+				
+				try {
+					response.getWriter().append("Logged Out");
+					response.setStatus(200);
+					SecurityContextHolder.clearContext();
+					System.err.println(" logOut Success");
+				} catch (IOException e) {
+					System.err.println(" logout Fail");
+					response.setStatus(401);
+				}
+			}
+		};
+		
 	}
 
 	
