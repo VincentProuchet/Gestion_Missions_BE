@@ -82,7 +82,7 @@ public class InitDataDB {
         manager1.setPassword(passwordEncoder.encode("1111"));
         manager1.setFirstName("manager1firstname");
         manager1.setLastName("manager1lastname");
-        manager1.setUsername("manager1lastname");
+        manager1.setUsername("manager1username");
         manager1.setActive(true);
 
         // manager2 for the managers (himself included...) and the admin
@@ -92,12 +92,11 @@ public class InitDataDB {
         manager2.setPassword(passwordEncoder.encode("1111"));
         manager2.setFirstName("manager2firstname");
         manager2.setLastName("manager2lastname");
-        manager2.setUsername("manager2lastname");
+        manager2.setUsername("manager2username");
         manager2.setActive(true);
 
         manager1.setManager(manager2);
         manager2.setManager(manager2);
-
 
         // the admin
         Collaborator admin = new Collaborator();
@@ -106,7 +105,7 @@ public class InitDataDB {
         admin.setPassword(passwordEncoder.encode("1111"));
         admin.setFirstName("adminfirstname");
         admin.setLastName("adminlastname");
-        admin.setUsername("adminlastname");
+        admin.setUsername("adminusername");
         admin.setActive(true);
         admin.setManager(admin);
         
@@ -133,7 +132,7 @@ public class InitDataDB {
             newColl.setEmail("coll" + i + "@mail");
             newColl.setFirstName("coll" + i + "firstname");
             newColl.setLastName("coll" + i + "lastname");
-            newColl.setUsername("coll" + i + "lastname");
+            newColl.setUsername("coll" + i + "username");
             newColl.setPassword(passwordEncoder.encode(""+ i + i + i + i));
             newColl.setActive(true);
             newColl.setManager(manager1);
@@ -227,7 +226,7 @@ public class InitDataDB {
         newMission.setCollaborator(collaborators.get(0));
         newMission.setMissionTransport(Transport.Carshare);
         newMission.setNature(newNature);
-        newMission.setStatus(Status.VALIDATED);
+        newMission.setStatus(Status.INIT);
         newMission.setStartDate(now);
         newMission.setEndDate(nextWeek(now));
         newMission = missionRepository.save(newMission);
@@ -246,11 +245,11 @@ public class InitDataDB {
         newMission2 = missionRepository.save(newMission2);
         missions.add(newMission2);
 
-        // rejected, begin last week, end nextMonth, collaborator 1
+        // rejected, begin last week, end nextMonth, collaborator 0
         Mission newMission3 = new Mission();
         newMission3.setStartCity(cities.get(4));
         newMission3.setEndCity(cities.get(2));
-        newMission3.setCollaborator(collaborators.get(1));
+        newMission3.setCollaborator(collaborators.get(0));
         newMission3.setMissionTransport(Transport.Car);
         newMission3.setNature(newNature3);
         newMission3.setStatus(Status.REJECTED);
@@ -303,11 +302,11 @@ public class InitDataDB {
         newMission6 = missionRepository.save(newMission6);
         missions.add(newMission6);
 
-        // validated, start lastyear + 1 week, end lastyear + 1 month, deprecated nature, manager2
+        // validated, start lastyear + 1 week, end lastyear + 1 month, deprecated nature, collaborator 0
         Mission newMission7 = new Mission();
         newMission7.setStartCity(cities.get(1));
         newMission7.setEndCity(cities.get(1));
-        newMission7.setCollaborator(manager2);
+        newMission7.setCollaborator(collaborators.get(0));
         newMission7.setMissionTransport(Transport.Flight);
         newMission7.setNature(newNature5);
         newMission7.setStatus(Status.VALIDATED);
