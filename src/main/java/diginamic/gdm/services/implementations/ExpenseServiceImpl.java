@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.services.ExpenseTypeService;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Expense;
@@ -35,7 +36,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	 * The {@link ExpenseRepository} dependency.
 	 */
 	private ExpenseRepository expenseRepository;
-	
+	private ExpenseTypeService expenseTypeService;
 	/**
 	 * The {@link MissionService} dependency;
 	 */
@@ -60,6 +61,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException("Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB", ErrorCodes.expenseInvalid);
 		}
 
+		expense.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
+		expense.setMission(missionService.read(expense.getMission().getId()));
 		return this.expenseRepository.save(expense);
 	}
 	
@@ -80,8 +83,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException("Expense invalid : ", ErrorCodes.expenseInvalid);
 		}
 
-		if ( expense.getMission().getId() != current.getMission().getId()
-				|| current.getMission().getExpenses().stream().allMatch(expense1 -> expense1.getId() != id)) {
+		if ( expense.getMission().getId() != current.getMission().getId()) {
 			return null;
 		}
 
@@ -89,7 +91,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 		current.setDate(expense.getDate());
 		current.setTva(expense.getTva());
 		current.setCost(expense.getCost());
-		current.setExpenseType(expense.getExpenseType());
+		current.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
+		current.setMission(missionService.read(expense.getMission().getId()));
 		this.expenseRepository.save(current);
 		return current;
 	}
@@ -97,8 +100,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public void delete(int id) throws BadRequestException {
 		Expense expense = read(id);
-		Mission mission = expense.getMission();
-		mission.setExpenses(mission.getExpenses().stream().filter(expense1 -> expense1.getId() != id).collect(Collectors.toSet()));
 
 		this.expenseRepository.delete(expense);
 	}

@@ -61,16 +61,20 @@ public class ExpenseController {
 	/**
 	 * Saves a new {@link Expense} instance.
 	 * 
-	 * @param expense The new expense within the request body to be registered
+	 * @param expenseDTO The new expense within the request body to be registered
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.COLLABORATOR)
-	public void create(@RequestBody ExpenseDTO expense) throws Exception {
+	public ExpenseDTO create(@RequestBody ExpenseDTO expenseDTO) throws Exception {
 		Collaborator user = collaboratorService.getConnectedUser();
-		Mission mission = missionService.read(expense.getIdMission());
+		Mission mission = missionService.read(expenseDTO.getIdMission());
 		if(mission.getCollaborator().getId() == user.getId()){
-			expenseService.create(expense.instantiate());
+			Expense newExpense = expenseDTO.instantiate();
+			Mission emptyMission = new Mission();
+			emptyMission.setId(expenseDTO.getIdMission());
+			newExpense.setMission(emptyMission);
+			return new ExpenseDTO(expenseService.create(newExpense));
 		}
 		throw new Exception("Only the assignee can create an expense for a mission");
 	}
@@ -125,7 +129,11 @@ public class ExpenseController {
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = expenseService.read(id).getMission();
 		if(mission.getCollaborator().getId() == user.getId()){
-			return new ExpenseDTO(expenseService.update(id, expenseDTO.instantiate()));
+			Expense modifiedExpense = expenseDTO.instantiate();
+			Mission emptyMission = new Mission();
+			emptyMission.setId(expenseDTO.getIdMission());
+			modifiedExpense.setMission(emptyMission);
+			return new ExpenseDTO(expenseService.update(id, modifiedExpense));
 		}
 		throw new Exception("Only the assignee can update the expenses of a mission");
 	}
