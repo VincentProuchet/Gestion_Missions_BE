@@ -1,9 +1,6 @@
 package diginamic.gdm.Enums;
 
-import java.util.Map;
-
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
@@ -23,8 +20,8 @@ import lombok.Getter;
 @Getter
 public enum Transport {
 	
-	CAR(0,Locales.fr, "voiture"),
-	CARSHARE(1, Locales.fr,"co-voiturage")
+	CAR(0, "voiture"),
+	CARSHARE(1,"co-voiturage")
 	
 	;
 	@Id	
@@ -32,7 +29,7 @@ public enum Transport {
 	
 	/** localizedLabel map of label can be localized */
 	@Column
-	private Map<Locales, String> localizedLabel;
+	private  String localizedLabel;
 	
 	@Transient
 	public static Locales activeLocale = Locales.fr;
@@ -42,9 +39,9 @@ public enum Transport {
 	 * @param locale
 	 * @param label
 	 */
-	private Transport(int id,Locales locale ,String label) {
+	private Transport(int id,String label) {
 		this.id = id;
-		this.localizedLabel.put(locale, label);
+		this.localizedLabel = label;
 	}
 	/** Constructeur
 	 * 
@@ -58,19 +55,9 @@ public enum Transport {
 	 * @return the label
 	 */
 	public String getLabel() {		
-		return this.localizedLabel.get(activeLocale);
+		return this.localizedLabel;
 	}
-	/**
-	 * pour ajouter des labels à vos 
-	 * enums
-	 * ATTENTION ecraseras toutee valeur se trouvant déjà
-	 * dans la valeur locale
-	 * @param locale
-	 * @param label
-	 */
-	public void addLabel(Locales locale, String label) {
-		this.localizedLabel.put(locale, label);
-	}
+
 	
 	
 	
