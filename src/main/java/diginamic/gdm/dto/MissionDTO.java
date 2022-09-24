@@ -46,6 +46,9 @@ public class MissionDTO implements DTO<Mission> {
     /** expenses */
     private List<ExpenseDTO> expenses;
     
+    /** Constructeur
+     * @param mission
+     */
     public MissionDTO(Mission mission) {
     	this.id = mission.getId();
     	this.start = mission.getStartDate();

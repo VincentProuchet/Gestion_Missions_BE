@@ -9,6 +9,10 @@ import lombok.Getter;
 
 /**
  * Represents the mean of transport for the mission
+ * They are suposed to be referenced as ordinal so please
+ * If you need to add more
+ * ad them at the end
+ * 
  * @author Joseph
  *	@author Vincent please don't mind the entities annotations
  *	that was a prevention in case this one gets promoted from enum to class
