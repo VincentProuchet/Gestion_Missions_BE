@@ -58,7 +58,7 @@ public class Mission {
 	private boolean hasBonusBeenEvaluated = false;
 
 	/** missionTransport : the type of transport for the mission */
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private Transport missionTransport;
 
 	/** status : the status of the mission request */
