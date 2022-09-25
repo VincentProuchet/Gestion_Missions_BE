@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import diginamic.gdm.dao.Expense;
-import diginamic.gdm.dao.ExpenseType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,24 +35,24 @@ public class ExpenseDTO implements DTO<Expense> {
 	private int idMission = 0;
 	
 	/**
-	 * Represents {@link diginamic.gdm.dao.Expense#date Expense.date}
+	 * Represents {@link diginamic.gdm.dao.Expense Expense.date}
 	 */
 	private LocalDateTime date = null;
 	
 	/**
-	 * Represents {@link diginamic.gdm.dao.Expense#cost Expense.cost}
+	 * Represents {@link diginamic.gdm.dao.Expense Expense.cost}
 	 */
 	private BigDecimal cost = null;
 	
 	/**
-	 * Represents {@link diginamic.gdm.dao.Expense#tva Expense.tva}
+	 * Represents {@link diginamic.gdm.dao.Expense Expense.tva}
 	 */
 	private float tva = 0;
 	
 	/**
-	 * Represents {@link diginamic.gdm.dao.Expense#expenseType Expense.expenseType}
+	 * Represents {@link diginamic.gdm.dao.Expense Expense.expenseType}
 	 */
-	private ExpenseType type = null;
+	private ExpenseTypeDTO type = null;
 	
 	public ExpenseDTO(Expense expense) {
 		this.id = expense.getId();
@@ -61,12 +60,12 @@ public class ExpenseDTO implements DTO<Expense> {
 		this.date = expense.getDate();
 		this.cost = expense.getCost();
 		this.tva = expense.getTva();
-		this.type = expense.getExpenseType();
+		this.type = new ExpenseTypeDTO(expense.getExpenseType());
 	}
 
 	@Override
 	public Expense instantiate() {
-		return new Expense(id, date, cost, tva, null, type);
+		return new Expense(id, date, cost, tva, null, type.instantiate());
 	}
 	
 }
