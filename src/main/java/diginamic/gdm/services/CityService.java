@@ -44,9 +44,9 @@ public interface CityService {
 	City read(String name) throws BadRequestException;
 
 	/**
-	 * Updates the data for a specific registered city.
+	 *	gets  the data for a specific registered city
+	 * will check for id then names 
 	 * 
-	 * @param id The id corresponding to the city to update
 	 * @param city The city to update with modified info
 	 * @return The resulting city with updated info
 	 */

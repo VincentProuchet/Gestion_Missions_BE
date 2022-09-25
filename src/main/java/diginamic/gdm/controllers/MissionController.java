@@ -50,7 +50,7 @@ public class MissionController {
 	 * The {@link MissionService} dependency.
 	 */
 	private MissionService missionService;
-	
+
 	/** cityService */
 	private CityService cityService;
 
@@ -73,23 +73,25 @@ public class MissionController {
 	}
 
 	/**
-	 * Gets the list of missions waiting for validation, only for a manager, and only the missions of his team members
+	 * Gets the list of missions waiting for validation, only for a manager, and
+	 * only the missions of his team members
 	 *
-	 * @param idManager TODO this param is redundant, is it really more secure to keep it?
+	 * @param idManager TODO this param is redundant, is it really more secure to
+	 *                  keep it?
 	 * @return A list of all missions
 	 */
-	@GetMapping(path = GDMRoutes.MANAGER+"/{idManager}")
+	@GetMapping(path = GDMRoutes.MANAGER + "/{idManager}")
 	@Secured(GDMRoles.COLLABORATOR)
 	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) throws Exception {
 		// get the identity of the manager
 		Collaborator user = collaboratorService.getConnectedUser();
 
-		if (user.getId() == idManager){
+		if (user.getId() == idManager) {
 			return missionService.missionsToValidate(idManager).stream().map(MissionDTO::new).toList();
 		}
 		throw new Exception("it is not allowed to get the missions waiting validation if you are not the manager");
 	}
-	
+
 	/**
 	 * Saves a new {@link Mission} instance.
 	 * 
@@ -103,6 +105,12 @@ public class MissionController {
 		Collaborator user = collaboratorService.getConnectedUser();
 		City startCity;
 		City arrivalCiTy;
+		
+		/**
+		 *  these try catch are a prototype for an automated way of adding cities on the fly
+		 *  it need to see a rework since the system is still case sensitive 
+		 */
+	
 		try {
 			startCity = cityService.read(mission.getStartCity());
 		} catch (BadRequestException e) {
@@ -115,12 +123,9 @@ public class MissionController {
 			arrivalCiTy = new City(mission.getArrivalCity());
 			arrivalCiTy = cityService.create(arrivalCiTy);
 		}
-		
-			return new MissionDTO(missionService.create( new Mission(mission,startCity,arrivalCiTy,user)));
-			
-		//throw new Exception("it is not allowed to create a mission for someone else");
+		return new MissionDTO(missionService.create(new Mission(mission, startCity, arrivalCiTy, user)));
 	}
-	
+
 	/**
 	 * Gets a specific registered mission.
 	 * 
@@ -133,31 +138,35 @@ public class MissionController {
 		// only a collaborator or his manager can ask for this
 		return new MissionDTO(missionService.read(id));
 	}
-	
+
 	/**
 	 * Updates the data for a specific registered mission.
 	 * 
-	 * @param id The id corresponding to the mission to update
+	 * @param id         The id corresponding to the mission to update
 	 * @param missionDTO The mission withing the request body with modified info
 	 * @return The resulting mission with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured(GDMRoles.COLLABORATOR)
 	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) throws Exception {
-		//Be aware that only mission with a certain status can be modified
+		// Be aware that only mission with a certain status can be modified
 		// and update should'nt take the status from client
-
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = missionService.read(id);
 		Collaborator assignee = mission.getCollaborator();
-		
-		if (user.getId() == assignee.getId()){
-			return new MissionDTO(missionService.update(id, missionDTO.instantiate()));
+		// we check the first right to update
+		if (user.getId() == assignee.getId()) {
+			City startCity;
+			City arrivalCiTy;
+			// then we get cities
+			startCity = cityService.read(missionDTO.getStartCity());
+			arrivalCiTy = cityService.read(missionDTO.getArrivalCity());
+			return new MissionDTO(missionService.update(id,new Mission(missionDTO,startCity,arrivalCiTy,user)));
 		}
 		throw new Exception("it is not allowed to update a mission for someone else if you are not the manager");
 
 	}
-	
+
 	/**
 	 * Deletes a specific registered mission.
 	 * 
@@ -177,9 +186,10 @@ public class MissionController {
 		}
 		throw new Exception("it is not allowed to delete a mission for someone else");
 	}
-	
+
 	/**
-	 * Validates a mission by updating its status to {@link Status#VALIDATED VALIDATED}
+	 * Validates a mission by updating its status to {@link Status#VALIDATED
+	 * VALIDATED}
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
@@ -196,13 +206,13 @@ public class MissionController {
 		throw new Exception("it is not allowed to validate a mission for someone not in your team");
 
 	}
-	
+
 	/**
 	 * Rejects a mission by updating its status to {@link Status#REJECTED REJECTED}
 	 * 
 	 * @param id The id corresponding to the mission to validate
 	 */
-	@PutMapping(path = "{id}/"+GDMRoutes.REJETER)
+	@PutMapping(path = "{id}/" + GDMRoutes.REJETER)
 	@Secured(GDMRoles.MANAGER)
 	public void reject(@PathVariable int id) throws Exception {
 
@@ -227,10 +237,10 @@ public class MissionController {
 	@Scheduled(fixedRate = GDMVars.SHEDULED_INTERVAL)
 	public void testNightComputing() throws BadRequestException {
 		System.out.println("computing");
-		
+
 		scheduledTasksService.computeBonusForCompletedMissions();
 		scheduledTasksService.changeMissionStatus();
 
 	}
-	
+
 }

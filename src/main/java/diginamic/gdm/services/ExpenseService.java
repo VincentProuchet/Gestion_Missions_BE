@@ -65,7 +65,8 @@ public interface ExpenseService {
 	 *
 	 * @param expense the expense to validate
 	 * @return true if the expense is correctly formed
+	 * @throws BadRequestException 
 	 */
-	boolean isExpenseValid(Expense expense);
+	boolean isExpenseValid(Expense expense) throws BadRequestException;
 	
 }

@@ -69,19 +69,20 @@ public class MissionServiceImpl implements MissionService {
     @Override
     public Mission update(int id, Mission mission, boolean allowWE) throws BadRequestException {
 
+    	Mission current = read(mission.getId());
+    	
         //throws exception
-        if (id != mission.getId()) {
+        if (id != current.getId()) {
             throw new BadRequestException("The id is inconsistent with the given mission", ErrorCodes.idInconsistent);
         }
-        if (!isThisMissionValid(mission, allowWE)) {
+        if (!isThisMissionValid(current, allowWE)) {
             throw new BadRequestException("This mission does not have all the required data, or the dates are not allowed (WE or collaborator already in mission) ", ErrorCodes.missionInvalid);
         }
-        if (!canBeUpdated(mission)) {
+        if (!canBeUpdated(current)) {
             throw new BadRequestException("This mission can't be updated : make sure its status is INIT or REJECTED, or consider create it if it does not exist", ErrorCodes.missionInvalid);
         }
 
-        Mission current = read(id);
-        current.setBonus(mission.getBonus());
+        //current.setBonus(mission.getBonus());// Il would not have touched the bonus because its suposed to be the result of a calculus
         current.setMissionTransport(mission.getMissionTransport());
         current.setStartDate(mission.getStartDate());
         current.setEndDate(mission.getEndDate());

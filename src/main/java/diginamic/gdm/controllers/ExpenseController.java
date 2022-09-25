@@ -67,13 +67,17 @@ public class ExpenseController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.COLLABORATOR)
 	public ExpenseDTO create(@RequestBody ExpenseDTO expenseDTO) throws Exception {
+		// we get the connected user
 		Collaborator user = collaboratorService.getConnectedUser();
+		// we get the mission form DB
 		Mission mission = missionService.read(expenseDTO.getIdMission());
+		// we check if the user has the righrs to add expenses to THAT mission
 		if(mission.getCollaborator().getId() == user.getId()){
+			// we create a new expense
 			Expense newExpense = expenseDTO.instantiate();
-			Mission emptyMission = new Mission();
-			emptyMission.setId(expenseDTO.getIdMission());
-			newExpense.setMission(emptyMission);
+			// and give it he mission its supposed to
+			newExpense.setMission(mission);
+					
 			return new ExpenseDTO(expenseService.create(newExpense));
 		}
 		throw new Exception("Only the assignee can create an expense for a mission");

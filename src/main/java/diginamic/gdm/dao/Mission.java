@@ -101,10 +101,12 @@ public class Mission {
 		this.bonus = m.getBonus();
 		this.missionTransport = m.getTransport();
 		this.nature = m.getNature().instantiate();
+		this.status = m.getStatus();
 		this.startCity = start;
 		this.endCity = arrival;
 		this.collaborator = collaborator;
 	}
+	
 
 	
 	

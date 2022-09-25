@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Transactional
 public class ExpenseServiceImpl implements ExpenseService {
-	
+
 	/**
 	 * The {@link ExpenseRepository} dependency.
 	 */
@@ -57,25 +57,28 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public Expense create(Expense expense) throws BadRequestException {
 
-		if (!isExpenseValid(expense)){
-			throw new BadRequestException("Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB", ErrorCodes.expenseInvalid);
+		if (!isExpenseValid(expense)) {
+			throw new BadRequestException(
+					"Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB",
+					ErrorCodes.expenseInvalid);
 		}
 
 		expense.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
 		expense.setMission(missionService.read(expense.getMission().getId()));
 		return this.expenseRepository.save(expense);
 	}
-	
+
 	@Override
 	public Expense read(int id) throws BadRequestException {
-		return this.expenseRepository.findById(id).orElseThrow(()->new BadRequestException("Expense not found", ErrorCodes.expenseNotFound));
+		return this.expenseRepository.findById(id)
+				.orElseThrow(() -> new BadRequestException("Expense not found", ErrorCodes.expenseNotFound));
 	}
 
 	@Override
 	public Expense update(int id, Expense expense) throws BadRequestException {
 		Expense current = read(expense.getId());
 
-		if (id != expense.getId()){
+		if (id != expense.getId()) {
 			throw new BadRequestException("Expense id inconsistent", ErrorCodes.idInconsistent);
 		}
 
@@ -83,10 +86,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException("Expense invalid : ", ErrorCodes.expenseInvalid);
 		}
 
-		if ( expense.getMission().getId() != current.getMission().getId()) {
+		if (expense.getMission().getId() != current.getMission().getId()) {
 			return null;
 		}
-
 
 		current.setDate(expense.getDate());
 		current.setTva(expense.getTva());
@@ -105,33 +107,39 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public boolean isExpenseValid(Expense expense) {
+	public boolean isExpenseValid(Expense expense) throws BadRequestException {
 		Mission mission = expense.getMission();
 
 		// does this mission exist?
 		if (mission == null) {
-			return false;
+			throw new BadRequestException("Why is that expense null", ErrorCodes.expenseInvalid);
 		}
 		Optional<Mission> actualMissionOptional = missionRepository.findById(mission.getId());
-		if (actualMissionOptional.isEmpty()){
-			return false;
+		if (actualMissionOptional.isEmpty()) {
+			throw new BadRequestException("the mission doesn't exist", ErrorCodes.missionInvalid);
 		}
 		Mission actualMission = actualMissionOptional.get();
 
-		boolean existsAndIsValid = missionService.isMissionDone(actualMission.getId());
+		if (missionService.isMissionDone(actualMission.getId())) {
+			throw new BadRequestException("Mission is done", ErrorCodes.missionInvalid);
+		}
 
 		// is the date valid?
 		LocalDateTime date = expense.getDate();
 		if (date == null) {
-			return false;
+			throw new BadRequestException("date is null ", ErrorCodes.missionInvalid);
 		}
 
-		boolean isDateInMissionPeriod = date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate());
+		if (date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate())) {
+			throw new BadRequestException("Expense's dates doesn't match mission's dates", ErrorCodes.missionInvalid);
+		}
+		// are all data needed present
+		if (expense.getExpenseType() != null && expense.getCost().compareTo(BigDecimal.valueOf(0)) >= 0
+				&& expense.getTva() >= 0) {
+			throw new BadRequestException("Expense's dates doesn't match mission's dates", ErrorCodes.missionInvalid);
+		}
 
-		// required data
-		boolean isRequiredDataPresent = expense.getExpenseType() != null && expense.getCost().compareTo(BigDecimal.valueOf(0)) >= 0 && expense.getTva() >= 0;
-
-		return existsAndIsValid && isDateInMissionPeriod && isRequiredDataPresent;
+		return true;
 	}
 
 }
