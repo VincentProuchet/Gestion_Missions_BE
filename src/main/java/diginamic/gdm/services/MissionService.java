@@ -103,8 +103,9 @@ public interface MissionService {
 	 *
 	 * @param mission the mission
 	 * @return true if the mission is correctly formed
+	 * @throws Exception 
 	 */
-	default boolean isThisMissionValid(Mission mission) {
+	default boolean isThisMissionValid(Mission mission) throws Exception {
 		return isThisMissionValid(mission, false);
 	}
 
@@ -114,8 +115,9 @@ public interface MissionService {
 	 * @param allowWE allow to work in WE
 	 * @param mission the mission
 	 * @return true if the mission is correctly formed
+	 * @throws BadRequestException 
 	 */
-	boolean isThisMissionValid(Mission mission, boolean allowWE);
+	boolean isThisMissionValid(Mission mission, boolean allowWE) throws Exception;
 
 	/**
 	 * Check if the mission status is INIT or REJECTED

@@ -106,6 +106,15 @@ public class Mission {
 		this.endCity = arrival;
 		this.collaborator = collaborator;
 	}
+public Mission(MissionDTO m) {
+		this.id = m.getId();
+		this.startDate = m.getStart();
+		this.endDate = m.getEnd();
+		this.bonus = m.getBonus();
+		this.missionTransport = m.getTransport();
+		this.nature = m.getNature().instantiate();
+		this.status = m.getStatus();
+	}
 	
 
 	

@@ -105,12 +105,12 @@ public class MissionController {
 		Collaborator user = collaboratorService.getConnectedUser();
 		City startCity;
 		City arrivalCiTy;
-		
+
 		/**
-		 *  these try catch are a prototype for an automated way of adding cities on the fly
-		 *  it need to see a rework since the system is still case sensitive 
+		 * these try catch are a prototype for an automated way of adding cities on the
+		 * fly it need to see a rework since the system is still case sensitive
 		 */
-	
+
 		try {
 			startCity = cityService.read(mission.getStartCity());
 		} catch (BadRequestException e) {
@@ -155,15 +155,14 @@ public class MissionController {
 		Mission mission = missionService.read(id);
 		Collaborator assignee = mission.getCollaborator();
 		// we check the first right to update
-		if (user.getId() == assignee.getId()) {
-			City startCity;
-			City arrivalCiTy;
-			// then we get cities
-			startCity = cityService.read(missionDTO.getStartCity());
-			arrivalCiTy = cityService.read(missionDTO.getArrivalCity());
-			return new MissionDTO(missionService.update(id,new Mission(missionDTO,startCity,arrivalCiTy,user)));
+		if (user.getId() != assignee.getId()) {
+			throw new Exception("it is not allowed to update a mission for someone else if you are not the manager");
 		}
-		throw new Exception("it is not allowed to update a mission for someone else if you are not the manager");
+		Mission missionUpdated = new Mission(missionDTO);
+		missionUpdated.setStartCity(cityService.read(missionDTO.getStartCity()));
+		missionUpdated.setEndCity(cityService.read(missionDTO.getArrivalCity()));
+		missionUpdated.setCollaborator(user);
+		return new MissionDTO(missionService.update(id, missionUpdated));
 
 	}
 
