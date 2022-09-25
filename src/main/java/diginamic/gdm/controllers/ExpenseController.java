@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import diginamic.gdm.GDMRoles;
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.Expense;
+import diginamic.gdm.dao.ExpenseType;
 import diginamic.gdm.dto.ExpenseDTO;
 import diginamic.gdm.services.ExpenseService;
+import diginamic.gdm.services.ExpenseTypeService;
 import lombok.AllArgsConstructor;
 
 /**

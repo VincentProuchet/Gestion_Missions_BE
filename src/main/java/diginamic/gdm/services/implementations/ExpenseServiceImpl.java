@@ -56,15 +56,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public Expense create(Expense expense) throws BadRequestException {
-
-		if (!isExpenseValid(expense)) {
-			throw new BadRequestException(
-					"Expense invalid : make sure the reqired data is present, the date is ok, and that the mission is already registered in DB",
-					ErrorCodes.expenseInvalid);
-		}
-
+		// why waiting for setting thoses ?
 		expense.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
+		// this is an overkill, the mission should have been already checked and set at
+		// this point
 		expense.setMission(missionService.read(expense.getMission().getId()));
+		// we check if everything is allright
+		this.isExpenseValid(expense);
+		// and save
 		return this.expenseRepository.save(expense);
 	}
 
@@ -81,10 +80,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (id != expense.getId()) {
 			throw new BadRequestException("Expense id inconsistent", ErrorCodes.idInconsistent);
 		}
-
-		if (!isExpenseValid(expense)) {
-			throw new BadRequestException("Expense invalid : ", ErrorCodes.expenseInvalid);
-		}
+		// since this one throws is own exceptions
+		this.isExpenseValid(expense);
 
 		if (expense.getMission().getId() != current.getMission().getId()) {
 			return null;
@@ -108,19 +105,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public boolean isExpenseValid(Expense expense) throws BadRequestException {
-		Mission mission = expense.getMission();
+		// on recherche la mission dans la BDD
+		Mission mission = missionRepository.findById(expense.getMission().getId())
+				.orElseThrow(() -> new BadRequestException("the mission doesn't exist", ErrorCodes.missionInvalid));
 
-		// does this mission exist?
-		if (mission == null) {
-			throw new BadRequestException("Why is that expense null", ErrorCodes.expenseInvalid);
-		}
-		Optional<Mission> actualMissionOptional = missionRepository.findById(mission.getId());
-		if (actualMissionOptional.isEmpty()) {
-			throw new BadRequestException("the mission doesn't exist", ErrorCodes.missionInvalid);
-		}
-		Mission actualMission = actualMissionOptional.get();
-
-		if (missionService.isMissionDone(actualMission.getId())) {
+		if (missionService.isMissionDone(mission.getId())) {
 			throw new BadRequestException("Mission is done", ErrorCodes.missionInvalid);
 		}
 
@@ -130,13 +119,24 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException("date is null ", ErrorCodes.missionInvalid);
 		}
 
-		if (date.isAfter(actualMission.getStartDate()) && date.isBefore(actualMission.getEndDate())) {
-			throw new BadRequestException("Expense's dates doesn't match mission's dates", ErrorCodes.missionInvalid);
+		// are all data needed present and in correct values
+		if (expense.getExpenseType().equals(null) ) {
+			throw new BadRequestException("Expense's types can't be null", ErrorCodes.expenseInvalid);
 		}
-		// are all data needed present
-		if (expense.getExpenseType() != null && expense.getCost().compareTo(BigDecimal.valueOf(0)) >= 0
-				&& expense.getTva() >= 0) {
-			throw new BadRequestException("Expense's dates doesn't match mission's dates", ErrorCodes.missionInvalid);
+
+		if (expense.getCost().compareTo(BigDecimal.valueOf(0)) < 0) {
+			throw new BadRequestException("Expense's value can't be negative", ErrorCodes.expenseInvalid);
+
+		}
+		if (expense.getTva() < 0) {
+			throw new BadRequestException("Expense's TVA can't be negative", ErrorCodes.missionInvalid);
+		}
+		if (!date.isAfter(mission.getStartDate())) {
+			throw new BadRequestException("Expense's dates can't be before mission start", ErrorCodes.expenseInvalid);
+		}
+
+		if (!date.isBefore(mission.getEndDate())) {
+			throw new BadRequestException("Expense's dates can't be after mission end", ErrorCodes.expenseInvalid);
 		}
 
 		return true;

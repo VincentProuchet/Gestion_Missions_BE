@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import diginamic.gdm.dto.ExpenseDTO;
+import diginamic.gdm.dto.ExpenseTypeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,5 +33,10 @@ public class ExpenseType {
 	/** name : the name of the type of expense */
 	@Column(nullable = false,unique = true)
 	private String name;
+	
+	public ExpenseType(ExpenseTypeDTO et) {
+		this.id = et.getId();
+		this.name = et.getName();
+	}
 
 }

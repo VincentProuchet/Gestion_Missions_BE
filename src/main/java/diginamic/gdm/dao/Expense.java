@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import diginamic.gdm.dto.ExpenseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,4 +51,14 @@ public class Expense {
 	@ManyToOne
 	@JoinColumn(name = "expenseTypeID",nullable = false)
 	private ExpenseType expenseType;
+	
+	
+	public Expense(ExpenseDTO e) {
+		this.id = e.getId();
+		this.date = e.getDate();
+		this.cost = e.getCost();
+		this.tva = e.getTva();
+		this.expenseType =new ExpenseType(e.getType()) ;
+		
+	}
 }

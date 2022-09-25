@@ -164,6 +164,9 @@ public class MissionServiceImpl implements MissionService {
         return true;
     }
 
+    /**
+     *needs refactoring, since it will do uneccessary database queries
+     */
     @Override
     public boolean isMissionDone(int id) {
         Optional<Mission> optionalMission = missionRepository.findById(id);
