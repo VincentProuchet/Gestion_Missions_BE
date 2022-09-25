@@ -181,7 +181,7 @@ public class MissionServiceImpl implements MissionService {
     public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
         Collaborator manager = managerRepository.findById(idManager).orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
         List<Mission> missionsToValidate = new ArrayList<>();
-        manager.getTeam().forEach(collaborator -> missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION)));
+        manager.getTeam().forEach(collaborator -> missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatusNot(collaborator, Status.INIT)));
         return missionsToValidate;
     }
 
