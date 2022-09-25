@@ -33,6 +33,8 @@ public abstract class GDMRoutes {
 	public static final String REJETER = "rejeter";
 	/** MISSION */
 	public static final String MISSION = "mission";	
+	/** MISSION */
+	public static final String RESET = "reset";	
 	/** EXPENSE */
 	public static final String EXPENSE = "expense";
 	/** TYPE */

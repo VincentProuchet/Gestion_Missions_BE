@@ -194,13 +194,12 @@ public class MissionController {
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.VALIDER)
 	@Secured(GDMRoles.MANAGER)
-	public void validate(@PathVariable int id) throws Exception {
+	public MissionDTO validate(@PathVariable int id) throws Exception {
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = missionService.read(id);
 
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
-			missionService.updateStatus(id, Status.VALIDATED);
-			return;
+			return new MissionDTO(missionService.updateStatus(id, Status.VALIDATED));
 		}
 		throw new Exception("it is not allowed to validate a mission for someone not in your team");
 
@@ -209,20 +208,37 @@ public class MissionController {
 	/**
 	 * Rejects a mission by updating its status to {@link Status#REJECTED REJECTED}
 	 * 
-	 * @param id The id corresponding to the mission to validate
+	 * @param id The id corresponding to the mission to reject
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.REJETER)
 	@Secured(GDMRoles.MANAGER)
-	public void reject(@PathVariable int id) throws Exception {
+	public MissionDTO reject(@PathVariable int id) throws Exception {
 
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = missionService.read(id);
 
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
-			missionService.updateStatus(id, Status.VALIDATED);
-			return;
+			return new MissionDTO(missionService.updateStatus(id, Status.REJECTED));
 		}
 		throw new Exception("it is not allowed to reject a mission for someone not in your team");
+	}
+	
+	/**
+	 * Resets a mission's status by updating its status to {@link Status#WAITING_VALIDATION WAITING_VALIDATION}
+	 * 
+	 * @param id The id corresponding to the mission to reset
+	 */
+	@PutMapping(path = "{id}/" + GDMRoutes.RESET)
+	@Secured(GDMRoles.MANAGER)
+	public MissionDTO reset(@PathVariable int id) throws Exception {
+
+		Collaborator user = collaboratorService.getConnectedUser();
+		Mission mission = missionService.read(id);
+
+		if (user.getId() == mission.getCollaborator().getManager().getId()) {
+			return new MissionDTO(missionService.updateStatus(id, Status.WAITING_VALIDATION));
+		}
+		throw new Exception("it is not allowed to reset a mission for someone not in your team");
 	}
 
 	/**

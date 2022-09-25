@@ -232,15 +232,14 @@ public class MissionServiceImpl implements MissionService {
 		return mission.getStatus() == Status.VALIDATED && mission.getEndDate().isBefore(LocalDateTime.now());
 	}
 
-	@Override
-	public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
-		Collaborator manager = managerRepository.findById(idManager)
-				.orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
-		List<Mission> missionsToValidate = new ArrayList<>();
-		manager.getTeam().forEach(collaborator -> missionsToValidate
-				.addAll(missionRepository.findByCollaboratorAndStatus(collaborator, Status.WAITING_VALIDATION)));
-		return missionsToValidate;
-	}
+	
+    @Override
+    public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
+        Collaborator manager = managerRepository.findById(idManager).orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
+        List<Mission> missionsToValidate = new ArrayList<>();
+        manager.getTeam().forEach(collaborator -> missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatusNot(collaborator, Status.INIT)));
+        return missionsToValidate;
+    }
 
 	@Override
 	public List<Mission> missionsToPutInWaitingValidation() {
