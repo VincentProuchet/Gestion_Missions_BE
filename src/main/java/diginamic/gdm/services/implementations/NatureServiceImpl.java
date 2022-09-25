@@ -39,6 +39,12 @@ public class NatureServiceImpl implements NatureService {
 
     @Override
     public Nature create(Nature nature) throws BadRequestException {
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime end = null;
+        nature.setEndOfValidity(end);
+        nature.setDateOfValidity(now);
+
         if (!canBeAdded(nature)) {
             throw new BadRequestException("A nature with this name already exists", ErrorCodes.natureInvalid);
         }
@@ -57,6 +63,10 @@ public class NatureServiceImpl implements NatureService {
     @Override
     public Nature update(int id, Nature nature) throws BadRequestException {
 
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime end = null;
+        nature.setEndOfValidity(end);
+        nature.setDateOfValidity(now);
         if (id != nature.getId()) {
             throw new BadRequestException("The id is inconsistent with the given nature", ErrorCodes.idInconsistent);
         }
@@ -67,14 +77,15 @@ public class NatureServiceImpl implements NatureService {
             throw new BadRequestException("This nature can't be updated : consider create it instead, or get the latest version of it before updating", ErrorCodes.natureInvalid);
         }
 
+        //currently the start date is now and the end date is null
         Nature registeredNature = natureRepository.findById(id).get();
         List<Nature> orderedListOfNatures = natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
         // the actual update in DB
         Nature activeNature;
-        LocalDateTime now = LocalDateTime.now();
         if (isThisNatureInUse(registeredNature)) {
 
             registeredNature.setEndOfValidity(now);
+            nature.setEndOfValidity(null);
             nature.setDateOfValidity(now);
             nature.setId(0);
             activeNature = natureRepository.save(nature);
@@ -96,7 +107,7 @@ public class NatureServiceImpl implements NatureService {
             registeredNature.setTjm(nature.getTjm());
             registeredNature.setBonusPercentage(nature.getBonusPercentage());
             registeredNature.setDateOfValidity(now);
-            registeredNature.setEndOfValidity(nature.getEndOfValidity());
+            registeredNature.setEndOfValidity(null);
             registeredNature.setDescription(nature.getDescription());
             this.natureRepository.save(registeredNature);
 
@@ -157,8 +168,8 @@ public class NatureServiceImpl implements NatureService {
     public boolean isAValidNature(Nature nature) {
         LocalDateTime endDateOfValidity = nature.getEndOfValidity();
         LocalDateTime startDateOfValidity = nature.getDateOfValidity();
+        boolean areDatesValid = (startDateOfValidity != null) && ((endDateOfValidity == null) || (endDateOfValidity.compareTo(startDateOfValidity) > 0));
 
-        boolean areDatesValid = ((startDateOfValidity != null) && ((endDateOfValidity == null) || (endDateOfValidity.compareTo(startDateOfValidity) > 0)));
         boolean requiredDataIsPresent = nature.getDescription() != null && !nature.getDescription().equals("");
         return areDatesValid && requiredDataIsPresent;
     }
