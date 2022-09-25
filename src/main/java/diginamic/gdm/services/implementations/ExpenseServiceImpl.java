@@ -109,7 +109,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		Mission mission = missionRepository.findById(expense.getMission().getId())
 				.orElseThrow(() -> new BadRequestException("the mission doesn't exist", ErrorCodes.missionInvalid));
 
-		if (missionService.isMissionDone(mission.getId())) {
+		if (!missionService.isMissionDone(mission.getId())) {
 			throw new BadRequestException("Mission is done", ErrorCodes.missionInvalid);
 		}
 
@@ -129,7 +129,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		}
 		if (expense.getTva() < 0) {
-			throw new BadRequestException("Expense's TVA can't be negative", ErrorCodes.missionInvalid);
+			throw new BadRequestException("Expense's TVA can't be negative", ErrorCodes.expenseInvalid);
 		}
 		if (!date.isAfter(mission.getStartDate())) {
 			throw new BadRequestException("Expense's dates can't be before mission start", ErrorCodes.expenseInvalid);
