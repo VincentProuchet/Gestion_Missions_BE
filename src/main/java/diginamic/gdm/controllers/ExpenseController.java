@@ -154,10 +154,10 @@ public class ExpenseController {
 	public void delete(@PathVariable int id) throws Exception {
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = expenseService.read(id).getMission();
-		if(mission.getCollaborator().getId() == user.getId()){
-			expenseService.delete(id);
+		if(mission.getCollaborator().getId() != user.getId()){
+			throw new Exception("Only the assignee can delete the expenses of a mission");
 		}
-		throw new Exception("Only the assignee can delete the expenses of a mission");
+		expenseService.delete(id);
 	}
 	
 }
