@@ -80,7 +80,7 @@ public class MissionServiceImpl implements MissionService {
 		}
 		// current.setBonus(mission.getBonus());// Il would not have touched the bonus
 		// because its suposed to be the result of a calculus
-		current.setNature(natureService.read(mission.getId()));		
+		current.setNature(natureService.read(mission.getNature().getId()));		
 		current.setStartDate(mission.getStartDate());
 		current.setEndDate(mission.getEndDate());
 		current.setMissionTransport(mission.getMissionTransport());
