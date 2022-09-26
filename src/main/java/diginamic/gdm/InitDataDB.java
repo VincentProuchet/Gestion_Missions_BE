@@ -184,7 +184,7 @@ public class InitDataDB {
         newNature4.setTjm(BigDecimal.valueOf(50));
         newNature4.setDescription("Promotional work");
         newNature4.setDateOfValidity(previousWeek(now));
-        newNature4.setEndOfValidity(nextWeek(now));
+        //newNature4.setEndOfValidity(nextWeek(now));// no more end of validity in the future
         newNature4.setGivesBonus(true);
         newNature4.setBonusPercentage(50f);
         newNature4.setCharged(true);
