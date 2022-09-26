@@ -32,8 +32,9 @@ public interface ExpenseService {
 	 *
 	 * @param expense The new expense to be registered
 	 * @return the newly created expense, or null (to replace with exceptions)
+	 * @throws Exception 
 	 */
-	Expense create(Expense expense) throws BadRequestException;
+	Expense create(Expense expense) throws  Exception;
 	
 	/**
 	 * Gets a specific registered expense.
@@ -50,8 +51,9 @@ public interface ExpenseService {
 	 * @param id The id corresponding to the expense to update
 	 * @param expense The expense to update with modified info
 	 * @return The resulting expense with updated info
+	 * @throws Exception 
 	 */
-	Expense update(int id, Expense expense) throws BadRequestException;
+	Expense update(int id, Expense expense) throws Exception;
 	
 	/**
 	 * Deletes a specific registered expense.
@@ -66,7 +68,8 @@ public interface ExpenseService {
 	 * @param expense the expense to validate
 	 * @return true if the expense is correctly formed
 	 * @throws BadRequestException 
+	 * @throws Exception 
 	 */
-	boolean isExpenseValid(Expense expense) throws BadRequestException;
+	boolean isExpenseValid(Expense expense) throws Exception;
 	
 }

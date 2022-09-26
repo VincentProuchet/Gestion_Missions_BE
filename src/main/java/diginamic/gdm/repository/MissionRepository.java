@@ -18,7 +18,7 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
     List<Mission> findByNatureAndStartDateAfter(Nature nature, LocalDateTime date);
 
     List<Mission> findByCollaboratorOrderByStartDateDesc(Collaborator collaborator);
-    List<Mission> findByCollaboratorAndEndDateAfterOrderByStartDate(Collaborator collaborator, LocalDateTime startDate);
+    List<Mission> findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(Collaborator collaborator, LocalDateTime startDate,Status status);
 
     List<Mission> findByCollaboratorAndStatusNot(Collaborator collaborator, Status status);
 
@@ -29,5 +29,6 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
     List<Mission> findByStatus(Status status);
 
     List<Mission> findByCollaborator(Collaborator collaborator);
-
+    
+    
 }

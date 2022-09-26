@@ -135,10 +135,10 @@ public class MissionServiceImpl implements MissionService {
 		if (endDate == null) {
 			throw new BadRequestException("Missions end date is null ", ErrorCodes.missionInvalid);
 		}
-		if (!startDate.isAfter(now)) {
+		if (startDate.isBefore(now)) {
 			throw new BadRequestException("Missions can't start in the past ", ErrorCodes.missionInvalid);
 		}
-		if (!endDate.isAfter(startDate)) {
+		if (endDate.isBefore(startDate)) {
 			throw new BadRequestException("Missions can't start after its end ", ErrorCodes.missionInvalid);
 		}
 
@@ -186,8 +186,8 @@ public class MissionServiceImpl implements MissionService {
 		}
 
 		// the mission cant be in the same time as another one
-		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterOrderByStartDate(collaborator,
-				startDate);
+		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(collaborator,
+				startDate, Status.REJECTED );
 		int missionsCount = missions.size();
 		boolean isCollaboratorAvailable = true;
 		// in case of an update, avoid to compare to self
@@ -195,10 +195,10 @@ public class MissionServiceImpl implements MissionService {
 			
 			Mission nextMission = (missions.get(0).getId() == mission.getId()) ? missions.get(1) : missions.get(0);
 			LocalDateTime nextMissionStartDate = nextMission.getStartDate();
-			if(!startDate.isBefore(nextMissionStartDate)) {
+			if(startDate.isAfter(nextMissionStartDate)) {
 				throw new BadRequestException(" la mission commence après le début de la mission suivante", ErrorCodes.missionInvalid);
 			}
-			if(!endDate.isBefore(nextMissionStartDate)) {
+			if(endDate.isAfter(nextMissionStartDate)) {
 				throw new BadRequestException("la mission se termine après le début le la mission suivante", ErrorCodes.missionInvalid);
 			}
 		}
@@ -206,10 +206,19 @@ public class MissionServiceImpl implements MissionService {
 	}
 
 	@Override
-	public boolean canBeUpdated(Mission mission) {
-		Status status = mission.getStatus();
-		return (status == Status.INIT || status == Status.REJECTED)
-				&& missionRepository.findById(mission.getId()).isPresent();
+	public boolean canBeUpdated(Mission mission) throws BadRequestException {
+		Mission missionIDB = read(mission.getId());
+		Status status = missionIDB.getStatus();
+		switch(status) {
+		case ENDED:
+			throw new BadRequestException("la mission est terminée ", ErrorCodes.missionInvalid);
+		case WAITING_VALIDATION:
+			throw new BadRequestException("la mission est en attente de validation et ne peux être modifiée ", ErrorCodes.missionInvalid);
+		case VALIDATED:
+			throw new BadRequestException("la mission est Validée et ne peux être modifiée ", ErrorCodes.missionInvalid);
+		default:
+			return true;
+		}
 	}
 
 	@Override
@@ -221,14 +230,12 @@ public class MissionServiceImpl implements MissionService {
 
 	/**
 	 * needs refactoring, since it will do uneccessary database queries
+	 * @throws BadRequestException 
 	 */
 	@Override
-	public boolean isMissionDone(int id) {
-		Optional<Mission> optionalMission = missionRepository.findById(id);
-		if (optionalMission.isEmpty()) {
-			return false;
-		}
-		Mission mission = optionalMission.get();
+	public boolean isMissionDone(int id) throws Exception {
+		Mission mission = read(id);
+				
 		return mission.getStatus() == Status.VALIDATED && mission.getEndDate().isBefore(LocalDateTime.now());
 	}
 

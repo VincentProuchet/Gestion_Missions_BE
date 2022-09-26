@@ -55,7 +55,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense create(Expense expense) throws BadRequestException {
+	public Expense create(Expense expense) throws Exception {
 		// why waiting for setting thoses ?
 		expense.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
 		// this is an overkill, the mission should have been already checked and set at
@@ -74,7 +74,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public Expense update(int id, Expense expense) throws BadRequestException {
+	public Expense update(int id, Expense expense) throws Exception {
 		Expense current = read(expense.getId());
 
 		if (id != expense.getId()) {
@@ -104,15 +104,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public boolean isExpenseValid(Expense expense) throws BadRequestException {
+	public boolean isExpenseValid(Expense expense) throws Exception {
 		// on recherche la mission dans la BDD
 		Mission mission = missionRepository.findById(expense.getMission().getId())
 				.orElseThrow(() -> new BadRequestException("the mission doesn't exist", ErrorCodes.missionInvalid));
-
-		if (!missionService.isMissionDone(mission.getId())) {
-			throw new BadRequestException("Mission is done", ErrorCodes.missionInvalid);
+		if(!missionService.isMissionDone(mission.getId())) {
+			throw new BadRequestException("Mission is not Done no modifications ", ErrorCodes.missionInvalid);
 		}
-
 		// is the date valid?
 		LocalDateTime date = expense.getDate();
 		if (date == null) {
@@ -120,7 +118,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 
 		// are all data needed present and in correct values
-		if (expense.getExpenseType().equals(null) ) {
+		if (expense.getExpenseType().equals(null)) {
 			throw new BadRequestException("Expense's types can't be null", ErrorCodes.expenseInvalid);
 		}
 

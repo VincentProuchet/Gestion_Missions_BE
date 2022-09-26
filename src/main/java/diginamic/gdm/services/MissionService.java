@@ -124,8 +124,9 @@ public interface MissionService {
 	 *
 	 * @param mission the mission
 	 * @return true if the status allows the update
+	 * @throws Exception 
 	 */
-	boolean canBeUpdated(Mission mission);
+	boolean canBeUpdated(Mission mission) throws Exception;
 
 	/**
 	 * returns true, but check if the mission status is INIT or REJECTED
@@ -139,8 +140,9 @@ public interface MissionService {
 	 *
 	 * @param id mission id
 	 * @return true if completed
+	 * @throws Exception 
 	 */
-	boolean isMissionDone(int id);
+	boolean isMissionDone(int id) throws Exception;
 
 	/**
 	 * Get the list of missions to validate of the team of a given manager
