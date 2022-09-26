@@ -78,19 +78,8 @@ public class MissionServiceImpl implements MissionService {
 		if (id != current.getId()) {
 			throw new BadRequestException("The id is inconsistent with the given mission", ErrorCodes.idInconsistent);
 		}
-		// current.setBonus(mission.getBonus());// Il would not have touched the bonus
-		// because its suposed to be the result of a calculus
-		current.setNature(natureService.read(mission.getNature().getId()));		
-		current.setStartDate(mission.getStartDate());
-		current.setEndDate(mission.getEndDate());
-		current.setMissionTransport(mission.getMissionTransport());
-		current.setStartCity(mission.getStartCity());
-		current.setEndCity(mission.getEndCity());
-		current.setNature(mission.getNature());
-		current.setStatus(Status.INIT);
-		
-		
-		if (!isThisMissionValid(current, allowWE)) {
+
+		if (!isThisMissionValid(mission, allowWE)) {
 			throw new BadRequestException(
 					"This mission does not have all the required data, or the dates are not allowed (WE or collaborator already in mission) ",
 					ErrorCodes.missionInvalid);
@@ -100,6 +89,16 @@ public class MissionServiceImpl implements MissionService {
 					"This mission can't be updated : make sure its status is INIT or REJECTED, or consider create it if it does not exist",
 					ErrorCodes.missionInvalid);
 		}
+		// because its suposed to be the result of a calculus
+		// current.setBonus(mission.getBonus());// Il would not have touched the bonus
+		current.setNature(natureService.read(mission.getNature().getId()));
+		current.setStartDate(mission.getStartDate());
+		current.setEndDate(mission.getEndDate());
+		current.setMissionTransport(mission.getMissionTransport());
+		current.setStartCity(mission.getStartCity());
+		current.setEndCity(mission.getEndCity());
+		current.setNature(mission.getNature());
+		current.setStatus(Status.INIT);
 
 		return this.missionRepository.save(current);
 	}
@@ -175,47 +174,53 @@ public class MissionServiceImpl implements MissionService {
 
 		// if the transport is Flight, the mission must be created at least a week
 		// before the start
+		System.err.println( mission.getMissionTransport() == Transport.Flight );
+		System.err.println( startDate.isBefore(now.plusDays(7)));
+		if (mission.getMissionTransport() == Transport.Flight && startDate.isBefore(now.plusDays(7))) {
 		
-				if(mission.getMissionTransport() == Transport.Flight || !startDate.isAfter(now.plusDays(7))) {
-					new BadRequestException("with aerial transport start day must be now + 7 days", ErrorCodes.missionInvalid);
-				}
+			new BadRequestException("with aerial transport start day must be now + 7 days", ErrorCodes.missionInvalid);
+		}
 
 		// the mission s nature must be active at the date of start
-		if(!natureService.isNatureActive(nature, startDate)) {
-			throw	new BadRequestException("nature is invallid ", ErrorCodes.missionInvalid);
+		if (!natureService.isNatureActive(nature, startDate)) {
+			throw new BadRequestException("nature is invalid ", ErrorCodes.missionInvalid);
 		}
 
 		// the mission cant be in the same time as another one
-		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(collaborator,
-				startDate, Status.REJECTED );
+		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(
+				collaborator, startDate, Status.REJECTED);
 		int missionsCount = missions.size();
 		boolean isCollaboratorAvailable = true;
 		// in case of an update, avoid to compare to self
 		if (!(missionsCount == 0 || (missionsCount == 1 && missions.get(0).getId() == mission.getId()))) {
-			
+
 			Mission nextMission = (missions.get(0).getId() == mission.getId()) ? missions.get(1) : missions.get(0);
 			LocalDateTime nextMissionStartDate = nextMission.getStartDate();
-			if(startDate.isAfter(nextMissionStartDate)) {
-				throw new BadRequestException(" la mission commence après le début de la mission suivante", ErrorCodes.missionInvalid);
+			if (startDate.isAfter(nextMissionStartDate)) {
+				throw new BadRequestException(" la mission commence après le début de la mission suivante",
+						ErrorCodes.missionInvalid);
 			}
-			if(endDate.isAfter(nextMissionStartDate)) {
-				throw new BadRequestException("la mission se termine après le début le la mission suivante", ErrorCodes.missionInvalid);
+			if (endDate.isAfter(nextMissionStartDate)) {
+				throw new BadRequestException("la mission se termine après le début le la mission suivante",
+						ErrorCodes.missionInvalid);
 			}
 		}
-		return   isCollaboratorAvailable;
+		return isCollaboratorAvailable;
 	}
 
 	@Override
 	public boolean canBeUpdated(Mission mission) throws BadRequestException {
 		Mission missionIDB = read(mission.getId());
 		Status status = missionIDB.getStatus();
-		switch(status) {
+		switch (status) {
 		case ENDED:
 			throw new BadRequestException("la mission est terminée ", ErrorCodes.missionInvalid);
 		case WAITING_VALIDATION:
-			throw new BadRequestException("la mission est en attente de validation et ne peux être modifiée ", ErrorCodes.missionInvalid);
+			throw new BadRequestException("la mission est en attente de validation et ne peux être modifiée ",
+					ErrorCodes.missionInvalid);
 		case VALIDATED:
-			throw new BadRequestException("la mission est Validée et ne peux être modifiée ", ErrorCodes.missionInvalid);
+			throw new BadRequestException("la mission est Validée et ne peux être modifiée ",
+					ErrorCodes.missionInvalid);
 		default:
 			return true;
 		}
@@ -230,23 +235,25 @@ public class MissionServiceImpl implements MissionService {
 
 	/**
 	 * needs refactoring, since it will do uneccessary database queries
-	 * @throws BadRequestException 
+	 * 
+	 * @throws BadRequestException
 	 */
 	@Override
 	public boolean isMissionDone(int id) throws Exception {
 		Mission mission = read(id);
-				
+
 		return mission.getStatus() == Status.VALIDATED && mission.getEndDate().isBefore(LocalDateTime.now());
 	}
 
-	
-    @Override
-    public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
-        Collaborator manager = managerRepository.findById(idManager).orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
-        List<Mission> missionsToValidate = new ArrayList<>();
-        manager.getTeam().forEach(collaborator -> missionsToValidate.addAll(missionRepository.findByCollaboratorAndStatusNot(collaborator, Status.INIT)));
-        return missionsToValidate;
-    }
+	@Override
+	public List<Mission> missionsToValidate(int idManager) throws BadRequestException {
+		Collaborator manager = managerRepository.findById(idManager)
+				.orElseThrow(() -> new BadRequestException("Manager not found", ErrorCodes.managerNotFound));
+		List<Mission> missionsToValidate = new ArrayList<>();
+		manager.getTeam().forEach(collaborator -> missionsToValidate
+				.addAll(missionRepository.findByCollaboratorAndStatusNot(collaborator, Status.INIT)));
+		return missionsToValidate;
+	}
 
 	@Override
 	public List<Mission> missionsToPutInWaitingValidation() {
