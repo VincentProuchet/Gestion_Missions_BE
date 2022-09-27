@@ -36,7 +36,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	 */
 	private CollaboratorRepository collaboratorRepository;
 
-	private MissionService missionService;
+	//private MissionService missionService;
 	
 	@Override
 	public List<Collaborator> list() {
@@ -75,18 +75,18 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	}
 
 	
-
-	@Override
-	public Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException {
-		mission.setCollaborator(collaborator);
-		return missionService.create(mission);
-	}
-
-	@Override
-	public Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException {
-		mission.setCollaborator(collaborator);
-		return missionService.update(mission.getId(), mission);
-	}
+// deleted for circular dependency
+//	@Override
+//	public Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException {
+//		mission.setCollaborator(collaborator);
+//		return missionService.create(mission);
+//	}
+//
+//	@Override
+//	public Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException {
+//		mission.setCollaborator(collaborator);
+//		return missionService.update(mission.getId(), mission);
+//	}
 
 	@Override
 	public Collaborator findByUserName(String userName) throws UsernameNotFoundException {

@@ -17,13 +17,6 @@ public class AccountControllerTest {
 	void signup() {
 		
 		
-		Collaborator coll = new Collaborator();
-		coll.setUsername("mario");
-		coll.setPassword("1111");
-		coll.setManager(coll);		
-		controller.signup(coll);
-		// TODO not really a test
-		assert(true);
 	}
 
 }

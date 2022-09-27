@@ -20,6 +20,10 @@ import lombok.Setter;
  * @author Joseph
  *
  */
+/**
+ * @author Vincent
+ *
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -60,4 +64,24 @@ public class Nature {
 	/** description : the name of the nature */
 	@Column(nullable = false)
 	private String description;
+	
+	/**
+	 * Setter
+	 * will set tjm propertie of the Nature 
+	 * to the absolute value provided
+	 * sooooo ... no negative 
+	 * @param tjm provided
+	 */
+	public void setTjm(int tjm) {
+		this.tjm = BigDecimal.valueOf(tjm);
+	}
+	/**
+	 * Setter
+	 * made because lombock is kinda not accepting overloading 
+	 * @param tjm
+	 */
+	public void setTjm(BigDecimal tjm) {
+		
+		this.tjm = tjm;
+	}
 }

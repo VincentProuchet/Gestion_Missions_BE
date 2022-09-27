@@ -54,7 +54,7 @@ public interface CollaboratorService extends UserDetailsService {
 	 * @param collaborator
 	 * @return
 	 */
-	Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException;
+//	Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException;
 
 	/**
 	 * Reassign an existing mission to another collaborator
@@ -63,7 +63,7 @@ public interface CollaboratorService extends UserDetailsService {
 	 * @param collaborator
 	 * @return
 	 */
-	Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException;
+//	Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException;
 	
 	/**
 	 * Collaborator from username

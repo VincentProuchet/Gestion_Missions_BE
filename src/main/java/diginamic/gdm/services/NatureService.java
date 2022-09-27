@@ -39,6 +39,14 @@ public interface NatureService {
 	Nature read(int id) throws BadRequestException;
 
 	/**
+ 	 * Gets a specific registered mission nature.
+	 *
+	 * @param description
+	 * @return Nature
+	 * @throws BadRequestException
+	 */
+	List<Nature> read(String description) throws BadRequestException;
+	/**
 	 * Updates the data for a specific registered mission nature. The nature will
 	 * have its start date of validity set to now
 	 *
@@ -72,5 +80,6 @@ public interface NatureService {
 	 * @return true if nature can be considered as active
 	 */
 	public boolean isNatureActive(Nature nature, LocalDateTime date);
+
 
 }

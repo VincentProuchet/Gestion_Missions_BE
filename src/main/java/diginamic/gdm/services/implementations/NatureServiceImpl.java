@@ -30,8 +30,8 @@ public class NatureServiceImpl implements NatureService {
 	 */
 	private NatureRepository natureRepository;
 	/**
-	 * The {@link MissionRepository} dependency.
-	 * we may change it to MssioService I need to put more thoughts in that.
+	 * The {@link MissionRepository} dependency. we may change it to MssioService I
+	 * need to put more thoughts in that.
 	 */
 	private MissionRepository missionRepository;
 
@@ -49,7 +49,8 @@ public class NatureServiceImpl implements NatureService {
 		nature.setDateOfValidity(now);
 
 		if (!canBeAdded(nature)) {
-			throw new BadRequestException("A nature with this name already exists consider modify the existing one instead.", 
+			throw new BadRequestException(
+					"A nature with this name already exists consider modify the existing one instead.",
 					ErrorCodes.natureInvalid);
 		}
 		this.isAValidNature(nature);
@@ -60,6 +61,11 @@ public class NatureServiceImpl implements NatureService {
 	public Nature read(int id) throws BadRequestException {
 		return this.natureRepository.findById(id)
 				.orElseThrow(() -> new BadRequestException("Nature not found", ErrorCodes.natureNotFound));
+	}
+
+	@Override
+	public List<Nature> read(String description) throws BadRequestException {
+		return this.natureRepository.findByDescription(description);
 	}
 
 	@Override
@@ -74,19 +80,14 @@ public class NatureServiceImpl implements NatureService {
 		if (id != nature.getId()) {
 			throw new BadRequestException("The id is inconsistent with the given nature", ErrorCodes.idInconsistent);
 		}
-		if (!canBeUpdated(id, nature)) {
-			throw new BadRequestException(
-					"This nature can't be updated : consider create it instead, or get the latest version of it before updating",
-					ErrorCodes.natureInvalid);
-		}
+		
+		Nature registeredNature = canBeUpdated(id, nature);
 
-		// we search the existing nature
-		Nature registeredNature = natureRepository.findById(id).get();
 		// well searching by label isn't really necessary here since we try to update
 		// something
 		// we have the id
-			// List<Nature> orderedListOfNatures =
-			// natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
+		// List<Nature> orderedListOfNatures =
+		// natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
 		Nature activeNature;
 		// if existing nature is active
 		if (isThisNatureInUse(registeredNature)) {
@@ -95,7 +96,7 @@ public class NatureServiceImpl implements NatureService {
 			nature.setDateOfValidity(now);
 			nature.setId(0);
 			isAValidNature(nature);
-			// and we save the new one 
+			// and we save the new one
 			// we new do save it before updating future missions
 			activeNature = natureRepository.save(nature);
 
@@ -106,7 +107,7 @@ public class NatureServiceImpl implements NatureService {
 				missionRepository.save(mission);
 			}
 			// the actual update in DB
-			// if everything allright to that point 
+			// if everything allright to that point
 			// we give it an endDateOfValidity
 			registeredNature.setEndOfValidity(now);
 			natureRepository.save(registeredNature);
@@ -120,7 +121,7 @@ public class NatureServiceImpl implements NatureService {
 			registeredNature.setDateOfValidity(now);
 			registeredNature.setEndOfValidity(null);
 			registeredNature.setDescription(nature.getDescription());
-			// the save allways return the entity saved instance 
+			// the save allways return the entity saved instance
 			activeNature = this.natureRepository.save(registeredNature);
 		}
 
@@ -139,8 +140,8 @@ public class NatureServiceImpl implements NatureService {
 		// throw exception can't delete a used nature
 		LocalDateTime now = LocalDateTime.now();
 		Nature nature = read(id);
-		// si nature is used 
-		// it get an end of validity 
+		// si nature is used
+		// it get an end of validity
 		// and is not erased
 		if (isThisNatureInUse(nature)) {
 			nature.setEndOfValidity(now);
@@ -155,8 +156,8 @@ public class NatureServiceImpl implements NatureService {
 	}
 
 	/**
-	 * test if a nature has an assigned mission
-	 * this is a data integrity test made for internal use
+	 * test if a nature has an assigned mission this is a data integrity test made
+	 * for internal use
 	 * 
 	 * @param nature to test
 	 * @return true if it get to its end
@@ -177,25 +178,25 @@ public class NatureServiceImpl implements NatureService {
 	public List<Nature> getActiveNatures() {
 		return natureRepository.findByEndOfValidityIsNull();
 	}
+
 	@Override
-	public boolean isNatureActive(Nature nature, LocalDateTime date ) {				
+	public boolean isNatureActive(Nature nature, LocalDateTime date) {
 		// nature is active if its endofvalidity is null
-		if(nature.getEndOfValidity()==null) {
+		if (nature.getEndOfValidity() == null) {
 			return true;
-		}		
-		// if given date is null 
-		if(date==null) {
+		}
+		// if given date is null
+		if (date == null) {
 			// we give it now
 			date = LocalDateTime.now();
 		}
-		//TRUE  if the given date is before endDate AND after start date
-		return (date.isBefore(nature.getEndOfValidity())&& date.isAfter(nature.getDateOfValidity()));
+		// TRUE if the given date is before endDate AND after start date
+		return (date.isBefore(nature.getEndOfValidity()) && date.isAfter(nature.getDateOfValidity()));
 	}
 
 	/**
-	 * Returns true if the nature is currently active
-	 * this is a data integrity test made for internal use
-	 * mainly when creating/updating nature
+	 * Returns true if the nature is currently active this is a data integrity test
+	 * made for internal use mainly when creating/updating nature
 	 *
 	 * @param nature must not be null
 	 * @return
@@ -224,6 +225,12 @@ public class NatureServiceImpl implements NatureService {
 			// throw description can't be empty
 			throw new BadRequestException("description can't be empty", ErrorCodes.natureInvalid);
 		}
+		if(nature.getBonusPercentage()<0) {
+			throw new BadRequestException("bonus can't be negative", ErrorCodes.natureInvalid);
+		}
+		if(nature.getTjm().signum()==-1) {
+			throw new BadRequestException("Tjm can't be negative", ErrorCodes.natureInvalid);
+		}
 		return true;
 	}
 
@@ -239,36 +246,38 @@ public class NatureServiceImpl implements NatureService {
 
 	/**
 	 * Check that the id is coherent with the given nature (maybe this will be
-	 * removed) Check that the given nature is the last of the natures with the same
-	 * description (active or not)
-	 *
+	 * removed) Check that the given nature exist in db and if yes return the instance
+	 * 
+	 * 
 	 * @param id
 	 * @param nature
 	 * @return true if the nature can be updated, on condition it is valid
+	 * @throws BadRequestException 
 	 */
-	public boolean canBeUpdated(int id, Nature nature) {
+	public Nature canBeUpdated(int id, Nature nature) throws BadRequestException {
+		
+		
 		if (id != nature.getId()) {
-			return false;
+			throw new BadRequestException("ids doesn't matches",ErrorCodes.idInconsistent);
 		}
-		// should throw an exception
-		List<Nature> orderedListOfNatures = natureRepository
-				.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
-		if (orderedListOfNatures.size() == 0) {
-			// inform that the right method to call is create
-			return false;
-		}
-
+		
+		/// we just check if there are other ones with the same name in Db
+//		List<Nature> orderedListOfNatures = natureRepository
+//				.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
+//		if (orderedListOfNatures.size() == 0) {
+//			// inform that the right method to call is create
+//			return false;
+//		}
 		// throws an id not found exception
-		Optional<Nature> registeredNatureOptional = natureRepository.findById(id);
-		if (registeredNatureOptional.isEmpty()) {
-			return false;
-		}
-
-		Nature registeredNature = registeredNatureOptional.get();
-
+		//We try to find it wait a minute 
+		Nature registeredNature = this.read(nature.getId());
+		
 		// check that the given nature id is the last with the given description
+		// we don't really care if its the last one
+		// what we want is that its not assigned
 		// both data comes from the DB, so a check on IDs is enough
-		return orderedListOfNatures.get(0).getId() == registeredNature.getId();
+		// orderedListOfNatures.get(0).getId() == registeredNature.getId();
+		return registeredNature;
 	}
 
 	/**
