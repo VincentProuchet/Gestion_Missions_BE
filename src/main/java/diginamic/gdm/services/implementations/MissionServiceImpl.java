@@ -189,6 +189,7 @@ public class MissionServiceImpl implements MissionService {
 		// the mission cant be in the same time as another one
 		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(
 				collaborator, startDate, Status.REJECTED);
+		// on ne prend que la mission qui vient après la date de la mission courante
 		int missionsCount = missions.size();
 		boolean isCollaboratorAvailable = true;
 		// in case of an update, avoid to compare to self
