@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: "Gestion des Missions"
+  jpa:
+    generate-ddl: true  
+    show-sql: false # this allow you to see sql queries in your console
+                    # usefull for some debugs
+                    # set to false for faster db initialisation in createddrop
+    hibernate:
+      ddl-auto: create-drop
+#  session:
+#    store-type: jdbc
+#    timeout: 7200
+    #jdbc:
+      #schema: classpath:org/springframework/session/jdbc/schema-mariadb.sql
+      #table-name: SPRING_SESSION
+        
+  datasource:
+  # of course you're supposed to put your own vreadentials here
+    url: "jdbc:mariadb://localhost:3307/gdm" ## database Url
+    username: databaseAccountLogin
+    password: "1111"
+    driverClassName: org.mariadb.jdbc.Driver
+#  liquibase:
+#    parameters:
+#      enabled: false
+#    change-log: classpath:db/changelog/changelog.sql
+    
