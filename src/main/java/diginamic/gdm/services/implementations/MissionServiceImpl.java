@@ -194,7 +194,7 @@ public class MissionServiceImpl implements MissionService {
 
 		// the mission s nature must be active at the date of start
 		if (!natureService.isNatureActive(nature, startDate)) {
-			throw new BadRequestException("nature is invalid ", ErrorCodes.missionInvalid);
+			throw new BadRequestException("nature is not active ", ErrorCodes.missionInvalid);
 		}
 
 		// the mission cant be in the same time as another one
