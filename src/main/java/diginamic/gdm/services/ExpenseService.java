@@ -8,6 +8,9 @@ import diginamic.gdm.exceptions.BadRequestException;
 
 /**
  * Interface to be implemented by an expense service class.
+ * the implementation will have to handle 
+ * persistence and the respect of 
+ * all datas integrity rules
  * 
  * @author DorianBoel
  */

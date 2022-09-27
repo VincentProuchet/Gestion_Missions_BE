@@ -132,8 +132,9 @@ public interface MissionService {
 	 * returns true, but check if the mission status is INIT or REJECTED
 	 * @param mission the mission
 	 * @return true if deleted
+	 * @throws Exception 
 	 */
-	boolean canBeDeleted(Mission mission);
+	boolean canBeDeleted(Mission mission) throws Exception;
 
 	/**
 	 * Check if the mission has been completed
