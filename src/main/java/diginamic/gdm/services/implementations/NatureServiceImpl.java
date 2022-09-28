@@ -135,22 +135,22 @@ public class NatureServiceImpl implements NatureService {
 			}
 		}
 
+		nature.setEndOfValidity(null);// for now we prevent users from giving an EOV date to nature
 
 		Nature activeNature;
 		// if existing nature is active
 		if (isThisNatureInUse(registeredNature)) {
 			// we create a new one
 			// the new values receive data to become a valide new nature
-			nature.setEndOfValidity(null);
-			nature.setDateOfValidity(now);
 			nature.setId(0);
 			isAValidNature(nature);
 			// and we save the new one
 			// we new do save it before updating future missions
 			activeNature = natureRepository.save(nature);
 
-			// update future missions that referred to this nature
-			List<Mission> futureMissions = missionRepository.findByNatureAndStartDateAfter(registeredNature, now);
+			// update missions that referred to the original nature 
+			// and start after the start date of validity
+			List<Mission> futureMissions = missionRepository.findByNatureAndStartDateAfter(registeredNature, nature.getDateOfValidity());
 			for (Mission mission : futureMissions) {
 				mission.setNature(activeNature);
 				missionRepository.save(mission);
@@ -158,7 +158,7 @@ public class NatureServiceImpl implements NatureService {
 			// the actual update in DB
 			// if everything allright to that point
 			// we give it an endDateOfValidity
-			registeredNature.setEndOfValidity(now);
+			registeredNature.setEndOfValidity(nature.getDateOfValidity());
 			natureRepository.save(registeredNature);
 
 		} else {
@@ -167,8 +167,8 @@ public class NatureServiceImpl implements NatureService {
 			registeredNature.setCharged(nature.isCharged());
 			registeredNature.setTjm(nature.getTjm());
 			registeredNature.setBonusPercentage(nature.getBonusPercentage());
-			registeredNature.setDateOfValidity(now);
-			registeredNature.setEndOfValidity(null);
+			registeredNature.setDateOfValidity(nature.getDateOfValidity());
+			registeredNature.setEndOfValidity(nature.getEndOfValidity());
 			// you can't update a nature description
 			// registeredNature.setDescription(nature.getDescription());
 			// we still check if for data integrity
@@ -234,6 +234,7 @@ public class NatureServiceImpl implements NatureService {
 	@Override
 	public boolean isNatureActive(Nature nature, LocalDateTime date) {
 		// nature is active if its endofvalidity is null
+		// may changed once  start allowing planning 
 		if (nature.getEndOfValidity() == null) {
 			return true;
 		}

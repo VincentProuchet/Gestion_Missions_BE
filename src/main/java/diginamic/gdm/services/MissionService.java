@@ -86,8 +86,9 @@ public interface MissionService {
 	 * Deletes a specific registered mission.
 	 * 
 	 * @param id The id corresponding to the mission to delete
+	 * @throws Exception 
 	 */
-	void delete(int id) throws BadRequestException;
+	void delete(int id) throws BadRequestException, Exception;
 
 	/**
 	 * Updates the current status for a specific mission.
@@ -98,52 +99,6 @@ public interface MissionService {
 	 */
 	Mission updateStatus(int id, Status status) throws BadRequestException;
 
-	/**
-	 * Check the validity of the mission request
-	 *
-	 * @param mission the mission
-	 * @return true if the mission is correctly formed
-	 * @throws Exception 
-	 */
-	default boolean isThisMissionValid(Mission mission) throws Exception {
-		return isThisMissionValid(mission, false);
-	}
-
-	/**
-	 * Check the validity of the mission request, allow a date in WE
-	 *
-	 * @param allowWE allow to work in WE
-	 * @param mission the mission
-	 * @return true if the mission is correctly formed
-	 * @throws BadRequestException 
-	 */
-	boolean isThisMissionValid(Mission mission, boolean allowWE) throws Exception;
-
-	/**
-	 * Check if the mission status is INIT or REJECTED
-	 *
-	 * @param mission the mission
-	 * @return true if the status allows the update
-	 * @throws Exception 
-	 */
-	boolean canBeUpdated(Mission mission) throws Exception;
-
-	/**
-	 * returns true, but check if the mission status is INIT or REJECTED
-	 * @param mission the mission
-	 * @return true if deleted
-	 * @throws Exception 
-	 */
-	boolean canBeDeleted(Mission mission) throws Exception;
-
-	/**
-	 * Check if the mission has been completed
-	 *
-	 * @param id mission id
-	 * @return true if completed
-	 * @throws Exception 
-	 */
-	boolean isMissionDone(int id) throws Exception;
 
 	/**
 	 * Get the list of missions to validate of the team of a given manager
@@ -172,4 +127,13 @@ public interface MissionService {
 	 * @return the list of missions with status VALIDATED and end date passed
 	 */
 	List<Mission> completedMissions();
+	
+	/**
+	 * Check if the mission has been completed
+	 *
+	 * @param id mission id
+	 * @return true if completed
+	 * @throws Exception
+	 */
+	public boolean isMissionDone(int id) throws Exception;
 }

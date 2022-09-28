@@ -41,7 +41,7 @@ public class Nature {
 
 	/** charged : is this mission charged to the client */
 	@Column(nullable = false)
-	private boolean charged = true;
+	private boolean charged = false;
 
 	/** tjm : the amount charged per working day to the client */
 	@Column(nullable = false)
