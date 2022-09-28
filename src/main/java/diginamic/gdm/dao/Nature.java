@@ -33,7 +33,7 @@ public class Nature {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id = 0;
 
 	/** givesBonus : does a mission with this nature give a bonus? */
 	@Column(nullable = false)
@@ -83,5 +83,9 @@ public class Nature {
 	public void setTjm(BigDecimal tjm) {
 		
 		this.tjm = tjm;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description.toLowerCase();		
 	}
 }

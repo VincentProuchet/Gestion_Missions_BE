@@ -64,8 +64,40 @@ public class NatureServiceImpl implements NatureService {
 	}
 
 	@Override
-	public List<Nature> read(String description) throws BadRequestException {
-		return this.natureRepository.findByDescription(description);
+	public List<Nature> read(String description) throws BadRequestException {		
+		return this.natureRepository.findByDescription(description.toLowerCase());
+	}
+
+	/**
+	 * 
+	 * Check that the given nature is the last of the natures with the same
+	 * description (active or not)
+	 *
+	 * @param id
+	 * @param nature
+	 * @return true if the nature can be updated, on condition it is valid
+	 */
+	public boolean canBeUpdated(Nature nature) throws BadRequestException {
+		// should throw an exception
+		List<Nature> orderedListOfNatures = natureRepository
+				.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
+		if (orderedListOfNatures.size() == 0) {
+			// if list is empty
+			// inform that the right method to call is create
+			return false;
+		}
+
+		// throws an id not found exception
+		Optional<Nature> registeredNatureOptional = natureRepository.findById(nature.getId());
+		if (registeredNatureOptional.isEmpty()) {
+			return false;
+		}
+
+		Nature registeredNature = registeredNatureOptional.get();
+
+		// check that the given nature id is the last with the given description
+		// both data comes from the DB, so a check on IDs is enough
+		return orderedListOfNatures.get(0).getId() == registeredNature.getId();
 	}
 
 	@Override
@@ -74,23 +106,40 @@ public class NatureServiceImpl implements NatureService {
 		// currently the start date is now and the end date is nul
 		// we may decide to allow planning in the future
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime end = null;
-		nature.setEndOfValidity(end);
-		nature.setDateOfValidity(now);
+		// LocalDateTime end = null;
+
 		if (id != nature.getId()) {
 			throw new BadRequestException("The id is inconsistent with the given nature", ErrorCodes.idInconsistent);
 		}
-		
-		Nature registeredNature = canBeUpdated(id, nature);
+		Nature registeredNature = this.read(nature.getId());
+		if (nature.getDateOfValidity().isBefore(now)) {
+			throw new BadRequestException(" updated nature can't start in the past", ErrorCodes.natureInvalid);
+		}
+		// well searching by label is done
+		// as an intEgrity check to prevent creation of nature 
+		// if an existing one is active
+		// if the name is different of what is registered
+		if (!registeredNature.getDescription().equals(nature.getDescription())) {
+			// we check for other natures of the same description
+			List<Nature> ListOfNaturesOfDescription = natureRepository
+					.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
+			if (ListOfNaturesOfDescription.size() > 0) {
+				for (Nature nature2 : ListOfNaturesOfDescription) {
+					if (this.isNatureActive(nature2, nature.getDateOfValidity())) {
+						throw new BadRequestException(
+								" you are trying to change the name of the nature and there is allready an active nature of the name "
+										+ nature.getDescription(),
+								ErrorCodes.natureInvalid);
+					}
+				}
+			}
+		}
 
-		// well searching by label isn't really necessary here since we try to update
-		// something
-		// we have the id
-		// List<Nature> orderedListOfNatures =
-		// natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
+
 		Nature activeNature;
 		// if existing nature is active
 		if (isThisNatureInUse(registeredNature)) {
+			// we create a new one
 			// the new values receive data to become a valide new nature
 			nature.setEndOfValidity(null);
 			nature.setDateOfValidity(now);
@@ -120,7 +169,10 @@ public class NatureServiceImpl implements NatureService {
 			registeredNature.setBonusPercentage(nature.getBonusPercentage());
 			registeredNature.setDateOfValidity(now);
 			registeredNature.setEndOfValidity(null);
-			registeredNature.setDescription(nature.getDescription());
+			// you can't update a nature description
+			// registeredNature.setDescription(nature.getDescription());
+			// we still check if for data integrity
+			isAValidNature(registeredNature);
 			// the save allways return the entity saved instance
 			activeNature = this.natureRepository.save(registeredNature);
 		}
@@ -225,10 +277,10 @@ public class NatureServiceImpl implements NatureService {
 			// throw description can't be empty
 			throw new BadRequestException("description can't be empty", ErrorCodes.natureInvalid);
 		}
-		if(nature.getBonusPercentage()<0) {
+		if (nature.getBonusPercentage() < 0) {
 			throw new BadRequestException("bonus can't be negative", ErrorCodes.natureInvalid);
 		}
-		if(nature.getTjm().signum()==-1) {
+		if (nature.getTjm().signum() == -1) {
 			throw new BadRequestException("Tjm can't be negative", ErrorCodes.natureInvalid);
 		}
 		return true;
@@ -245,47 +297,11 @@ public class NatureServiceImpl implements NatureService {
 	}
 
 	/**
-	 * Check that the id is coherent with the given nature (maybe this will be
-	 * removed) Check that the given nature exist in db and if yes return the instance
-	 * 
-	 * 
-	 * @param id
-	 * @param nature
-	 * @return true if the nature can be updated, on condition it is valid
-	 * @throws BadRequestException 
-	 */
-	public Nature canBeUpdated(int id, Nature nature) throws BadRequestException {
-		
-		
-		if (id != nature.getId()) {
-			throw new BadRequestException("ids doesn't matches",ErrorCodes.idInconsistent);
-		}
-		
-		/// we just check if there are other ones with the same name in Db
-//		List<Nature> orderedListOfNatures = natureRepository
-//				.findByDescriptionOrderByDateOfValidityDesc(nature.getDescription());
-//		if (orderedListOfNatures.size() == 0) {
-//			// inform that the right method to call is create
-//			return false;
-//		}
-		// throws an id not found exception
-		//We try to find it wait a minute 
-		Nature registeredNature = this.read(nature.getId());
-		
-		// check that the given nature id is the last with the given description
-		// we don't really care if its the last one
-		// what we want is that its not assigned
-		// both data comes from the DB, so a check on IDs is enough
-		// orderedListOfNatures.get(0).getId() == registeredNature.getId();
-		return registeredNature;
-	}
-
-	/**
 	 * For a nature to be deleted, created or modified, this must be false If true,
 	 * the nature must be rendered inactive instead
 	 *
 	 * @param nature
-	 * @return true if a mission has this nature
+	 * @return true if a mission use this nature
 	 */
 	public boolean isThisNatureInUse(Nature nature) {
 		return !missionRepository.findByNatureIs(nature).isEmpty();

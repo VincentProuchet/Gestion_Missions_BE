@@ -47,8 +47,13 @@ public interface NatureService {
 	 */
 	List<Nature> read(String description) throws BadRequestException;
 	/**
-	 * Updates the data for a specific registered mission nature. The nature will
-	 * have its start date of validity set to now
+	 * Updates the data for a specific registered mission nature.
+	 *  The nature will be checked for its data integrity
+	 *  and if its referenced by another entity in persistence
+	 *  if so a new nature will be created
+	 *  
+	 *  and entity using the previous one in the future (after start date )
+	 *  
 	 *
 	 * @param id     The id corresponding to the nature to update
 	 * @param nature The nature to update with modified info
