@@ -20,6 +20,7 @@ import diginamic.gdm.services.CollaboratorService;
 
 @Component
 public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler {
+	
 	@Autowired
 	private CollaboratorService collaboratorService;
 
