@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.GsonBuilderUtils;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -27,6 +29,8 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dto.CollaboratorDTO;
 import diginamic.gdm.services.CollaboratorService;
 import lombok.AllArgsConstructor;
 
@@ -57,6 +61,8 @@ public class GDMSecurityConfig {
 
 	@Autowired
 	CollaboratorService userService;	
+	@Autowired
+	LogoutHandler customLogoutHandler;
 
 	/**
 	 * configuration spring security
@@ -97,7 +103,7 @@ public class GDMSecurityConfig {
 		.expiredSessionStrategy(event -> event.getSessionInformation().expireNow())
 		;
 		http.logout()
-		.addLogoutHandler(logoutHandler())
+		.addLogoutHandler(customLogoutHandler)
 		.clearAuthentication(true)
 		.invalidateHttpSession(true)
 		.deleteCookies(GDMVars.SESSION_SESSION_COOKIE_NAME)
@@ -136,8 +142,20 @@ public class GDMSecurityConfig {
 	        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
 	                HttpServletResponse httpServletResponse, Authentication authentication)
 	                throws IOException, ServletException{
-	            httpServletResponse.getWriter().append("OK");
+	        	String outprint = " nothing to see here ";
+	        	String principal = (String) authentication.getPrincipal();
+	    		Collaborator collaborator = new Collaborator();
+	    		try {
+	    			collaborator = userService.findByUserName(principal);
+	    		} catch (Exception e) {
+	    			throw new ServletException("user not found ????");
+	    		}
+	    	
+	    		httpServletResponse.setContentType("application/json");
+	    		httpServletResponse.setCharacterEncoding("UTF-8");
+	            httpServletResponse.getWriter().print( outprint);
 	            httpServletResponse.setStatus(200);
+	            
 	        }
 	    };
 	}
@@ -158,35 +176,7 @@ public class GDMSecurityConfig {
 	        }
 	    };
 	}
-	
-	public LogoutHandler logoutHandler() {
-		return new LogoutHandler() {
-			
-			@Override
-			public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-				System.err.println("Login out");
-				Cookie[] cookies  =  request.getCookies();
-				for (Cookie cookie : cookies) {
-					if(cookie.getName()==GDMVars.SESSION_SESSION_COOKIE_NAME) {
-						System.out.println("cookie !!!!!!");
-					}
-				}
-				
-				try {
-					response.getWriter().append("Logged Out");
-					response.setStatus(200);
-					SecurityContextHolder.clearContext();
-					System.err.println(" logOut Success");
-				} catch (IOException e) {
-					System.err.println(" logout Fail");
-					response.setStatus(401);
-				}
-			}
-		};
 		
-	}
-
-	
 //	@Bean
 	/**Made to circumvent the CORS trouble we got when trying to connect backend to frontEnd 
 	 * @return
