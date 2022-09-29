@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.JsonbHttpMessageConverter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -26,6 +27,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -142,20 +146,34 @@ public class GDMSecurityConfig {
 	        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
 	                HttpServletResponse httpServletResponse, Authentication authentication)
 	                throws IOException, ServletException{
-	        	String outprint = " nothing to see here ";
-	        	String principal = (String) authentication.getPrincipal();
+	        	String outprint = "";
+	        	String principal = "";
+	        	httpServletResponse.setContentType("application/json");
+	        	httpServletResponse.setCharacterEncoding("UTF-8");
+	        	try {
+	        		principal= (String) authentication.getPrincipal();
+					
+				} catch (Exception e) {
+		            httpServletResponse.getWriter().print(" fail to get principal from authantication context");
+		            httpServletResponse.setStatus(500);
+					
+				}
 	    		Collaborator collaborator = new Collaborator();
 	    		try {
 	    			collaborator = userService.findByUserName(principal);
+	    			
 	    		} catch (Exception e) {
-	    			throw new ServletException("user not found ????");
+		            httpServletResponse.getWriter().print(" user not found ?");
+		            httpServletResponse.setStatus(500);
 	    		}
+	    		//CollaboratorDTO userDTO = new CollaboratorDTO(collaborator);
+	    		
 	    	
+	    		httpServletResponse.addHeader("user", outprint);
 	    		httpServletResponse.setContentType("application/json");
 	    		httpServletResponse.setCharacterEncoding("UTF-8");
-	            httpServletResponse.getWriter().print( outprint);
-	            httpServletResponse.setStatus(200);
-	            
+	            httpServletResponse.getOutputStream();
+	            httpServletResponse.setStatus(200);	            	            
 	        }
 	    };
 	}
