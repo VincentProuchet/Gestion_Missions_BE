@@ -15,6 +15,7 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
     List<Mission> findByNatureIs(Nature nature);
 
     List<Mission> findByNatureOrderByStartDateDesc(Nature nature);
+    List<Mission> findByNatureAndStartDateBefore(Nature nature, LocalDateTime date);
     List<Mission> findByNatureAndStartDateAfter(Nature nature, LocalDateTime date);
 
     List<Mission> findByCollaboratorOrderByStartDateDesc(Collaborator collaborator);

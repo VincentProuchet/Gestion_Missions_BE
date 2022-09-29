@@ -64,7 +64,7 @@ public class NatureServiceImpl implements NatureService {
 	}
 
 	@Override
-	public List<Nature> read(String description) throws BadRequestException {		
+	public List<Nature> read(String description) throws BadRequestException {
 		return this.natureRepository.findByDescription(description.toLowerCase());
 	}
 
@@ -112,11 +112,16 @@ public class NatureServiceImpl implements NatureService {
 			throw new BadRequestException("The id is inconsistent with the given nature", ErrorCodes.idInconsistent);
 		}
 		Nature registeredNature = this.read(nature.getId());
-		if (nature.getDateOfValidity().isBefore(now)) {
-			throw new BadRequestException(" updated nature can't start in the past", ErrorCodes.natureInvalid);
+		if (nature.getDateOfValidity().isBefore(now.minusHours(8))) {
+			// for now we set the updated nature with a date of now if startdate is in the
+			// past
+			nature.setDateOfValidity(now);
+			// throw new BadRequestException(" updated nature can't start in the past",
+			// ErrorCodes.natureInvalid);
+
 		}
 		// well searching by label is done
-		// as an intEgrity check to prevent creation of nature 
+		// as an intEgrity check to prevent creation of nature
 		// if an existing one is active
 		// if the name is different of what is registered
 		if (!registeredNature.getDescription().equals(nature.getDescription())) {
@@ -137,47 +142,73 @@ public class NatureServiceImpl implements NatureService {
 
 		nature.setEndOfValidity(null);// for now we prevent users from giving an EOV date to nature
 
-		Nature activeNature;
+		Nature activeNature = null;
 		// if existing nature is active
 		if (isThisNatureInUse(registeredNature)) {
-			// we create a new one
-			// the new values receive data to become a valide new nature
-			nature.setId(0);
-			isAValidNature(nature);
-			// and we save the new one
-			// we new do save it before updating future missions
-			activeNature = natureRepository.save(nature);
-
-			// update missions that referred to the original nature 
+			// we search mission with the nature that start before
+			// its start before because a new nature can become active while missions
+			// started with the old one and have not ended yet
+			List<Mission> oldMissions = missionRepository.findByNatureAndStartDateBefore(registeredNature,
+					nature.getDateOfValidity());
+			// if there is old mission
+			if (oldMissions.size() > 0) {
+				// we create a new one
+				// the new values receive data to become a valide new nature
+				nature.setId(0);
+				isAValidNature(nature);
+				// and we save the new one
+				// we new do save it before updating future missions
+				activeNature = natureRepository.save(nature);
+			}
+			// if there is none
+			else {
+				// we update the existing one
+				activeNature = this.justUpdate(registeredNature, nature);
+			}
+			if (activeNature == null) {
+				throw new BadRequestException("Something went wrong and the nature couldn't be updated ",
+						ErrorCodes.natureInvalid);
+			}
+			// then we update possible future missions with the new nature
+			// update missions that referred to the original nature
 			// and start after the start date of validity
-			List<Mission> futureMissions = missionRepository.findByNatureAndStartDateAfter(registeredNature, nature.getDateOfValidity());
+			List<Mission> futureMissions = missionRepository.findByNatureAndStartDateAfter(activeNature,
+					nature.getDateOfValidity());
 			for (Mission mission : futureMissions) {
 				mission.setNature(activeNature);
 				missionRepository.save(mission);
 			}
-			// the actual update in DB
-			// if everything allright to that point
-			// we give it an endDateOfValidity
-			registeredNature.setEndOfValidity(nature.getDateOfValidity());
-			natureRepository.save(registeredNature);
-
+			return activeNature;
 		} else {
 			// if a nature is not used, it will be updated either way, active or not
-			registeredNature.setGivesBonus(nature.isGivesBonus());
-			registeredNature.setCharged(nature.isCharged());
-			registeredNature.setTjm(nature.getTjm());
-			registeredNature.setBonusPercentage(nature.getBonusPercentage());
-			registeredNature.setDateOfValidity(nature.getDateOfValidity());
-			registeredNature.setEndOfValidity(nature.getEndOfValidity());
-			// you can't update a nature description
-			// registeredNature.setDescription(nature.getDescription());
-			// we still check if for data integrity
-			isAValidNature(registeredNature);
-			// the save allways return the entity saved instance
-			activeNature = this.natureRepository.save(registeredNature);
+			return justUpdate(registeredNature, nature);
 		}
+	}
 
-		return activeNature;
+	/**
+	 * this fonction will just update the registerdNature with data form the
+	 * givenNature its only control are data integrity
+	 * 
+	 * @param registeredNature
+	 * @param givenNature
+	 * @return saved nature
+	 * @throws BadRequestException
+	 */
+	private Nature justUpdate(Nature registeredNature, Nature givenNature) throws BadRequestException {
+		registeredNature.setGivesBonus(givenNature.isGivesBonus());
+		registeredNature.setCharged(givenNature.isCharged());
+		registeredNature.setTjm(givenNature.getTjm());
+		registeredNature.setBonusPercentage(givenNature.getBonusPercentage());
+		registeredNature.setDateOfValidity(givenNature.getDateOfValidity());
+		registeredNature.setEndOfValidity(givenNature.getEndOfValidity());
+		// you're not supposed to update a nature description
+		// but the new control that check for description integrity
+		// may make it fine
+		registeredNature.setDescription(givenNature.getDescription());
+		// we still check if for data integrity
+		isAValidNature(registeredNature);
+		// the save allways return the entity saved instance
+		return this.natureRepository.save(registeredNature);
 	}
 
 	@Override
@@ -190,17 +221,14 @@ public class NatureServiceImpl implements NatureService {
 		// set endDate to now
 		// else
 		// throw exception can't delete a used nature
-		LocalDateTime now = LocalDateTime.now();
 		Nature nature = read(id);
-		// si nature is used
-		// it get an end of validity
-		// and is not erased
 		if (isThisNatureInUse(nature)) {
-			nature.setEndOfValidity(now);
-			natureRepository.save(nature);
-			return;
+//			nature.setEndOfValidity(LocalDateTime.now());
+//			natureRepository.save(nature);
+			throw new BadRequestException("This nature is used", ErrorCodes.natureCantBeDeleted);
 		}
-		this.isNatureAssigned(nature);
+		// this.isNatureAssigned(nature); // why checking it twice for the very same
+		// thing
 		// if a nature is not used nor assigned to future mission
 		// its deleted
 		this.natureRepository.delete(nature);
@@ -215,14 +243,18 @@ public class NatureServiceImpl implements NatureService {
 	 * @return true if it get to its end
 	 * @throws BadRequestException
 	 */
-	public void isNatureAssigned(Nature nature) throws BadRequestException {
+	@Deprecated
+	private void isNatureAssigned(Nature nature) throws BadRequestException {
 		// we get mission that have This nature assigned
 		List<Mission> missions = missionRepository.findByNatureOrderByStartDateDesc(nature);
-		// we check only the last mission in chronology
-		Mission lastMission = missions.get(0);
-		if (lastMission.getStartDate().isAfter(LocalDateTime.now())) {
-			throw new BadRequestException("This nature as assigned mission and can't be deleted",
-					ErrorCodes.natureCantBeDeleted);
+		// if thereis mission
+		if (missions.size() > 0) {
+			// we check only the last mission in chronology
+			Mission lastMission = missions.get(0);
+			if (lastMission.getStartDate().isAfter(LocalDateTime.now())) {
+				throw new BadRequestException("This nature as assigned mission and can't be deleted",
+						ErrorCodes.natureCantBeDeleted);
+			}
 		}
 	}
 
@@ -234,7 +266,7 @@ public class NatureServiceImpl implements NatureService {
 	@Override
 	public boolean isNatureActive(Nature nature, LocalDateTime date) {
 		// nature is active if its endofvalidity is null
-		// may changed once  start allowing planning 
+		// may changed once start allowing planning
 		if (nature.getEndOfValidity() == null) {
 			return true;
 		}

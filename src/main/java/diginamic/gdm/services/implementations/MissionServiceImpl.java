@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.GDMVars;
@@ -32,8 +33,13 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 @Transactional
+//@Value("${path.to.your.property.key}") // for injecting properties values 
 public class MissionServiceImpl implements MissionService {
 
+
+	/** delay to respect when selecting flight as transport  */
+	
+	private static final int minDayBeforeFligthTransport = GDMVars.MIN_DAYS_BEFORE_FLIGHT_TRANSPORT;
 	/**
 	 * The {@link MissionRepository} dependency.
 	 */
@@ -46,8 +52,7 @@ public class MissionServiceImpl implements MissionService {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
-
-	private int minDayBeforeFligthTransport = GDMVars.MIN_DAYS_BEFORE_FLIGHT_TRANSPORT;
+	
 	
 	/**
 	 * returns true, but check if the mission status is INIT or REJECTED
