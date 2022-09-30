@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.ObjectToStringHttpMessageConverter;
+import org.springframework.http.converter.json.JsonbHttpMessageConverter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,6 +24,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.TSFBuilder;
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.GDMVars;
@@ -122,34 +129,36 @@ public class GDMSecurityConfig {
 	public AuthenticationSuccessHandler successHandler() {
 		return new AuthenticationSuccessHandler() {
 			@Override
-			public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-					HttpServletResponse httpServletResponse, Authentication authentication)
+			public void onAuthenticationSuccess(HttpServletRequest request,
+					HttpServletResponse response, Authentication authentication)
 					throws IOException, ServletException {
 				String outprint = "";
 				// we have to set respons parameters
-				httpServletResponse.setContentType("application/json");
-				httpServletResponse.setCharacterEncoding("UTF-8");
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
 				try {
 					// we get connected user an make a Data transfert Object of it
 					CollaboratorDTO collab =new CollaboratorDTO(userService.getConnectedUser());
 					// an place it in Json form in the outprint
-					outprint = collab.toJson();
+					outprint = new ObjectMapper().writeValueAsString(collab);// this create a json formated string of any object
+					
 				} catch (Exception e) {
 					// we add an header , responses MUST have an header 
-					httpServletResponse.addHeader(" user not found ", "  there is no user ");
+					response.addHeader(" user not found ", "  there is no user ");
 					outprint = e.getMessage();
 					// setting status response
-					httpServletResponse.setStatus(500);
+					response.setStatus(500);
 				}
 				// we add an header , responses MUST have an header 
 				// any response without header is considerer as an error by angular
-				httpServletResponse.addHeader("user", outprint);
+				response.addHeader("user", outprint);
 				// we put things in the body
 				// this can only be made once
 				// only one body
-				httpServletResponse.getWriter().append(outprint);
+				
+				response.getWriter().append(outprint);
 				// and set status to accepted
-				httpServletResponse.setStatus(202);
+				response.setStatus(202);
 			}
 		};
 	}

@@ -82,44 +82,5 @@ public class CollaboratorDTO extends Object implements DTO<Collaborator> {
 		return new Collaborator(this);
 	}
 
-	/**
-	 * retrun a Json form of the object
-	 * @return
-	 */
-	public String toJson() {
-
-		StringBuilder json = new StringBuilder("{")
-				.append("\"id\":").append(this.id)
-				.append(",\"firstName\":\"").append(this.firstName).append("\"")
-				.append(",\"lastName\":\"").append(this.lastName).append("\"")
-				.append(",\"username\":\"").append(this.username).append("\"")
-				.append(",\"email\":\"").append(this.email).append("\"");
-		json.append(",\"manager\":");
-		if (this.manager != null) {
-			json.append(this.manager.toJson());
-		} else {
-			json.append("null");
-		}
-		json.append(",\"roles\":");
-		if (this.manager == null) {
-			json.append("null");
-
-		} else {
-			json.append("[");
-			
-			for (Roles roles2 : roles) {
-				json
-				.append("{\"id\":").append(roles2.getId())
-				.append(",\"label\":\"").append(roles2.getLabel()).append("\"")
-				.append(",\"authority\":\"").append(roles2.getAuthority()).append("\"");
-				
-				json.append("},");
-			}
-			json.append("]");
-		}
-
-		json.append("}");
-		return json.toString();
-	}
-
+	
 }
