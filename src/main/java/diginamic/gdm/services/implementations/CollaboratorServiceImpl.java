@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -95,7 +96,14 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
 	@Secured({GDMRoles.ADMIN,GDMRoles.MANAGER,GDMRoles.COLLABORATOR})
 	public Collaborator getConnectedUser()throws Exception {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
+		SecurityContext context = SecurityContextHolder.getContext();
+		if(context == null) {
+			throw new Exception(" security context is null ");
+		}		
+		Authentication auth = context.getAuthentication();
+		if(auth==null) {
+			throw new Exception("authentication null ");
+		}
 		String username = (String) auth.getPrincipal();
 		return collaboratorRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException(" Can't find connected username") );
 		

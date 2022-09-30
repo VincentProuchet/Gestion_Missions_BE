@@ -81,7 +81,9 @@ public class Collaborator implements UserDetails {
 
 	/** manager : the manager of this collaborator */
 	@JoinColumn(name = "managerid")
-	@ManyToOne(fetch = FetchType.LAZY)
+//	@ManyToOne(fetch = FetchType.LAZY) add to change it because it messed up the authentication 
+	// the risk of stack overflow is contained by DTO conversion
+	@ManyToOne
 	private Collaborator manager = null;
 
 	/**

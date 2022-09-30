@@ -126,28 +126,30 @@ public class GDMSecurityConfig {
 					HttpServletResponse httpServletResponse, Authentication authentication)
 					throws IOException, ServletException {
 				String outprint = "";
-				String principal = "";
-				CollaboratorDTO userDTO;
+				// we have to set respons parameters
 				httpServletResponse.setContentType("application/json");
 				httpServletResponse.setCharacterEncoding("UTF-8");
 				try {
-					principal = (String) authentication.getPrincipal();
+					// we get connected user an make a Data transfert Object of it
+					CollaboratorDTO collab =new CollaboratorDTO(userService.getConnectedUser());
+					// an place it in Json form in the outprint
+					outprint = collab.toJson();
 				} catch (Exception e) {
-					httpServletResponse.addHeader("authentication failure ", "no context ");
-					httpServletResponse.setStatus(500);
-				}
-				Collaborator collaborator = new Collaborator();
-				try {
-					collaborator = userService.findByUserName(principal);
-					userDTO = new CollaboratorDTO(collaborator);
-
-				} catch (Exception e) {
+					// we add an header , responses MUST have an header 
 					httpServletResponse.addHeader(" user not found ", "  there is no user ");
+					outprint = e.getMessage();
+					// setting status response
 					httpServletResponse.setStatus(500);
 				}
-
+				// we add an header , responses MUST have an header 
+				// any response without header is considerer as an error by angular
 				httpServletResponse.addHeader("user", outprint);
-				httpServletResponse.setStatus(200);
+				// we put things in the body
+				// this can only be made once
+				// only one body
+				httpServletResponse.getWriter().append(outprint);
+				// and set status to accepted
+				httpServletResponse.setStatus(202);
 			}
 		};
 	}
