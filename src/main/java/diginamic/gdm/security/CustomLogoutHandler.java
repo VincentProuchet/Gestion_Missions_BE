@@ -32,25 +32,21 @@ public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler 
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-		System.err.println("Login out");
 		Cookie[] cookies = request.getCookies();
 		if(cookies!=null) {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName() == GDMVars.SESSION_SESSION_COOKIE_NAME) {
-					System.out.println("cookie !!!!!!");
+					cookie.setMaxAge(0);
 				}
-			}
-			
+			}			
 		}
-			
-
 	}
 
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		String principal = (String) authentication.getPrincipal();
 		Collaborator collaborator = new Collaborator();
 		try {
+			String principal = (String) authentication.getPrincipal();
 			collaborator = this.collaboratorService.findByUserName(principal);
 		} catch (Exception e) {
 			response.addHeader(" user not found ", "  there is no user ");
@@ -61,8 +57,8 @@ public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler 
 //		if (SecurityContextHolder.getContext() == null) {
 			response.addHeader(" user logged out ", collaborator.getFirstName() );
 			response.setStatus(200);
-			System.out.println("The user " + collaborator.getFirstName() + " has logged out.");
-			System.err.println(" logOut Success");
+//			System.out.println("The user " + collaborator.getFirstName() + " has logged out.");
+//			System.err.println(" logOut Success");
 		}
 //		else {
 //			response.addHeader(" user is still logged in ", collaborator.getFirstName() );
