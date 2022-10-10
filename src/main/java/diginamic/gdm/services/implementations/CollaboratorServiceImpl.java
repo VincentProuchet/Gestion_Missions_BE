@@ -58,7 +58,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	}
 
 	@Override
-	public Collaborator update(int id, Collaborator collaborator) throws BadRequestException {
+	public Collaborator update(int id, Collaborator collaborator) throws BadRequestException {		
 		Collaborator current = this.read(id);
 		current.setFirstName(collaborator.getFirstName());
 		current.setLastName(collaborator.getLastName());
@@ -82,16 +82,22 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
 	}
 
+	/**
+	 * this return connected user informations if 
+	 * - there is a security context
+	 * - user informations exist in database
+	 *
+	 */
 	@Secured({ GDMRoles.ADMIN, GDMRoles.MANAGER, GDMRoles.COLLABORATOR })
-	public Collaborator getConnectedUser() throws Exception {
-		SecurityContext context = SecurityContextHolder.getContext();
-		if (context == null) {
-			throw new Exception(CollaboratorErrors.NO_SECURITY_CONTEXT);
-		}
+	public Collaborator getConnectedUser() throws Exception {		
+		SecurityContext context = SecurityContextHolder.getContext();// I left if well sequenced on purpose 
 		Authentication auth = context.getAuthentication();
-		if (auth == null) {
-			throw new Exception(CollaboratorErrors.NO_AUTHENTICATION_CONTEXT);
-		}
+		// these are useless
+		// the simple presence of the @secured annotation 
+		// prevent any access without security context  
+		// if (context == null){ throw new Exception(CollaboratorErrors.NO_SECURITY_CONTEXT); }
+		// if (auth == null) { throw new Exception(CollaboratorErrors.NO_AUTHENTICATION_CONTEXT); }
+		
 		String username = (String) auth.getPrincipal();
 		return collaboratorRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));

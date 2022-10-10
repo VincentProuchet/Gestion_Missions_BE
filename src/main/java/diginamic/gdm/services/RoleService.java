@@ -35,7 +35,7 @@ public interface RoleService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Roles create(Roles role)throws Exception;
+	public Roles create(Roles role);
 	/**
 	 * update that role in persistence
 	 * @param role

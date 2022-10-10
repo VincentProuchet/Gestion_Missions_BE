@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,9 +20,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import diginamic.gdm.Enums.Role;
+import diginamic.gdm.dao.City;
+import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
+import diginamic.gdm.dao.Roles;
 import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.repository.CityRepository;
+import diginamic.gdm.repository.CollaboratorRepository;
+import diginamic.gdm.repository.ExpenseTypeRepository;
+import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
+import diginamic.gdm.services.CityService;
+import diginamic.gdm.services.CollaboratorService;
+import diginamic.gdm.services.RoleService;
+import diginamic.gdm.utilities.testTools;
 
 // ce sont des tests d integrations et pas des tests unitaires... je sais pas trop comment tester plus petit ici
 // ben en fait sur les servicesImpl  tu peux pas, il te faut un contexte Spring  
@@ -35,28 +50,49 @@ import diginamic.gdm.repository.NatureRepository;
 @SpringBootTest
 class NatureServiceImplTest {
 
+	/** natureServiceImpl
+	 * Well this is supposed to be the class testing it 
+	 *
+	 */
 	@Autowired
 	private NatureServiceImpl natureService;
-	@Autowired // we need it to test some services methods
+	@Autowired // we need this. some test need us to pass around the NatureService
 	private NatureRepository natureRepository;
+	/** collabService 
+	 * to test :
+	 *  - isNatureInUse 
+	 */
+	@Autowired
+	private RoleService roleSrv;
+	// and all repository
+	@Autowired
+	private CollaboratorRepository collaboratorRepository;
+	@Autowired
+	private MissionRepository missionRepository;
+	@Autowired
+	private ExpenseTypeRepository expenseTypeRepository;
+	@Autowired
+	private CityRepository cityRepository;
+	@Autowired
+	private testTools tools ;
+	
 
 	private int naturesTobeExpected = 0;
-	private String TestDescription = "TestNatureName";
+	private String TestDescription = "TestNature";
 	private int TestTjm = 4500;
 	private float marginError = 0.005f;
 	private LocalDateTime beforeCreation = LocalDateTime.now();
 	private LocalDateTime afterCreation = LocalDateTime.now();
+	
 
 	/**
 	 * we allready have data in the database that are pushed by the initDB so ... we
 	 * are gonna use these for test wherever
-	 * 
-	 * @throws BadRequestException
+	 * @throws  
 	 * 
 	 */
 	@BeforeEach
-	void init() throws BadRequestException {
-
+	void init() {
 	}
 
 	void cleanDB() throws BadRequestException {
@@ -156,7 +192,7 @@ class NatureServiceImplTest {
 		//assertThrows(BadRequestException.class, () -> natureService.canBeUpdated( nature));
 		// should be true, its the only one with that description
 		assertTrue( natureService.canBeUpdated(nature));
-		Nature nature1 = this.giveMeJustANature(this.TestDescription + "canBeupdated");
+		Nature nature1 = tools.giveMeJustANature(this.TestDescription + "canBeupdated");
 		this.natureRepository.save(nature1);
 		this.natureRepository.save(nature1);
 		assertFalse( natureService.canBeUpdated(nature));
@@ -181,9 +217,15 @@ class NatureServiceImplTest {
 	@Test
 	@Order(5)
 	void isThisNatureInUse() throws Exception {
+		
 		Nature nature = this.pleaseCreateOneNature(TestDescription + "is this nature in use");
 		// just created so it should say no
 		assertFalse(natureService.isThisNatureInUse(nature));
+		//this.setTools();
+		Mission mission = tools.pleaseCreateAMission(nature);
+		// with a mission associated it should say yes
+		assertTrue(natureService.isThisNatureInUse(nature));
+		
 	}
 
 	@Test
@@ -213,12 +255,16 @@ class NatureServiceImplTest {
         assertEquals(activeNatures.size(), previousSize);
 	}
 
+    /**
+     * @TODO rework this to be a real test of updating nature
+     * @throws BadRequestException
+     */
     @Test
     void update() throws BadRequestException {
     	
-        Nature nature = this.giveMeJustANature(TestDescription+"update");
+        Nature nature = tools.giveMeJustANature(TestDescription+"update");
         assertNull(nature.getEndOfValidity());        
-        nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
+        nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 6, 10, 10, 10));
         nature.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
         Nature persistedNature  = natureRepository.save(nature);
         assertNotNull(natureService.read(persistedNature.getId()));
@@ -246,33 +292,17 @@ class NatureServiceImplTest {
 
 		return this.natureService.create(nature);
 	}
-	/**
-	 * this gives you an instance of nature 
-	 * with : 
-	 * startDOV = now
-	 * endDOV = null;
-	 * description = description
-	 * giveBonus = true
-	 * charged = true
-	 * tjm  = this.TestTjm
-	 * 
-	 * its just to not write that block for each test
-	 * @param description
-	 * @return a persisted nature reference
-	 * @throws BadRequestException
-	 */
-	public Nature giveMeJustANature(String description) throws BadRequestException {
-		Nature nature = new Nature();
-		// in our implementation date are automatically added
-		nature.setDateOfValidity(LocalDateTime.now());
-		nature.setEndOfValidity(null);
-		nature.setDescription(description);
-		System.err.println(description);
-		// we set them to true because their default values are false
-		nature.setGivesBonus(true);
-		nature.setCharged(true);
-		nature.setTjm(this.TestTjm);
-
-		return nature;
+	
+	public void setTools() {
+		this.tools.setRoleSrv(roleSrv);
+		this.tools.setCollaboratorRepository(this.collaboratorRepository);
+		this.tools.setCityRepository(this.cityRepository);
+		this.tools.setExpenseTypeRepository(expenseTypeRepository);
+		this.tools.setMissionRepository(missionRepository);
+		
+		
+		
 	}
+	
+	
 }
