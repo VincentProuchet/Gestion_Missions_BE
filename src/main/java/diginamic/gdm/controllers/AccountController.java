@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.GDMRoles;
-import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Roles;
 import diginamic.gdm.dto.CollaboratorDTO;
 import diginamic.gdm.services.CollaboratorService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.GDMRoutes;
 import lombok.AllArgsConstructor;
 
 /**

@@ -7,6 +7,7 @@ import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.NatureService;
+import diginamic.gdm.vars.errors.impl.NatureErrors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,9 +50,7 @@ public class NatureServiceImpl implements NatureService {
 		nature.setDateOfValidity(now);
 
 		if (!canBeAdded(nature)) {
-			throw new BadRequestException(
-					"A nature with this name already exists consider modify the existing one instead.",
-					ErrorCodes.natureInvalid);
+			throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.create.SAME_NAME);
 		}
 		this.isAValidNature(nature);
 		return this.natureRepository.save(nature);
@@ -60,7 +59,7 @@ public class NatureServiceImpl implements NatureService {
 	@Override
 	public Nature read(int id) throws BadRequestException {
 		return this.natureRepository.findById(id)
-				.orElseThrow(() -> new BadRequestException("Nature not found", ErrorCodes.natureNotFound));
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.natureNotFound, NatureErrors.read.NOT_FOUND));
 	}
 
 	@Override
@@ -109,7 +108,7 @@ public class NatureServiceImpl implements NatureService {
 		// LocalDateTime end = null;
 
 		if (id != nature.getId()) {
-			throw new BadRequestException("The id is inconsistent with the given nature", ErrorCodes.idInconsistent);
+			throw new BadRequestException(ErrorCodes.idInconsistent, NatureErrors.INCONSISTENT_ID);
 		}
 		Nature registeredNature = this.read(nature.getId());
 		if (nature.getDateOfValidity().isBefore(now.minusHours(8))) {
@@ -131,16 +130,14 @@ public class NatureServiceImpl implements NatureService {
 			if (ListOfNaturesOfDescription.size() > 0) {
 				for (Nature nature2 : ListOfNaturesOfDescription) {
 					if (this.isNatureActive(nature2, nature.getDateOfValidity())) {
-						throw new BadRequestException(
-								" you are trying to change the name of the nature and there is allready an active nature of the name "
-										+ nature.getDescription(),
-								ErrorCodes.natureInvalid);
+						throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.update.CANT_CHANGE_NAME,
+								nature.getDescription());
 					}
 				}
 			}
 		}
 
-		nature.setEndOfValidity(null);// for now we prevent users from giving an EOV date to nature
+		//nature.setEndOfValidity(null);// for now we prevent users from giving an EOV date to nature
 
 		Nature activeNature = null;
 		// if existing nature is active
@@ -217,18 +214,14 @@ public class NatureServiceImpl implements NatureService {
 		// delete from DB
 		// return
 		//
-		// if active ie endDate null
+		// if active endDate null
 		// set endDate to now
 		// else
 		// throw exception can't delete a used nature
 		Nature nature = read(id);
 		if (isThisNatureInUse(nature)) {
-//			nature.setEndOfValidity(LocalDateTime.now());
-//			natureRepository.save(nature);
-			throw new BadRequestException("This nature is used", ErrorCodes.natureCantBeDeleted);
+			throw new BadRequestException(ErrorCodes.natureCantBeDeleted, NatureErrors.delete.IS_ASSIGNED);
 		}
-		// this.isNatureAssigned(nature); // why checking it twice for the very same
-		// thing
 		// if a nature is not used nor assigned to future mission
 		// its deleted
 		this.natureRepository.delete(nature);
@@ -247,13 +240,12 @@ public class NatureServiceImpl implements NatureService {
 	private void isNatureAssigned(Nature nature) throws BadRequestException {
 		// we get mission that have This nature assigned
 		List<Mission> missions = missionRepository.findByNatureOrderByStartDateDesc(nature);
-		// if thereis mission
+		// if there is mission
 		if (missions.size() > 0) {
 			// we check only the last mission in chronology
 			Mission lastMission = missions.get(0);
 			if (lastMission.getStartDate().isAfter(LocalDateTime.now())) {
-				throw new BadRequestException("This nature as assigned mission and can't be deleted",
-						ErrorCodes.natureCantBeDeleted);
+				throw new BadRequestException(ErrorCodes.natureCantBeDeleted,NatureErrors.delete.IS_ASSIGNED);
 			}
 		}
 	}
@@ -265,7 +257,7 @@ public class NatureServiceImpl implements NatureService {
 
 	@Override
 	public boolean isNatureActive(Nature nature, LocalDateTime date) {
-		// nature is active if its endofvalidity is null
+		// nature is active if its end of validity is null
 		// may changed once start allowing planning
 		if (nature.getEndOfValidity() == null) {
 			return true;
@@ -290,31 +282,30 @@ public class NatureServiceImpl implements NatureService {
 		LocalDateTime endDateOfValidity = nature.getEndOfValidity();
 		LocalDateTime startDateOfValidity = nature.getDateOfValidity();
 		if (startDateOfValidity == null) {
-			// throw startdateofvalidity can't be null
-			throw new BadRequestException("startdateofvalidity can't be null", ErrorCodes.natureInvalid);
+			// throw start date of validity can't be null
+			throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.invalid.START_CANT_BE,NatureErrors.NULL);
 		}
-		// if endofvalidity not null
+		// if end of validity not null
 		if (endDateOfValidity != null) {
-			// if end of validity is before startofvalidity
+			// if end of validity is before start of validity
 			if (startDateOfValidity.isAfter(endDateOfValidity)) {
-				// throw end of validity can't be after startofvalidity
-				throw new BadRequestException("end of validity can't be after startofvalidity",
-						ErrorCodes.natureInvalid);
+				// throw end of validity can't be after start of validity
+				throw new BadRequestException(ErrorCodes.natureInvalid,NatureErrors.invalid.END_CANT_BE_BEFORE_START);
 			}
 		}
 		if (nature.getDescription() == null) {
 			// throw description can't be null
-			throw new BadRequestException("description can't be null", ErrorCodes.natureInvalid);
+			throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.invalid.NULL_DESCIPTION);
 		}
 		if (nature.getDescription().equals("")) {
 			// throw description can't be empty
-			throw new BadRequestException("description can't be empty", ErrorCodes.natureInvalid);
+			throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.invalid.EMPTY_DESCIPTION);
 		}
 		if (nature.getBonusPercentage() < 0) {
-			throw new BadRequestException("bonus can't be negative", ErrorCodes.natureInvalid);
+			throw new BadRequestException( ErrorCodes.natureInvalid, NatureErrors.invalid.NEGATIVE_BONUS);
 		}
 		if (nature.getTjm().signum() == -1) {
-			throw new BadRequestException("Tjm can't be negative", ErrorCodes.natureInvalid);
+			throw new BadRequestException( ErrorCodes.natureInvalid, NatureErrors.invalid.NEGATIVE_TJM);
 		}
 		return true;
 	}

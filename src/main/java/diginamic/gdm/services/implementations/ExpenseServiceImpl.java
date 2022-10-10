@@ -3,13 +3,9 @@ package diginamic.gdm.services.implementations;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.services.ExpenseTypeService;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Expense;
@@ -17,9 +13,11 @@ import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.ExpenseRepository;
-import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.services.ExpenseService;
+import diginamic.gdm.services.ExpenseTypeService;
 import diginamic.gdm.services.MissionService;
+import diginamic.gdm.vars.errors.impl.ExpenseErrors;
+import diginamic.gdm.vars.errors.impl.MissionErrors;
 import lombok.AllArgsConstructor;
 
 /**
@@ -36,6 +34,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	 * The {@link ExpenseRepository} dependency.
 	 */
 	private ExpenseRepository expenseRepository;
+
 	/**
 	 * The {@link ExpenseTypeService} dependency;
 	 */
@@ -71,7 +70,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public Expense read(int id) throws BadRequestException {
 		return this.expenseRepository.findById(id)
-				.orElseThrow(() -> new BadRequestException("Expense not found", ErrorCodes.expenseNotFound));
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.expenseNotFound, ExpenseErrors.read.NOT_FOUND));
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		// this test is also an overkill
 		// the missionService would throw an error if the id didn't exist
 		if (id != current.getId()) {
-			throw new BadRequestException("Expense id inconsistent", ErrorCodes.idInconsistent);
+			throw new BadRequestException(ErrorCodes.idInconsistent, ExpenseErrors.INCONSISTENT_ID);
 		}
 		// since this one throws is own exceptions
 		// of course we test the data we want to put
@@ -116,36 +115,39 @@ public class ExpenseServiceImpl implements ExpenseService {
 		// are pointing to the same mission
 		// its an overkill and only done here only to have more feedback when testing
 		if (expense.getMission().getId() != mission.getId()) {
-			throw new BadRequestException("Expenses mission's id inconsistent ", ErrorCodes.idInconsistent);
+			throw new BadRequestException(ErrorCodes.idInconsistent, ExpenseErrors.INCONSISTENT_ID);
 		}
 
 		if (!missionService.isMissionDone(mission.getId())) {
-			throw new BadRequestException("Mission is not Done no expenses can be added", ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.NOT_DONE,
+					ExpenseErrors.EXPENSE, ExpenseErrors.CANT_BE, ExpenseErrors.ADDED);
 		}
 		// is the date valid?
 		LocalDateTime date = expense.getDate();
 		if (date == null) {
-			throw new BadRequestException("date is null ", ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.expenseInvalid, ExpenseErrors.invalid.NULL_DATE);
 		}
 		// are all data needed present and in correct values
 		if (expense.getExpenseType().equals(null)) {
-			throw new BadRequestException("Expense's types can't be null", ErrorCodes.expenseInvalid);
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.NULL_TYPE);
 		}
 		// cost can't be negative
 		if (expense.getCost().compareTo(BigDecimal.valueOf(0)) < 0) {
-			throw new BadRequestException("Expense's value can't be negative", ErrorCodes.expenseInvalid);
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.VALUE,ExpenseErrors.CANT_BE
+					, ExpenseErrors.NEGATIVE);
 		}
 		// TVA can't be negative
 		if (expense.getTva() < 0) {
-			throw new BadRequestException("Expense's TVA can't be negative", ErrorCodes.expenseInvalid);
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.TAXES,ExpenseErrors.CANT_BE
+					, ExpenseErrors.NEGATIVE);
 		}
 		// expenses's date can't be before mission start
 		if (date.isBefore(mission.getStartDate())) {
-			throw new BadRequestException("Expense's dates can't be before mission start", ErrorCodes.expenseInvalid);
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_BEFORE);
 		}
 		// expenses's date can't be after mission end
 		if (date.isAfter(mission.getEndDate())) {
-			throw new BadRequestException("Expense's dates can't be after mission end", ErrorCodes.expenseInvalid);
+			throw new BadRequestException( ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_AFTER);
 		}
 		return true;
 	}

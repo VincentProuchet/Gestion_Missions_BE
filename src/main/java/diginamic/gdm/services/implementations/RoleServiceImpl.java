@@ -9,6 +9,7 @@ import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.Roles;
 import diginamic.gdm.repository.RoleRepository;
 import diginamic.gdm.services.RoleService;
+import diginamic.gdm.vars.errors.impl.RolesErrors;
 import lombok.AllArgsConstructor;
 
 /**
@@ -55,13 +56,13 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Roles read(int id) throws Exception {
 		
-		return this.repository.findById(id).orElseThrow(()-> new Exception(" authoritie not found ")) ;
+		return this.repository.findById(id).orElseThrow(()-> new Exception(RolesErrors.read.NOT_FOUND)) ;
 	}
 
 	@Override
 	public Roles read(String label) throws Exception {
 		
-		return this.repository.findByLabel(label).orElseThrow(()-> new Exception(" authoritie not found "));
+		return this.repository.findByLabel(label).orElseThrow(()-> new Exception(RolesErrors.read.NOT_FOUND));
 	}
 
 }

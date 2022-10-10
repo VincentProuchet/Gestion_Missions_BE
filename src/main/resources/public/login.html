@@ -13,7 +13,7 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 
-<title>Please Log In</title>
+<title>Gestion des missions</title>
 
 </head>
 <body>
@@ -21,67 +21,62 @@
 
 	<div class="container-fluid py-5 h-100">
 		<div class="row no-gutter">
-			<!-- image -->
-			<div class="col-md-7 d-none d-md-flex bg-image">
-			 <div class="container">
-      <form class="form-signin" method="post" action="/login">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <p>
-          <label for="username" class="sr-only">Username</label>
-          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-        </p>
-        <p>
-          <label for="password" class="sr-only">Password</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        </p>
-<p><input type='checkbox' name='remember-me'/> Remember me on this computer.</p>
-<input name="_csrf" type="hidden" value="fd620f86-f7c3-46fe-9c8f-680e3b30915b" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-</div>
-			</div>
-			<!-- content  -->
-			<div class="col-md bg-light">
-				<div class="login d-flex align-items-center py-4">
-					<!-- Demo content-->
-					<div class="container">
-						<div class="row">
-							<div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-								<h2 class="display-4">GDM</h2>
-								<h4 class="text-muted mb-4">Gestion des mission</h4>
-								<form action="/signin" method="post">
-									<div class="form-group mb-4">
-										<input id="username" type="text" name="username"
-											placeholder="username" required="" autofocus=""
-											class="form-control rounded-pill border-0 shadow-sm px-4">
+
+			<div class="container-fluid ">
+
+				<div class="row no-gutter">
+					<!-- content  -->
+					<div class="bg-light">
+						<div class="login d-flex align-items-center py-4">
+							<!-- Demo content-->
+							<div class="container p-3">
+								<div class="row">
+									<div class="col-6 offset-xl-1">
+										<h2 class="display-4">GDM</h2>
+										<h4 class="text-muted mb-4">Gestion des missions</h4>
+										<form class="form-signin" method="post" action="/login">
+											<div class="form-group has-validation mb-4">
+												<input type="text" id="username" name="username"
+													placeholder="Nom d'utilisateur"
+													class="form-control rounded-pill shadow-sm px-4" required
+													autofocus>
+
+											</div>
+											<div class="form-group has-validation mb-4">
+												<input type="password" id="password" name="password"
+													placeholder="Mot de passe"
+													class="form-control rounded-pill shadow-sm px-4 text-primary"
+													required>
+											</div>
+											<div class="form-check">
+												<input type='checkbox' name='remember-me' /> <label
+													for="remember-me" class="form-check-label">me
+													garder connecté sur cet ordinateur</label>
+											</div>
+											<div class="form-group mb-4"></div>
+											<input name="_csrf" type="hidden"
+												value="fd620f86-f7c3-46fe-9c8f-680e3b30915b" />
+											<button class="btn btn-lg btn-primary btn-block"
+												type="submit">Se connecter</button>
+										</form>
 									</div>
-									<div class="form-group mb-4">
-										<input id="password" type="password" name="password"
-											placeholder="password" required=""
-											class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-									</div>
-									<div class="form-check">
-										<input id="customCheck1" type="checkbox" checked
-											class="form-check-input"> <label for="customCheck1"
-											class="form-check-label">Se souvenir du mot de passe</label>
-									</div>
-									<div class="form-group mb-4"></div>
-									<button type="submit" value="Log in"
-										class="btn btn-primary btn-lg btn-block">Se connecter</button>
-								</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
 		</div>
 	</div>
+
+
 	<div>
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous"></script>
 	</div>
-
 </body>
 </html>

@@ -30,9 +30,21 @@ public class City {
 	/** name : the name of the city */
 	private String name;
 	
+	/** Constructeur
+	 * @param city
+	 */
 	public City(CityDTO city) {
 		this.id = city.getId();
 		this.name = city.getName();
+	}
+	
+	/**
+	 * setter 
+	 * les noms de villes sont tous en minuscule
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name =  name.strip().toLowerCase();
 	}
 
 }

@@ -2,7 +2,7 @@ package diginamic.gdm.Enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import diginamic.gdm.GDMRoles;
+import diginamic.gdm.vars.GDMRoles;
 import lombok.Getter;
 /**
  * here lies the Granted authorities 

@@ -10,6 +10,7 @@ import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.CityService;
+import diginamic.gdm.vars.errors.impl.CityErrors;
 import lombok.AllArgsConstructor;
 
 import javax.transaction.Transactional;
@@ -28,7 +29,7 @@ public class CityServiceImpl implements CityService {
 	 * The {@link CityRepository} dependency.
 	 */
 	private CityRepository cityRepository;
-	
+
 	@Override
 	public List<City> list() {
 		return this.cityRepository.findAll();
@@ -38,10 +39,11 @@ public class CityServiceImpl implements CityService {
 	public City create(City city) {
 		return this.cityRepository.save(city);
 	}
-	
+
 	@Override
 	public City read(int id) throws BadRequestException {
-		return this.cityRepository.findById(id).orElseThrow(() -> new BadRequestException("City not found", ErrorCodes.cityNotFound));
+		return this.cityRepository.findById(id)
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound, CityErrors.CITY, CityErrors.read.NOT_FOUND));
 	}
 
 	@Override
@@ -61,8 +63,9 @@ public class CityServiceImpl implements CityService {
 	@Override
 	public City read(String name) throws BadRequestException {
 		// we first search it
-		return this.cityRepository.findByName(name).orElseThrow(() -> new BadRequestException("City not found", ErrorCodes.cityNotFound));
-		
+		return this.cityRepository.findByName(name)
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound,CityErrors.CITY, CityErrors.read.NOT_FOUND));
+
 	}
 
 	@Override
@@ -70,23 +73,16 @@ public class CityServiceImpl implements CityService {
 		City city2;
 		// attempt to find it by id
 		try {
-			System.err.println("search by id");
-			 city2  = this.read(city.getId());
-			
+			city2 = this.read(city.getId());
 		} catch (BadRequestException e) {
 			// attemp to find it by name
 			try {
-				System.err.println("id not found  search by name");
 				city2 = read(city.getName());
-				
 			} catch (BadRequestException e2) {
 				// creation of a new city
-			System.err.println("create a new city");
 				city2 = this.create(new City(city));
 			}
-			
-		}		
+		}
 		return city2;
 	}
-
 }

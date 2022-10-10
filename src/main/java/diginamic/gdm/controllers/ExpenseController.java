@@ -2,11 +2,6 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.MissionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -20,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.GDMRoles;
-import diginamic.gdm.GDMRoutes;
+import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Expense;
-import diginamic.gdm.dao.ExpenseType;
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dto.ExpenseDTO;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
+import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.ExpenseService;
-import diginamic.gdm.services.ExpenseTypeService;
+import diginamic.gdm.services.MissionService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.GDMRoutes;
 import lombok.AllArgsConstructor;
 
 /**
@@ -44,8 +43,10 @@ public class ExpenseController {
 	 */
 	private ExpenseService expenseService;
 
+	/** missionService */
 	private MissionService missionService;
 
+	/** collaboratorService */
 	private CollaboratorService collaboratorService;
 
 	/**
@@ -100,7 +101,7 @@ public class ExpenseController {
 		if(mission.getCollaborator().getId() == user.getId()){
 			return new ExpenseDTO(expense);
 		}
-		throw new Exception("Only the assignee can see an expense of a mission");
+		throw new BadRequestException(ErrorCodes.expenseNotFound,"Only the assignee can see the expenses of a mission");
 	}
 	/**
 	 * Gets the expenses associated to a given mission
@@ -117,7 +118,7 @@ public class ExpenseController {
 		if(mission.getCollaborator().getId() == user.getId()){
 			return expenseService.getExpensesOfMission(mission).stream().map(ExpenseDTO::new).toList();
 		}
-		throw new Exception("Only the assignee can see the expenses of a mission");
+		throw new BadRequestException(ErrorCodes.expenseNotFound,"Only the assignee can see the expenses of a mission");
 	}
 	
 	

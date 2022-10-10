@@ -46,6 +46,8 @@ public interface CityService {
 	/**
 	 *	gets  the data for a specific registered city
 	 * will check for id then names 
+	 * creates a new one if not found
+	 * cities are ALLWAYS lowercase
 	 * 
 	 * @param city The city to update with modified info
 	 * @return The resulting city with updated info

@@ -8,6 +8,10 @@ import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CityService;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.ScheduledTasksService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.GDMRoutes;
+import diginamic.gdm.vars.GDMVars;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,9 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.GDMRoles;
-import diginamic.gdm.GDMRoutes;
-import diginamic.gdm.GDMVars;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dto.MissionDTO;

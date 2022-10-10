@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import diginamic.gdm.GDMRoles;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
@@ -20,6 +19,8 @@ import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.MissionService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.errors.impl.CollaboratorErrors;
 import lombok.AllArgsConstructor;
 
 /**
@@ -37,8 +38,8 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	 */
 	private CollaboratorRepository collaboratorRepository;
 
-	//private MissionService missionService;
-	
+	// private MissionService missionService;
+
 	@Override
 	public List<Collaborator> list() {
 		return this.collaboratorRepository.findAll();
@@ -48,15 +49,17 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	public Collaborator create(Collaborator collaborator) {
 		return this.collaboratorRepository.save(collaborator);
 	}
-	
+
 	@Override
 	public Collaborator read(int id) throws BadRequestException {
-		return this.collaboratorRepository.findById(id).orElseThrow(() -> new BadRequestException("Collaborator not found", ErrorCodes.collaboratorNotFound));
+		return this.collaboratorRepository.findById(id)
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.collaboratorNotFound,
+						CollaboratorErrors.read.NOT_FOUND ));
 	}
 
 	@Override
-	public Collaborator update(int id, Collaborator collaborator) {
-		Collaborator current = this.collaboratorRepository.findById(id).orElseThrow();
+	public Collaborator update(int id, Collaborator collaborator) throws BadRequestException {
+		Collaborator current = this.read(id);
 		current.setFirstName(collaborator.getFirstName());
 		current.setLastName(collaborator.getLastName());
 		current.setPassword(collaborator.getPassword());
@@ -66,47 +69,33 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		return current;
 	}
 
-
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Collaborator coll = this.collaboratorRepository
-				.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(" Username not found ")) ;
+		Collaborator coll = this.collaboratorRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
 		return coll;
 	}
 
-	
-// deleted for circular dependency
-//	@Override
-//	public Mission addMission(Mission mission, Collaborator collaborator) throws BadRequestException {
-//		mission.setCollaborator(collaborator);
-//		return missionService.create(mission);
-//	}
-//
-//	@Override
-//	public Mission reassignMission(Mission mission, Collaborator collaborator) throws BadRequestException {
-//		mission.setCollaborator(collaborator);
-//		return missionService.update(mission.getId(), mission);
-//	}
-
 	@Override
 	public Collaborator findByUserName(String userName) throws UsernameNotFoundException {
-		return this.collaboratorRepository.findByUsername(userName).orElseThrow(()-> new UsernameNotFoundException(" Can't find connected username") );
+		return this.collaboratorRepository.findByUsername(userName)
+				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
 	}
 
-	@Secured({GDMRoles.ADMIN,GDMRoles.MANAGER,GDMRoles.COLLABORATOR})
-	public Collaborator getConnectedUser()throws Exception {
+	@Secured({ GDMRoles.ADMIN, GDMRoles.MANAGER, GDMRoles.COLLABORATOR })
+	public Collaborator getConnectedUser() throws Exception {
 		SecurityContext context = SecurityContextHolder.getContext();
-		if(context == null) {
-			throw new Exception(" security context is null ");
-		}		
+		if (context == null) {
+			throw new Exception(CollaboratorErrors.NO_SECURITY_CONTEXT);
+		}
 		Authentication auth = context.getAuthentication();
-		if(auth==null) {
-			throw new Exception("authentication null ");
+		if (auth == null) {
+			throw new Exception(CollaboratorErrors.NO_AUTHENTICATION_CONTEXT);
 		}
 		String username = (String) auth.getPrincipal();
-		return collaboratorRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException(" Can't find connected username") );
-		
+		return collaboratorRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
+
 	}
 
 }

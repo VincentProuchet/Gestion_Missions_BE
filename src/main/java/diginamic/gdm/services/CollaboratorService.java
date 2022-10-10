@@ -43,8 +43,9 @@ public interface CollaboratorService extends UserDetailsService {
 	 * @param id The id corresponding to the collaborator to update
 	 * @param collaborator The collaborator to update with modified info
 	 * @return The resulting collaborator with updated info
+	 * @throws BadRequestException 
 	 */
-	Collaborator update(int id, Collaborator collaborator);
+	Collaborator update(int id, Collaborator collaborator) throws BadRequestException;
 
 
 	/**

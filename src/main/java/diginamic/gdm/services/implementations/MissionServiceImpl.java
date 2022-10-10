@@ -10,19 +10,20 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import diginamic.gdm.GDMVars;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dao.Transport;
-import diginamic.gdm.errors.MissionServiceErrors;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
+import diginamic.gdm.vars.GDMVars;
+import diginamic.gdm.vars.errors.ErrorsMessage;
+import diginamic.gdm.vars.errors.impl.MissionErrors;
 import lombok.AllArgsConstructor;
 
 /**
@@ -36,10 +37,9 @@ import lombok.AllArgsConstructor;
 //@Value("${path.to.your.property.key}") // for injecting properties values 
 public class MissionServiceImpl implements MissionService {
 
+	/** delay to respect when selecting flight as transport */
+	private final int minDayBeforeFligthTransport = GDMVars.MIN_DAYS_BEFORE_FLIGHT_TRANSPORT;
 
-	/** delay to respect when selecting flight as transport  */
-	
-	private static final int minDayBeforeFligthTransport = GDMVars.MIN_DAYS_BEFORE_FLIGHT_TRANSPORT;
 	/**
 	 * The {@link MissionRepository} dependency.
 	 */
@@ -52,8 +52,7 @@ public class MissionServiceImpl implements MissionService {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
-	
-	
+
 	/**
 	 * returns true, but check if the mission status is INIT or REJECTED
 	 * 
@@ -69,8 +68,8 @@ public class MissionServiceImpl implements MissionService {
 		case ENDED:
 		case VALIDATED:
 		case WAITING_VALIDATION:
-			throw new BadRequestException(MissionServiceErrors.delete.STATUSERROR + mission.getStatus()
-					+ MissionServiceErrors.delete.CANT_BE_DELETED, ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.delete.CANT_BE_DELETED,
+					MissionErrors.delete.STATUSERROR, mission.getStatus().name());
 		// any case that is not in the book is considered to allow deletion
 		default:
 			return true;
@@ -86,14 +85,13 @@ public class MissionServiceImpl implements MissionService {
 	 */
 	public boolean canBeUpdated(Mission mission) throws BadRequestException {
 		Mission missionIDB = read(mission.getId());
-		Status status = missionIDB.getStatus();
-		switch (status) {
+		switch (missionIDB.getStatus()) {
 		case ENDED:
-			throw new BadRequestException(MissionServiceErrors.update.IS_ENDED, ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);
 		case WAITING_VALIDATION:
-			throw new BadRequestException(MissionServiceErrors.update.IS_WAITING_VALIDATION, ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_WAITING_VALIDATION);
 		case VALIDATED:
-			throw new BadRequestException(MissionServiceErrors.update.IS_VALIDATED, ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_VALIDATED);
 		default:
 			return true;
 		}
@@ -122,18 +120,11 @@ public class MissionServiceImpl implements MissionService {
 	@Override
 	public void delete(int id) throws Exception {
 		Mission mission = read(id);
-		String message = new StringBuilder(MissionServiceErrors.delete.STATUSERROR).append(mission.getStatus())
-				.append(MissionServiceErrors.delete.CANT_BE_DELETED).toString();
 		if (isMissionDone(mission)) {
-			throw new BadRequestException(message, ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.delete.CANT_BE_DELETED,
+					MissionErrors.delete.STATUSERROR, mission.getStatus().name());
 		}
-		switch (mission.getStatus()) {
-		case VALIDATED:
-			throw new BadRequestException(message, ErrorCodes.missionInvalid);
-		case ENDED:
-			throw new BadRequestException(message, ErrorCodes.missionInvalid);
-		default:
-			// in all other case the mission is deleted
+		if (this.canBeDeleted(mission)) {
 			this.missionRepository.delete(mission);
 		}
 	}
@@ -144,7 +135,8 @@ public class MissionServiceImpl implements MissionService {
 	}
 
 	/**
-	 * Check if the mission has been completed
+	 * Check if the mission has been completed make a persistence query using
+	 * provided id
 	 *
 	 * @param id mission id
 	 * @return true if completed
@@ -157,7 +149,9 @@ public class MissionServiceImpl implements MissionService {
 	}
 
 	/**
-	 * Check if the mission has been completed
+	 * Check if the mission has been completed this override is made to reduce the
+	 * database queries quantities if you allready got the JPA instance of a
+	 * specific mission you can just pass it here if not then use the id version
 	 *
 	 * @param mission
 	 * @return true if completed
@@ -179,30 +173,25 @@ public class MissionServiceImpl implements MissionService {
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime startDate = mission.getStartDate();
 		LocalDateTime endDate = mission.getEndDate();
-		// TODO change this for exceptions !!!!
 		// the mission has a collaborator
 		Collaborator collaborator = collaboratorService.read(mission.getCollaborator().getId());
 
 		// dates not null, start before end, start after now
 		if (startDate == null) {
-			throw new BadRequestException(new StringBuilder(MissionServiceErrors.invalid.START_CANT_BE)
-					.append(MissionServiceErrors.NULL).toString(), ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.START_CANT_BE,
+					MissionErrors.NULL);
 		}
 		if (endDate == null) {
-			throw new BadRequestException(new StringBuilder(MissionServiceErrors.invalid.END_CANT_BE)
-					.append(MissionServiceErrors.NULL).toString(), ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.END_CANT_BE,
+					MissionErrors.NULL);
 		}
 		if (startDate.isBefore(now)) {
-			throw new BadRequestException(
-					new StringBuilder(MissionServiceErrors.invalid.START_CANT_BE)
-							.append(MissionServiceErrors.invalid.BEFORE).append(MissionServiceErrors.NOW).toString(),
-					ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.START_CANT_BE,
+					MissionErrors.BEFORE, MissionErrors.NOW);
 		}
 		if (endDate.isBefore(startDate)) {
-			throw new BadRequestException(
-					new StringBuilder(MissionServiceErrors.invalid.END_CANT_BE)
-							.append(MissionServiceErrors.invalid.BEFORE).append(MissionServiceErrors.START).toString(),
-					ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.END_CANT_BE,
+					MissionErrors.BEFORE, MissionErrors.START);
 		}
 
 		// start and end not in WE
@@ -212,15 +201,15 @@ public class MissionServiceImpl implements MissionService {
 			switch (startDay) {
 			case SATURDAY:
 			case SUNDAY:
-				throw new BadRequestException(new StringBuilder(MissionServiceErrors.invalid.START_CANT_BE)
-						.append(MissionServiceErrors.ON).append(startDay).toString(), ErrorCodes.missionInvalid);
+				throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.START_CANT_BE,
+						MissionErrors.ON, startDay.toString());
 			default:
 			}
 			switch (endDay) {
 			case SATURDAY:
 			case SUNDAY:
-				throw new BadRequestException(new StringBuilder(MissionServiceErrors.invalid.END_CANT_BE)
-						.append(MissionServiceErrors.ON).append(endDay).toString(), ErrorCodes.missionInvalid);
+				throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.END_CANT_BE,
+						MissionErrors.ON, endDay.toString());
 			default:
 			}
 		}
@@ -228,31 +217,25 @@ public class MissionServiceImpl implements MissionService {
 		// nature, start and end cities are mandatory
 		Nature nature = natureService.read(mission.getNature().getId());
 		if (mission.getStartCity() == null) {
-			throw new BadRequestException(new StringBuilder(MissionServiceErrors.START)
-					.append(MissionServiceErrors.invalid.CITY_CANT_BE)
-					.append(MissionServiceErrors.NULL)
-					.toString(), ErrorCodes.missionInvalid);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.DEPARTURE,
+					MissionErrors.invalid.NULL_CITY);
 		}
 		if (mission.getEndCity() == null) {
-			throw new BadRequestException(new StringBuilder(MissionServiceErrors.END)
-					.append(MissionServiceErrors.invalid.CITY_CANT_BE)
-					.append(MissionServiceErrors.NULL)
-					.toString(), ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.ARRIVAL,
+					MissionErrors.invalid.NULL_CITY);
 		}
 		// if the transport is Flight, the mission must be created at least a week
 		// before the start
 		System.err.println(mission.getMissionTransport() == Transport.Flight);
 		System.err.println(startDate.isBefore(now.plusDays(7)));
 		if (mission.getMissionTransport() == Transport.Flight
-				&& startDate.isBefore(now.plusDays(this.minDayBeforeFligthTransport))) {
-			throw new BadRequestException(new StringBuilder(MissionServiceErrors.invalid.AERIAL_TRANSPORT )
-					.append(this.minDayBeforeFligthTransport)
-					.append(MissionServiceErrors.FROM_TODAY)
-					.toString(), ErrorCodes.missionInvalid);
+				&& startDate.isBefore(now.plusDays(minDayBeforeFligthTransport))) {
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.AERIAL_TRANSPORT,
+					String.valueOf(minDayBeforeFligthTransport), MissionErrors.FROM_TODAY);
 		}
 		// the mission s nature must be active at the date of start
 		if (!natureService.isNatureActive(nature, startDate)) {
-			throw new BadRequestException(MissionServiceErrors.invalid.INACTIVE_NATURE, ErrorCodes.missionInvalid);
+			throw new BadRequestException(MissionErrors.invalid.INACTIVE_NATURE, ErrorCodes.missionInvalid);
 		}
 
 		// the mission can't be in the same time as another one
@@ -274,11 +257,11 @@ public class MissionServiceImpl implements MissionService {
 			LocalDateTime nextMissionStartDate = nextMission.getStartDate();
 			LocalDateTime nextMissionEndDate = nextMission.getEndDate();
 			if (startDate.isAfter(nextMissionStartDate) && startDate.isBefore(nextMissionEndDate)) {
-				throw new BadRequestException(MissionServiceErrors.invalid.CANT_START_IN_NEXT_MISSION,
+				throw new BadRequestException(MissionErrors.invalid.CANT_START_IN_NEXT_MISSION,
 						ErrorCodes.missionInvalid);
 			}
 			if (endDate.isAfter(nextMissionStartDate) && endDate.isBefore(nextMissionEndDate)) {
-				throw new BadRequestException(MissionServiceErrors.invalid.CANT_END_IN_NEXT_MISSION,
+				throw new BadRequestException(MissionErrors.invalid.CANT_END_IN_NEXT_MISSION,
 						ErrorCodes.missionInvalid);
 			}
 		}
@@ -307,7 +290,7 @@ public class MissionServiceImpl implements MissionService {
 	@Override
 	public Mission read(int id) throws BadRequestException {
 		return this.missionRepository.findById(id)
-				.orElseThrow(() -> new BadRequestException(MissionServiceErrors.read.NOTFOUND, ErrorCodes.missionNotFound));
+				.orElseThrow(() -> new BadRequestException(MissionErrors.read.NOT_FOUND, ErrorCodes.missionNotFound));
 	}
 
 	@Override
@@ -315,7 +298,7 @@ public class MissionServiceImpl implements MissionService {
 		Mission current = read(mission.getId());
 		// ckecks of ID's
 		if (id != current.getId()) {
-			throw new BadRequestException(MissionServiceErrors.update.INCONSISTENT_ID, ErrorCodes.idInconsistent);
+			throw new BadRequestException(MissionErrors.INCONSISTENT_ID, ErrorCodes.idInconsistent);
 		}
 		// check database datas status
 		canBeUpdated(current);

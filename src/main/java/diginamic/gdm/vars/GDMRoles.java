@@ -1,4 +1,4 @@
-package diginamic.gdm;
+package diginamic.gdm.vars;
 
 /**
  * Roles used for 

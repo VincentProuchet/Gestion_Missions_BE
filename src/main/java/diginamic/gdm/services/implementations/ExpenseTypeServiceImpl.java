@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import diginamic.gdm.dao.ExpenseType;
 import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.services.ExpenseTypeService;
+import diginamic.gdm.vars.errors.ErrorsMessage;
 import lombok.AllArgsConstructor;
 
 import javax.transaction.Transactional;
@@ -40,7 +41,7 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	
 	@Override
 	public ExpenseType read(int id) throws BadRequestException {
-		return this.expenseTypeRepository.findById(id).orElseThrow(()->new BadRequestException("Expense Type not found", ErrorCodes.expenseTypeNotFound));
+		return this.expenseTypeRepository.findById(id).orElseThrow(()->new BadRequestException(ErrorCodes.expenseTypeNotFound,ErrorsMessage.EXPENSE_TYPE,ErrorsMessage.read.NOT_FOUND));
 	}
 
 	@Override
@@ -53,8 +54,7 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 
 	@Override
 	public void delete(int id) throws BadRequestException {
-		ExpenseType expenseType = read(id);
-		this.expenseTypeRepository.delete(expenseType);
+		this.expenseTypeRepository.delete(this.read(id));
 	}
 
 }

@@ -19,6 +19,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * initialisation de la base de données 
+ * appelée lors de l'initialisation de l'application
+ * peupleras la base de données avec des données cohérentes et utilisable lors de test
+ * 
+ * @author Joseph 
+ *
+ */
 @Component
 public class InitDataDB {
 

@@ -1,4 +1,4 @@
-package diginamic.gdm;
+package diginamic.gdm.vars;
 
 /**
  * Classe utilitaire qui n'a d'autre but que de conserver tout
@@ -43,7 +43,7 @@ public abstract class GDMRoutes {
 	public static final String CITY = "city";
 	/** FAVICON */
 	public static final String FAVICON = "/favicon.ico";
-
+	/** TESTNIGHTCOMPUTING */
 	public static final String TESTNIGHTCOMPUTING = "testNightComputing";
 	
 	
