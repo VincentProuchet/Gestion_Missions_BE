@@ -56,7 +56,11 @@ public class Expense {
 	public Expense(ExpenseDTO e) {
 		this.id = e.getId();
 		this.date = e.getDate();
-		this.cost = e.getCost();
+		if(e.getCost()!=null) {
+			this.cost = e.getCost();
+		}
+		this.mission = new Mission();
+		this.mission.setId(e.getIdMission());
 		this.tva = e.getTva();
 		this.expenseType =new ExpenseType(e.getType()) ;
 		

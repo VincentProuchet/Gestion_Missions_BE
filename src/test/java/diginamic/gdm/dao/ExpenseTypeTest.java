@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import diginamic.gdm.dto.ExpenseTypeDTO;
 
 /**
- * classe de test des ExpenseType
+ * classe de test de DAO-DTO/ExpenseType 
  * on teste aussi la conversion du DTO
  * 
  * @author Vincent

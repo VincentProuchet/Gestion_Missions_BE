@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import diginamic.gdm.dto.CityDTO;
 
 /**
- * Class de test  DAO/City
+ * Class de test  DAO-DTO/City
  *  
  * @author Vincent
  *

@@ -42,7 +42,7 @@ public class ExpenseDTO implements DTO<Expense> {
 	/**
 	 * Represents {@link diginamic.gdm.dao.Expense Expense.cost}
 	 */
-	private BigDecimal cost = null;
+	private BigDecimal cost = BigDecimal.ZERO;
 	
 	/**
 	 * Represents {@link diginamic.gdm.dao.Expense Expense.tva}
