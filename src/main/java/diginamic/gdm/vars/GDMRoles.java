@@ -27,5 +27,5 @@ public abstract class GDMRoles {
 	/** ANON */
 	public static final String ANON ="ROLE_ANONY";
 	
-	
+	public static final String AUTHORITY_PREFIX = "ROLE_";
 }

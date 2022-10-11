@@ -3,26 +3,27 @@ spring:
     name: "Gestion des Missions"
   jpa:
     generate-ddl: true  
-    show-sql: false # this allow you to see sql queries in your console
-                    # usefull for some debugs
-                    # set to false for faster db initialisation in createddrop
+        # this allow you to see sql queries in your console
+        # usefull for some debugs
+        # set this to false for faster db initialisation in createddrop
+    show-sql: false 
+    properties:
+      hibernate:
+      # this has not a real chances to become a security concern
+      # but just in case set this to false in production
+        format_sql: false      
     hibernate:
       ddl-auto: create-drop
-#  session:
-#    store-type: jdbc
-#    timeout: 7200
-    #jdbc:
-      #schema: classpath:org/springframework/session/jdbc/schema-mariadb.sql
-      #table-name: SPRING_SESSION
-        
+    session:
+      store-type: jdbc
+      timeout: 7200        
   datasource:
-  # of course you're supposed to put your own vreadentials here
+  
+    name:"DatabaseForAll" 
+    # name of that datasourece
+    # of course you're supposed to put your own vreadentials here    
     url: "jdbc:mariadb://localhost:3307/databaseName" ## database Url
     username: databaseAccountLogin
     password: "1111"
     driverClassName: org.mariadb.jdbc.Driver
-#  liquibase:
-#    parameters:
-#      enabled: false
-#    change-log: classpath:db/changelog/changelog.sql
     

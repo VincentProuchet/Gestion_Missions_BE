@@ -1,7 +1,5 @@
 package diginamic.gdm.controllers;
 
-import java.util.Collection;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;

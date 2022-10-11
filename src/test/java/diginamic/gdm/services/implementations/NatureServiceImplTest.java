@@ -13,12 +13,15 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.City;
@@ -43,11 +46,13 @@ import diginamic.gdm.utilities.testTools;
  * these test are Only for Nature We dont test the dependency with other
  * Entities nor Services those kind of test belong to a separate class
  * 
- * @author Vincent
- * @author Joseph
+ * @author Vincent 
+ * @author Joseph // ton travail était une excellente base pour le refactoring de cette Junit,
+ * 					 tu est déjà un bon programmeur	et tu ne peu que t'améliorer 
  * 
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class NatureServiceImplTest {
 
 	/** natureServiceImpl
@@ -85,35 +90,20 @@ class NatureServiceImplTest {
 	private LocalDateTime afterCreation = LocalDateTime.now();
 	
 
-	/**
-	 * we allready have data in the database that are pushed by the initDB so ... we
-	 * are gonna use these for test wherever
-	 * @throws  
-	 * 
-	 */
-	@BeforeEach
-	void init() {
-	}
-
-	void cleanDB() throws BadRequestException {
-		System.err.println("after nothing");
-	}
 
 	@Test
 	void list() {
-		// well there must since inityDb fill some values be more than 0 elements in the
-		// DBB
+		// well there must have more than 0 one since inityDb fill some values in the persistence
 		assertNotEquals(natureService.list().size(), this.naturesTobeExpected);
 	}
-
 	/**
-	 * only test if the creation of a nature create persist the entities with the
+	 * only test if the creation of a nature create and persist the entities with the
 	 * desired values
 	 * 
 	 * @throws BadRequestException
 	 */
 	@Test
-	@Order(1)
+	@Order(0)
 	void createSuccess() throws BadRequestException {
 		// we create a testNature with specific values
 		this.beforeCreation = LocalDateTime.now();
@@ -157,11 +147,10 @@ class NatureServiceImplTest {
 	/**
 	 * to refactor we don't need to use a nature in DB to test that
 	 * 
-	 * @param nature
 	 * @throws BadRequestException
 	 */
 	@Test
-	@Order(2)
+	@Order(1)
 	void isAValidNature() throws BadRequestException {
 		Nature nature = new Nature();
 		nature.setEndOfValidity(LocalDateTime.now());
@@ -186,7 +175,7 @@ class NatureServiceImplTest {
 	 * @throws BadRequestException
 	 */
 	@Test
-	@Order(4)
+	@Order(3)
 	void canBeUpdated() throws BadRequestException {
 		Nature nature = this.pleaseCreateOneNature(this.TestDescription + "canBeupdated");
 		//assertThrows(BadRequestException.class, () -> natureService.canBeUpdated( nature));
@@ -205,7 +194,7 @@ class NatureServiceImplTest {
 	 * @throws BadRequestException
 	 */
 	@Test
-	@Order(3)
+	@Order(2)
 	void canBeAdded() throws BadRequestException {
 		Nature nature = new Nature();
 		nature.setDescription(TestDescription + "can be added nature");
@@ -215,7 +204,7 @@ class NatureServiceImplTest {
 	}
 
 	@Test
-	@Order(5)
+	@Order(4)
 	void isThisNatureInUse() throws Exception {
 		
 		Nature nature = this.pleaseCreateOneNature(TestDescription + "is this nature in use");

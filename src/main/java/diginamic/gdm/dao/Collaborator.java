@@ -19,6 +19,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dto.CollaboratorDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -187,15 +188,15 @@ public class Collaborator implements UserDetails {
 	 * this take authorities already the user already have and add it the one passed
 	 * as parameters * @param Roles authority
 	 */
-	public void addAuthorities(Roles... authority) {
+	public void setRoles(Role... authority) {
 		Set<Roles> construct = new HashSet<Roles>();
 		for (Roles role : this.authorities) {
 			construct.add(role);
 		}
 
-		for (Roles role : authority) {
+		for (Role role : authority) {
 
-			construct.add(role);
+			construct.add(new Roles(role));
 		}
 		this.authorities = construct;
 	}

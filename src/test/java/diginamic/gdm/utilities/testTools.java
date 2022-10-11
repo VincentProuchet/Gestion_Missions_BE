@@ -1,5 +1,6 @@
 package diginamic.gdm.utilities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dao.Collaborator;
+import diginamic.gdm.dao.Expense;
 import diginamic.gdm.dao.ExpenseType;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
@@ -21,6 +23,7 @@ import diginamic.gdm.dao.Roles;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.repository.CollaboratorRepository;
+import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
@@ -64,6 +67,8 @@ public class testTools {
 	private ExpenseTypeRepository expenseTypeRepository;
 	@Autowired
 	private CityRepository cityRepository;
+	@Autowired
+	private ExpenseRepository expenseRepository; 
 	
 	
 
@@ -108,22 +113,7 @@ public class testTools {
 		admin.setManager(admin);
 		return collaboratorRepository.save(admin);
 	}
-	/**
-	 * create a list of 5 new cities
-	 * with name in the for name + an iterator
-	 * @param name provided name
-	 * @return list of 5 cities entities for testing purposes
-	 */
-	public List<City> createCities(String name) {
-		 List<City> cities = new ArrayList<>(5);
-	        for (int i = 0; i < 5; i++) {
-	            City newCity = new City();
-	            newCity.setName("city"+name+ i);
-	            newCity = this.cityRepository.save(newCity);
-	            cities.add(newCity);
-	        }
-	        return cities;
-	}
+	
 	/**
 	 * this gives you an instance of nature 
 	 * with : 
@@ -200,22 +190,63 @@ public class testTools {
 		mission.setEndCity(cities.get(0));
 		return this.missionRepository.save(mission);		
 	}
+	/**
+	 * create a list of 5 new cities
+	 * with name in the for name + an iterator
+	 * @param name provided name
+	 * @return a list of 5 persisted cities entities
+	 */
+	public List<City> createCities(String name) {
+		 List<City> cities = new ArrayList<>(5);
+	        for (int i = 0; i < 5; i++) {
+	            City newCity = new City();
+	            newCity.setName("city"+name+ i);
+	            cities.add(newCity);
+	        }
+	        cities = this.cityRepository.saveAll(cities);
+	        return cities;
+	}
 	
 	/**
-	 * will create and persist  3 expensetypes of names
+	 * will create and persist  3 expense types of names
 	 * made of name+iterator 
 	 * @param name 
 	 * @return list of persisted expensesType Entities
 	 */
-	public List<ExpenseType> creatExpensesType(String name){
+	public List<ExpenseType> creatExpensesTypes(String name){
 		 // 3 expenses types
         List<ExpenseType> expenseTypes = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             ExpenseType newExpenseType = new ExpenseType();
             newExpenseType.setName(name + i);
-            newExpenseType = expenseTypeRepository.save(newExpenseType);
             expenseTypes.add(newExpenseType);
         }
+        expenseTypes = expenseTypeRepository.saveAll(expenseTypes);        
         return expenseTypes;
+	}
+
+	/**
+	 * Create and persist a list of 5 expense assigned to the provided mission
+	 * and of types of provided list of types
+	 * @param mission associated with the expense
+	 * @param types associated with the expense
+	 * @return list of 5 persisted expenses types 
+	 */
+	public List<Expense> createExpenses(Mission mission,List<ExpenseType>types){
+		// 10 expenses
+        List<Expense> expenses = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Expense expense = new Expense();
+            expense.setCost(BigDecimal.valueOf(10 * i));
+            expense.setMission(mission);
+            expense.setDate(mission.getStartDate().plusDays(1));
+            expense.setExpenseType(types.get(i % types.size()));
+            expense.setTva((float) i);
+            expenses.add(expense);
+        }
+        expenses = expenseRepository.saveAll(expenses);
+        return expenses;
+		
+		
 	}
 }

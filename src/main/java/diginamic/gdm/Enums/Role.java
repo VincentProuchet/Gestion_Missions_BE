@@ -7,10 +7,7 @@ import lombok.Getter;
 /**
  * here lies the Granted authorities 
  * that will be inserted in the database at 
- * the application statup
- * TODO place a DATABASE status to check if it has 
- * allready initialised and place that behind it to avoid 
- * overwriting 
+ * the application startup
  * in the meantime
  * just not changing the id's would do the trick 
  * @author Vincent
@@ -31,6 +28,7 @@ public enum Role implements GrantedAuthority {
 	ANON(5000,GDMRoles.ANON),
 	;
 	
+	public static final String AUTHORITY_PREFIX = GDMRoles.AUTHORITY_PREFIX; 
 	/** id */
 	private final int id;
 	/**
@@ -51,6 +49,9 @@ public enum Role implements GrantedAuthority {
 
 	@Override
 	public String getAuthority() {		
+		if (!this.LABEL.startsWith(AUTHORITY_PREFIX)) {
+			return new StringBuilder(AUTHORITY_PREFIX).append(this.LABEL).toString();
+		}
 		return this.LABEL;
 	}
 }
