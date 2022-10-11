@@ -17,7 +17,7 @@ public class CityTest {
 	 * specially in regard of special characters
 	 */
 	@Test
-	public void textLowerCaseName() {
+	public void nameConventionCompliance() {
 		City city1 = new City(0,"   MonTp:,;!,:!eL;lier   ");
 		City city2 = new City(0,"   BouRg-----en        braise 2   ");
 		City city3 = new City(0,"  01    23      45    67             89   ");
