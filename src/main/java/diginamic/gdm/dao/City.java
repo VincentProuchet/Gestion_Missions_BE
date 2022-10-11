@@ -24,7 +24,7 @@ import lombok.Setter;
 @Entity
 public class City {
 	
-	private static final String CLEANING_NAME= "[^[a-zA-Z0-9- ]]";
+	private static final String CLEANING_NAME= GDMVars.REGEX_NAMES;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id = 0;
@@ -52,6 +52,7 @@ public class City {
 	/**
 	 * setter 
 	 * les noms de villes sont tous en minuscule
+	 * et passes par un retrait des caractères indésirables dans un nom
 	 * @param name
 	 * 
 	 */
@@ -59,9 +60,7 @@ public class City {
 		
 		name = name.replaceAll(CLEANING_NAME,"");
 		name = name.replaceAll("  "," ").replaceAll("  "," ").replaceAll("  "," ");
-		name =name.strip().toLowerCase();
-		
-		System.err.println(name);
+		name =name.strip().toLowerCase();		
 		this.name =  name;
 	}
 

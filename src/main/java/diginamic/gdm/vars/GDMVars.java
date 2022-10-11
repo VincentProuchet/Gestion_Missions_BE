@@ -31,4 +31,10 @@ public abstract class GDMVars {
 	public final static String FRONT_END_URL ="http://localhost:4200";
 	/** BACK_END_URL  utilisé pour les réglage de CORS */
 	public final static String BACK_END_URL ="http://localhost:8080";
+	
+	/** 
+	 * REGEX for replace all
+	 * will remove anything that is not a letter/number whithespace or a '-'   
+	 */
+	public final static String REGEX_NAMES  ="[^[a-zA-Z0-9- ]]"; 
 }
