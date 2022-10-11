@@ -31,16 +31,16 @@ import lombok.Setter;
 public class Expense {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id = 0 ;
 
 	/** date : the date of the expense */
-	private LocalDateTime date;
+	private LocalDateTime date = LocalDateTime.now();
 
 	/** cost : the cost of the expense */
-	private BigDecimal cost;
+	private BigDecimal cost = BigDecimal.ZERO;
 
 	/** tva : the applicable TVA */
-	private Float tva;
+	private Float tva = 0f ;
 
 	/** mission : the mission which required this expense */
 	@ManyToOne

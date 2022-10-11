@@ -45,8 +45,10 @@ public class City {
 	 * @param city
 	 */
 	public City(CityDTO city) {
-		this.id = city.getId();
-		this.name = city.getName();
+		if( city.getId() >= 0 ) {
+			this.id = city.getId();
+		}
+		this.setName(city.getName());
 	}
 	
 	/**

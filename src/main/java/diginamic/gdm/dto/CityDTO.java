@@ -18,10 +18,10 @@ import lombok.Setter;
 public class CityDTO implements DTO<City> {
 	
 	/** id */
-	private int id;
+	private int id = 0;
 
 	/** name : the name of the city */
-	private String name;
+	private String name = "";
 	
 	/** Constructeur
 	 * @param city
