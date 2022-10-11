@@ -59,11 +59,9 @@ public class City {
 	public void setName(String name) {
 		
 		name = name.replaceAll(CLEANING_NAME,"");
-		name = name.replaceAll(" {2,}"," ");
-		name = name.replaceAll("-{2,}","-");
-		
+		name = name.replaceAll(GDMVars.REGEX_STUPID_WHITSPACES," ");
+		name = name.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");		
 		name =name.strip().toLowerCase();
-		System.err.println(name);
 		this.name =  name;
 	}
 

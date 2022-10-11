@@ -37,4 +37,8 @@ public abstract class GDMVars {
 	 * will remove anything that is not a letter/number whithespace or a '-'   
 	 */
 	public final static String REGEX_NAMES  ="[^[a-zA-Z0-9- ]]"; 
+	/** REGEX_STUPID_WHITSPACES to replace multiple spaces placed in succession "a      b" will become "a b" */
+	public final static String REGEX_STUPID_WHITSPACES  =" {2,}"; 
+	/** REGEX_STUPID_MINUS to replace multiple - placed in succession "r---------g" will become "r-g" */
+	public final static String REGEX_STUPID_MINUS  ="-{2,}"; 
 }
