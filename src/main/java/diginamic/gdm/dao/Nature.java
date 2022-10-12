@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import diginamic.gdm.dto.NatureDTO;
+import diginamic.gdm.vars.GDMVars;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +35,7 @@ public class Nature {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id = 0;
+	private int id ;
 
 	/** givesBonus : does a mission with this nature give a bonus? */
 	@Column(nullable = false)
@@ -45,7 +47,7 @@ public class Nature {
 
 	/** tjm : the amount charged per working day to the client */
 	@Column(nullable = false)
-	private BigDecimal tjm = BigDecimal.valueOf(0) ;
+	private BigDecimal tjm = BigDecimal.ZERO ;
 
 	/** bonusPercentage : the percentage of the charge which */
 	@Column(nullable = false)
@@ -59,7 +61,7 @@ public class Nature {
 	 * endOfValidity : the nature can't be used past this date if null, the nature
 	 * is currently valid
 	 */
-	private LocalDateTime endOfValidity = null;
+	private LocalDateTime endOfValidity;
 
 	/** description : the name of the nature */
 	@Column(nullable = false)
@@ -85,7 +87,29 @@ public class Nature {
 		this.tjm = tjm;
 	}
 	
+	/**
+	 * SETTER
+	 * les description des natures sont toujours stockées en minuscules
+	 * ne sont autorisés que les caractères alphanumérique, les tirets et espaces 
+	 * les espaces multiples ne sont pas autorisés 
+	 * de même que les tirets multiples
+	 * @param description
+	 */
 	public void setDescription(String description) {
-		this.description = description.toLowerCase();		
+		description = description.replaceAll(GDMVars.REGEX_NAMES,"");
+		description = description.replaceAll(GDMVars.REGEX_STUPID_WHITSPACES," ");
+		description = description.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");	
+		this.description = description.trim().toLowerCase();		
+	}
+	
+	public Nature(NatureDTO nature) {
+		this.id = nature.getId();
+		this.setDescription(nature.getDescription());
+		this.bonusPercentage = nature.getBonusPercentage();
+		this.charged = nature.isCharged();
+		this.dateOfValidity = nature.getDateOfValidity();
+		this.endOfValidity = nature.getEndOfValidity();
+		this.givesBonus = nature.isGivesBonus();
+		this.tjm = nature.getTjm();
 	}
 }
