@@ -37,13 +37,13 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public City create(City city) {
-		return this.cityRepository.save(city);
+		return this.cityRepository.findByName(city.getName()).orElseGet(()->this.cityRepository.save(city));
 	}
 
 	@Override
 	public City read(int id) throws BadRequestException {
 		return this.cityRepository.findById(id)
-				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound, CityErrors.CITY, CityErrors.read.NOT_FOUND));
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.NOT_FOUND));
 	}
 
 	@Override
@@ -64,25 +64,20 @@ public class CityServiceImpl implements CityService {
 	public City read(String name) throws BadRequestException {
 		// we first search it
 		return this.cityRepository.findByName(name)
-				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound,CityErrors.CITY, CityErrors.read.NOT_FOUND));
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.NOT_FOUND));
 
 	}
 
 	@Override
 	public City read(CityDTO city) throws BadRequestException {
-		City city2;
 		// attempt to find it by id
 		try {
-			city2 = this.read(city.getId());
+			return this.read(city.getId());
 		} catch (BadRequestException e) {
 			// attemp to find it by name
-			try {
-				city2 = read(city.getName());
-			} catch (BadRequestException e2) {
-				// creation of a new city
-				city2 = this.create(new City(city));
-			}
+			
+			return this.read(city.getName());
 		}
-		return city2;
+		
 	}
 }

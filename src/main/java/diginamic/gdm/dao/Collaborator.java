@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dto.CollaboratorDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

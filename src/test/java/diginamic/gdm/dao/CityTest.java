@@ -25,12 +25,14 @@ public class CityTest {
 		City city1 = new City(0,"   MonTp:,;!,:!eL;lier   ");
 		City city2 = new City(0,"   BouRg-----en        braise 2   ");
 		City city3 = new City(0,"  01    23      45    67             89   ");
-		City city4 = new City(0,"e,?;.:/r!§%*µ¨^£$¤&~t#'{([-----|`_\\q@)]°+=}");
+		City city4 = new City(0,"e,?;.:/r!§%*¨^£$¤&~t#'{([-----|`_\\q@)]°+=}");
+		City city5 = new City(0,"aâäàe êëéè uûüù iîïì oôöò");
 		
 		assertTrue(city1.getName().equals("montpellier"));
 		assertTrue(city2.getName().equals("bourg-en braise 2"));
 		assertTrue(city3.getName().equals("01 23 45 67 89"));
 		assertTrue(city4.getName().equals("ert-q"));
+		assertEquals("aâäàe êëéè uûüù iîïì oôöò", city5.getName());
 	}
 	
 	@Test

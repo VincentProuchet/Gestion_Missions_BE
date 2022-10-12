@@ -7,7 +7,6 @@ import javax.persistence.Id;
 
 import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.vars.GDMVars;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

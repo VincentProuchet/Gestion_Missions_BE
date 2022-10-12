@@ -6,10 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import diginamic.gdm.dto.ExpenseDTO;
 import diginamic.gdm.dto.ExpenseTypeDTO;
 import diginamic.gdm.vars.GDMVars;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

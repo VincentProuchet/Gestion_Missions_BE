@@ -2,8 +2,6 @@ package diginamic.gdm.dto;
 
 import java.lang.reflect.Field;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public interface DTO<T> {
 	
 	/**

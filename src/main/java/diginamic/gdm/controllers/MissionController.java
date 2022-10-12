@@ -116,7 +116,7 @@ public class MissionController {
 			startCity = cityService.read(mission.getStartCity());
 		} catch (BadRequestException e) {
 			startCity = new City(mission.getStartCity());
-			arrivalCiTy = cityService.create(startCity);
+			startCity = cityService.create(startCity);
 		}
 		try {
 			arrivalCiTy = cityService.read(mission.getArrivalCity());

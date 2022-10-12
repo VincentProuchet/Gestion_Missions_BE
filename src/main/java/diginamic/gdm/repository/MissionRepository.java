@@ -22,6 +22,7 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
     List<Mission> findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(Collaborator collaborator, LocalDateTime startDate,Status status);
 
     List<Mission> findByCollaboratorAndStatusNot(Collaborator collaborator, Status status);
+    List<Mission> findByCollaboratorAndStatus(Collaborator collaborator, Status status);
 
     List<Mission> findByStatusAndEndDateBeforeAndHasBonusBeenEvaluatedFalse(Status status, LocalDateTime currentDate);
 
