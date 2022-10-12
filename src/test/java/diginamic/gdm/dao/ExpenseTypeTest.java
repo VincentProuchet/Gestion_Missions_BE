@@ -9,7 +9,7 @@ import diginamic.gdm.dto.ExpenseTypeDTO;
 
 /**
  * classe de test de DAO-DTO/ExpenseType 
- * on teste aussi la conversion du DTO
+ * on teste aussi la conversion depuis et vers le DTO
  * 
  * @author Vincent
  *

@@ -16,11 +16,18 @@ import org.junit.jupiter.api.Test;
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dto.CollaboratorDTO;
 
+/**
+ * classe de test de DAO-DTO/Collaborator 
+ * on teste aussi la conversion depuis et vers le DTO
+ * 
+ * @author Vincent
+ *
+ */
 public class CollaboratorTest {
 
 	
 	@Test
-	public void baseValues() {
+	public void DAObaseValues() {
 		   // manager1 for the workers
         Collaborator user = new Collaborator();
         assertEquals(0,user.getId());
@@ -46,7 +53,7 @@ public class CollaboratorTest {
 	}
 
 	@Test
-	public void setValues() {
+	public void DAOsetValues() {
 		
 		   // manager1 for the workers
 		Collaborator user = new Collaborator();
@@ -149,10 +156,6 @@ public class CollaboratorTest {
         assertEquals(user.getFirstName(),user.getManager().getFirstName());
         assertNull(user.getManager().getManager());
         assertTrue(user.getAuthorities().contains(collaboratorRole));
-        
-        
-        
-     
 	}
 	
 }

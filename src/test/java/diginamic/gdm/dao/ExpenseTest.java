@@ -13,6 +13,13 @@ import org.junit.jupiter.api.Test;
 import diginamic.gdm.dto.ExpenseDTO;
 import diginamic.gdm.dto.ExpenseTypeDTO;
 
+/**
+ * classe de test de DAO-DTO/Expense
+ * on teste aussi la conversion depuis et vers le DTO
+ * 
+ * @author Vincent
+ *
+ */
 public class ExpenseTest {
 	
 	@Test
