@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * These tests use the data created by InitDataDB
+ * 
+ * @author Joseph
  */
 @SpringBootTest
 class ScheduledTasksServiceImplTest {

@@ -15,6 +15,10 @@ import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CityService;
 
+/**
+ * @author Vincent
+ *
+ */
 @SpringBootTest
 @ActiveProfiles("test")
 public class CityServiceImplTest {
