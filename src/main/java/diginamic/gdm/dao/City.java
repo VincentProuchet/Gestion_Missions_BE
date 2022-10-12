@@ -37,7 +37,7 @@ public class City {
 	 * @param name
 	 */
 	public City(int id,String name) {
-		this.id = Math.abs(id);
+		this.id =id;
 		this.setName(name);
 	}
 	

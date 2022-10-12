@@ -2,10 +2,18 @@ package diginamic.gdm.dto;
 
 import java.lang.reflect.Field;
 
-public interface DTO<T> {
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-	T instantiate();
+public interface DTO<T> {
 	
+	/**
+	 * this was an experiments to convert JAVA object to JSON
+	 * that was before I found the new ObjectMapper().writeValueAsString(Object);
+	 * @param obj
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 */
 	default String toJsonString(Object obj) throws IllegalArgumentException, IllegalAccessException{
 		StringBuilder json = new StringBuilder();
 		if(obj==null) {

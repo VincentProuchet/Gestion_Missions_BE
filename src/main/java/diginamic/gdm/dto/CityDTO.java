@@ -30,12 +30,7 @@ public class CityDTO implements DTO<City> {
 		id = city.getId();
 		name = city.getName();
 	}
-	
-	@Override
-	public City instantiate() {
-		return new City(0, name);
-	}
-	
+		
 	/**
 	 * @return Citie's name in lowerCase
 	 */

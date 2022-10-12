@@ -58,7 +58,7 @@ public class ExpenseTypeController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.ADMIN)
 	public void create(@RequestBody ExpenseTypeDTO expenseType) {
-		expenseTypeService.create(expenseType.instantiate());
+		expenseTypeService.create(new ExpenseType(expenseType));
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class ExpenseTypeController {
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured(GDMRoles.ADMIN)
 	public ExpenseTypeDTO update(@PathVariable int id, @RequestBody ExpenseTypeDTO expenseTypeDTO) throws BadRequestException {
-		return new ExpenseTypeDTO(expenseTypeService.update(id, expenseTypeDTO.instantiate()));
+		return new ExpenseTypeDTO(expenseTypeService.update(id, new ExpenseType(expenseTypeDTO)));
 	}
 	
 	/**

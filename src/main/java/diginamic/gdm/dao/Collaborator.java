@@ -46,10 +46,10 @@ public class Collaborator implements UserDetails {
 	/** id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int id ;
 	/** lastName */
 	@Column(name = "last_name")
-	private String lastName;
+	private String lastName ;
 	/** firstName */
 	@Column(name = "first_name")
 	private String firstName;
@@ -61,13 +61,13 @@ public class Collaborator implements UserDetails {
 
 	/** userName */
 	@Column(nullable = false, unique = true)
-	private String username = "robert";
+	private String username;
 	/** password : remember to add security */
 	@Column(name = "password", nullable = false)
-	private String password = String.valueOf(Math.random() * 2000);
+	private String password ;
 	/** isActive */
 	@Column(name = "is_active")
-	private boolean isActive = true;
+	private boolean isActive = false;
 
 	/**
 	 * authorities Roles implements GrantedAuthority
@@ -153,6 +153,7 @@ public class Collaborator implements UserDetails {
 		this.id = user.getId();
 		this.lastName = user.getLastName();
 		this.firstName = user.getFirstName();
+		this.username = user.getUsername();
 		this.email = user.getEmail();
 		this.authorities = user.getRoles();
 		if (user.getManager() != null) { // just in case

@@ -32,8 +32,5 @@ public class ExpenseTypeDTO implements DTO<ExpenseType>{
 		this.name = expenseType.getName();
 	}
 	
-	public ExpenseType instantiate() {
-		return new ExpenseType(id, name); 
-	}
-	
+
 }

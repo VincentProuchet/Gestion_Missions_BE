@@ -58,7 +58,7 @@ public class CityController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
 	public void create(@RequestBody CityDTO cityDTO) {
-		cityService.create(cityDTO.instantiate());
+		cityService.create( new City(cityDTO));
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class CityController {
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured({GDMRoles.ADMIN})
 	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) throws BadRequestException {
-		return new CityDTO(cityService.update(id, cityDTO.instantiate()));
+		return new CityDTO(cityService.update(id,new City(cityDTO)));
 	}
 	
 	/**

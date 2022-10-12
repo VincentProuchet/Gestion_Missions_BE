@@ -64,14 +64,7 @@ public class MissionDTO implements DTO<Mission> {
     	this.collaborator = new CollaboratorDTO(mission.getCollaborator());
     	this.expenses = mission.getExpenses().stream().map(expense -> new ExpenseDTO(expense)).toList();
     }
-/**
- * I had to rewritte it bu please don't use it it will only give you an empty Mission
- */
-	@Override
-	public Mission instantiate() {
-		
-		return new Mission();
-	}
+
     
  
 

@@ -9,11 +9,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
-import org.mariadb.jdbc.plugin.codec.LocalDateTimeCodec;
 
 import diginamic.gdm.dto.ExpenseDTO;
 import diginamic.gdm.dto.ExpenseTypeDTO;
-import diginamic.gdm.dto.MissionDTO;
 
 public class ExpenseTest {
 	
@@ -45,6 +43,7 @@ public class ExpenseTest {
 	@Test
 	public void convertToDTO() {
 		Mission mission = new Mission();
+		mission.setId(256);
 		ExpenseType expenseType1 = new ExpenseType(0,"   MonTp:,;!,:!eL;lier   ");
 		
 		Expense expense1 = new Expense();		

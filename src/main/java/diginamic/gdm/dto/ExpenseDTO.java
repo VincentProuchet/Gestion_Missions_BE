@@ -62,10 +62,5 @@ public class ExpenseDTO implements DTO<Expense> {
 		this.tva = expense.getTva();
 		this.type = new ExpenseTypeDTO(expense.getExpenseType());
 	}
-
-	@Override
-	public Expense instantiate() {
-		return new Expense(id, date, cost, tva, null, type.instantiate());
-	}
 	
 }

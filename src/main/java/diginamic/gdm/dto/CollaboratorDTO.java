@@ -75,12 +75,6 @@ public class CollaboratorDTO extends Object implements DTO<Collaborator> {
 		}
 	}
 
-	/**
-	 * return an instance of a Collaborator class from the currentDTO
-	 */
-	public Collaborator instantiate() {
-		return new Collaborator(this);
-	}
 
 	
 }

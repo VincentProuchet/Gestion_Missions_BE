@@ -77,7 +77,7 @@ public class ExpenseController {
 		// we check if the user has the righrs to add expenses to THAT mission
 		if(mission.getCollaborator().getId() == user.getId()){
 			// we create a new expense
-			Expense newExpense = expenseDTO.instantiate();
+			Expense newExpense = new Expense(expenseDTO);
 			// and give it he mission its supposed to
 			newExpense.setMission(mission);
 					
@@ -136,7 +136,7 @@ public class ExpenseController {
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = expenseService.read(id).getMission();
 		if(mission.getCollaborator().getId() == user.getId()){
-			Expense modifiedExpense = expenseDTO.instantiate();
+			Expense modifiedExpense = new Expense(expenseDTO);
 			Mission emptyMission = new Mission();
 			emptyMission.setId(expenseDTO.getIdMission());
 			modifiedExpense.setMission(emptyMission);
