@@ -35,6 +35,12 @@ import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.ExpenseService;
 
+/**
+ * 
+ * @Todo to refactor 
+ * @author Vincent
+ *
+ */
 @SpringBootTest
 class ExpenseServiceImplTest {
 
