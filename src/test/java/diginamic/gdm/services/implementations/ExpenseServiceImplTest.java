@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dao.Collaborator;
@@ -42,6 +43,7 @@ import diginamic.gdm.services.ExpenseService;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class ExpenseServiceImplTest {
 
     @Autowired
@@ -170,7 +172,7 @@ class ExpenseServiceImplTest {
         invalidExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
         invalidExpense.setMission(m2);
 
-        //assertFalse(expenseService.isExpenseValid(invalidExpense));
+        assertFalse(expenseService.isExpenseValid(invalidExpense));
 
         Expense invalidExpense2 = new Expense();
         invalidExpense2.setCost(BigDecimal.valueOf(30));

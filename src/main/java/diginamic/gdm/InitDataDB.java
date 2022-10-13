@@ -27,7 +27,7 @@ import java.util.List;
  * @author Joseph 
  *
  */
-@Component
+//@Component
 public class InitDataDB {
 
     private final LocalDateTime now;
@@ -59,7 +59,7 @@ public class InitDataDB {
 
     }
 
-    @EventListener
+   // @EventListener
     public void initDB(ContextRefreshedEvent event) throws Exception {
         System.out.println("init mock data");
 
@@ -84,56 +84,52 @@ public class InitDataDB {
 
         // 5 collaborators, 2 managers, 2 admin
         // manager1 for the workers
+        String m1Name = "vincent";
         Collaborator manager1 = new Collaborator();
         manager1.setAuthorities(Arrays.asList(managerRole, user));
-        manager1.setEmail("manager1@mail");
+        manager1.setEmail( m1Name + "@mail");
         manager1.setPassword(passwordEncoder.encode("1111"));
-        manager1.setFirstName("manager1firstname");
-        manager1.setLastName("manager1lastname");
-        manager1.setUsername("manager1username");
+        manager1.setFirstName(m1Name+ "firstname");
+        manager1.setLastName(m1Name+"lastname");
+        manager1.setUsername(m1Name+"username");
         manager1.setActive(true);
 
         // manager2 for the managers (himself included...) and the admin
+        String m2Name = "joseph";
         Collaborator manager2 = new Collaborator();
         manager2.setAuthorities(Arrays.asList(managerRole, user));
-        manager2.setEmail("manager2@mail");
+        manager2.setEmail(m2Name+"@mail");
         manager2.setPassword(passwordEncoder.encode("1111"));
-        manager2.setFirstName("manager2firstname");
-        manager2.setLastName("manager2lastname");
-        manager2.setUsername("manager2username");
+        manager2.setFirstName(m2Name+"firstname");
+        manager2.setLastName(m2Name+"lastname");
+        manager2.setUsername(m2Name+"username");
         manager2.setActive(true);
 
         manager1.setManager(manager2);
         manager2.setManager(manager2);
 
         // the admin
+        
+        String a1Name = "dorian";
         Collaborator admin = new Collaborator();
         admin.setAuthorities(Arrays.asList(adminRole, user));
-        admin.setEmail("admin@mail");
+        admin.setEmail(a1Name +"@mail");
         admin.setPassword(passwordEncoder.encode("1111"));
-        admin.setFirstName("adminfirstname");
-        admin.setLastName("adminlastname");
-        admin.setUsername("adminusername");
+        admin.setFirstName(a1Name +"firstname");
+        admin.setLastName(a1Name +"lastname");
+        admin.setUsername(a1Name +"username");
         admin.setActive(true);
         admin.setManager(admin);
         
-        Collaborator admin1 = new Collaborator();
-        admin1.setAuthorities(Arrays.asList(adminRole, user));
-        admin1.setEmail("m-itsumi@mail");
-        admin1.setPassword(passwordEncoder.encode("1111"));
-        admin1.setFirstName("Mario");
-        admin1.setLastName("Istumi");
-        admin1.setUsername("mario");
-        admin1.setActive(true);
-        admin1.setManager(manager2);
+       
 
         manager2 = collaboratorService.create(manager2);
         manager1 = collaboratorService.create(manager1);
         admin = collaboratorService.create(admin);
-        admin1 = collaboratorService.create(admin1);
 
-        // the 5 workers
-        List<Collaborator> collaborators = new ArrayList<>(5);
+        // the 6 workers
+        List<Collaborator> collaborators = new ArrayList<>();        
+        
         for (int i = 0; i < 5; i++) {
             Collaborator newColl = new Collaborator();
             newColl.setAuthorities(Arrays.asList(user));
@@ -147,6 +143,18 @@ public class InitDataDB {
             newColl = collaboratorService.create(newColl);
             collaborators.add(newColl);
         }
+        Collaborator user1 = new Collaborator();
+        user1.setAuthorities(Arrays.asList(user));
+        user1.setEmail("m-itsumi@mail");
+        user1.setPassword(passwordEncoder.encode("1111"));
+        user1.setFirstName("Mario");
+        user1.setLastName("Istumi");
+        user1.setUsername("mario");
+        user1.setActive(true);
+        user1.setManager(manager2);
+        user1 = collaboratorService.create(user1);
+        collaborators.add(user1);
+        
         // 6 natures
         List<Nature> natures = new ArrayList<>(5);
 

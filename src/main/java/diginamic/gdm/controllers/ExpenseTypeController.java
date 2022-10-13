@@ -53,11 +53,12 @@ public class ExpenseTypeController {
 	 * Saves a new {@link ExpenseType} instance.
 	 * 
 	 * @param expenseType The new expense type within the request body to be registered
+	 * @throws BadRequestException 
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured(GDMRoles.ADMIN)
-	public void create(@RequestBody ExpenseTypeDTO expenseType) {
+	public void create(@RequestBody ExpenseTypeDTO expenseType) throws BadRequestException {
 		expenseTypeService.create(new ExpenseType(expenseType));
 	}
 	

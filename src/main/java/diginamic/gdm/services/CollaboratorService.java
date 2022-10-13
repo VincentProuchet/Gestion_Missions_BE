@@ -26,8 +26,9 @@ public interface CollaboratorService extends UserDetailsService {
 	 * Saves a new {@link Collaborator} instance.
 	 * 
 	 * @param collaborator The new collaborator to be registered
+	 * @throws BadRequestException 
 	 */
-	Collaborator create(Collaborator collaborator);
+	Collaborator create(Collaborator collaborator) throws BadRequestException;
 	
 	/**
 	 * Gets a specific registered collaborator.

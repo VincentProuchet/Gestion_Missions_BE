@@ -20,18 +20,18 @@ public class ExpenseTypeTest {
 		ExpenseType expenseType1 = new ExpenseType(0,"   MonTp:,;!,:!eL;lier   ");
 		ExpenseType expenseType2 = new ExpenseType(0,"   BouRg-----en        braise 2   ");
 		ExpenseType expenseType3 = new ExpenseType(0,"  01    23      45    67             89   ");
-		ExpenseType expenseType4 = new ExpenseType(0,"e,?;.:/r!§%*µ¨^£$¤&~t#'{([-----|`_\\q@)]°+=}");
+		ExpenseType expenseType4 = new ExpenseType(0,"e,?;.:/r!§%*¨^£$¤&~t#'{([-----|`_\\q@)]°+=}");
 		
-		assertTrue(expenseType1.getName().equals("montpellier"));
-		assertTrue(expenseType2.getName().equals("bourg-en braise 2"));
-		assertTrue(expenseType3.getName().equals("01 23 45 67 89"));
-		assertTrue(expenseType4.getName().equals("ert-q"));
+		assertEquals("montpellier",expenseType1.getName());
+		assertEquals("bourg-en braise 2",expenseType2.getName());
+		assertEquals("01 23 45 67 89",expenseType3.getName());
+		assertEquals("ert-q",expenseType4.getName());
 	}
 	@Test
 	public void convertionToDTO() {
 		ExpenseType expenseType1 = new ExpenseType(0,"   MonTp:,;!,:!eL;lier   ");
 		ExpenseTypeDTO etDTO = new ExpenseTypeDTO(expenseType1);
-		assertTrue(etDTO.getName().equals("montpellier"));
+		assertEquals("montpellier",etDTO.getName());
 		assertEquals(0,etDTO.getId());
 				
 	}
@@ -39,7 +39,7 @@ public class ExpenseTypeTest {
 	public void convertionFromDTO() {
 		ExpenseTypeDTO expenseTypeDTO = new ExpenseTypeDTO(0,"   MonTp:,;!,:!eL;lier   ");
 		ExpenseType expenseType = new ExpenseType(expenseTypeDTO);
-		assertTrue(expenseType.getName().equals("montpellier"));
+		assertEquals("montpellier",expenseType.getName());
 		assertEquals(0,expenseType.getId());
 				
 	}

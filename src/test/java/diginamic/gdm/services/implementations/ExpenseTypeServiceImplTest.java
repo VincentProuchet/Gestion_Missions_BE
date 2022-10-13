@@ -82,6 +82,7 @@ public class ExpenseTypeServiceImplTest {
 		String name = baseName +"delete";
 		String jammedName = baseJammedName +"delete";
 		ExpenseType expenseType = this.service.create(new ExpenseType(0, jammedName));
+		assertDoesNotThrow(()->this.service.read(expenseType.getId()));
 		assertDoesNotThrow(()->this.service.delete(expenseType.getId()));
 		assertThrows(BadRequestException.class,()->this.service.read(expenseType.getId()));
 	

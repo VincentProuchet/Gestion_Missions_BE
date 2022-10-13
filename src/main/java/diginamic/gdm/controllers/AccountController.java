@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Roles;
 import diginamic.gdm.dto.CollaboratorDTO;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.vars.GDMRoles;
 import diginamic.gdm.vars.GDMRoutes;
@@ -40,12 +41,13 @@ public class AccountController {
 	 * Registers a new user account
 	 * 
 	 * @param collaborator The new collaborator whose account to register
+	 * @throws BadRequestException 
 	 */
 	
 	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
-	public void signup(@RequestBody Collaborator collaborator) {
+	public void signup(@RequestBody Collaborator collaborator) throws BadRequestException {
 		// we use a compression algorythm
 		collaborator.setPassword(this.EncryptThat(collaborator.getPassword()));
 		for (Roles role : collaborator.getAuthorities()) {

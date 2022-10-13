@@ -84,7 +84,9 @@ public class testTools {
 
 
 	/**
-	 * create a Collaborator with the name provided with admins rights in database
+	 * create a Collaborator with the name provided 
+	 * with all roles
+	 * in database
 	 * 
 	 * 
 	 * @param name
@@ -112,6 +114,37 @@ public class testTools {
 		admin = collaboratorRepository.save(admin);
 		admin.setManager(admin);
 		return collaboratorRepository.save(admin);
+	}
+	/**
+	 * create a Collaborator with the name provided 
+	 * all roles 
+	 * 
+	 * @param name
+	 * @throws BadRequestException 
+	 * @return a JPA instance of the newly created collaborator
+	 */
+	public Collaborator giveMeJustACollaborator(String name) {
+		name = name.toLowerCase();
+		this.userRole = new Roles(Role.COLLABORATOR);
+		userRole = roleSrv.create(userRole);
+
+		this.managerRole = new Roles(Role.MANAGER);
+		managerRole = roleSrv.create(managerRole);
+
+		this.adminRole = new Roles(Role.ADMIN);
+		adminRole = roleSrv.create(adminRole);
+		
+		Collaborator admin = new Collaborator();
+		admin.setAuthorities(Arrays.asList(managerRole, userRole, adminRole));
+		
+		
+		admin.setEmail( name + "@mail.com");
+		admin.setPassword("1111");
+		admin.setFirstName(name + "firstname");
+		admin.setLastName(name + "lastname");
+		admin.setUsername(name + "username");
+		admin.setActive(true);
+		return admin;
 	}
 	
 	/**

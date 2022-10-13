@@ -156,5 +156,33 @@ public class CollaboratorTest {
         assertNull(user.getManager().getManager());
         assertTrue(user.getAuthorities().contains(collaboratorRole));
 	}
+	@Test
+	public void testEmlail() {
+		assertTrue(Collaborator.isValidEmail("ezdfqefq@gmail.com"));
+		assertTrue(Collaborator.isValidEmail("ezd-fqefq@gmail.com"));
+		assertFalse(Collaborator.isValidEmail("ezd----fqefq@gmail.com"));
+		assertTrue(Collaborator.isValidEmail("ezd.fqefq@gmail.com"));
+		assertFalse(Collaborator.isValidEmail("ezd.....fqefq@gmail.com"));
+		assertTrue(Collaborator.isValidEmail("45dqs45fdqfk4656@qdsfqdf.com"));
+		assertTrue(Collaborator.isValidEmail("45dqs4-5fdqfk4656@qdsfqdf.com"));
+		assertTrue(Collaborator.isValidEmail("45dqs4-5fdqfk4656@qdsf-qdf.com"));
+		assertTrue(Collaborator.isValidEmail("sdfg544sgd.ssvsd@fdsg.com"));
+		assertTrue(Collaborator.isValidEmail("s45dfgsgd.ssv45sd@f-dsg.com"));
+		assertTrue(Collaborator.isValidEmail("45dqs45fdqfk4656@qdsf-qdf.com"));
+		assertFalse(Collaborator.isValidEmail("45dqs45fdqfk4656@qdsf..qdf.com"));
+		assertFalse(Collaborator.isValidEmail("4s,46@qdsfq.com"));
+		assertFalse(Collaborator.isValidEmail("45dqs?45fdqfk4656@qdsfqdf.com"));
+		assertFalse(Collaborator.isValidEmail("ezd.....fqefq@gmail.comghft"));
+		assertFalse(Collaborator.isValidEmail("ezd.....fqefq@gmaildererderfderfdezedfrezertregmaildererderfderfdezedfrezertrek.com"));
+		assertFalse(Collaborator.isValidEmail("gmaildererderfderfdezedfrezertregmaildererderfderfdezedfrezertrek@qdsfqdf.com"));
+		assertFalse(Collaborator.isValidEmail("ezdfqefq@gmail."));
+		assertFalse(Collaborator.isValidEmail("ezdfqefq@gmailcom"));
+		assertFalse(Collaborator.isValidEmail("cqfdffqf@"));
+		assertFalse(Collaborator.isValidEmail("@gmail.com"));
+		assertFalse(Collaborator.isValidEmail("cqfdffqf@.com"));
+		
+		
+		
+	}
 	
 }

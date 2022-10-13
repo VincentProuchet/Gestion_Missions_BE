@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dto.CollaboratorDTO;
+import diginamic.gdm.vars.GDMVars;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -97,8 +98,8 @@ public class Collaborator implements UserDetails {
 	 */
 	public Collaborator(int id, String lastName, String firstName, String email, Roles role) {
 		this.id = id;
-		this.lastName = lastName;
-		this.firstName = firstName;
+		this.setLastName(lastName);
+		this.setFirstName(firstName);
 		this.email = email;
 		this.authorities.add(role);
 
@@ -112,9 +113,9 @@ public class Collaborator implements UserDetails {
 	 */
 	public Collaborator(Collaborator user) {
 		this.id = user.getId();
-		this.lastName = user.getLastName();
-		this.firstName = user.getFirstName();
-		this.username = user.getUsername();
+		this.setLastName(user.getLastName());
+		this.setFirstName(user.getFirstName());
+		this.setUsername(user.getUsername());
 		this.password = user.getPassword();
 		this.isActive = user.isActive();
 		this.email = user.getEmail();
@@ -131,9 +132,9 @@ public class Collaborator implements UserDetails {
 	 */
 	public Collaborator(Collaborator user, boolean withManager) {
 		this.id = user.getId();
-		this.lastName = user.getLastName();
-		this.firstName = user.getFirstName();
-		this.username = user.getUsername();
+		this.setLastName(user.getLastName());
+		this.setFirstName( user.getFirstName());
+		this.setUsername(user.getUsername());
 		this.password = user.getPassword();
 		this.isActive = user.isActive();
 		this.email = user.getEmail();
@@ -150,10 +151,10 @@ public class Collaborator implements UserDetails {
 	 */
 	public Collaborator(CollaboratorDTO user) {
 		this.id = user.getId();
-		this.lastName = user.getLastName();
-		this.firstName = user.getFirstName();
-		this.username = user.getUsername();
-		this.email = user.getEmail();
+		this.setLastName(user.getLastName());
+		this.setFirstName(user.getFirstName());
+		this.setUsername(user.getUsername());
+		this.email = user.getEmail().strip();
 		this.authorities = user.getRoles();
 		if (user.getManager() != null) { // just in case
 			this.manager = new Collaborator(user.getManager(), false);
@@ -168,8 +169,8 @@ public class Collaborator implements UserDetails {
 	 */
 	public Collaborator(CollaboratorDTO user, boolean withManager) {
 		this.id = user.getId();
-		this.lastName = user.getLastName();
-		this.firstName = user.getFirstName();
+		this.setLastName(user.getLastName());
+		this.setFirstName(user.getFirstName());
 		this.email = user.getEmail();
 		if (user.getManager() != null && withManager) {// for stackOverFlow prevention
 			this.manager = new Collaborator(user.getManager(), false);
@@ -257,17 +258,75 @@ public class Collaborator implements UserDetails {
 			Collaborator manager) {
 		super();
 		this.id = id;
-		this.lastName = lastName;
-		this.firstName = firstName;
+		this.setLastName(lastName);
+		this.setFirstName(firstName);
 		this.email = email;
 		this.team = team;
-		this.username = username;
+		this.setUsername(username);
 		this.password = password;
 		this.isActive = isActive;
 		this.authorities = authorities;
 		this.missions = missions;
 		if (manager != null)
 			this.manager = new Collaborator(manager, false);
+	}
+	
+	/**
+	 * SETTER
+	 * @param name
+	 */
+	public void setFirstName(String name) {	
+		name =name.strip();
+		this.firstName = name;
+	}
+	/**
+	 * SETTER
+	 * @param name
+	 */
+	public void setLastName(String name) {	
+		name =name.strip();
+		this.lastName = name;
+	}
+	/**
+	 * SETTER
+	 * @param name
+	 */
+	public void setUsername(String name) {
+		name =name.strip();
+		this.username = name;
+	}
+	
+	/**
+	 * test if a string is a valid name for the collaborator
+	 * @param name
+	 * @return
+	 */
+	public static boolean isValidFisrtName(String name) {
+		return name.matches(GDMVars.REGEX_HUMANS_FIRST_NAMES);
+	}
+	/**
+	 * test if a string is a valid name for the collaborator
+	 * @param name
+	 * @return
+	 */
+	public static boolean isValidLastName(String name) {
+		return name.matches(GDMVars.REGEX_HUMANS_LAST_NAMES);
+	}
+	/**
+	 * test if a string is a valid name for the collaborator
+	 * @param name
+	 * @return
+	 */
+	public static boolean isValidUserName(String name) {
+		return name.matches(GDMVars.REGEX_USERNAMES);
+	}
+	/**
+	 * test if a string is a valid email format
+	 * @param name
+	 * @return
+	 */
+	public static boolean isValidEmail(String name) {		
+		return name.matches(GDMVars.REGEX_EMAIL2);
 	}
 
 }

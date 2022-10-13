@@ -1,6 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -13,12 +14,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Mission;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.MissionService;
 import diginamic.gdm.vars.GDMRoles;
 import diginamic.gdm.vars.errors.impl.CollaboratorErrors;
 import lombok.AllArgsConstructor;
@@ -46,7 +45,33 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	}
 
 	@Override
-	public Collaborator create(Collaborator collaborator) {
+	public Collaborator create(Collaborator collaborator) throws BadRequestException {
+		// names Must respect some standards
+	
+		if(!Collaborator.isValidFisrtName(collaborator.getFirstName())) {
+			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
+					CollaboratorErrors.create.BAD_FIRSTNAME );
+		};
+		if(!Collaborator.isValidLastName(collaborator.getLastName())) {
+			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
+					CollaboratorErrors.create.BAD_LASTNAME );
+		};
+		if(!Collaborator.isValidUserName(collaborator.getUsername())) {
+			
+			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
+					CollaboratorErrors.create.BAD_USERNAME );
+		};
+		if(!Collaborator.isValidEmail(collaborator.getEmail())) {
+			System.err.println(collaborator.getEmail());
+			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
+					CollaboratorErrors.create.BAD_EMAIL );
+		};
+		// that username must not allready exist
+		if(!this.collaboratorRepository.findByUsername(collaborator.getUsername()).isEmpty()) {
+			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
+					CollaboratorErrors.create.NAME_ALLREADY_EXIST, collaborator.getUsername());
+		}
+		
 		return this.collaboratorRepository.save(collaborator);
 	}
 
@@ -65,6 +90,17 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		current.setPassword(collaborator.getPassword());
 		current.setEmail(collaborator.getEmail());
 		current.setManager(collaborator.getManager());
+		// we get a list with the current user filtered out
+		Optional<Collaborator> OptexistingUsers =  this.collaboratorRepository.findByUsername(collaborator.getUsername())
+												.filter( (element)->element.getId()!=current.getId());
+		// if the is one user, that is nit the current user withe the same userName   
+		if(!OptexistingUsers.isEmpty()) {
+			// we throw an errors
+			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
+			CollaboratorErrors.create.NAME_ALLREADY_EXIST, collaborator.getUsername() );
+		}
+		
+		
 		this.collaboratorRepository.save(current);
 		return current;
 	}
