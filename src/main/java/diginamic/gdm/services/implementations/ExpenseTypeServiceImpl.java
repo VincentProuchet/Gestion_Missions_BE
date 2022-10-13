@@ -35,8 +35,12 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	}
 
 	@Override
-	public ExpenseType create(ExpenseType expenseType) {
-		return this.expenseTypeRepository.save(expenseType);
+	public ExpenseType create(ExpenseType expenseType) throws BadRequestException {
+		if(!this.expenseTypeRepository.findByName(expenseType.getName()).isEmpty()){
+			throw new BadRequestException(ErrorCodes.expenseTypeNotFound,ErrorsMessage.EXPENSE_TYPE,ErrorsMessage.create.NAME_ALLREADY_EXIST,expenseType.getName());
+		}
+		return this.expenseTypeRepository.save(expenseType) ;
+		
 	}
 	
 	@Override
@@ -47,11 +51,18 @@ public class ExpenseTypeServiceImpl implements ExpenseTypeService {
 	@Override
 	public ExpenseType update(int id, ExpenseType expenseType) throws BadRequestException {
 		ExpenseType current = read(expenseType.getId());
+		// we check if the new name does not allready exist 
+		if(!this.expenseTypeRepository.findByName(expenseType.getName()).isEmpty()){
+			throw new BadRequestException(ErrorCodes.expenseTypeNotFound,ErrorsMessage.EXPENSE_TYPE,ErrorsMessage.create.NAME_ALLREADY_EXIST,expenseType.getName());
+		}
 		current.setName(expenseType.getName());
-		this.expenseTypeRepository.save(current);
-		return current;
+		return this.expenseTypeRepository.save(current);
+		
 	}
 
+	/**
+	 *@Todo implement controls forbiding suppression of ExpenseType referenced by one expense 
+	 */
 	@Override
 	public void delete(int id) throws BadRequestException {
 		this.expenseTypeRepository.delete(this.read(id));

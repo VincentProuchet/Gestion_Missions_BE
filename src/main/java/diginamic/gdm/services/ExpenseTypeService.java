@@ -23,8 +23,9 @@ public interface ExpenseTypeService {
 	 * Saves a new {@link ExpenseType} instance.
 	 * 
 	 * @param expenseType The new expense type to be registered
+	 * @throws BadRequestException 
 	 */
-	ExpenseType create(ExpenseType expenseType);
+	ExpenseType create(ExpenseType expenseType) throws BadRequestException;
 	
 	/**
 	 * Gets a specific registered expense type.

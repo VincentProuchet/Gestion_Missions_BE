@@ -2,8 +2,11 @@ package diginamic.gdm.services.implementations;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CityService;
 
 /**
+ * Tests for 
+ * CityServicImpl
+ * 
  * @author Vincent
  *
  */
@@ -24,7 +30,7 @@ import diginamic.gdm.services.CityService;
 public class CityServiceImplTest {
 
 	@Autowired
-	private CityService service;
+	private CityServiceImpl service;
 
 	private String baseName = "cityservice-test ";// trailing space is here on purpose
 	private String baseJammedName = "    cityservice----test   &~#'{([|`_\\^¨°)]+=}$£¤%*,?;.:/!§      ";
@@ -44,9 +50,12 @@ public class CityServiceImplTest {
 		// we create it than read it
 		City city = this.service.create(new City(0, baseJammedName + "read"));
 		// we read it
+		// by name
 		assertDoesNotThrow(() -> this.service.read(baseName + "read"));
 		City city2 = this.service.read(baseName + "read");
+		// by id
 		assertDoesNotThrow(() -> this.service.read(city2.getId()));
+		// from a cityDTO
 		assertDoesNotThrow(() -> this.service.read(new CityDTO(city2)));
 		assertNotEquals(city, city2);
 		assertEquals(city.getId(), city2.getId());
@@ -63,6 +72,14 @@ public class CityServiceImplTest {
 		city.setName("new "+jammedName);
 		assertDoesNotThrow(()->this.service.update(city.getId(), city));		
 	}
+	@Test
+	public void list() {
+		assertDoesNotThrow(()-> this.service.list());
+		List<City> cities = this.service.list();
+		assertFalse(cities.isEmpty());		
+		
+	}
+	
 
 	@Test
 	public void delete() {
@@ -75,6 +92,8 @@ public class CityServiceImplTest {
 		assertDoesNotThrow(()->this.service.read(city.getId()));
 		assertThrows(BadRequestException.class,()->this.service.read(0));
 		assertDoesNotThrow(()->this.service.delete(city.getId()));
+		// now that its deleted it should not be there
+		assertThrows(BadRequestException.class,()->this.service.read(city.getId()));
 		
 	}
 

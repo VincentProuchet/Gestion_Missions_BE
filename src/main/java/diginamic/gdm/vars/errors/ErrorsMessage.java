@@ -61,7 +61,7 @@ public class ErrorsMessage {
 	 *
 	 */
 	public static class create {
-		
+		public static String NAME_ALLREADY_EXIST = " allready exist withe the name : ";
 	}
 
 	/**
