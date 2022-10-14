@@ -24,8 +24,9 @@ public interface CityService {
 	 * Saves a new {@link City} instance.
 	 * 
 	 * @param city The new city to be registered
+	 * @throws Exception 
 	 */
-	City create(City city);
+	City create(City city) throws Exception;
 	
 	/**
 	 * Gets a specific registered city.

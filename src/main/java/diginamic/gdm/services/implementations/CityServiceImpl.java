@@ -36,7 +36,14 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public City create(City city) {
+	public City create(City city) throws BadRequestException {
+		if(!City.isValidName(city.getName())) {
+			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
+		}
+		if(!this.cityRepository.findByName(city.getName()).isEmpty()){
+			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
+			
+		}
 		return this.cityRepository.findByName(city.getName()).orElseGet(()->this.cityRepository.save(city));
 	}
 
@@ -48,6 +55,9 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public City update(int id, City city) throws BadRequestException {
+		if(!City.isValidName(city.getName())) {
+			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
+		}	
 		City current = read(id);
 		current.setName(city.getName());
 		this.cityRepository.save(current);

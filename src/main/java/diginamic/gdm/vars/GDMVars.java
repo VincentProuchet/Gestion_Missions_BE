@@ -45,13 +45,13 @@ public abstract class GDMVars {
 	
 	
 	/** REGEX_CITY_NAMES 
-	 * city names can be up to 250 char
+	 * city names can be up to 180 char
 	 * avec "' ", ' , -  or space in the name and as many as necessary
 	 * but they can't be consecutives
 	 * reject all other punctuations
 	 * accept UPPERCASES
 	 * */
-	public final static String REGEX_CITY_NAMES = "^([\\p{L}\\d]{1,1}((?<appoSpace>' )|(?<appo>')|[\\s\\-]){0,1}[\\p{L}\\d]{1,2}){1,84}$";
+	public final static String REGEX_CITY_NAMES = "^([\\p{L}\\d]{1,1}((?<appoSpace>' )|(?<appo>')|[\\s\\-]|[\\p{L}\\d]){0,1}[\\p{L}\\d]{1,2}){1,45}$";
 	/**
 	 * REGEX
 	 * 

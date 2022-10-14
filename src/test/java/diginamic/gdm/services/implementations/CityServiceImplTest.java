@@ -33,27 +33,34 @@ public class CityServiceImplTest {
 	@Autowired
 	private CityServiceImpl service;
 
-	private String baseName = "cityservice-test ";// trailing space is here on purpose
-	private String baseJammedName = "    cityservice----test   &~#'{([|`_\\^¨°)]+=}$£¤%*,?;.:/!§      ";
+	private String baseName = "city-service-test";// trailing space is here on purpose
+	
 
 	@Test
-	public void create() {
+	public void create(){		
 		City city = new City(0, baseName + " create");
-		this.service.create(city);
+		// too much -
+		assertThrows(BadRequestException.class,()->this.service.create(new City(0, baseName + "--create")));
+		// special char
+		assertThrows(BadRequestException.class,()->this.service.create(new City(0,baseName + ";create")));
+		// too much space  
+		assertThrows(BadRequestException.class,()->this.service.create(new City(0,baseName + "  create")));
+		assertDoesNotThrow(()->this.service.create(city));
+		assertThrows(BadRequestException.class,()->this.service.create(city));
 	}
 
 	@Test
-	public void read() throws BadRequestException {
+	public void read() throws Exception {
 		// we check the value doesn't exist
 		
-		assertThrows(BadRequestException.class, () -> this.service.read(baseName + "read"));
+		assertThrows(BadRequestException.class, () -> this.service.read(baseName + " read"));
 		assertThrows(BadRequestException.class, () -> this.service.read(new CityDTO()));
 		// we create it than read it
-		City city = this.service.create(new City(0, baseJammedName + "read"));
+		City city = this.service.create(new City(0, baseName + " read"));
 		// we read it
 		// by name
-		assertDoesNotThrow(() -> this.service.read(baseName + "read"));
-		City city2 = this.service.read(baseName + "read");
+		assertDoesNotThrow(() -> this.service.read(baseName + " read"));
+		City city2 = this.service.read(baseName + " read");
 		// by id
 		assertDoesNotThrow(() -> this.service.read(city2.getId()));
 		// from a cityDTO
@@ -62,15 +69,20 @@ public class CityServiceImplTest {
 		assertEquals(city.getId(), city2.getId());
 	}
 
+	/**
+	 * @throws BadRequestException
+	 */
 	@Test
 	public void update() throws BadRequestException {
 		String name = baseName +"update";
-		String jammedName = baseName +"update";		
+		String jammedName = baseName +";update";		
 		// we check the value doesn't exist
 		assertThrows(BadRequestException.class, () -> this.service.read(name));
 		// we create it than read it
-		City city = this.service.create(new City(0, jammedName));
+		City city = this.service.create(new City(0, name));
 		city.setName("new "+jammedName);
+		assertThrows(BadRequestException.class, () -> this.service.update(city.getId(),city));
+		city.setName("new "+name);
 		assertDoesNotThrow(()->this.service.update(city.getId(), city));		
 	}
 	@Test
@@ -83,7 +95,7 @@ public class CityServiceImplTest {
 	
 
 	@Test
-	public void delete() {
+	public void delete() throws Exception {
 		String name = baseName +"delete";
 		String jammedName = baseName +"delete";		
 		// we check the value doesn't exist

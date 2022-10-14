@@ -23,7 +23,6 @@ import lombok.Setter;
 @Entity
 public class City {
 	
-	private static final String CLEANING_NAME= GDMVars.REGEX_NAMES;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id = 0;
@@ -60,10 +59,6 @@ public class City {
 	 * 
 	 */
 	public void setName(String name) {
-		
-		name = name.replaceAll(CLEANING_NAME,"");
-		name = name.replaceAll(GDMVars.REGEX_STUPID_WHITSPACES," ");
-		name = name.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");		
 		name =name.strip().toLowerCase();
 		this.name =  name;
 	}
@@ -72,7 +67,7 @@ public class City {
 	 * @param name of a city
 	 * @return true if the provided string is a valid name for the object 
 	 */
-	public boolean isValidName(String name) {
+	public static boolean isValidName(String name) {
 		return name.matches(GDMVars.REGEX_CITY_NAMES); 
 	}
 
