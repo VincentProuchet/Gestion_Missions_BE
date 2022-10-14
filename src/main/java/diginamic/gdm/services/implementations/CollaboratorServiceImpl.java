@@ -48,7 +48,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	public Collaborator create(Collaborator collaborator) throws BadRequestException {
 		// names Must respect some standards
 	
-		if(!Collaborator.isValidFisrtName(collaborator.getFirstName())) {
+		if(!Collaborator.isValidFirstName(collaborator.getFirstName())) {
 			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
 					CollaboratorErrors.create.BAD_FIRSTNAME );
 		};

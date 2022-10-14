@@ -124,7 +124,6 @@ public class testTools {
 	 * @return a JPA instance of the newly created collaborator
 	 */
 	public Collaborator giveMeJustACollaborator(String name) {
-		name = name.toLowerCase();
 		this.userRole = new Roles(Role.COLLABORATOR);
 		userRole = roleSrv.create(userRole);
 
@@ -138,7 +137,7 @@ public class testTools {
 		admin.setAuthorities(Arrays.asList(managerRole, userRole, adminRole));
 		
 		
-		admin.setEmail( name + "@mail.com");
+		admin.setEmail( name.toLowerCase() + "@mail.com");
 		admin.setPassword("1111");
 		admin.setFirstName(name + "firstname");
 		admin.setLastName(name + "lastname");

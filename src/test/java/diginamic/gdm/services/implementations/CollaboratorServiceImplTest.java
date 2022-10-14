@@ -21,11 +21,11 @@ public class CollaboratorServiceImplTest {
 	@Autowired 
 	private testTools tools;
 	
-	private String baseName = "collaboratorserviceImplTest";
-	private String oneMinus = "collaborator-serviceTest";
-	private String twoMinus = "collaborator--serviceTest";
-	private String tooMuchMinus = "collaborator---serviceTest";
-	private String tooMuchSpaces = "collaboratorse rvice-test";
+	private String baseName = "collsrvImplTest";
+	private String oneMinus = "coll-srvTest";
+	private String twoMinus = "coll--srvTest";
+	private String tooMuchMinus = "coll---srvTest";
+	private String tooMuchSpaces = "colls rv-test";
 	private String tooMuchSpecialChars = "&~#'{([|`_\\^¨°)]+=}$£¤%*,?;.:/!§";
 	
 	

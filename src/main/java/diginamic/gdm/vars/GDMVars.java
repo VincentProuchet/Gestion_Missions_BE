@@ -42,57 +42,70 @@ public abstract class GDMVars {
 	 * letter/number whithespace or a '-'
 	 */
 	public final static String REGEX_NAMES = "[^\\p{L}\\p{N}\s\\-]";
-
+	
+	
+	/** REGEX_CITY_NAMES 
+	 * city names can be up to 250 char
+	 * avec "' ", ' , -  or space in the name and as many as necessary
+	 * but they can't be consecutives
+	 * reject all other punctuations
+	 * accept UPPERCASES
+	 * */
+	public final static String REGEX_CITY_NAMES = "^([\\p{L}\\d]{1,1}((?<appoSpace>' )|(?<appo>')|[\\s\\-]){0,1}[\\p{L}\\d]{1,2}){1,84}$";
 	/**
-	 * REGEX for humans last names
+	 * REGEX
 	 * 
-	 * Note that we accept digit for testing purpose
-	 * 
-	 * - in mathes will say yes if straing contains letters and number or a '-' and
-	 * has 5 to 64 char
+	 * accept letters/numbers  and one -  or one space (ex : e-r or : e r)
+	 * reject e- or -e 
+	 * must be 2 < lettersLong < 128
+	 * reject uppercases
+	 * reject punctuation
+	 * reject over 128
+	 *  
 	 */
-	public final static String REGEX_USERNAMES = "^[\\p{L}\\p{N}\\-]{5,64}$";
+		public final static String REGEX_VALIDATE_NAMES = "^[\\p{L}\\d]{1,32}{\\s\\-}{0,1}[\\p{L}\\d]{1,32}[\\\\p{L}\\\\d]{1,32}{\\\\s\\\\-}{0,1}[\\\\p{L}\\\\d]{1,32}$";
+	/**
+	 * REGEX for Usernames
+	 * 
+	 * Note that we accept digit for testing purpose
+	 * 
+	 * - in mathes will say yes if string contains nothing but letters,numbers,- or _
+	 * 															and has 6 to 64 char
+	 */
+	public final static String REGEX_USERNAMES = "^([\\p{L}\\d]{1,1}[_\\-]{0,1}[\\p{L}\\d]{1,2}){1,16}$";
 	/**
 	 * REGEX for humans last names
 	 * 
 	 * Note that we accept digit for testing purpose
-	 * 
-	 * - in replaceall will replace anything that is a letter/number or a '-' - in
-	 * mathes will say no if found anything that is not a letter/number or a '-' but
+	 
+	 * mathes will say yes if string contains nothing but letters,numbers,- or --  but
 	 * the name can be lastname | last-name | last--name
+	 * 
 	 */
-	public final static String REGEX_HUMANS_LAST_NAMES = "^[\\p{L}\\p{N}]{2,64}$"
-									+"|^[\\p{L}\\p{N}]{2,30}\\-{0,2}[\\p{L}\\p{N}]{2,30}]$"
+	public final static String REGEX_HUMANS_LAST_NAMES =  "^[\\p{L}\\d]{1,32}\\-{0,2}[\\p{L}\\d]{1,32}$";
 									
 	;
 	/**
-	 * REGEX for humans last names
+	 * REGEX for humans first names
 	 * 
 	 * Note that we accept digit for testing purpose
-	 * 
-	 * - in replaceall will replace anything that is a letter/number - in mathes
-	 * will say no if found anything that is not a letter/number - but the name can
-	 * be firstname
+	 * the regex accept composed first names
+	 * must have a min of 2 letters 
+	 
 	 */
-	public final static String REGEX_HUMANS_FIRST_NAMES = "^[\\p{L}\\p{N}]{2,64}$";
+	public final static String REGEX_HUMANS_FIRST_NAMES = "^[\\p{L}\\d]{1,32}\\-{0,1}[\\p{L}\\d]{1,32}$";
+	
 	/**
 	 * REGEX
 	 * 
-	 * - in replaceall will replace anything that is not a letter/number whithespace
-	 * or a '-' and @ - in mathes will say yes if found anything that is not a
-	 * letter/number whithespace or a '-' and @
-	 * 
-	 * this one is the simpliest but won't like specific some non latin UTF-8 char
-	 */
-	public final static String REGEX_EMAIL = "^[\\w\\.\\-]{1,64}@[\\w\\-.]{1,64}\\.[\\w]{2,6}$";
-	/**
-	 * REGEX
-	 * 
-	 * pattern for e-mail validation ex:
-	 * azertyuiopqsdfg987013hjklmwxcvbn-qefqfef465@azertyuiopqsdf465klmwxcvbn-q464fqf.sfdgfd
+	 * pattern for e-mail validation 
+	 * accept up to 2 - or . but not consecutives (ex a-a-a@d.com)
+	 * accept one - after the @
+	 * reject UPPERCASES
+	 * reject punctuation
 	 * 
 	 */
-	public final static String REGEX_EMAIL2 =  "^[\\p{Ll}\\d]{1,30}[\\-\\.]{0,1}[\\p{Ll}\\d]{1,30}@[\\p{Ll}\\d]{1,30}\\-{0,1}[\\p{Ll}\\d]{1,30}\\.[a-z0-9]{2,6}$";
+	public final static String REGEX_EMAIL2 =  "^[\\p{Ll}\\d]{1,30}[\\-\\.]{0,1}[\\p{Ll}\\d]{1,30}[\\-\\.]{0,1}[\\p{Ll}\\d]{1,30}@[\\p{Ll}\\d]{1,30}\\-{0,1}[\\p{Ll}\\d]{1,30}\\.[a-z0-9]{2,6}$";
 
 	/**
 	 * REGEX_STUPID_WHITSPACES

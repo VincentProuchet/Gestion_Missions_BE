@@ -301,7 +301,7 @@ public class Collaborator implements UserDetails {
 	 * @param name
 	 * @return
 	 */
-	public static boolean isValidFisrtName(String name) {
+	public static boolean isValidFirstName(String name) {
 		return name.matches(GDMVars.REGEX_HUMANS_FIRST_NAMES);
 	}
 	/**

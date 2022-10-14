@@ -55,6 +55,8 @@ public class City {
 	 * les noms de villes sont tous en minuscule
 	 * et passes par un retrait des caractères indésirables dans un nom
 	 * @param name
+	 * @TODO refactor we won't modify user entry 
+	 * 			but notify him of a wrong format 
 	 * 
 	 */
 	public void setName(String name) {
@@ -64,6 +66,14 @@ public class City {
 		name = name.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");		
 		name =name.strip().toLowerCase();
 		this.name =  name;
+	}
+	/**
+	 * 
+	 * @param name of a city
+	 * @return true if the provided string is a valid name for the object 
+	 */
+	public boolean isValidName(String name) {
+		return name.matches(GDMVars.REGEX_CITY_NAMES); 
 	}
 
 }
