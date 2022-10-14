@@ -124,25 +124,24 @@ public class testTools {
 	 * @return a JPA instance of the newly created collaborator
 	 */
 	public Collaborator giveMeJustACollaborator(String name) {
-		this.userRole = new Roles(Role.COLLABORATOR);
-		userRole = roleSrv.create(userRole);
-
-		this.managerRole = new Roles(Role.MANAGER);
-		managerRole = roleSrv.create(managerRole);
-
-		this.adminRole = new Roles(Role.ADMIN);
-		adminRole = roleSrv.create(adminRole);
-		
 		Collaborator admin = new Collaborator();
-		admin.setAuthorities(Arrays.asList(managerRole, userRole, adminRole));
-		
-		
-		admin.setEmail( name.toLowerCase() + "@mail.com");
-		admin.setPassword("1111");
 		admin.setFirstName(name + "firstname");
 		admin.setLastName(name + "lastname");
+		admin.setEmail( name.toLowerCase() + "@mail.com");
+		
 		admin.setUsername(name + "username");
+		admin.setPassword("1111");
 		admin.setActive(true);
+		
+		this.userRole = new Roles(Role.COLLABORATOR);
+		userRole = roleSrv.create(userRole);
+		
+		this.managerRole = new Roles(Role.MANAGER);
+		managerRole = roleSrv.create(managerRole);
+		
+		this.adminRole = new Roles(Role.ADMIN);
+		adminRole = roleSrv.create(adminRole);
+		admin.setAuthorities(Arrays.asList(managerRole, userRole, adminRole));
 		return admin;
 	}
 	

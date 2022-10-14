@@ -27,8 +27,9 @@ public interface CollaboratorService extends UserDetailsService {
 	 * 
 	 * @param collaborator The new collaborator to be registered
 	 * @throws BadRequestException 
+	 * @throws Exception 
 	 */
-	Collaborator create(Collaborator collaborator) throws BadRequestException;
+	Collaborator create(Collaborator collaborator) throws  Exception;
 	
 	/**
 	 * Gets a specific registered collaborator.
@@ -45,8 +46,9 @@ public interface CollaboratorService extends UserDetailsService {
 	 * @param collaborator The collaborator to update with modified info
 	 * @return The resulting collaborator with updated info
 	 * @throws BadRequestException 
+	 * @throws Exception 
 	 */
-	Collaborator update(int id, Collaborator collaborator) throws BadRequestException;
+	Collaborator update(int id, Collaborator collaborator) throws Exception;
 
 
 	/**

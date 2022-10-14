@@ -53,11 +53,12 @@ public class CityController {
 	 * Saves a new {@link City} instance.
 	 * 
 	 * @param cityDTO The new city within the request body to be registered
+	 * @throws Exception 
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
-	public void create(@RequestBody CityDTO cityDTO) {
+	public void create(@RequestBody CityDTO cityDTO) throws Exception {
 		cityService.create( new City(cityDTO));
 	}
 	
