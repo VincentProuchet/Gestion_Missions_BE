@@ -49,6 +49,17 @@ public interface CollaboratorService extends UserDetailsService {
 	 * @throws Exception 
 	 */
 	Collaborator update(int id, Collaborator collaborator) throws Exception;
+	
+	/**
+	 * Collaborator deletion 
+	 * it's not supposed to delete a collaborator data
+	 * only switch its account to inactive  
+	 * @param id
+	 * @param collaborator
+	 * @return
+	 * @throws Exception
+	 */
+	Collaborator delete(int id, Collaborator collaborator) throws Exception;
 
 
 	/**

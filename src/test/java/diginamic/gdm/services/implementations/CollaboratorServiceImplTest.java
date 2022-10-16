@@ -1,6 +1,7 @@
 package diginamic.gdm.services.implementations;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ public class CollaboratorServiceImplTest {
 	}
 
 	@Test
-	private void read() throws BadRequestException {
+	public void read() throws Exception {
 		String name = baseName + "read";
 		assertThrows(BadRequestException.class, () -> this.service.read(0));
 		assertThrows(BadRequestException.class, () -> this.service.read(Integer.MAX_VALUE));
@@ -68,7 +69,7 @@ public class CollaboratorServiceImplTest {
 	}
 
 	@Test
-	private void update() throws BadRequestException {
+	public void update() throws Exception {
 		String name = baseName + "update";
 		assertThrows(BadRequestException.class, () -> this.service.read(0));
 		assertThrows(BadRequestException.class, () -> this.service.read(Integer.MAX_VALUE));
@@ -97,14 +98,37 @@ public class CollaboratorServiceImplTest {
 		
 	}
 
+	/**
+	 * Delete doesn't exit for this service
+	 * @throws Exception
+	 */
 	@Test
-	private void delete() {
-
+	private void delete() throws Exception {
+		String name = baseName + "delete";
+		assertThrows(BadRequestException.class, () -> this.service.read(0));
+		assertThrows(BadRequestException.class, () -> this.service.read(Integer.MAX_VALUE));
+		Collaborator collaborator1 = tools.giveMeJustACollaborator(name);
+		Collaborator collaborator = this.service.create(collaborator1);
+		assertDoesNotThrow(() -> this.service.read(collaborator.getId()));
+		// delete 
+		
+		// and check
+		//assertThrows(BadRequestException.class, () -> this.service.read(collaborator.getId()));
+		
+		
 	}
 
 	@Test
-	private void list() {
-
+	public void list() throws Exception {
+		int quantities = this.service.list().size();
+		String name = baseName + "list";
+		assertThrows(BadRequestException.class, () -> this.service.read(0));
+		assertThrows(BadRequestException.class, () -> this.service.read(Integer.MAX_VALUE));
+		Collaborator collaborator1 = tools.giveMeJustACollaborator(name);
+		Collaborator collaborator = this.service.create(collaborator1);
+		assertDoesNotThrow(() -> this.service.read(collaborator.getId()));
+		// list should have one more
+		assertEquals(quantities+1, this.service.list().size());
 	}
 
 	@Test

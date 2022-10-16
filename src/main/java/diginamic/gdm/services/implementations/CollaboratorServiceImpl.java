@@ -148,4 +148,15 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		;
 	}
 
+	@Override
+	public Collaborator delete(int id, Collaborator collaborator) throws Exception {
+		if(id!= collaborator.getId()) {
+			throw new BadRequestException(ErrorCodes.idInconsistent,CollaboratorErrors.INCONSISTENT_ID);
+		}
+		Collaborator current = this.read(id);
+		// deletion is just setting it to  not active
+				current.setActive(false);
+		return this.collaboratorRepository.save(current) ;
+	}
+
 }

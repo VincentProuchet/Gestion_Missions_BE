@@ -41,13 +41,13 @@ public class AccountController {
 	 * Registers a new user account
 	 * 
 	 * @param collaborator The new collaborator whose account to register
-	 * @throws BadRequestException 
+	 * @throws Exception 
 	 */
 	
 	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
-	public void signup(@RequestBody Collaborator collaborator) throws BadRequestException {
+	public void signup(@RequestBody Collaborator collaborator) throws Exception {
 		// we use a compression algorythm
 		collaborator.setPassword(this.EncryptThat(collaborator.getPassword()));
 		for (Roles role : collaborator.getAuthorities()) {
