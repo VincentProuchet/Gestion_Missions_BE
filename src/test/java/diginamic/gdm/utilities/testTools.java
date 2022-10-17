@@ -1,6 +1,7 @@
 package diginamic.gdm.utilities;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +53,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class testTools {
-	
+
 	// this will need services
 	@Autowired
 	private RoleService roleSrv;
@@ -68,9 +69,7 @@ public class testTools {
 	@Autowired
 	private CityRepository cityRepository;
 	@Autowired
-	private ExpenseRepository expenseRepository; 
-	
-	
+	private ExpenseRepository expenseRepository;
 
 	private int TestTjm = 4500;
 	private float marginError = 0.005f;
@@ -81,16 +80,12 @@ public class testTools {
 	private Roles adminRole;
 	private Roles managerRole;
 
-
-
 	/**
-	 * create a Collaborator with the name provided 
-	 * with all roles
-	 * in database
+	 * create a Collaborator with the name provided with all roles in database
 	 * 
 	 * 
 	 * @param name
-	 * @throws BadRequestException 
+	 * @throws BadRequestException
 	 * @return a JPA instance of the newly created collaborator
 	 */
 	public Collaborator CreateCollaborator(String name) {
@@ -102,7 +97,7 @@ public class testTools {
 
 		this.adminRole = new Roles(Role.ADMIN);
 		adminRole = roleSrv.create(adminRole);
-		
+
 		Collaborator admin = new Collaborator();
 		admin.setAuthorities(Arrays.asList(managerRole, userRole, adminRole));
 		admin.setEmail(name + "@mail");
@@ -115,47 +110,42 @@ public class testTools {
 		admin.setManager(admin);
 		return collaboratorRepository.save(admin);
 	}
+
 	/**
-	 * create a Collaborator with the name provided 
-	 * all roles 
+	 * create a Collaborator with the name provided all roles
 	 * 
 	 * @param name
-	 * @throws BadRequestException 
+	 * @throws BadRequestException
 	 * @return a JPA instance of the newly created collaborator
 	 */
 	public Collaborator giveMeJustACollaborator(String name) {
 		Collaborator admin = new Collaborator();
 		admin.setFirstName(name + "firstname");
 		admin.setLastName(name + "lastname");
-		admin.setEmail( name.toLowerCase() + "@mail.com");
-		
+		admin.setEmail(name.toLowerCase() + "@mail.com");
+
 		admin.setUsername(name + "username");
 		admin.setPassword("1111");
 		admin.setActive(true);
-		
+
 		this.userRole = new Roles(Role.COLLABORATOR);
 		userRole = roleSrv.create(userRole);
-		
+
 		this.managerRole = new Roles(Role.MANAGER);
 		managerRole = roleSrv.create(managerRole);
-		
+
 		this.adminRole = new Roles(Role.ADMIN);
 		adminRole = roleSrv.create(adminRole);
 		admin.setAuthorities(Arrays.asList(managerRole, userRole, adminRole));
 		return admin;
 	}
-	
+
 	/**
-	 * this gives you an instance of nature 
-	 * with : 
-	 * startDOV = now
-	 * endDOV = null;
-	 * description = description
-	 * giveBonus = true
-	 * charged = true
-	 * tjm  = this.TestTjm
+	 * this gives you an instance of nature with : startDOV = now endDOV = null;
+	 * description = description giveBonus = true charged = true tjm = this.TestTjm
 	 * 
 	 * its just to not write that block for each test
+	 * 
 	 * @param description
 	 * @return a NON-persisted nature entity
 	 * @throws BadRequestException
@@ -173,6 +163,7 @@ public class testTools {
 
 		return nature;
 	}
+
 	/**
 	 * this is to persist a nature with default values and a provided description
 	 * 
@@ -194,90 +185,132 @@ public class testTools {
 
 		return this.natureRepository.save(nature);
 	}
-	
+
 	/**
-	 * this will create mission with just a nature
-	 * it will use nature's description as name for creation of  
-	 * - cities for the mission (5)
-	 * - mission collaborator names, an administrator Collaborator 
-	 * the mission will 
-	 * - start next month from now 
-	 * - end in the month after the next one from now
+	 * this will create mission with just a nature it will use nature's description
+	 * as name for creation of - cities for the mission (5) - mission collaborator
+	 * names, an administrator Collaborator the mission will - start next month from
+	 * now - end in the month after the next one from now
 	 * 
-	 * this directly use mission repository 
-	 * there is not control on mission data validity 
+	 * this directly use mission repository there is not control on mission data
+	 * validity
 	 * 
 	 * @param nature
-	 * @return a Persisted Mission entity 
+	 * @return a Persisted Mission entity
 	 */
-	public Mission pleaseCreateAMission(Nature nature ) {
+	public Mission pleaseCreateAMission(Nature nature) {
 		Mission mission = new Mission();
 		mission.setNature(nature);
 		mission.setStartDate(this.nextMonth);
-		mission.setEndDate(this.theMonthAfter);		
+		mission.setEndDate(this.theMonthAfter);
 		mission.setCollaborator(this.CreateCollaborator(nature.getDescription()));
-		List<City> cities = this.createCities(nature.getDescription());;		
+		List<City> cities = this.createCities(nature.getDescription());
+		;
 		mission.setStartCity(cities.get(0));
 		mission.setEndCity(cities.get(0));
-		return this.missionRepository.save(mission);		
+		return this.missionRepository.save(mission);
 	}
+
 	/**
-	 * create a list of 5 new cities
-	 * with name in the for name + an iterator
+	 * create a list of 5 new cities with name in the for name + an iterator
+	 * 
 	 * @param name provided name
 	 * @return a list of 5 persisted cities entities
 	 */
 	public List<City> createCities(String name) {
-		 List<City> cities = new ArrayList<>(5);
-	        for (int i = 0; i < 5; i++) {
-	            City newCity = new City();
-	            newCity.setName("city"+name+ i);
-	            cities.add(newCity);
-	        }
-	        cities = this.cityRepository.saveAll(cities);
-	        return cities;
-	}
-	
-	/**
-	 * will create and persist  3 expense types of names
-	 * made of name+iterator 
-	 * @param name 
-	 * @return list of persisted expensesType Entities
-	 */
-	public List<ExpenseType> creatExpensesTypes(String name){
-		 // 3 expenses types
-        List<ExpenseType> expenseTypes = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            ExpenseType newExpenseType = new ExpenseType();
-            newExpenseType.setName(name + i);
-            expenseTypes.add(newExpenseType);
-        }
-        expenseTypes = expenseTypeRepository.saveAll(expenseTypes);        
-        return expenseTypes;
+		List<City> cities = new ArrayList<>(5);
+		for (int i = 0; i < 5; i++) {
+			City newCity = new City();
+			newCity.setName("city" + name + i);
+			cities.add(newCity);
+		}
+		cities = this.cityRepository.saveAll(cities);
+		return cities;
 	}
 
 	/**
-	 * Create and persist a list of 5 expense assigned to the provided mission
-	 * and of types of provided list of types
-	 * @param mission associated with the expense
-	 * @param types associated with the expense
-	 * @return list of 5 persisted expenses types 
+	 * will create and persist 3 expense types of names made of name+iterator
+	 * 
+	 * @param name
+	 * @return list of persisted expensesType Entities
 	 */
-	public List<Expense> createExpenses(Mission mission,List<ExpenseType>types){
-		// 10 expenses
-        List<Expense> expenses = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Expense expense = new Expense();
-            expense.setCost(BigDecimal.valueOf(10 * i));
-            expense.setMission(mission);
-            expense.setDate(mission.getStartDate().plusDays(1));
-            expense.setExpenseType(types.get(i % types.size()));
-            expense.setTva((float) i);
-            expenses.add(expense);
-        }
-        expenses = expenseRepository.saveAll(expenses);
-        return expenses;
-		
-		
+	public List<ExpenseType> creatExpensesTypes(String name) {
+		// 3 expenses types
+		List<ExpenseType> expenseTypes = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			ExpenseType newExpenseType = new ExpenseType();
+			newExpenseType.setName(name + i);
+			expenseTypes.add(newExpenseType);
+		}
+		expenseTypes = expenseTypeRepository.saveAll(expenseTypes);
+		return expenseTypes;
 	}
+
+	/**
+	 * Create and persist a list of 5 expense assigned to the provided mission and
+	 * of types of provided list of types
+	 * 
+	 * @param mission associated with the expense
+	 * @param types   associated with the expense
+	 * @return list of 5 persisted expenses types
+	 */
+	public List<Expense> createExpenses(Mission mission, List<ExpenseType> types) {
+		// 10 expenses
+		List<Expense> expenses = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			Expense expense = new Expense();
+			expense.setCost(BigDecimal.valueOf(10 * i));
+			expense.setMission(mission);
+			expense.setDate(mission.getStartDate().plusDays(1));
+			expense.setExpenseType(types.get(i % types.size()));
+			expense.setTva((float) i);
+			expenses.add(expense);
+		}
+		expenses = expenseRepository.saveAll(expenses);
+		return expenses;
+
+	}
+
+	/**
+	 * give you the next monday date if your day of week is saturday or sunday
+	 * 
+	 * @param date
+	 * @return LocalDateTime next work day if the provided date is a saturday or a sunday
+	 */
+	public LocalDateTime nextWorkDay(LocalDateTime date) {
+		switch (date.getDayOfWeek()) {
+		case SUNDAY:
+			return date.plusDays(1);
+		case SATURDAY:
+			return date.plusDays(2);
+		default:
+			return date;
+		}
+	}
+
+	/**
+	 * will give you the next saturday 
+	 * if the provided date is a day of the week
+	 * @param date
+	 * @return LocalDateTime the next saturday 
+	 */
+	public LocalDateTime nextWeekEnd(LocalDateTime date) {
+		int daytoAdd = 0;
+		switch (date.getDayOfWeek()) {
+		case MONDAY:
+			daytoAdd++;
+		case TUESDAY:
+			daytoAdd++;
+		case WEDNESDAY:
+			daytoAdd++;
+		case THURSDAY:
+			daytoAdd++;
+		case FRIDAY:
+			daytoAdd++;
+		default:
+			break;
+		}
+		return date.plusDays(daytoAdd);
+	}
+
 }

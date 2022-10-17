@@ -2,6 +2,9 @@ package diginamic.gdm.dto;
 
 import java.lang.reflect.Field;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public interface DTO<T> {
 	
 	/**
@@ -41,5 +44,19 @@ public interface DTO<T> {
 		
 		return json.toString();
 	}
-	
+	/**
+	 * this is 	a method that automatically return the instance as a JsonString
+	 * or a blanck string on exception
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	default String toJsonString() throws JsonProcessingException {
+		try {
+			return new ObjectMapper().writeValueAsString(this);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 }

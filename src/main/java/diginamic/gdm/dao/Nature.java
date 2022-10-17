@@ -18,13 +18,18 @@ import lombok.Setter;
 
 /**
  * Entity which represents the nature of a mission
+ *  
+ *  id
+ *  giveBonus
+ *  charged
+ *  tjm
+ *  bonusPercentage
+ *  dateOfValidity
+ *  endOfValidity
+ *  description
  * 
  * @author Joseph
- *
- */
-/**
  * @author Vincent
- *
  */
 @Getter
 @Setter

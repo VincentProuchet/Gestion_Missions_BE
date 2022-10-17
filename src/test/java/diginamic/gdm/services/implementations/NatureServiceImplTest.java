@@ -85,7 +85,7 @@ class NatureServiceImplTest {
 	private int naturesTobeExpected = 0;
 	private String TestDescription = "TestNature";
 	private int TestTjm = 4500;
-	private float marginError = 0.005f;
+	private float marginError = 0.001f;
 	private LocalDateTime beforeCreation = LocalDateTime.now();
 	private LocalDateTime afterCreation = LocalDateTime.now();
 	

@@ -32,6 +32,8 @@ public class MissionErrors extends ErrorsMessage {
 		public static String NOT_DONE = "Mission not done ";
 		/** IS_ENDED */
 		public static String IS_ENDED = "Mission as ended ";
+		public static String IS_REJECTED = "Mission was reject and can't be validated ";
+		public static String IS_INIT = "Mission is in initialised state and can't be validated ";
 		/** IS_WAITING_VALIDATION */
 		public static String IS_WAITING_VALIDATION = "Mission is waiting validation ";
 		
@@ -46,7 +48,9 @@ public class MissionErrors extends ErrorsMessage {
 
 	public static class invalid {
 		public static String START_CANT_BE="Mission can't start ";
-		public static String NULL_CITY="city can't be null ";
+		public static String NULL_CITY="city can't be ";
+		public static String NULL_COLLABORATOR="collaborator can't be ";		
+		public static String NULL_NATURE="nature can't be ";		
 		public static String END_CANT_BE="Mission can't end ";
 		public static String AERIAL_TRANSPORT = "Mission with aerial transport can't start in less than ";
 		public static String INACTIVE_NATURE = "Selected nature is not active.";
