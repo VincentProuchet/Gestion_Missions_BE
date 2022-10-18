@@ -136,4 +136,48 @@ public interface MissionService {
 	 * @throws Exception
 	 */
 	public boolean isMissionDone(int id) throws Exception;
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 * 
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	public Mission RejectMission(int id) throws BadRequestException;
+	
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 * 
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	public Mission NightComputing(int id) throws BadRequestException ;
+	
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 * 
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	public Mission resetMission(int id) throws BadRequestException ;
+
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 * 
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	Mission validateMission(int id) throws BadRequestException;
+	
 }

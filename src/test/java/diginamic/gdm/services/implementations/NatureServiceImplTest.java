@@ -52,7 +52,7 @@ import diginamic.gdm.utilities.testTools;
  * 
  */
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("Test")
 class NatureServiceImplTest {
 
 	/** natureServiceImpl

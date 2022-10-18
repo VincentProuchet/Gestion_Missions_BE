@@ -343,6 +343,7 @@ public class MissionServiceImpl implements MissionService {
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
+	@Override
 	public Mission validateMission(int id) throws BadRequestException {
 		Mission mission = this.read(id);
 		switch (mission.getStatus()) {
@@ -371,6 +372,7 @@ public class MissionServiceImpl implements MissionService {
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
+	@Override
 	public Mission RejectMission(int id) throws BadRequestException {
 		Mission mission = this.read(id);
 		switch (mission.getStatus()) {
@@ -399,6 +401,7 @@ public class MissionServiceImpl implements MissionService {
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
+	@Override
 	public Mission NightComputing(int id) throws BadRequestException {
 		Mission mission = this.read(id);
 		switch (mission.getStatus()) {		
@@ -426,6 +429,7 @@ public class MissionServiceImpl implements MissionService {
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
+	@Override
 	public Mission resetMission(int id) throws BadRequestException {
 		Mission mission = this.read(id);
 		switch (mission.getStatus()) {

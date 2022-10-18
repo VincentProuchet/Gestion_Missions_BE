@@ -73,6 +73,6 @@ public interface ExpenseService {
 	 * @throws BadRequestException 
 	 * @throws Exception 
 	 */
-	boolean isExpenseValid(Expense expense) throws Exception;
+	Expense isExpenseValid(Expense expense) throws Exception;
 	
 }

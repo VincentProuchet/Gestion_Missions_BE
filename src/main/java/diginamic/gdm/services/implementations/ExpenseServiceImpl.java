@@ -56,13 +56,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public Expense create(Expense expense) throws Exception {
+		// we check if everything is all right
+		expense = this.isExpenseValid(expense);
 		// why waiting for setting theses ?
 		expense.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
 		// this is an overkill, the mission should have been already checked and set at
 		// this point
 		expense.setMission(missionService.read(expense.getMission().getId()));
-		// we check if everything is all right
-		this.isExpenseValid(expense);
 		// and save
 		return this.expenseRepository.save(expense);
 	}
@@ -85,7 +85,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		// since this one throws is own exceptions
 		// of course we test the data we want to put
 		// not the ones allready in place
-		this.isExpenseValid(expense);
+		expense = this.isExpenseValid(expense);
 		// We set data
 		// this one first since its the last element that can throw an Exception
 		current.setExpenseType(expenseTypeService.read(expense.getExpenseType().getId()));
@@ -106,7 +106,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public boolean isExpenseValid(Expense expense) throws Exception {
+	public Expense isExpenseValid(Expense expense) throws Exception {
+		
+		if(expense.getMission()==null) {
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.NULL_MISSION);
+		}
+		if(expense.getExpenseType()==null) {
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.NULL_TYPE);
+		}
 		// on recherche la mission dans la BDD
 		// this is a safety check made in case its was not done beforehand
 		Mission mission = missionService.read(expense.getMission().getId());
@@ -127,10 +134,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (date == null) {
 			throw new BadRequestException(ErrorCodes.expenseInvalid, ExpenseErrors.invalid.NULL_DATE);
 		}
-		// are all data needed present and in correct values
-		if (expense.getExpenseType().equals(null)) {
-			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.NULL_TYPE);
-		}
 		// cost can't be negative
 		if (expense.getCost().compareTo(BigDecimal.valueOf(0)) < 0) {
 			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.VALUE,ExpenseErrors.CANT_BE
@@ -141,6 +144,10 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.TAXES,ExpenseErrors.CANT_BE
 					, ExpenseErrors.NEGATIVE);
 		}
+		// TVA can't over 100 
+		if (expense.getTva() > 100) {
+			throw new BadRequestException(ErrorCodes.expenseInvalid, ExpenseErrors.invalid.TAXES_OVERFLOW);
+		}
 		// expenses's date can't be before mission start
 		if (date.isBefore(mission.getStartDate())) {
 			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_BEFORE);
@@ -149,7 +156,17 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (date.isAfter(mission.getEndDate())) {
 			throw new BadRequestException( ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_AFTER);
 		}
-		return true;
+		switch (date.getDayOfWeek()) {
+		case SATURDAY: 
+		case SUNDAY: 
+			throw new BadRequestException( ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_WEEKEND);
+		default:
+			break;
+						
+		}
+		
+		
+		return expense;
 	}
 
 }

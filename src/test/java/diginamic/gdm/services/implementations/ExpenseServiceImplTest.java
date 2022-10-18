@@ -1,23 +1,30 @@
 package diginamic.gdm.services.implementations;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dao.Collaborator;
@@ -28,245 +35,252 @@ import diginamic.gdm.dao.Nature;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dao.Transport;
 import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.repository.CityRepository;
-import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.repository.ExpenseRepository;
-import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.ExpenseService;
+import diginamic.gdm.utilities.testTools;
 
 /**
  * 
- * @Todo to refactor 
+ * @Todo to refactor
  * @author Vincent
  *
  */
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("Test")
+@TestInstance(Lifecycle.PER_CLASS)
+@TestMethodOrder(OrderAnnotation.class)
 class ExpenseServiceImplTest {
 
-    @Autowired
-    private NatureRepository natureRepository;
-    @Autowired
-    private CityRepository cityRepository;
-    @Autowired
-    private CollaboratorRepository collaboratorRepository;
-    @Autowired
-    private MissionRepository missionRepository;
-    @Autowired
-    private ExpenseTypeRepository expenseTypeRepository;
-    @Autowired
-    private ExpenseRepository expenseRepository;
-    @Autowired
-    private ExpenseService expenseService;
+	@Autowired
+	private NatureRepository natureRepository;
+	@Autowired
+	private MissionRepository missionRepository;
+	@Autowired
+	private ExpenseRepository expenseRepository;
+	@Autowired
+	private ExpenseServiceImpl service;
+	@Autowired
+	private testTools tools;
 
-    @BeforeEach
-    void init() {
+	private String description = "ExpenseSrvTest";
 
-        Nature nature1 = new Nature();
-        nature1.setDateOfValidity(LocalDateTime.of(2000, Month.JANUARY, 24, 01, 01, 01));
-        nature1.setDescription("nature1Name");
-        nature1.setEndOfValidity(null);
-        nature1.setCharged(true);
-        nature1 = natureRepository.save(nature1);
+	/** cities */
+	private List<City> cities = new ArrayList<>();
+	/** expensetypes */
+	private List<ExpenseType> expensetypes= new ArrayList<>();
+	/** expenses */
+	private List<Expense> expenses= new ArrayList();
+	/** colls */
+	private List<Collaborator> colls= new ArrayList<>();
+	/** natures */
+	private List<Nature> natures= new ArrayList<>();
+	/** missions */
+	private List<Mission> missions= new ArrayList<>();
 
-        Nature nature2 = new Nature();
-        nature2.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setDescription("nature2Name");
-        nature2.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setCharged(false);
-        nature2 = natureRepository.save(nature2);
+	@BeforeAll
+	void init() {
+		// valid nature
+		Nature nature;
+		nature = tools.giveMeJustANature(description);
+		nature.setDateOfValidity(LocalDateTime.of(2000, Month.JANUARY, 24, 01, 01, 01));
+		natures.add(0,natureRepository.save(nature));
+		// invalid nature
+		nature = tools.giveMeJustANature(description);
+		nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
+		nature.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
+		nature.setCharged(false);		
+		natures.add(1,natureRepository.save(nature));
+		
+		cities = tools.createCities(description);
+		
+		colls.add(tools.CreateCollaborator(description));// collaborator that get expenses from init
+		colls.add(tools.CreateCollaborator(description+1));		
+		colls.add(tools.CreateCollaborator(description+2));		
+		
+		expensetypes = tools.creatExpensesTypes(description);
+		// mission that will get expenses
+		LocalDateTime missionStart = LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10);
+		LocalDateTime missionEnd = LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10);
+		Mission m1;
+		m1 = new Mission();
+		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setMissionTransport(Transport.Car);
+		m1.setNature(natures.get(0));
+		m1.setStartCity(cities.get(0));
+		m1.setEndCity(cities.get(1));
+		m1.setStartDate(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
+		m1.setEndDate(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
+		m1.setCollaborator(colls.get(0));
+		m1.setStatus(Status.VALIDATED);
+		missions.add(missionRepository.save(m1));
+		
+		
+		// mission that Can't get expenses
+		m1 = new Mission();
+		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setMissionTransport(Transport.Flight);
+		m1.setNature(natures.get(0));
+		m1.setStartCity(cities.get(0));
+		m1.setEndCity(cities.get(1));
+		m1.setStartDate(LocalDateTime.now().plusDays(15));
+		m1.setCollaborator(colls.get(0));
+		m1.setEndDate(LocalDateTime.now().plusDays(15+30));
+		m1.setStatus(Status.INIT);
+		missions.add(missionRepository.save(m1));		
+		
+		Expense expense1;
+		expense1 = new Expense();
+		expense1.setCost(BigDecimal.valueOf(30));
+		expense1.setDate(tools.nextWorkDay(missionStart.plusDays(3)));
+		expense1.setTva(0.2f);
+		expense1.setExpenseType(expensetypes.get(0));
+		expense1.setMission(missions.get(0));
+		expenses.add(expense1);
 
-        City city1 = new City();
-        city1.setName("city1");
-        city1 = cityRepository.save(city1);
+		expense1 = new Expense();
+		expense1.setCost(BigDecimal.valueOf(30));
+		expense1.setDate(tools.nextWorkDay(missionStart.plusDays(3)));
+		expense1.setTva(0.2f);
+		expense1.setExpenseType(expensetypes.get(0));
+		expense1.setMission(missions.get(0));
+		expenses.add(expense1);
+		Set<Expense>exp = new HashSet<Expense>();
+		exp.addAll(expenses);
+		missions.get(0).setExpenses(exp );
+		// update mission in persistence
+		for (Mission m : missions) {
+			m = this.missionRepository.save(m);
+		}
+		// update expense in persistence
+		for (Expense e: expenses) {
+			e = expenseRepository.save(e);			
+		}
+	
+	}
 
-        City city2 = new City();
-        city2.setName("city2");
-        city2 = cityRepository.save(city2);
+	@Test
+	private void list() {
+		assertNotEquals(0,service.list().size());
+	}
 
-        Collaborator collaborator = new Collaborator();
-        collaborator = collaboratorRepository.save(collaborator);
+	@Test
+	private void isExpenseValid() {
+		
+	}
 
-        ExpenseType expenseType = new ExpenseType();
-        expenseType.setName("car");
-        expenseType = expenseTypeRepository.save(expenseType);
+	@Test
+	@Order(1)
+	public void create() throws BadRequestException {
+		Mission mission = missions.get(0);
+		ExpenseType et = expensetypes.get(0);
+		
+		Expense expense = new Expense();
+		LocalDateTime date = tools.nextWorkDay(mission.getStartDate().plusDays(3));
+		assertThrows(BadRequestException.class, ()->this.service.create(expense));
 
-        Mission m1 = new Mission();
-        m1.setBonus(BigDecimal.valueOf(36));
-        m1.setMissionTransport(Transport.Car);
-        m1.setNature(nature1);
-        m1.setStartCity(city1);
-        m1.setEndCity(city2);
-        m1.setStartDate(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        m1.setEndDate(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        m1.setCollaborator(collaborator);
-        m1.setStatus(Status.VALIDATED);
-        m1 = missionRepository.save(m1);
+		expense.setCost(BigDecimal.valueOf(30));
+		expense.setDate(date);
+		expense.setTva(0.2f);
+		expense.setExpenseType(et);
+		expense.setMission(mission);
+		// we should have a valid expense 
+		assertDoesNotThrow(()->service.create(expense));
+		// expense out of mission
+		expense.setDate(tools.nextWorkDay(LocalDateTime.now()));
+		assertThrows(BadRequestException.class,()->service.create(expense));		
+		// expense Week-end
+		expense.setDate(tools.nextWeekEnd(date));
+		assertThrows(BadRequestException.class,()->service.create(expense));		
+		expense.setDate(date);
+		// neg cost
+		expense.setCost(BigDecimal.valueOf(-30));
+		assertThrows(BadRequestException.class,()->service.create(expense));
+		expense.setCost(BigDecimal.valueOf(130));
+		// neg taxes 
+		expense.setTva(-0.2f);
+		assertThrows(BadRequestException.class,()->service.create(expense));
+		// taxes overflow
+		expense.setTva(101f);
+		assertThrows(BadRequestException.class,()->service.create(expense));
+		expense.setTva(5f);
+		assertDoesNotThrow(()->service.create(expense));
+		// expense type null
+		expense.setExpenseType(null);
+		assertThrows(BadRequestException.class,()->service.create(expense));
+		expense.setExpenseType(et);
+		// mission null
+		expense.setMission(null);
+		assertThrows(BadRequestException.class,()->service.create(expense));
+		expense.setMission(mission);
+		// Mission Mission not done
+		
+		
+		assertDoesNotThrow(()->service.create(expense));
+		
+	}
 
-        Mission m2 = new Mission();
-        m2.setBonus(BigDecimal.valueOf(100));
-        m2.setMissionTransport(Transport.Flight);
-        m2.setNature(nature1);
-        m2.setStartCity(city1);
-        m2.setEndCity(city1);
-        m2.setStartDate(LocalDateTime.now().plusDays(15));
-        m2.setCollaborator(collaborator);
-        m2.setEndDate(LocalDateTime.now().plusDays(20));
-        m2.setStatus(Status.INIT);
-        m2 = missionRepository.save(m2);
+	@Test
+	@Order(2)
+	public void update() throws BadRequestException {
+		
+		Expense expense = expenses.get(0);
+		int id = expense.getId();
+		ExpenseType et = expense.getExpenseType();
+		Mission mission = expense.getMission();
+		LocalDateTime date = tools.nextWorkDay(mission.getStartDate().plusDays(3));
+		
+		assertDoesNotThrow( ()->this.service.update(id,expense));
 
-        Set<Expense> expensesM1 = new HashSet<>();
-        Expense expense1 = new Expense();
-        expense1.setCost(BigDecimal.valueOf(30));
-        expense1.setDate(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10).plusDays(3));
-        expense1.setTva(0.2f);
-        expense1.setExpenseType(expenseType);
-        expense1.setMission(m1);
-        expensesM1.add(expense1);
+		expense.setCost(BigDecimal.valueOf(30));
+		expense.setDate(date);
+		expense.setTva(0.2f);
+		expense.setExpenseType(et);
+		expense.setMission(mission);
+		// we should have a valid expense 
+		assertDoesNotThrow(()->service.update(id,expense));
+		// wrong id 
+		assertThrows(BadRequestException.class,()->service.update(Integer.MAX_VALUE,expense));
+		// not found
+		expense.setId(Integer.MAX_VALUE);
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
+		expense.setId(id);
+		// expense out of mission
+		expense.setDate(tools.nextWorkDay(LocalDateTime.now()));
+		assertThrows(BadRequestException.class,()->service.update(id,expense));		
+		// expense Week-end
+		expense.setDate(tools.nextWeekEnd(date));
+		assertThrows(BadRequestException.class,()->service.update(id,expense));		
+		expense.setDate(date);
+		// neg cost
+		expense.setCost(BigDecimal.valueOf(-30));
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
+		expense.setCost(BigDecimal.valueOf(130));
+		// neg taxes 
+		expense.setTva(-0.2f);
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
+		// taxes overflow
+		expense.setTva(101f);
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
+		expense.setTva(5f);
+		assertDoesNotThrow(()->service.update(id,expense));
+		// expense type null
+		expense.setExpenseType(null);
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
+		expense.setExpenseType(et);
+		// mission null
+		expense.setMission(null);
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
+		expense.setMission(mission);
+		assertDoesNotThrow(()->service.update(id,expense));
+	}
 
-        Expense expense2 = new Expense();
-        expense2.setCost(BigDecimal.valueOf(30));
-        expense2.setDate(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10).plusDays(3));
-        expense2.setTva(0.2f);
-        expense2.setExpenseType(expenseType);
-        expense2.setMission(m1);
-        expensesM1.add(expense2);
-
-
-
-        m1.setExpenses(expensesM1);
-        m1 = missionRepository.save(m1);
-        expense1 = expenseRepository.save(expense1);
-        expense2 = expenseRepository.save(expense2);
-    }
-
-    @AfterEach
-    void clean() {
-        expenseRepository.deleteAll();
-        expenseTypeRepository.deleteAll();
-        missionRepository.deleteAll();
-        collaboratorRepository.deleteAll();
-        natureRepository.deleteAll();
-        cityRepository.deleteAll();
-    }
-
-    @Test
-    void list() {
-        assertEquals(expenseService.list().size(), 2);
-    }
-    @Test
-    void isExpenseValid() {
-        Collaborator collaborator = collaboratorRepository.findAll().get(0);
-        Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
-        Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
-
-        //assertTrue(expenseRepository.findAll().stream().allMatch(expense -> expenseService.isExpenseValid(expense)));
-
-
-        Expense invalidExpense = new Expense();
-        invalidExpense.setCost(BigDecimal.valueOf(30));
-        invalidExpense.setDate(m2.getStartDate().plusDays(3));
-        invalidExpense.setTva(0.2f);
-        invalidExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
-        invalidExpense.setMission(m2);
-
-        assertFalse(expenseService.isExpenseValid(invalidExpense));
-
-        Expense invalidExpense2 = new Expense();
-        invalidExpense2.setCost(BigDecimal.valueOf(30));
-        invalidExpense2.setDate(m1.getEndDate().plusDays(10));
-        invalidExpense2.setTva(0.2f);
-        invalidExpense2.setExpenseType(expenseTypeRepository.findAll().get(0));
-        invalidExpense2.setMission(m1);
-
-        //assertFalse(expenseService.isExpenseValid(invalidExpense2));
-    }
-
-    @Test
-    void create() throws BadRequestException {
-        Collaborator collaborator = collaboratorRepository.findAll().get(0);
-        Mission m1 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.VALIDATED).get(0);
-        Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
-
-        Expense invalidExpense = new Expense();
-        invalidExpense.setCost(BigDecimal.valueOf(30));
-        invalidExpense.setDate(m2.getStartDate().plusDays(3));
-        invalidExpense.setTva(0.2f);
-        invalidExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
-        invalidExpense.setMission(m2);
-
-        assertEquals(expenseRepository.findAll().size(), 2);
-        assertThrows(BadRequestException.class, () -> expenseService.create(invalidExpense));
-        assertEquals(expenseRepository.findAll().size(), 2);
-
-        Expense invalidExpense2 = new Expense();
-        invalidExpense2.setCost(BigDecimal.valueOf(30));
-        invalidExpense2.setDate(m1.getEndDate().plusDays(10));
-        invalidExpense2.setTva(0.2f);
-        invalidExpense2.setExpenseType(expenseTypeRepository.findAll().get(0));
-        invalidExpense2.setMission(m1);
-
-        assertEquals(expenseRepository.findAll().size(), 2);
-        assertThrows(BadRequestException.class, () -> expenseService.create(invalidExpense2));
-        assertEquals(expenseRepository.findAll().size(), 2);
-
-        Expense validExpense = new Expense();
-        validExpense.setCost(BigDecimal.valueOf(30));
-        validExpense.setDate(m1.getStartDate().plusDays(10));
-        validExpense.setTva(0.2f);
-        validExpense.setExpenseType(expenseTypeRepository.findAll().get(0));
-        validExpense.setMission(m1);
-
-        assertEquals(expenseRepository.findAll().size(), 2);
-        //expenseService.create(validExpense);
-        assertEquals(expenseRepository.findAll().size(), 3);
-        assertEquals(expenseRepository.findByMission(m1).size(), 3);
-
-    }
-
-    @Test
-    void update() throws BadRequestException {
-        Collaborator collaborator = collaboratorRepository.findAll().get(0);
-        Mission m1 = missionRepository.findByCollaboratorAndStatusNot(collaborator, Status.VALIDATED).get(0);
-        Mission m2 = missionRepository.findByCollaboratorAndStatus(collaborator, Status.INIT).get(0);
-
-        List<Expense> expenses = expenseRepository.findAll();
-        Expense expense1 = expenses.get(0);
-        Expense expense2 = expenses.get(1);
-
-        LocalDateTime invalidDate = expense1.getMission().getEndDate().plusDays(2);
-        LocalDateTime oldDate = expense1.getDate();
-        expense1.setDate(invalidDate);
-
-        assertThrows(BadRequestException.class, () -> expenseService.update(expense1.getId(), expense1));
-        assertTrue(expenseRepository.findById(expense1.getId()).get().getDate().isEqual(oldDate));
-        expense1.setDate(oldDate);
-
-        expense1.setMission(m2);
-        assertThrows(BadRequestException.class, () -> expenseService.update(expense1.getId(), expense1));
-        assertTrue(expenseRepository.findById(expense1.getId()).get().getMission().getId() != m2.getId());
-        expense1.setMission(m1);
-
-        expense1.setCost(BigDecimal.valueOf(2000));
-        //expenseService.update(expense1.getId(), expense1);
-        assertTrue(expenseRepository.findById(expense1.getId()).get().getCost().compareTo(BigDecimal.valueOf(2000)) == 0);
-
-
-    }
-
-    @Test
-    void delete() {
-        expenseRepository.findAll().stream().forEach(expense -> {
-            try {
-                expenseService.delete(expense.getId());
-            } catch (BadRequestException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        assertEquals(expenseRepository.findAll().size(), 0);
-    }
+	@Test
+	private void delete() {
+		for (Expense e :expenses) {
+			assertDoesNotThrow(()->this.service.delete(e.getId()));
+		}
+	}
 
 }

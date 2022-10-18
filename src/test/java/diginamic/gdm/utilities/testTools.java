@@ -150,7 +150,7 @@ public class testTools {
 	 * @return a NON-persisted nature entity
 	 * @throws BadRequestException
 	 */
-	public Nature giveMeJustANature(String description) throws BadRequestException {
+	public Nature giveMeJustANature(String description) {
 		Nature nature = new Nature();
 		// in our implementation date are automatically added
 		nature.setDateOfValidity(LocalDateTime.now());
