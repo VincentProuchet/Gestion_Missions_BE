@@ -199,7 +199,7 @@ class MissionServiceImplTest {
 		m1.setStartDate(LocalDateTime.now().plusDays(10));
 		m1.setEndDate(LocalDateTime.now().plusDays(12));
 		m1.setCollaborator(collaborators.get(3));
-		m1.setStatus(Status.VALIDATED);
+		m1.setStatus(Status.INIT);
 		this.missions.add(index, missionRepository.save(m1));
 		// mission to validate 4
 		index++;
@@ -321,8 +321,12 @@ class MissionServiceImplTest {
 	void missionsToValidate() throws BadRequestException {
 
 		List<Mission> missionsToValidate = missionService.missionsToValidate(manager.getId());
-		assertEquals(5, missionsToValidate.size());
+		// we check that they all have init status
 		assertTrue(missionsToValidate.stream().allMatch(mission -> mission.getStatus() != Status.INIT));
+		// we get their count
+		long size = missionsToValidate.stream().filter(mission -> mission.getStatus() == Status.INIT).count();
+		System.out.println(size);
+		// now we check if we have the same count as waiting validation
 		assertEquals(2, missionsToValidate.stream().filter(mission -> mission.getStatus() == Status.WAITING_VALIDATION)
 				.count());
 	}
@@ -332,13 +336,37 @@ class MissionServiceImplTest {
 	void updateStatus() throws BadRequestException {
 
 		Mission m1 = this.missions.get(3);
+		assertEquals(m1.getStatus(), Status.INIT);
 		assertNotSame(m1.getStatus(), Status.REJECTED);
-		assertDoesNotThrow(() -> missionService.updateStatus(m1.getId(), Status.REJECTED));
-		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.REJECTED);
-		assertDoesNotThrow(() -> missionService.updateStatus(m1.getId(), Status.WAITING_VALIDATION));
+		assertNotSame(m1.getStatus(), Status.VALIDATED);
+		assertNotSame(m1.getStatus(), Status.WAITING_VALIDATION);
+		assertNotSame(m1.getStatus(), Status.ENDED);
+		assertThrows( BadRequestException.class,() -> missionService.RejectMission(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.validateMission(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.resetMission(m1.getId()));
+		assertDoesNotThrow(() -> missionService.NightComputing(m1.getId()));
+		
 		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.WAITING_VALIDATION);
-		assertDoesNotThrow(() -> missionService.updateStatus(m1.getId(), Status.INIT));
-		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.INIT);
+		
+		assertThrows( BadRequestException.class,() -> missionService.NightComputing(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.resetMission(m1.getId()));
+		assertDoesNotThrow(() -> missionService.validateMission(m1.getId()));
+		
+		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.VALIDATED);
+		
+		assertThrows( BadRequestException.class,() -> missionService.validateMission(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.RejectMission(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.NightComputing(m1.getId()));
+		assertDoesNotThrow(() -> missionService.resetMission(m1.getId()));
+		
+		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.WAITING_VALIDATION);
+		assertDoesNotThrow(() -> missionService.RejectMission(m1.getId()));
+		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.REJECTED);
+		
+		assertThrows( BadRequestException.class,() -> missionService.NightComputing(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.RejectMission(m1.getId()));
+		assertThrows( BadRequestException.class,() -> missionService.validateMission(m1.getId()));
+		
 	}
 
 	/**

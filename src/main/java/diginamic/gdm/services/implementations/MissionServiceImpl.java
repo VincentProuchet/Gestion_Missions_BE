@@ -326,13 +326,6 @@ public class MissionServiceImpl implements MissionService {
 		current.setStatus(Status.INIT);
 		return this.missionRepository.save(current);
 	}
-
-	@Override
-	public Mission updateStatus(int id, Status status) throws BadRequestException {
-		Mission mission = read(id);
-		mission.setStatus(status);
-		return missionRepository.save(mission);
-	}
 	
 	/**
 	 * First draw  of a mission's status manipulator
@@ -346,6 +339,7 @@ public class MissionServiceImpl implements MissionService {
 	@Override
 	public Mission validateMission(int id) throws BadRequestException {
 		Mission mission = this.read(id);
+		
 		switch (mission.getStatus()) {
 		
 		case INIT:
@@ -442,7 +436,7 @@ public class MissionServiceImpl implements MissionService {
 		case VALIDATED:
 		case REJECTED:
 		default:
-			mission.setStatus(Status.INIT);
+			mission.setStatus(Status.WAITING_VALIDATION);
 			return missionRepository.save(mission);
 		}
 		

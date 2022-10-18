@@ -2,6 +2,7 @@ package diginamic.gdm;
 
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.*;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
@@ -27,7 +28,7 @@ import java.util.List;
  * @author Joseph 
  *
  */
-//@Component
+@Component
 public class InitDataDB {
 
     private final LocalDateTime now;
@@ -37,6 +38,8 @@ public class InitDataDB {
     private CityService cityService;
     @Autowired
     private CollaboratorService collaboratorService;
+    @Autowired
+    private NatureService natureService;
     @Autowired
     private NatureRepository natureRepository;
     @Autowired
@@ -59,8 +62,13 @@ public class InitDataDB {
 
     }
 
-   // @EventListener
-    public void initDB(ContextRefreshedEvent event) throws Exception {
+   /**
+ * @param event
+ * @throws Exception
+ * @throws BadRequestException
+ */
+@EventListener
+    public void initDB(ContextRefreshedEvent event) throws Exception,BadRequestException {
         System.out.println("init mock data");
 
         // 5 cities
@@ -81,13 +89,13 @@ public class InitDataDB {
 
         Roles adminRole = new Roles(Role.ADMIN);
         adminRole = roleService.create(adminRole);
-
+        String emailEnd = "@carapace.com"; 
         // 5 collaborators, 2 managers, 2 admin
         // manager1 for the workers
         String m1Name = "vincent";
         Collaborator manager1 = new Collaborator();
         manager1.setAuthorities(Arrays.asList(managerRole, user));
-        manager1.setEmail( m1Name + "@mail");
+        manager1.setEmail( m1Name + emailEnd);
         manager1.setPassword(passwordEncoder.encode("1111"));
         manager1.setFirstName(m1Name+ "firstname");
         manager1.setLastName(m1Name+"lastname");
@@ -98,7 +106,7 @@ public class InitDataDB {
         String m2Name = "joseph";
         Collaborator manager2 = new Collaborator();
         manager2.setAuthorities(Arrays.asList(managerRole, user));
-        manager2.setEmail(m2Name+"@mail");
+        manager2.setEmail(m2Name+emailEnd);
         manager2.setPassword(passwordEncoder.encode("1111"));
         manager2.setFirstName(m2Name+"firstname");
         manager2.setLastName(m2Name+"lastname");
@@ -113,7 +121,7 @@ public class InitDataDB {
         String a1Name = "dorian";
         Collaborator admin = new Collaborator();
         admin.setAuthorities(Arrays.asList(adminRole, user));
-        admin.setEmail(a1Name +"@mail");
+        admin.setEmail(a1Name +emailEnd);
         admin.setPassword(passwordEncoder.encode("1111"));
         admin.setFirstName(a1Name +"firstname");
         admin.setLastName(a1Name +"lastname");
@@ -133,7 +141,7 @@ public class InitDataDB {
         for (int i = 0; i < 5; i++) {
             Collaborator newColl = new Collaborator();
             newColl.setAuthorities(Arrays.asList(user));
-            newColl.setEmail("coll" + i + "@mail");
+            newColl.setEmail("coll" + i + emailEnd);
             newColl.setFirstName("coll" + i + "firstname");
             newColl.setLastName("coll" + i + "lastname");
             newColl.setUsername("coll" + i + "username");
@@ -145,7 +153,7 @@ public class InitDataDB {
         }
         Collaborator user1 = new Collaborator();
         user1.setAuthorities(Arrays.asList(user));
-        user1.setEmail("m-itsumi@mail");
+        user1.setEmail("m-itsumi"+emailEnd );
         user1.setPassword(passwordEncoder.encode("1111"));
         user1.setFirstName("Mario");
         user1.setLastName("Istumi");
@@ -167,7 +175,7 @@ public class InitDataDB {
         newNature.setGivesBonus(true);
         newNature.setBonusPercentage(5f);
         newNature.setCharged(true);
-        newNature = natureRepository.save(newNature);
+        newNature = natureService.create(newNature);
         natures.add(newNature);
 
         // basic nature, more money
@@ -179,7 +187,7 @@ public class InitDataDB {
         newNature2.setGivesBonus(true);
         newNature2.setBonusPercentage(7f);
         newNature2.setCharged(true);
-        newNature2 = natureRepository.save(newNature2);
+        newNature2 = natureService.create(newNature2);
         natures.add(newNature2);
 
         // non charged nature
@@ -191,7 +199,7 @@ public class InitDataDB {
         newNature3.setGivesBonus(false);
         newNature3.setBonusPercentage(0f);
         newNature3.setCharged(false);
-        newNature3 = natureRepository.save(newNature3);
+        newNature3 = natureService.create(newNature3);
         natures.add(newNature3);
 
 
@@ -204,12 +212,12 @@ public class InitDataDB {
         newNature4.setGivesBonus(true);
         newNature4.setBonusPercentage(50f);
         newNature4.setCharged(true);
-        newNature4 = natureRepository.save(newNature4);
+        newNature4 = natureService.create(newNature4);
         natures.add(newNature4);
 
         // ended nature with same description
         Nature newNature5 = new Nature();
-        newNature5.setTjm(BigDecimal.valueOf(50));
+        newNature5.setTjm(BigDecimal.valueOf(150));
         newNature5.setDescription("Promotional work");
         newNature5.setDateOfValidity(previousWeek(lastYear));
         newNature5.setEndOfValidity(nextWeek(lastYear));
@@ -228,7 +236,7 @@ public class InitDataDB {
         newNature6.setGivesBonus(false);
         newNature6.setBonusPercentage(0f);
         newNature6.setCharged(true);
-        newNature6 = natureRepository.save(newNature6);
+        newNature6 = natureService.create(newNature6);
         natures.add(newNature6);
 
         // 8 missions
@@ -386,6 +394,7 @@ public class InitDataDB {
     }
 
     private LocalDateTime nextWorkedDay(LocalDateTime date) {
+    	date.plusDays(1);
         if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return date.plusDays(1);
         }

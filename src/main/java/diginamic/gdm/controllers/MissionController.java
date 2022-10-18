@@ -200,7 +200,7 @@ public class MissionController {
 		Mission mission = missionService.read(id);
 
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
-			return new MissionDTO(missionService.updateStatus(id, Status.VALIDATED));
+			return new MissionDTO(missionService.validateMission(id));
 		}
 		throw new Exception("it is not allowed to validate a mission for someone not in your team");
 
@@ -219,7 +219,7 @@ public class MissionController {
 		Mission mission = missionService.read(id);
 
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
-			return new MissionDTO(missionService.updateStatus(id, Status.REJECTED));
+			return new MissionDTO(missionService.RejectMission(id));
 		}
 		throw new Exception("it is not allowed to reject a mission for someone not in your team");
 	}
@@ -237,7 +237,7 @@ public class MissionController {
 		Mission mission = missionService.read(id);
 
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
-			return new MissionDTO(missionService.updateStatus(id, Status.WAITING_VALIDATION));
+			return new MissionDTO(missionService.resetMission(id));
 		}
 		throw new Exception("it is not allowed to reset a mission for someone not in your team");
 	}

@@ -90,14 +90,6 @@ public interface MissionService {
 	 */
 	void delete(int id) throws BadRequestException, Exception;
 
-	/**
-	 * Updates the current status for a specific mission.
-	 *
-	 * @param id     The id corresponding to the mission whose status to update
-	 * @param status The new status to be applied to the mission
-	 * @return the updated mission in DB
-	 */
-	Mission updateStatus(int id, Status status) throws BadRequestException;
 
 
 	/**
