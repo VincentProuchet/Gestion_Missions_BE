@@ -18,12 +18,10 @@ spring:
       store-type: jdbc
       timeout: 7200        
   datasource:
-  
-    name:"DatabaseForAll" 
-    # name of that datasourece
-    # of course you're supposed to put your own vreadentials here    
-    url: "jdbc:mariadb://localhost:3307/databaseName" ## database Url
+    # of course you're supposed to put your own creadentials here
+    url: "jdbc:mariadb://localhost:3307/databaseName"
     username: databaseAccountLogin
     password: "1111"
+    # driver... really important
     driverClassName: org.mariadb.jdbc.Driver
     
