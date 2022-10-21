@@ -69,6 +69,7 @@ class ScheduledTasksServiceImplTest {
 	private List<Collaborator> collaborators = new ArrayList<>();
 
 	private Collaborator manager;
+	private final float marginError = 0.001f;
     
     
     @BeforeAll
@@ -137,7 +138,7 @@ class ScheduledTasksServiceImplTest {
 		index = 0;
 		// 								0
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus(36);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -150,7 +151,7 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		// 								1
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus(30f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -164,7 +165,7 @@ class ScheduledTasksServiceImplTest {
 		// 								2
 		index++;
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus( 100f);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(2));
 		m1.setStartCity(this.cities.get(0));
@@ -178,7 +179,7 @@ class ScheduledTasksServiceImplTest {
 		// 							3
 		index++;
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus( 36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -192,7 +193,7 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(1));
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus( 36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setCollaborator(collaborators.get(4));
 		m1.setStatus(Status.INIT);
@@ -206,7 +207,7 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus( 100f);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -220,7 +221,7 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus( 100f);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.INIT);
@@ -244,24 +245,32 @@ class ScheduledTasksServiceImplTest {
         fakeMission.setEndDate(now.plusDays(12));
         assertEquals(this.scheduledTasksService.workedDays(fakeMission), 8);
     }
+    /**
+     * @TODO to refactor bigDecimal clearly poses a lot of trouble because of the their sizes
+     * @throws BadRequestException
+     */
     @Test
     void computeBonusForCompletedMissions() throws BadRequestException {
         List<Mission> missionsWithBonusesToCompute = missionService.completedMissionsToCompute();
-        //assertEquals(missionsWithBonusesToCompute.size(), 2);
-
-        Mission mission1 = missionsWithBonusesToCompute.get(0);
-        Nature nature1 = mission1.getNature();
-        BigDecimal bonusM1 = BigDecimal.valueOf(this.scheduledTasksService.workedDays(mission1) * nature1.getBonusPercentage() / 100).multiply(nature1.getTjm());
-
+        assertNotEquals(0, missionsWithBonusesToCompute.size());
         this.scheduledTasksService.computeBonusForCompletedMissions();
+        Nature nature1 = new Nature();
+        float bonus = 0f;
+        float actualValue = 0f;
+        Mission mission  ;
+        //for (Mission mission : missionsWithBonusesToCompute) {
+        // oui on n'en test que 100 parce que Maven n'aime pas attendre
+        for (int i=0 ;i<100 ;i++) {
+        	mission = missionsWithBonusesToCompute.get(i);
+        	actualValue =  missionService.read(mission.getId()).getBonus();
+        	assertEquals(0, mission.getBonus());
+        	nature1 = mission.getNature();
+        	bonus =  (this.scheduledTasksService.workedDays(mission) * nature1.getBonusPercentage() / 100)*(nature1.getTjm());
+        	assertTrue(bonus + marginError >= actualValue);
+        	assertTrue(bonus - marginError <= actualValue);
+			
+		}
 
-        assertEquals(bonusM1.compareTo(missionService.read(mission1.getId()).getBonus()), 0);
-
-        Mission mission2 = missionsWithBonusesToCompute.get(1);
-        Nature nature2 = mission2.getNature();
-        BigDecimal bonusM2 = BigDecimal.valueOf(this.scheduledTasksService.workedDays(mission2) * nature2.getBonusPercentage() / 100).multiply(nature2.getTjm());
-
-        assertEquals(bonusM2.compareTo(missionService.read(mission2.getId()).getBonus()), 0);
     }
 
     @Test

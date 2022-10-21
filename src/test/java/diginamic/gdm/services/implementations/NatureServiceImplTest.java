@@ -141,7 +141,7 @@ class NatureServiceImplTest {
 		assertTrue(nature1.getBonusPercentage() + this.marginError >= nature.getBonusPercentage());
 		assertTrue(nature1.getBonusPercentage() - this.marginError <= nature.getBonusPercentage());
 
-		assertTrue(nature1.getTjm().compareTo(nature.getTjm()) == 0);
+		assertEquals(nature1.getTjm(),nature.getTjm());
 	}
 
 	/**

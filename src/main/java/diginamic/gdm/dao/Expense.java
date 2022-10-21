@@ -3,6 +3,7 @@ package diginamic.gdm.dao;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,9 +37,11 @@ public class Expense {
 	private LocalDateTime date = LocalDateTime.now();
 
 	/** cost : the cost of the expense */
-	private BigDecimal cost = BigDecimal.ZERO;
+	@Column(precision = 2)
+	private Float cost = 0f;
 
 	/** tva : the applicable TVA */
+	@Column(precision = 2)
 	private Float tva = 0f ;
 
 	/** mission : the mission which required this expense */
@@ -55,9 +58,8 @@ public class Expense {
 	public Expense(ExpenseDTO e) {
 		this.id = e.getId();
 		this.date = e.getDate();
-		if(e.getCost()!=null) {
-			this.cost = e.getCost();
-		}
+		this.cost = e.getCost();
+		
 		this.mission = new Mission();
 		this.mission.setId(e.getIdMission());
 		this.tva = e.getTva();

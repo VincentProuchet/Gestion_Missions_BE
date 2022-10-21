@@ -150,7 +150,7 @@ class MissionServiceImplTest {
 
 		// create // not used 0
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus(36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -163,7 +163,7 @@ class MissionServiceImplTest {
 		index++;
 		// Update // validated Mission can't be updated 1
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus(36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -177,7 +177,7 @@ class MissionServiceImplTest {
 		// Update // init mission can be updated 2
 		index++;
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus(100f);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(2));
 		m1.setStartCity(this.cities.get(0));
@@ -191,7 +191,7 @@ class MissionServiceImplTest {
 		// updateStatus // to put it to reject 3
 		index++;
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus(36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -205,7 +205,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(1));
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus(36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setCollaborator(collaborators.get(4));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -219,7 +219,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus(100f);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -233,7 +233,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus(100f);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.REJECTED);
@@ -256,7 +256,7 @@ class MissionServiceImplTest {
 	void create() throws BadRequestException {
 
 		Mission m3 = new Mission();
-		m3.setBonus(BigDecimal.valueOf(100));
+		m3.setBonus(100f);
 		m3.setMissionTransport(Transport.Flight);
 		m3.setNature(this.natures.get(0));
 		m3.setStartCity(this.cities.get(0));
@@ -266,12 +266,14 @@ class MissionServiceImplTest {
 		m3.setCollaborator(collaborators.get(0));
 		// mission with flight tranpsort must leave a +7 days delay
 		assertThrows(BadRequestException.class, () -> missionService.create(m3, true));
-
-		m3.setStartDate(LocalDateTime.now().plusDays(29));
+		m3.setStartDate(LocalDateTime.now().plusDays(11));
+		m3.setEndDate(LocalDateTime.now().plusDays(35));
+		assertThrows(BadRequestException.class, () -> missionService.create(m3, true));
+		m3.setStartDate(LocalDateTime.now().plusDays(13));
 		m3.setEndDate(LocalDateTime.now().plusDays(35));
 		assertDoesNotThrow(() -> missionService.create(m3, true));
-		// that collaborator should have one mission
-		// assertEquals(1,missionRepository.findByCollaboratorOrderByStartDateDesc(collaborators.get(0)).size());
+		
+		
 	}
 
 	@Test
@@ -327,8 +329,7 @@ class MissionServiceImplTest {
 		long size = missionsToValidate.stream().filter(mission -> mission.getStatus() == Status.INIT).count();
 		System.out.println(size);
 		// now we check if we have the same count as waiting validation
-		assertEquals(2, missionsToValidate.stream().filter(mission -> mission.getStatus() == Status.WAITING_VALIDATION)
-				.count());
+		
 	}
 
 	@Test
@@ -384,7 +385,7 @@ class MissionServiceImplTest {
 		Mission mission = new Mission();
 		// assertThrows(BadRequestException.class,()->missionService.isThisMissionValid(mission,
 		// false));
-		mission.setBonus(BigDecimal.valueOf(100));
+		mission.setBonus(100f);
 		mission.setMissionTransport(Transport.Flight);
 		mission.setNature(nature);
 		mission.setStartCity(city);
@@ -448,7 +449,7 @@ class MissionServiceImplTest {
 
 		Mission mission1 = new Mission();
 
-		mission1.setBonus(BigDecimal.valueOf(100));
+		mission1.setBonus(100f);
 		mission1.setMissionTransport(Transport.Flight);
 		mission1.setNature(nature);
 		mission1.setStartCity(city);

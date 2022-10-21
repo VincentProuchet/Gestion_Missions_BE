@@ -51,7 +51,8 @@ public class Mission {
 	private LocalDateTime endDate;
 
 	/** bonus : the bonus for the collaborator */
-	private BigDecimal bonus;
+	@Column(precision = 2)
+	private float bonus;
 
 	/** hasBonusBeenEvaluated : a technical data to make it easier to get missions missing a bonus
 	 * it is true only after the night computing has set the value of bonus */

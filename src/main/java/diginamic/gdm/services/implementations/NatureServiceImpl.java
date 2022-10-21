@@ -304,7 +304,7 @@ public class NatureServiceImpl implements NatureService {
 		if (nature.getBonusPercentage() < 0) {
 			throw new BadRequestException( ErrorCodes.natureInvalid, NatureErrors.invalid.NEGATIVE_BONUS);
 		}
-		if (nature.getTjm().signum() == -1) {
+		if (nature.getTjm() < 0) {
 			throw new BadRequestException( ErrorCodes.natureInvalid, NatureErrors.invalid.NEGATIVE_TJM);
 		}
 		return true;

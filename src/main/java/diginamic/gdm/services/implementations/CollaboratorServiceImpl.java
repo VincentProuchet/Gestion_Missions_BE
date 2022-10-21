@@ -109,24 +109,21 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	 *
 	 */
 	@Secured({ GDMRoles.ADMIN, GDMRoles.MANAGER, GDMRoles.COLLABORATOR })
-	public Collaborator getConnectedUser() throws Exception {
+	public Collaborator getConnectedUser() throws BadRequestException {
 		SecurityContext context = SecurityContextHolder.getContext();// I left if well sequenced on purpose
-		Authentication auth = context.getAuthentication();
-		// these are useless
-		// the simple presence of the @secured annotation
-		// prevent any access without security context
-		// if (context == null){ throw new
-		// Exception(CollaboratorErrors.NO_SECURITY_CONTEXT); }
-		// if (auth == null) { throw new
-		// Exception(CollaboratorErrors.NO_AUTHENTICATION_CONTEXT); }
-
+		Authentication auth = context.getAuthentication();		
+		 if (auth == null) { throw new BadRequestException(CollaboratorErrors.NO_AUTHENTICATION_CONTEXT); }
 		String username = (String) auth.getPrincipal();
 		return collaboratorRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
-
 	}
 
-	private void isValidUser(Collaborator collaborator) throws Exception {
+	/**
+	 * valid user data integrity
+	 * @param collaborator
+	 * @throws BadRequestException
+	 */
+	private void isValidUser(Collaborator collaborator) throws BadRequestException {
 		// names Must respect some standards
 
 		if (!Collaborator.isValidFirstName(collaborator.getFirstName())) {

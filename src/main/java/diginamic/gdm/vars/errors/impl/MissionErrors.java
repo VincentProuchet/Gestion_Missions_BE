@@ -15,6 +15,7 @@ public class MissionErrors extends ErrorsMessage {
 	
 	public static String ARRIVAL = "Arrival ";
 	public static String DEPARTURE = "Departure ";
+	public static String NOT_MANAGER ="you're not manager ";
 	
 	public static class create {
 
@@ -23,9 +24,12 @@ public class MissionErrors extends ErrorsMessage {
 	public static class read {
 		/** NOT_FOUND */
 		public static String NOT_FOUND = "Mission not found.";
+		public static String ACCESS_DENIED = "Can't access ";
 	}
 
 	public static class update {
+		
+		public static String CANT_UPDATE = "you can't update ";
 		/** IS_VALIDATED */
 		public static String IS_VALIDATED = "Mission is validated and can't be modified.";
 		/** NOT_DONE */
@@ -56,6 +60,17 @@ public class MissionErrors extends ErrorsMessage {
 		public static String INACTIVE_NATURE = "Selected nature is not active.";
 		public static String CANT_START_IN_NEXT_MISSION = "Mission can't start in the next mission ";
 		public static String CANT_END_IN_NEXT_MISSION = "Mission can't end in the next mission ";
+	}
+	
+	public static class status{
+		public static String NOT_IN_YOUR_TEAM = "for someone not in your team ";
+		public static String NOT_YOURS = "for someone else ";
+		public static String CANT_VALIDATE ="You can't validate a mission ";
+		public static String CANT_DELETE ="You can't delete a mission ";
+		public static String CANT_REJECT ="You can't reject a mission ";
+		public static String CANT_RESET ="You can't reset a mission ";
+		
+		
 	}
 	
 

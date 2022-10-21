@@ -30,7 +30,7 @@ public class NatureDTO implements DTO<Nature> {
 	 * fait l'objet de facturation */
 	private boolean charged = false;
 	/** Taux journalier moyen pour la facturation à la journée de mission */
-	private BigDecimal tjm;	
+	private float tjm;	
 	/** % prime taux de prime à sur la montant total de la mission  */
 	private float bonusPercentage;
 	/**  début de validité de la nature  */

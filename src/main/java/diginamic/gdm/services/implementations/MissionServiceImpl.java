@@ -250,8 +250,8 @@ public class MissionServiceImpl implements MissionService {
 		// the mission can't be in the same time as another one
 		// we get all mission that have an end date before our new misson start date
 		// witch rule of every mission that would end after our start date
-		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterAndStatusNotOrderByStartDate(
-				collaborator, startDate, Status.REJECTED);
+		List<Mission> missions = missionRepository.findByCollaboratorAndEndDateAfterAndStatusOrderByStartDate(
+				collaborator, startDate, Status.VALIDATED);
 		int missionsCount = missions.size();
 		boolean isCollaboratorAvailable = true;
 		// in case of an update, avoid to compare to self

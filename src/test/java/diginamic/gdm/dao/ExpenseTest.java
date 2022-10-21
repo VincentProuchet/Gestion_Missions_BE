@@ -30,7 +30,7 @@ public class ExpenseTest {
 		
 		assertEquals(0, expense.getId());
 		assertEquals(0f, expense.getTva());
-		assertEquals(BigDecimal.ZERO, expense.getCost());
+		assertEquals(0, expense.getCost());
 		
 		assertInstanceOf(LocalDateTime.class,expense.getDate());
 		assertNotEquals(LocalDateTime.now().plusSeconds(1),expense.getDate() );
@@ -62,7 +62,7 @@ public class ExpenseTest {
 		
 		assertEquals(0, expense.getId());
 		assertEquals(0f, expense.getTva());
-		assertEquals(BigDecimal.ZERO, expense.getCost());
+		assertEquals(0f, expense.getCost());
 		
 		assertInstanceOf(LocalDateTime.class,expense.getDate());
 		assertNotEquals(LocalDateTime.now().minusSeconds(1),expense.getDate() );
@@ -86,7 +86,7 @@ public class ExpenseTest {
 		
 		assertEquals(0, expense.getId());
 		assertEquals(0f, expense.getTva());
-		assertEquals(BigDecimal.ZERO, expense.getCost());
+		assertEquals(0f, expense.getCost());
 		
 		assertInstanceOf(LocalDateTime.class,expense.getDate());
 		//assertNotEquals(LocalDateTime.now(),expense.getDate() );

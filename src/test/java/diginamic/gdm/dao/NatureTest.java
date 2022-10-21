@@ -37,7 +37,7 @@ public class NatureTest {
 		assertFalse(nature.isCharged());
 		assertNull(nature.getDateOfValidity());
 		assertNull(nature.getEndOfValidity());
-		assertEquals(BigDecimal.ZERO, nature.getTjm());
+		assertEquals(0f, nature.getTjm());
 		assertEquals(0f, nature.getBonusPercentage());
 		assertNull(nature.getDescription());
 
@@ -59,7 +59,7 @@ public class NatureTest {
 		
 		
 		assertEquals(this.id, nature.getId());
-		assertEquals(this.tjm, nature.getTjm().intValueExact());
+		assertEquals(this.tjm, nature.getTjm());
 		assertEquals(this.description, nature.getDescription());
 		// that end of validity is supposed to be null
 		assertTrue(nature.isCharged());
@@ -96,7 +96,7 @@ public class NatureTest {
 		
 		NatureDTO natureDTO = new NatureDTO(natureDAO);
 		assertEquals(this.id, natureDTO.getId());
-		assertEquals(this.tjm, natureDTO.getTjm().intValueExact());
+		assertEquals(this.tjm, natureDTO.getTjm());
 		assertEquals(this.description, natureDTO.getDescription());
 		// that end of validity is supposed to be null
 		assertTrue(natureDTO.isCharged());
@@ -125,14 +125,14 @@ public class NatureTest {
 		natureDTO.setDescription(this.description);
 		natureDTO.setDateOfValidity(LocalDateTime.now());
 		natureDTO.setEndOfValidity(LocalDateTime.now());
-		natureDTO.setTjm(BigDecimal.valueOf(this.tjm));
+		natureDTO.setTjm((this.tjm));
 		natureDTO.setBonusPercentage(this.bonus);
 		natureDTO.setGivesBonus(true);
 		natureDTO.setCharged(true);
 		
 		Nature nature = new Nature(natureDTO);
 		assertEquals(this.id, nature.getId());
-		assertEquals(this.tjm, nature.getTjm().intValueExact());
+		assertEquals(this.tjm, nature.getTjm());
 		assertEquals(this.description, nature.getDescription());
 		// that end of validity is supposed to be null
 		assertTrue(nature.isCharged());

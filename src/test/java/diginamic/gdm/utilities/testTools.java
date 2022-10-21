@@ -259,7 +259,7 @@ public class testTools {
 		List<Expense> expenses = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			Expense expense = new Expense();
-			expense.setCost(BigDecimal.valueOf(10 * i));
+			expense.setCost(10f * i);
 			expense.setMission(mission);
 			expense.setDate(mission.getStartDate().plusDays(1));
 			expense.setExpenseType(types.get(i % types.size()));

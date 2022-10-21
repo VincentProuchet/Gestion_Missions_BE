@@ -135,7 +135,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException(ErrorCodes.expenseInvalid, ExpenseErrors.invalid.NULL_DATE);
 		}
 		// cost can't be negative
-		if (expense.getCost().compareTo(BigDecimal.valueOf(0)) < 0) {
+		if (expense.getCost() < 0) {
 			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.VALUE,ExpenseErrors.CANT_BE
 					, ExpenseErrors.NEGATIVE);
 		}

@@ -51,11 +51,11 @@ public class Nature {
 	private boolean charged = false;
 
 	/** tjm : the amount charged per working day to the client */
-	@Column(nullable = false)
-	private BigDecimal tjm = BigDecimal.ZERO ;
+	@Column(nullable = false, precision = 2)
+	private float tjm = 0f ;
 
 	/** bonusPercentage : the percentage of the charge which */
-	@Column(nullable = false)
+	@Column(nullable = false, precision = 2)
 	private Float bonusPercentage = 0f;
 
 	/** dateOfValidity : the date at which this nature can be used */
@@ -72,22 +72,13 @@ public class Nature {
 	@Column(nullable = false)
 	private String description;
 	
-	/**
-	 * Setter
-	 * will set tjm propertie of the Nature 
-	 * to the absolute value provided
-	 * sooooo ... no negative 
-	 * @param tjm provided
-	 */
-	public void setTjm(int tjm) {
-		this.tjm = BigDecimal.valueOf(tjm);
-	}
+	
 	/**
 	 * Setter
 	 * made because lombock is kinda not accepting overloading 
 	 * @param tjm
 	 */
-	public void setTjm(BigDecimal tjm) {
+	public void setTjm(float tjm) {
 		
 		this.tjm = tjm;
 	}

@@ -11,6 +11,7 @@ import diginamic.gdm.services.ScheduledTasksService;
 import diginamic.gdm.vars.GDMRoles;
 import diginamic.gdm.vars.GDMRoutes;
 import diginamic.gdm.vars.GDMVars;
+import diginamic.gdm.vars.errors.impl.MissionErrors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,20 +47,16 @@ public class MissionController {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
-
 	/**
 	 * The {@link MissionService} dependency.
 	 */
 	private MissionService missionService;
-
 	/** cityService */
 	private CityService cityService;
-
 	/**
 	 * The {@link ScheduledTasksService} dependency.
 	 */
 	private ScheduledTasksService scheduledTasksService;
-
 	/**
 	 * The list of missions assigned to the connected user
 	 * 
@@ -90,7 +87,7 @@ public class MissionController {
 		if (user.getId() == idManager) {
 			return missionService.missionsToValidate(idManager).stream().map(MissionDTO::new).toList();
 		}
-		throw new Exception("it is not allowed to get the missions waiting validation if you are not the manager");
+		throw new BadRequestException(MissionErrors.read.ACCESS_DENIED ,MissionErrors.NOT_MANAGER);
 	}
 
 	/**
@@ -104,26 +101,9 @@ public class MissionController {
 	public MissionDTO create(@RequestBody MissionDTO mission) throws Exception {
 		// make sure this creation is asked by the collaborator it is assigned to
 		Collaborator user = collaboratorService.getConnectedUser();
-		City startCity;
-		City arrivalCiTy;
+		City startCity = cityService.read(mission.getStartCity());
+		City arrivalCiTy = cityService.read(mission.getArrivalCity());
 
-		/**
-		 * these try catch are a prototype for an automated way of adding cities on the
-		 * fly it need to see a rework since the system is still case sensitive
-		 */
-
-		try {
-			startCity = cityService.read(mission.getStartCity());
-		} catch (BadRequestException e) {
-			startCity = new City(mission.getStartCity());
-			startCity = cityService.create(startCity);
-		}
-		try {
-			arrivalCiTy = cityService.read(mission.getArrivalCity());
-		} catch (BadRequestException e) {
-			arrivalCiTy = new City(mission.getArrivalCity());
-			arrivalCiTy = cityService.create(arrivalCiTy);
-		}
 		return new MissionDTO(missionService.create(new Mission(mission, startCity, arrivalCiTy, user)));
 	}
 
@@ -157,7 +137,7 @@ public class MissionController {
 		Collaborator assignee = mission.getCollaborator();
 		// we check the first right to update
 		if (user.getId() != assignee.getId()) {
-			throw new Exception("it is not allowed to update a mission for someone else if you are not the manager");
+			throw new BadRequestException(MissionErrors.update.CANT_UPDATE ,MissionErrors.status.NOT_YOURS);
 		}
 		Mission missionUpdated = new Mission(missionDTO);
 		missionUpdated.setStartCity(cityService.read(missionDTO.getStartCity()));
@@ -184,7 +164,7 @@ public class MissionController {
 			missionService.delete(id);
 			return;
 		}
-		throw new Exception("it is not allowed to delete a mission for someone else");
+		throw new BadRequestException(MissionErrors.status.CANT_DELETE,MissionErrors.status.NOT_YOURS);
 	}
 
 	/**
@@ -202,7 +182,7 @@ public class MissionController {
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
 			return new MissionDTO(missionService.validateMission(id));
 		}
-		throw new Exception("it is not allowed to validate a mission for someone not in your team");
+		throw new BadRequestException(MissionErrors.status.CANT_VALIDATE,MissionErrors.status.NOT_IN_YOUR_TEAM);
 
 	}
 
@@ -220,18 +200,18 @@ public class MissionController {
 
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
 			return new MissionDTO(missionService.RejectMission(id));
-		}
-		throw new Exception("it is not allowed to reject a mission for someone not in your team");
+		}throw new BadRequestException(MissionErrors.status.CANT_REJECT,MissionErrors.status.NOT_IN_YOUR_TEAM);
 	}
 	
 	/**
 	 * Resets a mission's status by updating its status to {@link Status#WAITING_VALIDATION WAITING_VALIDATION}
 	 * 
 	 * @param id The id corresponding to the mission to reset
+	 * @throws Exception,BadRequestException 
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.RESET)
 	@Secured(GDMRoles.MANAGER)
-	public MissionDTO reset(@PathVariable int id) throws Exception {
+	public MissionDTO reset(@PathVariable int id) throws Exception,BadRequestException {
 
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = missionService.read(id);
@@ -239,7 +219,7 @@ public class MissionController {
 		if (user.getId() == mission.getCollaborator().getManager().getId()) {
 			return new MissionDTO(missionService.resetMission(id));
 		}
-		throw new Exception("it is not allowed to reset a mission for someone not in your team");
+		throw new BadRequestException(MissionErrors.status.CANT_RESET,MissionErrors.status.NOT_IN_YOUR_TEAM);
 	}
 
 	/**

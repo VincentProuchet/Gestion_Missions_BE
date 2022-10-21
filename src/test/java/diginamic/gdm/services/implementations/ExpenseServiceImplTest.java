@@ -105,7 +105,7 @@ class ExpenseServiceImplTest {
 		LocalDateTime missionEnd = LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10);
 		Mission m1;
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(36));
+		m1.setBonus((36));
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(0));
 		m1.setStartCity(cities.get(0));
@@ -119,7 +119,7 @@ class ExpenseServiceImplTest {
 		
 		// mission that Can't get expenses
 		m1 = new Mission();
-		m1.setBonus(BigDecimal.valueOf(100));
+		m1.setBonus(100);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(0));
 		m1.setStartCity(cities.get(0));
@@ -132,7 +132,7 @@ class ExpenseServiceImplTest {
 		
 		Expense expense1;
 		expense1 = new Expense();
-		expense1.setCost(BigDecimal.valueOf(30));
+		expense1.setCost(30f);
 		expense1.setDate(tools.nextWorkDay(missionStart.plusDays(3)));
 		expense1.setTva(0.2f);
 		expense1.setExpenseType(expensetypes.get(0));
@@ -140,7 +140,7 @@ class ExpenseServiceImplTest {
 		expenses.add(expense1);
 
 		expense1 = new Expense();
-		expense1.setCost(BigDecimal.valueOf(30));
+		expense1.setCost(30f);
 		expense1.setDate(tools.nextWorkDay(missionStart.plusDays(3)));
 		expense1.setTva(0.2f);
 		expense1.setExpenseType(expensetypes.get(0));
@@ -180,7 +180,7 @@ class ExpenseServiceImplTest {
 		LocalDateTime date = tools.nextWorkDay(mission.getStartDate().plusDays(3));
 		assertThrows(BadRequestException.class, ()->this.service.create(expense));
 
-		expense.setCost(BigDecimal.valueOf(30));
+		expense.setCost(30f);
 		expense.setDate(date);
 		expense.setTva(0.2f);
 		expense.setExpenseType(et);
@@ -195,9 +195,9 @@ class ExpenseServiceImplTest {
 		assertThrows(BadRequestException.class,()->service.create(expense));		
 		expense.setDate(date);
 		// neg cost
-		expense.setCost(BigDecimal.valueOf(-30));
+		expense.setCost(-30f);
 		assertThrows(BadRequestException.class,()->service.create(expense));
-		expense.setCost(BigDecimal.valueOf(130));
+		expense.setCost(130f);
 		// neg taxes 
 		expense.setTva(-0.2f);
 		assertThrows(BadRequestException.class,()->service.create(expense));
@@ -233,7 +233,7 @@ class ExpenseServiceImplTest {
 		
 		assertDoesNotThrow( ()->this.service.update(id,expense));
 
-		expense.setCost(BigDecimal.valueOf(30));
+		expense.setCost(30f);
 		expense.setDate(date);
 		expense.setTva(0.2f);
 		expense.setExpenseType(et);
@@ -254,9 +254,9 @@ class ExpenseServiceImplTest {
 		assertThrows(BadRequestException.class,()->service.update(id,expense));		
 		expense.setDate(date);
 		// neg cost
-		expense.setCost(BigDecimal.valueOf(-30));
+		expense.setCost(-30f);
 		assertThrows(BadRequestException.class,()->service.update(id,expense));
-		expense.setCost(BigDecimal.valueOf(130));
+		expense.setCost(130f);
 		// neg taxes 
 		expense.setTva(-0.2f);
 		assertThrows(BadRequestException.class,()->service.update(id,expense));

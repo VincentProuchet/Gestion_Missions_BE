@@ -36,8 +36,8 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
             Nature nature = mission.getNature();
 
-            BigDecimal bonus = BigDecimal.valueOf(workedDays(mission) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
-
+            float bonus = (workedDays(mission) * nature.getBonusPercentage() / 100) *nature.getTjm();
+            
             mission.setBonus(bonus);
             mission.setHasBonusBeenEvaluated(true);
 

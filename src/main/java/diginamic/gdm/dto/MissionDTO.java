@@ -33,7 +33,7 @@ public class MissionDTO implements DTO<Mission> {
     /** arrivalCity */
     private CityDTO arrivalCity;
     /** bonus */
-    private BigDecimal bonus;
+    private float bonus;
     /** transport */
     private Transport transport;
     /** status */
