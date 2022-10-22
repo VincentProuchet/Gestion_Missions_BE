@@ -266,12 +266,11 @@ public class MissionServiceImpl implements MissionService {
 			LocalDateTime nextMissionStartDate = nextMission.getStartDate();
 			LocalDateTime nextMissionEndDate = nextMission.getEndDate();
 			if (startDate.isAfter(nextMissionStartDate) && startDate.isBefore(nextMissionEndDate)) {
-				throw new BadRequestException(MissionErrors.invalid.CANT_START_IN_NEXT_MISSION,
-						ErrorCodes.missionInvalid);
+				throw new BadRequestException(ErrorCodes.missionInvalid,MissionErrors.invalid.CANT_START_IN_NEXT_MISSION
+						);
 			}
 			if (endDate.isAfter(nextMissionStartDate) && endDate.isBefore(nextMissionEndDate)) {
-				throw new BadRequestException(MissionErrors.invalid.CANT_END_IN_NEXT_MISSION,
-						ErrorCodes.missionInvalid);
+				throw new BadRequestException(ErrorCodes.missionInvalid,MissionErrors.invalid.CANT_END_IN_NEXT_MISSION);
 			}
 		}
 		return isCollaboratorAvailable;
@@ -307,7 +306,7 @@ public class MissionServiceImpl implements MissionService {
 		Mission current = read(mission.getId());
 		// ckecks of ID's
 		if (id != current.getId()) {
-			throw new BadRequestException(MissionErrors.INCONSISTENT_ID, ErrorCodes.idInconsistent);
+			throw new BadRequestException(ErrorCodes.idInconsistent,MissionErrors.INCONSISTENT_ID);
 		}
 		// check database datas status
 		canBeUpdated(current);
