@@ -138,7 +138,7 @@ class ScheduledTasksServiceImplTest {
 		index = 0;
 		// 								0
 		m1 = new Mission();
-		m1.setBonus(36);
+
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -151,7 +151,7 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		// 								1
 		m1 = new Mission();
-		m1.setBonus(30f);
+
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -165,7 +165,7 @@ class ScheduledTasksServiceImplTest {
 		// 								2
 		index++;
 		m1 = new Mission();
-		m1.setBonus( 100f);
+	
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(2));
 		m1.setStartCity(this.cities.get(0));
@@ -179,7 +179,6 @@ class ScheduledTasksServiceImplTest {
 		// 							3
 		index++;
 		m1 = new Mission();
-		m1.setBonus( 36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -193,7 +192,6 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(1));
-		m1.setBonus( 36f);
 		m1.setMissionTransport(Transport.Car);
 		m1.setCollaborator(collaborators.get(4));
 		m1.setStatus(Status.INIT);
@@ -207,7 +205,7 @@ class ScheduledTasksServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
-		m1.setBonus( 100f);
+
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -222,6 +220,7 @@ class ScheduledTasksServiceImplTest {
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
 		m1.setBonus( 100f);
+        m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.INIT);
@@ -260,7 +259,7 @@ class ScheduledTasksServiceImplTest {
         Mission mission  ;
         //for (Mission mission : missionsWithBonusesToCompute) {
         // oui on n'en test que 100 parce que Maven n'aime pas attendre
-        for (int i=0 ;i<100 ;i++) {
+        for (int i=0 ;i<missionsWithBonusesToCompute.size() ;i++) {
         	mission = missionsWithBonusesToCompute.get(i);
         	actualValue =  missionService.read(mission.getId()).getBonus();
         	assertEquals(0, mission.getBonus());

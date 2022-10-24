@@ -383,8 +383,7 @@ class MissionServiceImplTest {
 		Collaborator collaborator = collaborators.get(6);
 
 		Mission mission = new Mission();
-		// assertThrows(BadRequestException.class,()->missionService.isThisMissionValid(mission,
-		// false));
+		assertThrows(BadRequestException.class,()->missionService.isThisMissionValid(mission,false));
 		mission.setBonus(100f);
 		mission.setMissionTransport(Transport.Flight);
 		mission.setNature(nature);
@@ -432,11 +431,13 @@ class MissionServiceImplTest {
 
 		// dates incompatible with flightTransport
 		mission.setMissionTransport(Transport.Flight);
-		mission.setStartDate(tools.nextWorkDay(LocalDateTime.now().plusDays(5)));
-		mission.setEndDate(tools.nextWorkDay(LocalDateTime.now().plusDays(15)));
-		assertThrows(BadRequestException.class, () -> missionService.isThisMissionValid(mission, false));
-
+		LocalDateTime start = LocalDateTime.now().plusDays(6);
+		mission.setStartDate(start);
+		mission.setEndDate(tools.nextWorkDay(start.plusDays(15)));
+		assertThrows(BadRequestException.class, () -> missionService.isThisMissionValid(mission, true));
+		
 		mission.setMissionTransport(Transport.Car);
+		mission.setStartDate(tools.nextWorkDay(start));
 		// changed transport
 		assertDoesNotThrow(() -> missionService.isThisMissionValid(mission, false));
 

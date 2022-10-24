@@ -75,7 +75,7 @@ public class InitDataDB {
 	@Autowired
 	private MissionRepository missionRepository;
 	@Autowired
-	private MissionService missionService;	
+	private MissionService missionService;
 	@Autowired
 	private RoleService roleService;
 	@Autowired
@@ -88,8 +88,7 @@ public class InitDataDB {
 	private Roles userR;
 	private Roles adminR;
 	private Roles managerR;
-	
-	
+
 	private final String paramInitDBName = "intidb";
 	private List<Collaborator> coll = new ArrayList<>();
 	private List<Nature> natures = new ArrayList<>();
@@ -123,28 +122,27 @@ public class InitDataDB {
 
 		adminR = new Roles(Role.ADMIN);
 		adminR = roleService.create(adminR);
-		ApplicationParams paramdInitDB =new ApplicationParams();
+		ApplicationParams paramdInitDB = new ApplicationParams();
 		paramdInitDB.setValueb(false);
 		// we search the initDB parameter
 		try {
 			// if it exist
 			paramdInitDB = this.paramsR.read(paramInitDBName);
 		} catch (Exception e) {
-			//if it doesn't exist
+			// if it doesn't exist
 			System.err.println(e.getMessage());
-			// we reste DB to empty 
+			// we reste DB to empty
 			// because of duplicate entries
 			this.deleteDb();
 			// we create it
-			
+
 			paramdInitDB.setId(0);
 			paramdInitDB.setName(paramInitDBName);
 			paramdInitDB.setValueb(false);
 			paramdInitDB = this.paramsR.create(paramdInitDB);
-		}
-		finally {
+		} finally {
 			// in any case we check the value
-			if(!paramdInitDB.isValueb()) {
+			if (!paramdInitDB.isValueb()) {
 				// if false we initaialize the database
 				this.initDB();
 				paramdInitDB.setValueb(true);
@@ -220,11 +218,12 @@ public class InitDataDB {
 	private void giveMissionTo(Collaborator coll, int yearsPrior) {
 		LocalDateTime backTime = now.minusDays(now.getDayOfYear()).minusYears(yearsPrior);
 		int rand = 0;
-		for (; backTime.isBefore(now);backTime = backTime.plusDays(12)) {
+		List<Mission> local = new ArrayList<>();
+		for (; backTime.isBefore(now); backTime = backTime.plusDays(12)) {
 			// validated, begin years prior end 11 days after
 			Mission newMission = new Mission();
 			rand = giveMeAnumber(natures.size());
-			newMission.setNature(natures.get( rand ));
+			newMission.setNature(natures.get(rand));
 			rand = giveMeAnumber(Cities.size());
 			newMission.setStartCity(Cities.get(rand));
 			rand = giveMeAnumber(Cities.size());
@@ -234,8 +233,10 @@ public class InitDataDB {
 			newMission.setStatus(Status.VALIDATED);
 			newMission.setStartDate(backTime);
 			newMission.setEndDate(nextWeek(backTime.plusDays(11)));
-			missions.add(missionRepository.save(newMission));
+			local.add(newMission);
 		}
+
+		this.missions.addAll(missionRepository.saveAll(local));
 	}
 
 	/**
@@ -243,22 +244,26 @@ public class InitDataDB {
 	 * 
 	 */
 	private void createCities() {
+		List<City> local = new ArrayList<>();
+
+		local.add(new City(0, "montpellier"));
+		local.add(new City(0, "béziers"));
+		local.add(new City(0, "narbonne"));
+		local.add(new City(0, "agde"));
+		local.add(new City(0, "Saint-Remy-en-Bouzemont-Saint-Genest-et-Isson"));
+		local.add(new City(0, "séte"));
+		local.add(new City(0, "valras"));
+		local.add(new City(0, "paris"));
+//			local.add(cityService.create(new City(0, "la tour sur orb")));
+//			local.add(cityService.create(new City(0, "la tour sur mer")));
+//			local.add(cityService.create(new City(0, "la salvetat sur âgout")));
+		local.add(new City(0, "frontignan"));
+		local.add(new City(0, "lattes"));
+		local.add(new City(0, "lyon"));
+		local.add(new City(0, "marseille"));
+
 		try {
-			Cities.add(cityService.create(new City(0, "montpellier")));
-			Cities.add(cityService.create(new City(0, "béziers")));
-			Cities.add(cityService.create(new City(0, "narbonne")));
-			Cities.add(cityService.create(new City(0, "agde")));
-			Cities.add(cityService.create(new City(0, "Saint-Remy-en-Bouzemont-Saint-Genest-et-Isson")));
-			Cities.add(cityService.create(new City(0, "séte")));
-			Cities.add(cityService.create(new City(0, "valras")));
-			Cities.add(cityService.create(new City(0, "paris")));
-//			Cities.add(cityService.create(new City(0, "la tour sur orb")));
-//			Cities.add(cityService.create(new City(0, "la tour sur mer")));
-//			Cities.add(cityService.create(new City(0, "la salvetat sur âgout")));
-			Cities.add(cityService.create(new City(0, "frontignan")));
-			Cities.add(cityService.create(new City(0, "lattes")));
-			Cities.add(cityService.create(new City(0, "lyon")));
-			Cities.add(cityService.create(new City(0, "marseille")));
+			this.Cities.addAll(cityRepository.saveAll(local));
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -273,12 +278,13 @@ public class InitDataDB {
 	 * @throws BadRequestException
 	 */
 	private void createNatures(String natureName, int yearsPrior) throws BadRequestException {
+		List <Nature> local = new ArrayList<>();
 		LocalDateTime thisYear = LocalDateTime.now();
-		thisYear =  thisYear.minusDays(thisYear.getDayOfYear());
+		thisYear = thisYear.minusDays(thisYear.getDayOfYear());
 		LocalDateTime priorsYear = thisYear.minusYears(yearsPrior);
 		Nature newNature;
 
-		for (; priorsYear.isBefore(thisYear);  priorsYear =priorsYear.plusYears(1)) {
+		for (; priorsYear.isBefore(thisYear); priorsYear = priorsYear.plusYears(1)) {
 			newNature = new Nature();
 			newNature.setTjm((float) (Math.random() * 200));
 			newNature.setDescription(natureName);
@@ -291,7 +297,7 @@ public class InitDataDB {
 			newNature.setCharged(true);
 			newNature.setDateOfValidity(priorsYear);
 			newNature.setEndOfValidity(priorsYear.plusYears(1));
-			natures.add(this.natureRepository.save(newNature));
+			local.add(newNature);
 		}
 		// on créer la dernière nature come active
 		newNature = new Nature();
@@ -306,20 +312,24 @@ public class InitDataDB {
 		newNature.setCharged(true);
 		newNature.setDateOfValidity(priorsYear);
 		newNature.setEndOfValidity(null);
-		natures.add(this.natureRepository.save(newNature));
+		local.add(newNature);
+		
+		natures.addAll(this.natureRepository.saveAll(local));
 
 	}
 
 	/**
-	 * ajoute des dépense à toutes les missions validées ou terminées
-	 * et dont la date de fin est dans le passé
-	 *  présentes dans la base de données
+	 * ajoute des dépense à toutes les missions validées ou terminées et dont la
+	 * date de fin est dans le passé présentes dans la base de données
 	 */
 	private void createExpense() {
 		// pour chaque mission
+		this.missions = missionRepository.findAll();
+		List<Expense> local = new ArrayList<>();
+		
 		for (Mission mission : missions) {
 			if ((mission.getStatus() == Status.VALIDATED || mission.getStatus() == Status.ENDED)
-					&& mission.getEndDate().isBefore(now) ) {
+					&& mission.getEndDate().isBefore(now)) {
 				// pour chaque type de dépense
 				for (ExpenseType et : expenseTypes) {
 					Expense exp = new Expense();
@@ -331,11 +341,13 @@ public class InitDataDB {
 					// no more than 10 days from mission start
 					int day = giveMeAnumber(10);
 					exp.setDate(mission.getStartDate().plusDays(day));
-					this.expenses.add(this.expenseRepository.save(exp));
+					local.add(exp);
 				}
 			}
 
 		}
+
+		this.expenses.addAll(this.expenseRepository.saveAll(local));
 
 	}
 
@@ -355,9 +367,9 @@ public class InitDataDB {
 		expenseTypes.add(expenseTypeRepository.save(new ExpenseType(0, "papier toilette")));
 
 	}
-	
+
 	private int giveMeAnumber(int limit) {
-		return (int) ((Math.random()*100)%limit);
+		return (int) ((Math.random() * 100) % limit);
 	}
 
 	private LocalDateTime previousWeek(LocalDateTime date) {
@@ -395,7 +407,7 @@ public class InitDataDB {
 	 * @throws BadRequestException
 	 * @return a JPA instance of the newly created collaborator
 	 */
-	public Collaborator giveMeACollaborator(String name, Roles... roles) {		
+	public Collaborator giveMeACollaborator(String name, Roles... roles) {
 		Collaborator collaborator = new Collaborator();
 		collaborator.setFirstName(name);
 		collaborator.setLastName(name);
@@ -414,181 +426,178 @@ public class InitDataDB {
 		return collaborator;
 
 	}
-	
+
 	/**
-	 * ici ce sont les données crées par joseph
-	 * un peu modifiées 
+	 * ici ce sont les données crées par joseph un peu modifiées
 	 * 
-	 * les différences
-	 * 	elles ne sont plus assignée à un collaborateur fixe
-	 * 	les missions dans le passé ont le statut rejected
-	 *  les villes 
-	 *  et les natures sont choisies aléatoirement
+	 * les différences elles ne sont plus assignée à un collaborateur fixe les
+	 * missions dans le passé ont le statut rejected les villes et les natures sont
+	 * choisies aléatoirement
+	 * 
 	 * @param coll
 	 */
 	public void giveOldSetMissions(Collaborator coll) {
-		
-		//LocalDateTime backTime = now.minusDays(now.getDayOfYear()).minusYears(yearsPrior);
+
+		// LocalDateTime backTime =
+		// now.minusDays(now.getDayOfYear()).minusYears(yearsPrior);
 		int rand = 0;
 		// validated, begin now, end next week, collaborator 0
-		
-        Mission newMission = new Mission();
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+
+		Mission newMission = new Mission();
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-		
-		
+
 		newMission.setCollaborator(coll);
-        newMission.setStatus(Status.INIT);
-        newMission.setStartDate(now);
-        newMission.setEndDate(nextWeek(now));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
+		newMission.setStatus(Status.INIT);
+		newMission.setStartDate(now);
+		newMission.setEndDate(nextWeek(now));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
 
-        // validated, begin nextYear, end nextYear + 1 week, collaborator 0
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		// validated, begin nextYear, end nextYear + 1 week, collaborator 0
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        
-        newMission.setCollaborator(coll);
-        newMission.setStatus(Status.VALIDATED);
-        newMission.setMissionTransport(Transport.Flight);
-        newMission.setStartDate(nextYear);
-        newMission.setEndDate(nextWeek(nextYear));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
 
-        // rejected, begin last week, end nextMonth, collaborator 0
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		newMission.setCollaborator(coll);
+		newMission.setStatus(Status.VALIDATED);
+		newMission.setMissionTransport(Transport.Flight);
+		newMission.setStartDate(nextYear);
+		newMission.setEndDate(nextWeek(nextYear));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
+
+		// rejected, begin last week, end nextMonth, collaborator 0
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        newMission.setCollaborator(coll);
-        newMission.setMissionTransport(Transport.Car);
-        newMission.setStatus(Status.REJECTED);
-        newMission.setStartDate(previousWeek(now));
-        newMission.setEndDate(nextMonth(now));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
 
-        // init, begin now, promo nature, end nextMonth, collaborator 2
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		newMission.setCollaborator(coll);
+		newMission.setMissionTransport(Transport.Car);
+		newMission.setStatus(Status.REJECTED);
+		newMission.setStartDate(previousWeek(now));
+		newMission.setEndDate(nextMonth(now));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
+
+		// init, begin now, promo nature, end nextMonth, collaborator 2
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        newMission.setCollaborator(coll);
-        newMission.setMissionTransport(Transport.Car);
-        newMission.setStatus(Status.INIT);
-        newMission.setStartDate(now);
-        newMission.setEndDate(nextMonth(now));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
 
-        // init, begin next month, end nextYear, collaborator 3
-        
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		newMission.setCollaborator(coll);
+		newMission.setMissionTransport(Transport.Car);
+		newMission.setStatus(Status.INIT);
+		newMission.setStartDate(now);
+		newMission.setEndDate(nextMonth(now));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
+
+		// init, begin next month, end nextYear, collaborator 3
+
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        newMission.setCollaborator(coll);
-        newMission.setMissionTransport(Transport.Car);
-        newMission.setStatus(Status.INIT);
-        newMission.setStartDate(nextMonth(now));
-        newMission.setEndDate(nextYear);
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
 
+		newMission.setCollaborator(coll);
+		newMission.setMissionTransport(Transport.Car);
+		newMission.setStatus(Status.INIT);
+		newMission.setStartDate(nextMonth(now));
+		newMission.setEndDate(nextYear);
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
 
-        // 3 missions ended, two of which need the night computing for their bonus
-        // 2 validated, 1 refused (illustrate an issue here), 2 with disabled natures
+		// 3 missions ended, two of which need the night computing for their bonus
+		// 2 validated, 1 refused (illustrate an issue here), 2 with disabled natures
 
-        // validated, start last year, end lastyear + 1 week, old promo nature, manager1
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		// validated, start last year, end lastyear + 1 week, old promo nature, manager1
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        newMission.setCollaborator(coll);
-        newMission.setMissionTransport(Transport.Train);
-        newMission.setStatus(Status.REJECTED);
-        newMission.setStartDate(lastYear);
-        newMission.setEndDate(nextWeek(lastYear));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
 
-        // validated, start lastyear + 1 week, end lastyear + 1 month, deprecated nature, collaborator 0
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		newMission.setCollaborator(coll);
+		newMission.setMissionTransport(Transport.Train);
+		newMission.setStatus(Status.REJECTED);
+		newMission.setStartDate(lastYear);
+		newMission.setEndDate(nextWeek(lastYear));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
+
+		// validated, start lastyear + 1 week, end lastyear + 1 month, deprecated
+		// nature, collaborator 0
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        newMission.setCollaborator(coll);
-        newMission.setMissionTransport(Transport.Flight);
-        newMission.setStatus(Status.REJECTED);
-        newMission.setStartDate(nextWeek(lastYear));
-        newMission.setEndDate(nextMonth(lastYear));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
 
-        // rejected, start lastyear, end lastyear + 1 week, basic nature, admin
-        newMission = new Mission();
-        
-        newMission.setStartCity(Cities.get(0));
-        rand = giveMeAnumber(natures.size());
-		newMission.setNature(natures.get( rand ));
+		newMission.setCollaborator(coll);
+		newMission.setMissionTransport(Transport.Flight);
+		newMission.setStatus(Status.REJECTED);
+		newMission.setStartDate(nextWeek(lastYear));
+		newMission.setEndDate(nextMonth(lastYear));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
+
+		// rejected, start lastyear, end lastyear + 1 week, basic nature, admin
+		newMission = new Mission();
+
+		newMission.setStartCity(Cities.get(0));
+		rand = giveMeAnumber(natures.size());
+		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setStartCity(Cities.get(rand));
 		rand = giveMeAnumber(Cities.size());
 		newMission.setEndCity(Cities.get(rand));
-        
-        newMission.setCollaborator(coll);
-        newMission.setMissionTransport(Transport.Car);
-        newMission.setStatus(Status.REJECTED);
-        newMission.setStartDate(lastYear);
-        newMission.setEndDate(nextWeek(lastYear));
-        newMission = missionRepository.save(newMission);
-        missions.add(newMission);
+
+		newMission.setCollaborator(coll);
+		newMission.setMissionTransport(Transport.Car);
+		newMission.setStatus(Status.REJECTED);
+		newMission.setStartDate(lastYear);
+		newMission.setEndDate(nextWeek(lastYear));
+		newMission = missionRepository.save(newMission);
+		missions.add(newMission);
 	}
-	
+
 	/**
 	 * delete all db
 	 */
@@ -599,6 +608,6 @@ public class InitDataDB {
 		this.expenseTypeRepository.deleteAll();
 		this.natureRepository.deleteAll();
 		this.cityRepository.deleteAll();
-		
+
 	}
 }
