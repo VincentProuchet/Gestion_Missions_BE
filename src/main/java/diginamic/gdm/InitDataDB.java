@@ -444,7 +444,7 @@ public class InitDataDB {
 		// validated, begin now, end next week, collaborator 0
 
 		Mission newMission = new Mission();
-		newMission.setStartCity(Cities.get(0));
+
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -462,7 +462,6 @@ public class InitDataDB {
 		// validated, begin nextYear, end nextYear + 1 week, collaborator 0
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -481,7 +480,6 @@ public class InitDataDB {
 		// rejected, begin last week, end nextMonth, collaborator 0
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -500,7 +498,6 @@ public class InitDataDB {
 		// init, begin now, promo nature, end nextMonth, collaborator 2
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -520,7 +517,6 @@ public class InitDataDB {
 
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -542,7 +538,6 @@ public class InitDataDB {
 		// validated, start last year, end lastyear + 1 week, old promo nature, manager1
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -562,7 +557,7 @@ public class InitDataDB {
 		// nature, collaborator 0
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
+
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());
@@ -581,7 +576,7 @@ public class InitDataDB {
 		// rejected, start lastyear, end lastyear + 1 week, basic nature, admin
 		newMission = new Mission();
 
-		newMission.setStartCity(Cities.get(0));
+
 		rand = giveMeAnumber(natures.size());
 		newMission.setNature(natures.get(rand));
 		rand = giveMeAnumber(Cities.size());

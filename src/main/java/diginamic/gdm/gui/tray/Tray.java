@@ -63,7 +63,7 @@ public class Tray {
 		System.out.println(p.getRoot());
 
 //		Image image = getIconImage() ;
-		Image image = toolkit.getImage(p.toString());
+		Image image = toolkit.getImage(p.toAbsolutePath().toString());
 
 		// create a action listener to listen for default action executed on the tray
 		// icon
@@ -84,6 +84,12 @@ public class Tray {
 				mainWindow.setVisible(true);
 			}
 		};
+
+		ActionListener toggleAction = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mainWindow.setVisible(!mainWindow.isVisible());
+			}
+		};
 		// create a popup menu
 		PopupMenu popup = new PopupMenu();
 		// create menu item for the default action
@@ -99,7 +105,7 @@ public class Tray {
 		trayIcon = new TrayIcon(image, this.windowsTitle, popup);
 		// set the TrayIcon properties
 		trayIcon.setImageAutoSize(true);
-		trayIcon.addActionListener(openAction);
+		trayIcon.addActionListener(toggleAction);
 		// ...
 		// add the tray image
 		try {

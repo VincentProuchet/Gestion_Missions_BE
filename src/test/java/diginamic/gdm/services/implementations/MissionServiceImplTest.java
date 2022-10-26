@@ -151,6 +151,7 @@ class MissionServiceImplTest {
 		// create // not used 0
 		m1 = new Mission();
 		m1.setBonus(36f);
+        m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -164,6 +165,7 @@ class MissionServiceImplTest {
 		// Update // validated Mission can't be updated 1
 		m1 = new Mission();
 		m1.setBonus(36f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -178,6 +180,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setBonus(100f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(2));
 		m1.setStartCity(this.cities.get(0));
@@ -192,6 +195,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setBonus(36f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -204,8 +208,10 @@ class MissionServiceImplTest {
 		// mission to validate 4
 		index++;
 		m1 = new Mission();
+		
 		m1.setNature(natures.get(1));
 		m1.setBonus(36f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setCollaborator(collaborators.get(4));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -220,6 +226,7 @@ class MissionServiceImplTest {
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
 		m1.setBonus(100f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -234,6 +241,7 @@ class MissionServiceImplTest {
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
 		m1.setBonus(100f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.REJECTED);
