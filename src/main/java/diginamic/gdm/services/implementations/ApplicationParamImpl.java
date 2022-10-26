@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.ApplicationParams;
 import diginamic.gdm.repository.ApplicationParamsRepository;
-import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.ApplicationParamService;
 import lombok.AllArgsConstructor;
 

@@ -163,8 +163,7 @@ public class NatureServiceImpl implements NatureService {
 				activeNature = this.justUpdate(registeredNature, nature);
 			}
 			if (activeNature == null) {
-				throw new BadRequestException("Something went wrong and the nature couldn't be updated ",
-						ErrorCodes.natureInvalid);
+				throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.update.CANT_BE_MODIFIED);
 			}
 			// then we update possible future missions with the new nature
 			// update missions that referred to the original nature
@@ -228,27 +227,6 @@ public class NatureServiceImpl implements NatureService {
 		return;
 	}
 
-	/**
-	 * test if a nature has an assigned mission this is a data integrity test made
-	 * for internal use
-	 * 
-	 * @param nature to test
-	 * @return true if it get to its end
-	 * @throws BadRequestException
-	 */
-	@Deprecated
-	private void isNatureAssigned(Nature nature) throws BadRequestException {
-		// we get mission that have This nature assigned
-		List<Mission> missions = missionRepository.findByNatureOrderByStartDateDesc(nature);
-		// if there is mission
-		if (missions.size() > 0) {
-			// we check only the last mission in chronology
-			Mission lastMission = missions.get(0);
-			if (lastMission.getStartDate().isAfter(LocalDateTime.now())) {
-				throw new BadRequestException(ErrorCodes.natureCantBeDeleted,NatureErrors.delete.IS_ASSIGNED);
-			}
-		}
-	}
 
 	@Override
 	public List<Nature> getActiveNatures() {

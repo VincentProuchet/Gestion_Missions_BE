@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,12 +30,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import diginamic.gdm.gui.MainFrame;
 import diginamic.gdm.gui.TestFrame;
 import diginamic.gdm.gui.tray.Tray;
+import diginamic.gdm.repository.CollaboratorRepository;
+import diginamic.gdm.services.CollaboratorService;
 
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @EnableScheduling
 public class GestionDesMissionsBeApplication {
+	@Autowired
+	private CollaboratorService collService;
 	
 	private static MainFrame mainWindow;
 	private static Tray apptray; 

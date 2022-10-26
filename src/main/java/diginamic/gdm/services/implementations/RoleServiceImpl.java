@@ -1,6 +1,5 @@
 package diginamic.gdm.services.implementations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -41,7 +40,6 @@ public class RoleServiceImpl implements RoleService {
 	 */
 	public void saveAutorities() {
 		
-		ArrayList<Roles> rols = new ArrayList<Roles>();
 		for (Role r : Role.values()) {
 				this.create(new Roles(r));	
 		}

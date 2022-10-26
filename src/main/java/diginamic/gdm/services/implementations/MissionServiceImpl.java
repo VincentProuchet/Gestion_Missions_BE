@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.Collaborator;
@@ -22,7 +21,6 @@ import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
 import diginamic.gdm.vars.GDMVars;
-import diginamic.gdm.vars.errors.ErrorsMessage;
 import diginamic.gdm.vars.errors.impl.MissionErrors;
 import lombok.AllArgsConstructor;
 
@@ -187,7 +185,7 @@ public class MissionServiceImpl implements MissionService {
 		Nature nature = natureService.read(mission.getNature().getId());
 		// the mission s nature must be active at the date of start
 		if (!natureService.isNatureActive(nature, startDate)) {
-			throw new BadRequestException(MissionErrors.invalid.INACTIVE_NATURE, ErrorCodes.missionInvalid);
+			throw new BadRequestException(ErrorCodes.missionInvalid,MissionErrors.invalid.INACTIVE_NATURE);
 		}
 
 		// the mission has a collaborator

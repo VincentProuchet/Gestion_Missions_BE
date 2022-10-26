@@ -112,7 +112,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	public Collaborator getConnectedUser() throws BadRequestException {
 		SecurityContext context = SecurityContextHolder.getContext();// I left if well sequenced on purpose
 		Authentication auth = context.getAuthentication();		
-		 if (auth == null) { throw new BadRequestException(CollaboratorErrors.NO_AUTHENTICATION_CONTEXT); }
+		 if (auth == null) { throw new BadRequestException(ErrorCodes.collaboratorNotFound,CollaboratorErrors.NO_AUTHENTICATION_CONTEXT); }
 		String username = (String) auth.getPrincipal();
 		return collaboratorRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
