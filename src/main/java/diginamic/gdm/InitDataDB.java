@@ -1,6 +1,5 @@
 package diginamic.gdm;
 
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -146,6 +145,8 @@ public class InitDataDB {
 			// in any case we check the value
 			if(!paramdInitDB.isValueb()) {
 				// if false we initaialize the database
+				this.deleteDb(); // delete first
+				
 				this.initDB();
 				paramdInitDB.setValueb(true);
 				this.paramsR.update(paramdInitDB);
@@ -164,7 +165,6 @@ public class InitDataDB {
 	public void initDB() throws Exception, BadRequestException {
 		System.out.println("init mock data");
 
-		// 5 cities
 		this.createCities();
 		this.createExpenseTypes();
 
@@ -193,8 +193,8 @@ public class InitDataDB {
 		int yearsPrior = 5;
 		// 6 natures
 		this.createNatures("assistance", 5);
-		this.createNatures("recherche et dévellopement", 5);
-		this.createNatures("lêchage d'envellopes", 5);
+		this.createNatures("recherche et développement", 5);
+		this.createNatures("lêchage d'enveloppes", 5);
 		this.createNatures("installation de systèmes", 5);
 		this.createNatures("observation", 5);
 		this.createNatures("devis", 5);
@@ -218,6 +218,7 @@ public class InitDataDB {
 	}
 
 	private void giveMissionTo(Collaborator coll, int yearsPrior) {
+		List<Mission> local = new ArrayList<>();
 		LocalDateTime backTime = now.minusDays(now.getDayOfYear()).minusYears(yearsPrior);
 		int rand = 0;
 		for (; backTime.isBefore(now);backTime = backTime.plusDays(12)) {
@@ -234,8 +235,9 @@ public class InitDataDB {
 			newMission.setStatus(Status.VALIDATED);
 			newMission.setStartDate(backTime);
 			newMission.setEndDate(nextWeek(backTime.plusDays(11)));
-			missions.add(missionRepository.save(newMission));
+			local.add(newMission);
 		}
+		missions.addAll(missionRepository.saveAll(local));
 	}
 
 	/**
@@ -273,6 +275,7 @@ public class InitDataDB {
 	 * @throws BadRequestException
 	 */
 	private void createNatures(String natureName, int yearsPrior) throws BadRequestException {
+		List<Nature> local = new ArrayList<Nature>();
 		LocalDateTime thisYear = LocalDateTime.now();
 		thisYear =  thisYear.minusDays(thisYear.getDayOfYear());
 		LocalDateTime priorsYear = thisYear.minusYears(yearsPrior);
@@ -291,7 +294,7 @@ public class InitDataDB {
 			newNature.setCharged(true);
 			newNature.setDateOfValidity(priorsYear);
 			newNature.setEndOfValidity(priorsYear.plusYears(1));
-			natures.add(this.natureRepository.save(newNature));
+			local.add(newNature);
 		}
 		// on créer la dernière nature come active
 		newNature = new Nature();
@@ -306,8 +309,8 @@ public class InitDataDB {
 		newNature.setCharged(true);
 		newNature.setDateOfValidity(priorsYear);
 		newNature.setEndOfValidity(null);
-		natures.add(this.natureRepository.save(newNature));
-
+		local.add(newNature);
+		natures.addAll(this.natureRepository.saveAll(local));
 	}
 
 	/**
@@ -316,6 +319,8 @@ public class InitDataDB {
 	 *  présentes dans la base de données
 	 */
 	private void createExpense() {
+		
+		List<Expense> local = new ArrayList<>();
 		// pour chaque mission
 		for (Mission mission : missions) {
 			if ((mission.getStatus() == Status.VALIDATED || mission.getStatus() == Status.ENDED)
@@ -331,11 +336,12 @@ public class InitDataDB {
 					// no more than 10 days from mission start
 					int day = giveMeAnumber(10);
 					exp.setDate(mission.getStartDate().plusDays(day));
-					this.expenses.add(this.expenseRepository.save(exp));
+					local.add(exp);
 				}
 			}
 
 		}
+		this.expenseRepository.saveAll(local);
 
 	}
 
