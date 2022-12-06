@@ -10,62 +10,51 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import diginamic.gdm.Enums.Role;
-import diginamic.gdm.dao.City;
-import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
-import diginamic.gdm.dao.Roles;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
-import diginamic.gdm.services.CityService;
-import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.RoleService;
 import diginamic.gdm.utilities.testTools;
 
 // ce sont des tests d integrations et pas des tests unitaires... je sais pas trop comment tester plus petit ici
-// ben en fait sur les servicesImpl  tu peux pas, il te faut un contexte Spring  
+// ben en fait sur les servicesImpl  tu peux pas, il te faut un contexte Spring
 /**
  * these test are Only for Nature We dont test the dependency with other
  * Entities nor Services those kind of test belong to a separate class
- * 
- * @author Vincent 
+ *
+ * @author Vincent
  * @author Joseph // ton travail était une excellente base pour le refactoring de cette Junit,
- * 					 tu est déjà un bon programmeur	et tu ne peu que t'améliorer 
- * 
+ * 					 tu est déjà un bon programmeur	et tu ne peu que t'améliorer
+ *
  */
 @SpringBootTest
 @ActiveProfiles("Test")
 class NatureServiceImplTest {
 
 	/** natureServiceImpl
-	 * Well this is supposed to be the class testing it 
+	 * Well this is supposed to be the class testing it
 	 *
 	 */
 	@Autowired
 	private NatureServiceImpl natureService;
 	@Autowired // we need this. some test need us to pass around the NatureService
 	private NatureRepository natureRepository;
-	/** collabService 
+	/** collabService
 	 * to test :
-	 *  - isNatureInUse 
+	 *  - isNatureInUse
 	 */
 	@Autowired
 	private RoleService roleSrv;
@@ -80,7 +69,7 @@ class NatureServiceImplTest {
 	private CityRepository cityRepository;
 	@Autowired
 	private testTools tools ;
-	
+
 
 	private int naturesTobeExpected = 0;
 	private String TestDescription = "TestNature";
@@ -88,7 +77,7 @@ class NatureServiceImplTest {
 	private float marginError = 0.001f;
 	private LocalDateTime beforeCreation = LocalDateTime.now();
 	private LocalDateTime afterCreation = LocalDateTime.now();
-	
+
 
 
 	@Test
@@ -99,7 +88,7 @@ class NatureServiceImplTest {
 	/**
 	 * only test if the creation of a nature create and persist the entities with the
 	 * desired values
-	 * 
+	 *
 	 * @throws BadRequestException
 	 */
 	@Test
@@ -146,7 +135,7 @@ class NatureServiceImplTest {
 
 	/**
 	 * to refactor we don't need to use a nature in DB to test that
-	 * 
+	 *
 	 * @throws BadRequestException
 	 */
 	@Test
@@ -171,7 +160,7 @@ class NatureServiceImplTest {
 
 	/**
 	 * need data in db
-	 * 
+	 *
 	 * @throws BadRequestException
 	 */
 	@Test
@@ -185,12 +174,12 @@ class NatureServiceImplTest {
 		this.natureRepository.save(nature1);
 		this.natureRepository.save(nature1);
 		assertFalse( natureService.canBeUpdated(nature));
-	
+
 	}
 
 	/**
 	 * to refactor we need to create a new one in it before
-	 * 
+	 *
 	 * @throws BadRequestException
 	 */
 	@Test
@@ -206,7 +195,7 @@ class NatureServiceImplTest {
 	@Test
 	@Order(4)
 	void isThisNatureInUse() throws Exception {
-		
+
 		Nature nature = this.pleaseCreateOneNature(TestDescription + "is this nature in use");
 		// just created so it should say no
 		assertFalse(natureService.isThisNatureInUse(nature));
@@ -214,7 +203,7 @@ class NatureServiceImplTest {
 		Mission mission = tools.pleaseCreateAMission(nature);
 		// with a mission associated it should say yes
 		assertTrue(natureService.isThisNatureInUse(nature));
-		
+
 	}
 
 	@Test
@@ -250,9 +239,9 @@ class NatureServiceImplTest {
      */
     @Test
     void update() throws BadRequestException {
-    	
+
         Nature nature = tools.giveMeJustANature(TestDescription+"update");
-        assertNull(nature.getEndOfValidity());        
+        assertNull(nature.getEndOfValidity());
         nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 6, 10, 10, 10));
         nature.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
         Nature persistedNature  = natureRepository.save(nature);
@@ -265,7 +254,7 @@ class NatureServiceImplTest {
 
 	/**
 	 * this is to persist a nature with default values and a provided description
-	 * 
+	 *
 	 * @param description
 	 * @return a persisted nature reference
 	 * @throws BadRequestException
@@ -281,17 +270,17 @@ class NatureServiceImplTest {
 
 		return this.natureService.create(nature);
 	}
-	
+
 	public void setTools() {
 		this.tools.setRoleSrv(roleSrv);
 		this.tools.setCollaboratorRepository(this.collaboratorRepository);
 		this.tools.setCityRepository(this.cityRepository);
 		this.tools.setExpenseTypeRepository(expenseTypeRepository);
 		this.tools.setMissionRepository(missionRepository);
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 }

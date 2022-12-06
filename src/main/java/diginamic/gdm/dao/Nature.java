@@ -1,6 +1,5 @@
 package diginamic.gdm.dao;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -18,7 +17,7 @@ import lombok.Setter;
 
 /**
  * Entity which represents the nature of a mission
- *  
+ *
  *  id
  *  giveBonus
  *  charged
@@ -27,7 +26,7 @@ import lombok.Setter;
  *  dateOfValidity
  *  endOfValidity
  *  description
- * 
+ *
  * @author Joseph
  * @author Vincent
  */
@@ -71,33 +70,33 @@ public class Nature {
 	/** description : the name of the nature */
 	@Column(nullable = false)
 	private String description;
-	
-	
+
+
 	/**
 	 * Setter
-	 * made because lombock is kinda not accepting overloading 
+	 * made because lombock is kinda not accepting overloading
 	 * @param tjm
 	 */
 	public void setTjm(float tjm) {
-		
+
 		this.tjm = tjm;
 	}
-	
+
 	/**
 	 * SETTER
 	 * les description des natures sont toujours stockées en minuscules
-	 * ne sont autorisés que les caractères alphanumérique, les tirets et espaces 
-	 * les espaces multiples ne sont pas autorisés 
+	 * ne sont autorisés que les caractères alphanumérique, les tirets et espaces
+	 * les espaces multiples ne sont pas autorisés
 	 * de même que les tirets multiples
 	 * @param description
 	 */
 	public void setDescription(String description) {
 		description = description.replaceAll(GDMVars.REGEX_NAMES,"");
 		description = description.replaceAll(GDMVars.REGEX_STUPID_WHITSPACES," ");
-		description = description.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");	
-		this.description = description.trim().toLowerCase();		
+		description = description.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");
+		this.description = description.trim().toLowerCase();
 	}
-	
+
 	public Nature(NatureDTO nature) {
 		this.id = nature.getId();
 		this.setDescription(nature.getDescription());

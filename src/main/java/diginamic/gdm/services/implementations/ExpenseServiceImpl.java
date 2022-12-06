@@ -15,13 +15,14 @@ import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.services.ExpenseService;
 import diginamic.gdm.services.ExpenseTypeService;
 import diginamic.gdm.services.MissionService;
+import diginamic.gdm.vars.errors.ErrorsMessage;
 import diginamic.gdm.vars.errors.impl.ExpenseErrors;
 import diginamic.gdm.vars.errors.impl.MissionErrors;
 import lombok.AllArgsConstructor;
 
 /**
  * Implementation for {@link ExpenseService}.
- * 
+ *
  * @author DorianBoel
  */
 @Service
@@ -79,7 +80,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		// this test is also an overkill
 		// the missionService would throw an error if the id didn't exist
 		if (id != current.getId()) {
-			throw new BadRequestException(ErrorCodes.idInconsistent, ExpenseErrors.INCONSISTENT_ID);
+			throw new BadRequestException(ErrorCodes.idInconsistent, ErrorsMessage.INCONSISTENT_ID);
 		}
 		// since this one throws is own exceptions
 		// of course we test the data we want to put
@@ -106,7 +107,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public Expense isExpenseValid(Expense expense) throws Exception {
-		
+
 		if(expense.getMission()==null) {
 			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.invalid.NULL_MISSION);
 		}
@@ -121,12 +122,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 		// are pointing to the same mission
 		// its an overkill and only done here only to have more feedback when testing
 		if (expense.getMission().getId() != mission.getId()) {
-			throw new BadRequestException(ErrorCodes.idInconsistent, ExpenseErrors.INCONSISTENT_ID);
+			throw new BadRequestException(ErrorCodes.idInconsistent, ErrorsMessage.INCONSISTENT_ID);
 		}
 
 		if (!missionService.isMissionDone(mission.getId())) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.NOT_DONE,
-					ExpenseErrors.EXPENSE, ExpenseErrors.CANT_BE, ExpenseErrors.ADDED);
+					ErrorsMessage.EXPENSE, ErrorsMessage.CANT_BE, ErrorsMessage.ADDED);
 		}
 		// is the date valid?
 		LocalDateTime date = expense.getDate();
@@ -135,15 +136,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 		// cost can't be negative
 		if (expense.getCost() < 0) {
-			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.VALUE,ExpenseErrors.CANT_BE
-					, ExpenseErrors.NEGATIVE);
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ErrorsMessage.VALUE,ErrorsMessage.CANT_BE
+					, ErrorsMessage.NEGATIVE);
 		}
 		// TVA can't be negative
 		if (expense.getTva() < 0) {
-			throw new BadRequestException(ErrorCodes.expenseInvalid,ExpenseErrors.TAXES,ExpenseErrors.CANT_BE
-					, ExpenseErrors.NEGATIVE);
+			throw new BadRequestException(ErrorCodes.expenseInvalid,ErrorsMessage.TAXES,ErrorsMessage.CANT_BE
+					, ErrorsMessage.NEGATIVE);
 		}
-		// TVA can't over 100 
+		// TVA can't over 100
 		if (expense.getTva() > 100) {
 			throw new BadRequestException(ErrorCodes.expenseInvalid, ExpenseErrors.invalid.TAXES_OVERFLOW);
 		}
@@ -156,15 +157,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 			throw new BadRequestException( ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_AFTER);
 		}
 		switch (date.getDayOfWeek()) {
-		case SATURDAY: 
-		case SUNDAY: 
+		case SATURDAY:
+		case SUNDAY:
 			throw new BadRequestException( ErrorCodes.expenseInvalid,ExpenseErrors.invalid.IS_WEEKEND);
 		default:
 			break;
-						
+
 		}
-		
-		
+
+
 		return expense;
 	}
 

@@ -12,7 +12,7 @@ import lombok.Getter;
  * They are suposed to be referenced as ordinal so please
  * If you need to add more
  * ad them at the end
- * 
+ *
  * @author Joseph
  *	@author Vincent please don't mind the entities annotations
  *	that was a prevention in case this one gets promoted from enum to class
@@ -28,15 +28,15 @@ public enum Transport {
 	/** Flight */
 	Flight(3,"aérien")
 	;
-	@Id	
-	private int id;	
+	@Id
+	private int id;
 	/** localizedLabel label */
 	@Column(name= "label")
 	private  String localizedLabel;
-	
+
 	@Transient
 	public static Locales activeLocale = Locales.fr;
-	
+
 	/** Constructeur
 	 * @param id
 	 * @param locale
@@ -47,17 +47,17 @@ public enum Transport {
 		this.localizedLabel = label;
 	}
 	/** Constructeur
-	 * 
+	 *
 	 */
 	private Transport() {
 	}
-	
+
 	/**
-	 * return the localized label 
+	 * return the localized label
 	 * depending of the active locale of the TransportEnum
 	 * @return the label
 	 */
-	public String getLabel() {		
+	public String getLabel() {
 		return this.localizedLabel;
 	}
 

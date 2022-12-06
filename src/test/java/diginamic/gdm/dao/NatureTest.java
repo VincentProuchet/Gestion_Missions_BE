@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
@@ -15,14 +14,14 @@ import diginamic.gdm.dto.NatureDTO;
 /**
  * classe de test de DAO-DTO/Nature on teste aussi la conversion depuis et vers
  * le DTO
- * 
+ *
  * @author Vincent
  *
  */
 public class NatureTest {
-	
+
 	private float marginError = 0.001f;
-	private int marginTime = 1;// in minutes 
+	private int marginTime = 1;// in minutes
 	private int id = 256;
 	private String description = "nature-isolé perdue";
 	private String jammedDescription = " na,?;.:/!§%*^¨$£¤&~#'([|`_\\@=+<>ture---isolé       perdue";
@@ -56,8 +55,8 @@ public class NatureTest {
 		nature.setBonusPercentage(this.bonus);
 		nature.setGivesBonus(true);
 		nature.setCharged(true);
-		
-		
+
+
 		assertEquals(this.id, nature.getId());
 		assertEquals(this.tjm, nature.getTjm());
 		assertEquals(this.description, nature.getDescription());
@@ -67,7 +66,7 @@ public class NatureTest {
 		// here we test the margin error of float
 		assertTrue(nature.getBonusPercentage() + marginError >= nature.getBonusPercentage());
 		assertTrue(nature.getBonusPercentage() - marginError <= nature.getBonusPercentage());
-		
+
 		// we check if date of validity is now
 		assertTrue(nature.getDateOfValidity().isAfter(beforeCreation));
 		assertTrue(nature.getEndOfValidity().isAfter(beforeCreation));
@@ -93,7 +92,7 @@ public class NatureTest {
 		natureDAO.setBonusPercentage(this.bonus);
 		natureDAO.setGivesBonus(true);
 		natureDAO.setCharged(true);
-		
+
 		NatureDTO natureDTO = new NatureDTO(natureDAO);
 		assertEquals(this.id, natureDTO.getId());
 		assertEquals(this.tjm, natureDTO.getTjm());
@@ -104,7 +103,7 @@ public class NatureTest {
 		// here we test the margin error of float
 		assertTrue(natureDTO.getBonusPercentage() + marginError >= natureDTO.getBonusPercentage());
 		assertTrue(natureDTO.getBonusPercentage() - marginError <= natureDTO.getBonusPercentage());
-		
+
 		// we check if date of validity is now
 		assertTrue(natureDTO.getDateOfValidity().isAfter(beforeCreation));
 		assertTrue(natureDTO.getEndOfValidity().isAfter(beforeCreation));
@@ -129,7 +128,7 @@ public class NatureTest {
 		natureDTO.setBonusPercentage(this.bonus);
 		natureDTO.setGivesBonus(true);
 		natureDTO.setCharged(true);
-		
+
 		Nature nature = new Nature(natureDTO);
 		assertEquals(this.id, nature.getId());
 		assertEquals(this.tjm, nature.getTjm());
@@ -140,17 +139,17 @@ public class NatureTest {
 		// here we test the margin error of float
 		assertTrue(nature.getBonusPercentage() + marginError >= nature.getBonusPercentage());
 		assertTrue(nature.getBonusPercentage() - marginError <= nature.getBonusPercentage());
-		
+
 		// we check if date of validity is now
 		assertTrue(nature.getDateOfValidity().isAfter(beforeCreation));
 		assertTrue(nature.getEndOfValidity().isAfter(beforeCreation));
-		
+
 		//you have to give it some delta or the test can't make the difference,
 		// this is because the localdateTime isn't precise enought to compare
 		// micro-seconds
 		assertTrue(nature.getDateOfValidity().isBefore(afterCreation));
 		assertTrue(nature.getEndOfValidity().isBefore(afterCreation));
-		
+
 	}
 
 }

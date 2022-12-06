@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Roles;
 import diginamic.gdm.dto.CollaboratorDTO;
-import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.vars.GDMRoles;
 import diginamic.gdm.vars.GDMRoutes;
@@ -22,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for user account and authentication related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
@@ -39,11 +38,11 @@ public class AccountController {
 
 	/**
 	 * Registers a new user account
-	 * 
+	 *
 	 * @param collaborator The new collaborator whose account to register
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	
+
 	@PostMapping(path = GDMRoutes.SIGNUP)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
@@ -57,8 +56,8 @@ public class AccountController {
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param collaborator The new collaborator whose account to register
 	 * @throws Exception
 	 */
@@ -66,12 +65,12 @@ public class AccountController {
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured({GDMRoles.COLLABORATOR})
 	public CollaboratorDTO getConnectedUser() throws Exception {
-		return new CollaboratorDTO(collaboratorService.getConnectedUser());			
+		return new CollaboratorDTO(collaboratorService.getConnectedUser());
 	}
 
 	/**
 	 * this is a function for password Encryption for making things easier to test
-	 * 
+	 *
 	 * @param password
 	 * @return
 	 */

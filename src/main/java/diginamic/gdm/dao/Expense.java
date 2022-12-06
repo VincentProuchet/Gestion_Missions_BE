@@ -1,6 +1,5 @@
 package diginamic.gdm.dao;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -19,7 +18,7 @@ import lombok.Setter;
 
 /**
  * Entity which represents a Collaborator
- * 
+ *
  * @author Joseph
  *
  */
@@ -53,17 +52,17 @@ public class Expense {
 	@ManyToOne
 	@JoinColumn(name = "expenseTypeID",nullable = false)
 	private ExpenseType expenseType;
-	
-	
+
+
 	public Expense(ExpenseDTO e) {
 		this.id = e.getId();
 		this.date = e.getDate();
 		this.cost = e.getCost();
-		
+
 		this.mission = new Mission();
 		this.mission.setId(e.getIdMission());
 		this.tva = e.getTva();
 		this.expenseType =new ExpenseType(e.getType()) ;
-		
+
 	}
 }

@@ -19,12 +19,13 @@ import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.errors.ErrorsMessage;
 import diginamic.gdm.vars.errors.impl.CollaboratorErrors;
 import lombok.AllArgsConstructor;
 
 /**
  * Implementation for {@link CollaboratorService}.
- * 
+ *
  * @author DorianBoel
  */
 @Service
@@ -47,7 +48,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	@Override
 	public Collaborator create(Collaborator collaborator) throws Exception {
 		// names Must respect some standards
-		this.isValidUser(collaborator);;
+		this.isValidUser(collaborator);
 		// that username must not allready exist
 		if (!this.collaboratorRepository.findByUsername(collaborator.getUsername()).isEmpty()) {
 			throw new BadRequestException(ErrorCodes.collaboratorNotFound,
@@ -73,7 +74,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		current.setEmail(collaborator.getEmail());
 		current.setManager(collaborator.getManager());
 		current.setUsername(collaborator.getUsername());
-		
+
 		// we get a list with the current user filtered out
 		Optional<Collaborator> OptexistingUsers = this.collaboratorRepository.findByUsername(collaborator.getUsername())
 				.filter((element) -> element.getId() != current.getId());
@@ -108,11 +109,12 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 	 * user informations exist in database
 	 *
 	 */
+	@Override
 	@Secured({ GDMRoles.ADMIN, GDMRoles.MANAGER, GDMRoles.COLLABORATOR })
 	public Collaborator getConnectedUser() throws BadRequestException {
 		SecurityContext context = SecurityContextHolder.getContext();// I left if well sequenced on purpose
-		Authentication auth = context.getAuthentication();		
-		 if (auth == null) { throw new BadRequestException(ErrorCodes.collaboratorNotFound,CollaboratorErrors.NO_AUTHENTICATION_CONTEXT); }
+		Authentication auth = context.getAuthentication();
+		 if (auth == null) { throw new BadRequestException(ErrorCodes.collaboratorNotFound,ErrorsMessage.NO_AUTHENTICATION_CONTEXT); }
 		String username = (String) auth.getPrincipal();
 		return collaboratorRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException(CollaboratorErrors.read.NOT_FOUND));
@@ -129,26 +131,22 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 		if (!Collaborator.isValidFirstName(collaborator.getFirstName())) {
 			throw new BadRequestException(ErrorCodes.collaboratorNotFound, CollaboratorErrors.create.BAD_FIRSTNAME);
 		}
-		;
 		if (!Collaborator.isValidLastName(collaborator.getLastName())) {
 			throw new BadRequestException(ErrorCodes.collaboratorNotFound, CollaboratorErrors.create.BAD_LASTNAME);
 		}
-		;
 		if (!Collaborator.isValidUserName(collaborator.getUsername())) {
 
 			throw new BadRequestException(ErrorCodes.collaboratorNotFound, CollaboratorErrors.create.BAD_USERNAME);
 		}
-		;
 		if (!Collaborator.isValidEmail(collaborator.getEmail())) {
 			throw new BadRequestException(ErrorCodes.collaboratorNotFound, CollaboratorErrors.create.BAD_EMAIL);
 		}
-		;
 	}
 
 	@Override
 	public Collaborator delete(int id, Collaborator collaborator) throws Exception {
 		if(id!= collaborator.getId()) {
-			throw new BadRequestException(ErrorCodes.idInconsistent,CollaboratorErrors.INCONSISTENT_ID);
+			throw new BadRequestException(ErrorCodes.idInconsistent,ErrorsMessage.INCONSISTENT_ID);
 		}
 		Collaborator current = this.read(id);
 		// deletion is just setting it to  not active

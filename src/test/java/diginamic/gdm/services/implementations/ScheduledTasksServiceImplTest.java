@@ -1,5 +1,23 @@
 package diginamic.gdm.services.implementations;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
@@ -14,27 +32,9 @@ import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.ScheduledTasksService;
 import diginamic.gdm.utilities.testTools;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * These tests use the data created by InitDataDB
- * 
+ *
  * @author Joseph
  */
 @SpringBootTest
@@ -50,11 +50,11 @@ class ScheduledTasksServiceImplTest {
     private CollaboratorRepository collaboratorRepository;
     @Autowired
     private MissionRepository missionRepository;
-    
-    
+
+
     @Autowired
     private ScheduledTasksService scheduledTasksService;
-    
+
     @Autowired
 	private testTools tools;
 
@@ -70,8 +70,8 @@ class ScheduledTasksServiceImplTest {
 
 	private Collaborator manager;
 	private final float marginError = 0.001f;
-    
-    
+
+
     @BeforeAll
 	public void init() {
 		Nature nature = new Nature();
@@ -166,7 +166,7 @@ class ScheduledTasksServiceImplTest {
 		// 								2
 		index++;
 		m1 = new Mission();
-	
+
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(2));
 		m1.setStartCity(this.cities.get(0));
@@ -267,7 +267,7 @@ class ScheduledTasksServiceImplTest {
         	bonus =  (this.scheduledTasksService.workedDays(mission) * nature1.getBonusPercentage() / 100)*(nature1.getTjm());
         	assertTrue(bonus + marginError >= actualValue);
         	assertTrue(bonus - marginError <= actualValue);
-			
+
 		}
 
     }

@@ -11,11 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.exceptions.BadRequestException;
@@ -34,7 +31,7 @@ public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler 
 
 	/**
 	 * logout handling will set session's cookies life's to 0
-	 * 
+	 *
 	 */
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -52,11 +49,12 @@ public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler 
 
 	/**
 	 * will be called if authentication doesn't throw any error
-	 * 
+	 *
 	 * it form a correct http response
-	 * 
-	 * 
+	 *
+	 *
 	 */
+	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
 		Collaborator collaborator = new Collaborator();
@@ -69,32 +67,32 @@ public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler 
 			// we clear te security context
 			SecurityContextHolder.clearContext();
 			// if everything goes smoothly we set an header
-			
+
 			response.addHeader(" user logged out ", collaborator.getFirstName());
 			// and a status
 			response.setStatus(200);
-			
-		} catch (NullPointerException e) { // string conversion error 
-			
+
+		} catch (NullPointerException e) { // string conversion error
+
 			response.addHeader(" Nullpointer error ", "  string convertion ");
 			response.setStatus(418);
-			
+
 			throw new ServletException(e.getMessage());
-			
+
 		} catch (BadRequestException e) { // find by username errors
 			response.addHeader(" user not found ", "  there is no user ");
 			response.setStatus(418);
-			
+
 			throw new ServletException(e.getMessage());
-			
+
 		}catch (Exception e) { // everything else
 			// if not
 			response.addHeader(" we don't know ", " you will have to figure out this yourself ");
 			// i'm a teapot
 			response.setStatus(418);
-			
+
 			throw new ServletException(e.getMessage());
-			
+
 		}
 
 	}

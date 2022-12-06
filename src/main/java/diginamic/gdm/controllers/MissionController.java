@@ -2,17 +2,6 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
-import diginamic.gdm.dao.City;
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.services.CityService;
-import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.ScheduledTasksService;
-import diginamic.gdm.vars.GDMRoles;
-import diginamic.gdm.vars.GDMRoutes;
-import diginamic.gdm.vars.GDMVars;
-import diginamic.gdm.vars.errors.impl.MissionErrors;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,15 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import diginamic.gdm.dao.City;
+import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dto.MissionDTO;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.services.CityService;
+import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.MissionService;
+import diginamic.gdm.services.ScheduledTasksService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.GDMRoutes;
+import diginamic.gdm.vars.GDMVars;
+import diginamic.gdm.vars.errors.impl.MissionErrors;
 import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for {@link Mission} related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
@@ -59,7 +58,7 @@ public class MissionController {
 	private ScheduledTasksService scheduledTasksService;
 	/**
 	 * The list of missions assigned to the connected user
-	 * 
+	 *
 	 * @return A list of all missions
 	 */
 	@GetMapping
@@ -92,7 +91,7 @@ public class MissionController {
 
 	/**
 	 * Saves a new {@link Mission} instance.
-	 * 
+	 *
 	 * @param mission The new mission within the request body to be registered
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -109,7 +108,7 @@ public class MissionController {
 
 	/**
 	 * Gets a specific registered mission.
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to get
 	 * @return The registered mission corresponding to the given id
 	 */
@@ -122,7 +121,7 @@ public class MissionController {
 
 	/**
 	 * Updates the data for a specific registered mission.
-	 * 
+	 *
 	 * @param id         The id corresponding to the mission to update
 	 * @param missionDTO The mission withing the request body with modified info
 	 * @return The resulting mission with updated info
@@ -149,7 +148,7 @@ public class MissionController {
 
 	/**
 	 * Deletes a specific registered mission.
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to delete
 	 */
 	@DeleteMapping(path = "{id}")
@@ -170,7 +169,7 @@ public class MissionController {
 	/**
 	 * Validates a mission by updating its status to {@link Status#VALIDATED
 	 * VALIDATED}
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to validate
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.VALIDER)
@@ -188,7 +187,7 @@ public class MissionController {
 
 	/**
 	 * Rejects a mission by updating its status to {@link Status#REJECTED REJECTED}
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to reject
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.REJETER)
@@ -202,12 +201,12 @@ public class MissionController {
 			return new MissionDTO(missionService.RejectMission(id));
 		}throw new BadRequestException(MissionErrors.status.CANT_REJECT,MissionErrors.status.NOT_IN_YOUR_TEAM);
 	}
-	
+
 	/**
 	 * Resets a mission's status by updating its status to {@link Status#WAITING_VALIDATION WAITING_VALIDATION}
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to reset
-	 * @throws Exception,BadRequestException 
+	 * @throws Exception,BadRequestException
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.RESET)
 	@Secured(GDMRoles.MANAGER)

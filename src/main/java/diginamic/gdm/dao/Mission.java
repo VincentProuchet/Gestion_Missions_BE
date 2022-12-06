@@ -1,6 +1,5 @@
 package diginamic.gdm.dao;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +26,7 @@ import lombok.Setter;
 
 /**
  * Entity which represents a Collaborator
- * 
+ *
  * @author Joseph
  *
  */
@@ -92,9 +91,9 @@ public class Mission {
 	@ManyToOne
 	@JoinColumn(name = "collaboratorID", nullable = false)
 	private Collaborator collaborator;
-	
+
 	public Mission(MissionDTO m, City start, City arrival,Collaborator collaborator) {
-		
+
 		super();
 		this.id = m.getId();
 		this.startDate = m.getStart();
@@ -116,9 +115,9 @@ public Mission(MissionDTO m) {
 		this.nature = m.getNature().instantiate();
 		this.status = m.getStatus();
 	}
-	
 
-	
-	
-	
+
+
+
+
 }

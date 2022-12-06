@@ -10,7 +10,7 @@ import diginamic.gdm.vars.errors.ErrorsMessage;
 public class CityErrors extends ErrorsMessage {
 	/**
 	 * pour les erreur lors de lectures
-	 * 
+	 *
 	 * @author Vincent
 	 *
 	 */

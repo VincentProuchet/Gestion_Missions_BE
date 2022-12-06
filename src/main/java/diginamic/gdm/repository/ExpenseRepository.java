@@ -1,11 +1,11 @@
 package diginamic.gdm.repository;
 
-import diginamic.gdm.dao.Mission;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import diginamic.gdm.dao.Expense;
-
-import java.util.List;
+import diginamic.gdm.dao.Mission;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
 

@@ -4,7 +4,7 @@ import diginamic.gdm.vars.errors.ErrorsMessage;
 
 /**
  * classe de message d'erreur pour les natures
- * 
+ *
  * @author Vincent
  *
  */
@@ -15,11 +15,11 @@ public class NatureErrors extends ErrorsMessage {
 	 */
 	public static class create {
 		public static String SAME_NAME = "A nature with the same name allready exist, please consider modify the existing one instead. ";
-		
+
 	}
 	/**
 	 * pour les erreur lors de lectures
-	 * 
+	 *
 	 * @author Vincent
 	 *
 	 */
@@ -36,7 +36,7 @@ public class NatureErrors extends ErrorsMessage {
 		/** CANT_BE_MODIFIED */
 		public static String CANT_BE_MODIFIED = "Nature can't be modified. ";
 		public static String CANT_CHANGE_NAME = "you are trying to change the name of the nature and there is allready an active nature of the name : ";
-		
+
 	}
 
 	/**

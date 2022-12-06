@@ -68,6 +68,7 @@ public class Tray {
 		// create a action listener to listen for default action executed on the tray
 		// icon
 		ActionListener closingAction = new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// execute default action of the application
 				// notification
@@ -80,12 +81,14 @@ public class Tray {
 		};
 
 		ActionListener openAction = new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainWindow.setVisible(true);
 			}
 		};
 
 		ActionListener toggleAction = new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				mainWindow.setVisible(!mainWindow.isVisible());
 			}

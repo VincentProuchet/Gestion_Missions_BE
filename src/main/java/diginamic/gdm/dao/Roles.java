@@ -16,7 +16,7 @@ import lombok.Setter;
 /**
  * Represents a collaborator's role/function user for storing GrantedAuthorities
  * in database and bind them to userAccounts
- * 
+ *
  * @author DorianBoel
  */
 @Entity
@@ -52,7 +52,7 @@ public class Roles implements GrantedAuthority {
 
 	/**
 	 * Constructeur for Role enum conversion to JPA entities
-	 * 
+	 *
 	 * @param role
 	 */
 	public Roles(Role role) {

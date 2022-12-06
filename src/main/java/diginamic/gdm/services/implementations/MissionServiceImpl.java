@@ -21,6 +21,7 @@ import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.MissionService;
 import diginamic.gdm.services.NatureService;
 import diginamic.gdm.vars.GDMVars;
+import diginamic.gdm.vars.errors.ErrorsMessage;
 import diginamic.gdm.vars.errors.impl.MissionErrors;
 import lombok.AllArgsConstructor;
 
@@ -32,7 +33,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 @Transactional
-//@Value("${path.to.your.property.key}") // for injecting properties values 
+//@Value("${path.to.your.property.key}") // for injecting properties values
 public class MissionServiceImpl implements MissionService {
 
 	/** delay to respect when selecting flight as transport */
@@ -53,7 +54,7 @@ public class MissionServiceImpl implements MissionService {
 
 	/**
 	 * returns true, but check if the mission status is INIT or REJECTED
-	 * 
+	 *
 	 * @param mission the mission
 	 * @return true if deleted
 	 * @throws Exception
@@ -174,12 +175,12 @@ public class MissionServiceImpl implements MissionService {
 		LocalDateTime endDate = mission.getEndDate();
 		if (mission.getCollaborator() == null) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.NULL_COLLABORATOR,
-					MissionErrors.NULL);
+					ErrorsMessage.NULL);
 		}
 		Collaborator  collaborator = this.collaboratorService.read(mission.getCollaborator().getId());
 		if (mission.getNature() == null) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.NULL_NATURE,
-					MissionErrors.NULL);
+					ErrorsMessage.NULL);
 		}
 		// nature, are mandatory
 		Nature nature = natureService.read(mission.getNature().getId());
@@ -192,19 +193,19 @@ public class MissionServiceImpl implements MissionService {
 		// dates not null, start before end, start after now
 		if (startDate == null) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.START_CANT_BE,
-					MissionErrors.NULL);
+					ErrorsMessage.NULL);
 		}
 		if (endDate == null) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.END_CANT_BE,
-					MissionErrors.NULL);
+					ErrorsMessage.NULL);
 		}
 		if (startDate.isBefore(now)) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.START_CANT_BE,
-					MissionErrors.BEFORE, MissionErrors.NOW);
+					ErrorsMessage.BEFORE, ErrorsMessage.NOW);
 		}
 		if (endDate.isBefore(startDate)) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.END_CANT_BE,
-					MissionErrors.BEFORE, MissionErrors.START);
+					ErrorsMessage.BEFORE, ErrorsMessage.START);
 		}
 
 		// start and end not in WE
@@ -215,14 +216,14 @@ public class MissionServiceImpl implements MissionService {
 			case SATURDAY:
 			case SUNDAY:
 				throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.START_CANT_BE,
-						MissionErrors.ON, startDay.toString());
+						ErrorsMessage.ON, startDay.toString());
 			default:
 			}
 			switch (endDay) {
 			case SATURDAY:
 			case SUNDAY:
 				throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.END_CANT_BE,
-						MissionErrors.ON, endDay.toString());
+						ErrorsMessage.ON, endDay.toString());
 			default:
 			}
 		}
@@ -242,7 +243,7 @@ public class MissionServiceImpl implements MissionService {
 		if (mission.getMissionTransport() == Transport.Flight
 				&& startDate.isBefore(now.plusDays(minDayBeforeFligthTransport))) {
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.invalid.AERIAL_TRANSPORT,
-					String.valueOf(minDayBeforeFligthTransport), MissionErrors.FROM_TODAY);
+					String.valueOf(minDayBeforeFligthTransport), ErrorsMessage.FROM_TODAY);
 		}
 
 		// the mission can't be in the same time as another one
@@ -304,7 +305,7 @@ public class MissionServiceImpl implements MissionService {
 		Mission current = read(mission.getId());
 		// ckecks of ID's
 		if (id != current.getId()) {
-			throw new BadRequestException(ErrorCodes.idInconsistent,MissionErrors.INCONSISTENT_ID);
+			throw new BadRequestException(ErrorCodes.idInconsistent,ErrorsMessage.INCONSISTENT_ID);
 		}
 		// check database datas status
 		canBeUpdated(current);
@@ -323,12 +324,12 @@ public class MissionServiceImpl implements MissionService {
 		current.setStatus(Status.INIT);
 		return this.missionRepository.save(current);
 	}
-	
+
 	/**
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
@@ -336,15 +337,15 @@ public class MissionServiceImpl implements MissionService {
 	@Override
 	public Mission validateMission(int id) throws BadRequestException {
 		Mission mission = this.read(id);
-		
+
 		switch (mission.getStatus()) {
-		
+
 		case INIT:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_INIT);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_INIT);
 		case REJECTED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_REJECTED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_REJECTED);
 		case ENDED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);
 		case VALIDATED:
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_VALIDATED);
 		case WAITING_VALIDATION:
@@ -352,13 +353,13 @@ public class MissionServiceImpl implements MissionService {
 			mission.setStatus(Status.VALIDATED);
 			return missionRepository.save(mission);
 		}
-		
+
 	}
 	/**
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
@@ -367,13 +368,13 @@ public class MissionServiceImpl implements MissionService {
 	public Mission RejectMission(int id) throws BadRequestException {
 		Mission mission = this.read(id);
 		switch (mission.getStatus()) {
-		
+
 		case INIT:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_INIT);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_INIT);
 		case REJECTED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_REJECTED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_REJECTED);
 		case ENDED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);
 		case VALIDATED:
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_VALIDATED);
 		case WAITING_VALIDATION:
@@ -381,13 +382,13 @@ public class MissionServiceImpl implements MissionService {
 			mission.setStatus(Status.REJECTED);
 			return missionRepository.save(mission);
 		}
-		
+
 	}
 	/**
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
@@ -395,27 +396,27 @@ public class MissionServiceImpl implements MissionService {
 	@Override
 	public Mission NightComputing(int id) throws BadRequestException {
 		Mission mission = this.read(id);
-		switch (mission.getStatus()) {		
+		switch (mission.getStatus()) {
 		case REJECTED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_REJECTED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_REJECTED);
 		case ENDED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);
 		case VALIDATED:
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_VALIDATED);
 		case WAITING_VALIDATION:
 			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_WAITING_VALIDATION);
-		case INIT:			
+		case INIT:
 		default:
 			mission.setStatus(Status.WAITING_VALIDATION);
 			return missionRepository.save(mission);
 		}
-		
+
 	}
 	/**
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
@@ -425,17 +426,17 @@ public class MissionServiceImpl implements MissionService {
 		Mission mission = this.read(id);
 		switch (mission.getStatus()) {
 		case INIT:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_INIT);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_INIT);
 		case WAITING_VALIDATION:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_WAITING_VALIDATION);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_WAITING_VALIDATION);
 		case ENDED:
-			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);			
+			throw new BadRequestException(ErrorCodes.missionInvalid, MissionErrors.update.IS_ENDED);
 		case VALIDATED:
 		case REJECTED:
 		default:
 			mission.setStatus(Status.WAITING_VALIDATION);
 			return missionRepository.save(mission);
 		}
-		
+
 	}
 }

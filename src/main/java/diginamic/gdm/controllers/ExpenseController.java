@@ -30,14 +30,14 @@ import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for {@link Expense} related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
 @RequestMapping(path = GDMRoutes.EXPENSE, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ExpenseController {
-	
+
 	/**
 	 * The {@link ExpenseService} dependency.
 	 */
@@ -52,7 +52,7 @@ public class ExpenseController {
 	/**
 	 * Gets the full list of registered expenses.
 	 * For test purposes
-	 * 
+	 *
 	 * @return A list of all expenses
 	 */
 	@GetMapping
@@ -60,10 +60,10 @@ public class ExpenseController {
 	public List<ExpenseDTO> list() throws Exception {
 		return expenseService.list().stream().map(ExpenseDTO::new).toList();
 	}
-	
+
 	/**
 	 * Saves a new {@link Expense} instance.
-	 * 
+	 *
 	 * @param expenseDTO The new expense within the request body to be registered
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -80,15 +80,15 @@ public class ExpenseController {
 			Expense newExpense = new Expense(expenseDTO);
 			// and give it he mission its supposed to
 			newExpense.setMission(mission);
-					
+
 			return new ExpenseDTO(expenseService.create(newExpense));
 		}
 		throw new Exception("Only the assignee can create an expense for a mission");
 	}
-	
+
 	/**
 	 * Gets a specific registered expense.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense to get
 	 * @return The registered expense corresponding to the given id
 	 */
@@ -105,7 +105,7 @@ public class ExpenseController {
 	}
 	/**
 	 * Gets the expenses associated to a given mission
-	 * 
+	 *
 	 * @param id The id of the mission
 	 * @return the list of expenses of the mission
 	 */
@@ -120,11 +120,11 @@ public class ExpenseController {
 		}
 		throw new BadRequestException(ErrorCodes.expenseNotFound,"Only the assignee can see the expenses of a mission");
 	}
-	
-	
+
+
 	/**
 	 * Updates the data for a specific registered expense.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense to update
 	 * @param expenseDTO The expense within the request body with modified info
 	 * @return The resulting expense with updated info
@@ -144,10 +144,10 @@ public class ExpenseController {
 		}
 		throw new Exception("Only the assignee can update the expenses of a mission");
 	}
-	
+
 	/**
 	 * Deletes a specific registered expense.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense to delete
 	 */
 	@DeleteMapping(path = "{id}")
@@ -160,5 +160,5 @@ public class ExpenseController {
 		}
 		expenseService.delete(id);
 	}
-	
+
 }

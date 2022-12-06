@@ -13,7 +13,7 @@ import lombok.Setter;
 
 /**
  * Entity which represents a city
- * 
+ *
  * @author Joseph
  *
  */
@@ -22,14 +22,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class City {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id = 0;
-
+	
 	/** name : the name of the city */
 	private String name;
-	
+
 	/** Constructeur
 	 * @param id
 	 * @param name
@@ -38,7 +38,7 @@ public class City {
 		this.id =id;
 		this.setName(name);
 	}
-	
+
 	/** Constructeur
 	 * @param city
 	 */
@@ -48,27 +48,27 @@ public class City {
 		}
 		this.setName(city.getName());
 	}
-	
+
 	/**
-	 * setter 
+	 * setter
 	 * les noms de villes sont tous en minuscule
 	 * et passes par un retrait des caractères indésirables dans un nom
 	 * @param name
-	 * @TODO refactor we won't modify user entry 
-	 * 			but notify him of a wrong format 
-	 * 
+	 * @TODO refactor we won't modify user entry
+	 * 			but notify him of a wrong format
+	 *
 	 */
 	public void setName(String name) {
-		name =name.strip().toLowerCase();
+		name = name.strip().toLowerCase();
 		this.name =  name;
 	}
 	/**
-	 * 
+	 *
 	 * @param name of a city
-	 * @return true if the provided string is a valid name for the object 
+	 * @return true if the provided string is a valid name for the object
 	 */
 	public static boolean isValidName(String name) {
-		return name.matches(GDMVars.REGEX_CITY_NAMES); 
+		return name.matches(GDMVars.REGEX_CITY_NAMES);
 	}
 
 }

@@ -51,7 +51,7 @@ public class ApplicationParamImpl implements ApplicationParamService {
 	@Override
 	public ApplicationParams update(ApplicationParams param) throws Exception {
 		ApplicationParams paramP = this.read(param.getId());
-		
+
 		paramP.setText(param.getText());
 		paramP.setValue(param.getValue());
 		paramP.setValuef(param.getValuef());
@@ -61,7 +61,7 @@ public class ApplicationParamImpl implements ApplicationParamService {
 
 	@Override
 	public ApplicationParams delete(ApplicationParams param) throws Exception {
-		
+
 		return null;
 	}
 

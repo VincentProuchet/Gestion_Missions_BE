@@ -11,7 +11,7 @@ import lombok.Setter;
 
 /**
  * for sending user
- * 
+ *
  * @author Vincent
  *
  */
@@ -43,7 +43,7 @@ public class CollaboratorDTO extends Object implements DTO<Collaborator> {
 
 	/**
 	 * Constructeur
-	 * 
+	 *
 	 * @param collaborator
 	 */
 	public CollaboratorDTO(Collaborator collaborator) {
@@ -61,7 +61,7 @@ public class CollaboratorDTO extends Object implements DTO<Collaborator> {
 	/**
 	 * Alternate Constructeur made to get mangers of a user made to avoid the
 	 * stackOverflow
-	 * 
+	 *
 	 * @param collaborator
 	 * @param withManager
 	 */
@@ -76,5 +76,5 @@ public class CollaboratorDTO extends Object implements DTO<Collaborator> {
 	}
 
 
-	
+
 }

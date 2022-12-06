@@ -26,7 +26,7 @@ public class CollaboratorServiceImplTest {
 	private String baseName = "collsrvImplTest";
 	private String validemail = "collsrvimpltest@dffd.com";
 	private String invalidBaseName = "collsrv ImplTest";
-	
+
 	@Test
 	public void create() {
 		String name = baseName + "create";
@@ -65,7 +65,7 @@ public class CollaboratorServiceImplTest {
 		Collaborator collaborator1 = tools.giveMeJustACollaborator(name);
 		Collaborator collaborator = this.service.create(collaborator1);
 		assertDoesNotThrow(() -> this.service.read(collaborator.getId()));
-		
+
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class CollaboratorServiceImplTest {
 		collaborator.setUsername(name);
 		// we now have a valid user
 		assertDoesNotThrow(() -> this.service.update(collaborator.getId(),collaborator));
-		
+
 	}
 
 	/**
@@ -110,12 +110,12 @@ public class CollaboratorServiceImplTest {
 		Collaborator collaborator1 = tools.giveMeJustACollaborator(name);
 		Collaborator collaborator = this.service.create(collaborator1);
 		assertDoesNotThrow(() -> this.service.read(collaborator.getId()));
-		// delete 
-		
+		// delete
+
 		// and check
 		//assertThrows(BadRequestException.class, () -> this.service.read(collaborator.getId()));
-		
-		
+
+
 	}
 
 	@Test
@@ -138,7 +138,7 @@ public class CollaboratorServiceImplTest {
 		assertThrows(UsernameNotFoundException.class, () -> this.service.loadUserByUsername(name));
 		Collaborator collaborator1 = tools.giveMeJustACollaborator(name);
 		assertThrows(UsernameNotFoundException.class, () -> this.service.loadUserByUsername(collaborator1.getUsername()));
-		//creation 
+		//creation
 		assertDoesNotThrow(()-> this.service.create(collaborator1));
 		// should be there
 		assertDoesNotThrow(() -> this.service.loadUserByUsername(collaborator1.getUsername()));
@@ -151,7 +151,7 @@ public class CollaboratorServiceImplTest {
 		assertThrows(UsernameNotFoundException.class, () -> this.service.findByUserName(name));
 		Collaborator collaborator1 = tools.giveMeJustACollaborator(name);
 		assertThrows(UsernameNotFoundException.class, () -> this.service.findByUserName(collaborator1.getUsername()));
-		//creation 
+		//creation
 		assertDoesNotThrow(()->this.service.create(collaborator1));
 		// should be there
 		assertDoesNotThrow(() -> this.service.loadUserByUsername(collaborator1.getUsername()));

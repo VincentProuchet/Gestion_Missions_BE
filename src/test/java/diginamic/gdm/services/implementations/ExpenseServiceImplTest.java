@@ -1,11 +1,9 @@
 package diginamic.gdm.services.implementations;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -14,17 +12,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dao.Collaborator;
@@ -38,11 +34,10 @@ import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
-import diginamic.gdm.services.ExpenseService;
 import diginamic.gdm.utilities.testTools;
 
 /**
- * 
+ *
  * @Todo to refactor
  * @author Vincent
  *
@@ -71,7 +66,7 @@ class ExpenseServiceImplTest {
 	/** expensetypes */
 	private List<ExpenseType> expensetypes= new ArrayList<>();
 	/** expenses */
-	private List<Expense> expenses= new ArrayList();
+	private List<Expense> expenses= new ArrayList<>();
 	/** colls */
 	private List<Collaborator> colls= new ArrayList<>();
 	/** natures */
@@ -90,15 +85,15 @@ class ExpenseServiceImplTest {
 		nature = tools.giveMeJustANature(description);
 		nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
 		nature.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-		nature.setCharged(false);		
+		nature.setCharged(false);
 		natures.add(1,natureRepository.save(nature));
-		
+
 		cities = tools.createCities(description);
-		
+
 		colls.add(tools.CreateCollaborator(description));// collaborator that get expenses from init
-		colls.add(tools.CreateCollaborator(description+1));		
-		colls.add(tools.CreateCollaborator(description+2));		
-		
+		colls.add(tools.CreateCollaborator(description+1));
+		colls.add(tools.CreateCollaborator(description+2));
+
 		expensetypes = tools.creatExpensesTypes(description);
 		// mission that will get expenses
 		LocalDateTime missionStart = LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10);
@@ -115,8 +110,8 @@ class ExpenseServiceImplTest {
 		m1.setCollaborator(colls.get(0));
 		m1.setStatus(Status.VALIDATED);
 		missions.add(missionRepository.save(m1));
-		
-		
+
+
 		// mission that Can't get expenses
 		m1 = new Mission();
 		m1.setBonus(100);
@@ -128,8 +123,8 @@ class ExpenseServiceImplTest {
 		m1.setCollaborator(colls.get(0));
 		m1.setEndDate(LocalDateTime.now().plusDays(15+30));
 		m1.setStatus(Status.INIT);
-		missions.add(missionRepository.save(m1));		
-		
+		missions.add(missionRepository.save(m1));
+
 		Expense expense1;
 		expense1 = new Expense();
 		expense1.setCost(30f);
@@ -146,7 +141,7 @@ class ExpenseServiceImplTest {
 		expense1.setExpenseType(expensetypes.get(0));
 		expense1.setMission(missions.get(0));
 		expenses.add(expense1);
-		Set<Expense>exp = new HashSet<Expense>();
+		Set<Expense>exp = new HashSet<>();
 		exp.addAll(expenses);
 		missions.get(0).setExpenses(exp );
 		// update mission in persistence
@@ -155,9 +150,9 @@ class ExpenseServiceImplTest {
 		}
 		// update expense in persistence
 		for (Expense e: expenses) {
-			e = expenseRepository.save(e);			
+			e = expenseRepository.save(e);
 		}
-	
+
 	}
 
 	@Test
@@ -167,7 +162,7 @@ class ExpenseServiceImplTest {
 
 	@Test
 	private void isExpenseValid() {
-		
+
 	}
 
 	@Test
@@ -175,7 +170,7 @@ class ExpenseServiceImplTest {
 	public void create() throws BadRequestException {
 		Mission mission = missions.get(0);
 		ExpenseType et = expensetypes.get(0);
-		
+
 		Expense expense = new Expense();
 		LocalDateTime date = tools.nextWorkDay(mission.getStartDate().plusDays(3));
 		assertThrows(BadRequestException.class, ()->this.service.create(expense));
@@ -185,20 +180,20 @@ class ExpenseServiceImplTest {
 		expense.setTva(0.2f);
 		expense.setExpenseType(et);
 		expense.setMission(mission);
-		// we should have a valid expense 
+		// we should have a valid expense
 		assertDoesNotThrow(()->service.create(expense));
 		// expense out of mission
 		expense.setDate(tools.nextWorkDay(LocalDateTime.now()));
-		assertThrows(BadRequestException.class,()->service.create(expense));		
+		assertThrows(BadRequestException.class,()->service.create(expense));
 		// expense Week-end
 		expense.setDate(tools.nextWeekEnd(date));
-		assertThrows(BadRequestException.class,()->service.create(expense));		
+		assertThrows(BadRequestException.class,()->service.create(expense));
 		expense.setDate(date);
 		// neg cost
 		expense.setCost(-30f);
 		assertThrows(BadRequestException.class,()->service.create(expense));
 		expense.setCost(130f);
-		// neg taxes 
+		// neg taxes
 		expense.setTva(-0.2f);
 		assertThrows(BadRequestException.class,()->service.create(expense));
 		// taxes overflow
@@ -215,22 +210,22 @@ class ExpenseServiceImplTest {
 		assertThrows(BadRequestException.class,()->service.create(expense));
 		expense.setMission(mission);
 		// Mission Mission not done
-		
-		
+
+
 		assertDoesNotThrow(()->service.create(expense));
-		
+
 	}
 
 	@Test
 	@Order(2)
 	public void update() throws BadRequestException {
-		
+
 		Expense expense = expenses.get(0);
 		int id = expense.getId();
 		ExpenseType et = expense.getExpenseType();
 		Mission mission = expense.getMission();
 		LocalDateTime date = tools.nextWorkDay(mission.getStartDate().plusDays(3));
-		
+
 		assertDoesNotThrow( ()->this.service.update(id,expense));
 
 		expense.setCost(30f);
@@ -238,9 +233,9 @@ class ExpenseServiceImplTest {
 		expense.setTva(0.2f);
 		expense.setExpenseType(et);
 		expense.setMission(mission);
-		// we should have a valid expense 
+		// we should have a valid expense
 		assertDoesNotThrow(()->service.update(id,expense));
-		// wrong id 
+		// wrong id
 		assertThrows(BadRequestException.class,()->service.update(Integer.MAX_VALUE,expense));
 		// not found
 		expense.setId(Integer.MAX_VALUE);
@@ -248,16 +243,16 @@ class ExpenseServiceImplTest {
 		expense.setId(id);
 		// expense out of mission
 		expense.setDate(tools.nextWorkDay(LocalDateTime.now()));
-		assertThrows(BadRequestException.class,()->service.update(id,expense));		
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
 		// expense Week-end
 		expense.setDate(tools.nextWeekEnd(date));
-		assertThrows(BadRequestException.class,()->service.update(id,expense));		
+		assertThrows(BadRequestException.class,()->service.update(id,expense));
 		expense.setDate(date);
 		// neg cost
 		expense.setCost(-30f);
 		assertThrows(BadRequestException.class,()->service.update(id,expense));
 		expense.setCost(130f);
-		// neg taxes 
+		// neg taxes
 		expense.setTva(-0.2f);
 		assertThrows(BadRequestException.class,()->service.update(id,expense));
 		// taxes overflow

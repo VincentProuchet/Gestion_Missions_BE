@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
     private MissionService missionService;
-    
+
     @Override
     public void computeBonusForCompletedMissions() {
 
@@ -33,7 +33,7 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
             Nature nature = mission.getNature();
 
             float bonus = (workedDays(mission) * nature.getBonusPercentage() / 100) *nature.getTjm();
-            
+
             mission.setBonus(bonus);
             mission.setHasBonusBeenEvaluated(true);
 

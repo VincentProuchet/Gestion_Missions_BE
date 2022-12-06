@@ -2,7 +2,6 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
-import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import diginamic.gdm.dao.ExpenseType;
 import diginamic.gdm.dto.ExpenseTypeDTO;
+import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.ExpenseTypeService;
 import diginamic.gdm.vars.GDMRoles;
 import diginamic.gdm.vars.GDMRoutes;
@@ -25,14 +25,14 @@ import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for {@link ExpenseType} related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
 @RequestMapping(path = GDMRoutes.EXPENSE+"_"+GDMRoutes.TYPE, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ExpenseTypeController {
-	
+
 	/**
 	 * The {@link ExpenseTypeService} dependency.
 	 */
@@ -40,7 +40,7 @@ public class ExpenseTypeController {
 
 	/**
 	 * Gets the full list of registered expense types.
-	 * 
+	 *
 	 * @return A list of all expense types
 	 */
 	@GetMapping
@@ -48,12 +48,12 @@ public class ExpenseTypeController {
 	public List<ExpenseTypeDTO> list() {
 		return expenseTypeService.list().stream().map(ExpenseTypeDTO::new).toList();
 	}
-	
+
 	/**
 	 * Saves a new {@link ExpenseType} instance.
-	 * 
+	 *
 	 * @param expenseType The new expense type within the request body to be registered
-	 * @throws BadRequestException 
+	 * @throws BadRequestException
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
@@ -61,10 +61,10 @@ public class ExpenseTypeController {
 	public void create(@RequestBody ExpenseTypeDTO expenseType) throws BadRequestException {
 		expenseTypeService.create(new ExpenseType(expenseType));
 	}
-	
+
 	/**
 	 * Gets a specific registered expense type.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense type to get
 	 * @return The registered expense type corresponding to the given id
 	 */
@@ -73,10 +73,10 @@ public class ExpenseTypeController {
 	public ExpenseTypeDTO read(@PathVariable int id) throws BadRequestException {
 		return new ExpenseTypeDTO(expenseTypeService.read(id));
 	}
-	
+
 	/**
 	 * Updates the data for a specific registered expense type.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense type to update
 	 * @param expenseTypeDTO The expense type within the request body with modified info
 	 * @return The resulting expense type with updated info
@@ -86,10 +86,10 @@ public class ExpenseTypeController {
 	public ExpenseTypeDTO update(@PathVariable int id, @RequestBody ExpenseTypeDTO expenseTypeDTO) throws BadRequestException {
 		return new ExpenseTypeDTO(expenseTypeService.update(id, new ExpenseType(expenseTypeDTO)));
 	}
-	
+
 	/**
 	 * Deletes a specific registered expense type.
-	 * 
+	 *
 	 * @param id The id of the expense type to delete
 	 */
 	@DeleteMapping(path = "{id}")
@@ -97,5 +97,5 @@ public class ExpenseTypeController {
 	public void delete(@PathVariable int id) throws BadRequestException {
 		expenseTypeService.delete(id);
 	}
-	
+
 }

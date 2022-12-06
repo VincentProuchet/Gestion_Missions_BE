@@ -4,16 +4,16 @@ import diginamic.gdm.vars.errors.ErrorsMessage;
 
 /**
  * classe d'erreurs des collaborateurs
- * 
+ *
  * @author Vincent
  *
  */
 public class CollaboratorErrors extends ErrorsMessage {
-	
-	
+
+
 	/**
 	 * pour les erreur lors de lectures
-	 * 
+	 *
 	 * @author Vincent
 	 *
 	 */
@@ -26,7 +26,7 @@ public class CollaboratorErrors extends ErrorsMessage {
 	}
 	/**
 	 * pour les erreur lors de lectures
-	 * 
+	 *
 	 * @author Vincent
 	 *
 	 */
@@ -34,5 +34,5 @@ public class CollaboratorErrors extends ErrorsMessage {
 		/** NOTFOUND */
 		public static String NOT_FOUND = "user not found ";
 	}
-	
+
 }

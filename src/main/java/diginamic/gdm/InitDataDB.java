@@ -1,6 +1,5 @@
 package diginamic.gdm;
 
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ import diginamic.gdm.services.RoleService;
  * initialisation de la base de données appelée lors de l'initialisation de
  * l'application peupleras la base de données avec des données cohérentes et
  * utilisable lors de test
- * 
+ *
  * @author Joseph
  *
  */
@@ -54,6 +53,7 @@ public class InitDataDB {
 	private final LocalDateTime now;
 	private final LocalDateTime lastYear;
 	private final LocalDateTime nextYear;
+	@SuppressWarnings("unused")
 	@Autowired
 	private CityService cityService;
 	@Autowired
@@ -62,10 +62,12 @@ public class InitDataDB {
 	private CollaboratorService collaboratorService;
 	@Autowired
 	private CollaboratorRepository collaboratorRepository;
+	@SuppressWarnings("unused")
 	@Autowired
 	private NatureService natureService;
 	@Autowired
 	private NatureRepository natureRepository;
+	@SuppressWarnings("unused")
 	@Autowired
 	private ExpenseTypeService expenseTypeService;
 	@Autowired
@@ -74,6 +76,7 @@ public class InitDataDB {
 	private ExpenseRepository expenseRepository;
 	@Autowired
 	private MissionRepository missionRepository;
+	@SuppressWarnings("unused")
 	@Autowired
 	private MissionService missionService;
 	@Autowired
@@ -82,6 +85,7 @@ public class InitDataDB {
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
 	private ApplicationParamService paramsR;
+	@SuppressWarnings("unused")
 	@Autowired
 	private ApplicationParamsRepository applicationParamsRepository;
 
@@ -106,7 +110,7 @@ public class InitDataDB {
 
 	/**
 	 * event called at application start
-	 * 
+	 *
 	 * @param event
 	 * @throws Exception
 	 * @throws BadRequestException
@@ -155,7 +159,7 @@ public class InitDataDB {
 	/**
 	 * initialise database with mock data mainly used for dveloppement and
 	 * presentation
-	 * 
+	 *
 	 * @throws Exception
 	 * @throws BadRequestException
 	 */
@@ -241,7 +245,7 @@ public class InitDataDB {
 
 	/**
 	 * créer des villes dans la base de données
-	 * 
+	 *
 	 */
 	private void createCities() {
 		List<City> local = new ArrayList<>();
@@ -272,7 +276,7 @@ public class InitDataDB {
 	/**
 	 * créer des natures dans la base de données durant une années chacune en
 	 * utilisant yearsprior pour le nombre d'années à remonter
-	 * 
+	 *
 	 * @param natureName
 	 * @param yearsPrior
 	 * @throws BadRequestException
@@ -313,7 +317,7 @@ public class InitDataDB {
 		newNature.setDateOfValidity(priorsYear);
 		newNature.setEndOfValidity(null);
 		local.add(newNature);
-		
+
 		natures.addAll(this.natureRepository.saveAll(local));
 
 	}
@@ -326,7 +330,7 @@ public class InitDataDB {
 		// pour chaque mission
 		this.missions = missionRepository.findAll();
 		List<Expense> local = new ArrayList<>();
-		
+
 		for (Mission mission : missions) {
 			if ((mission.getStatus() == Status.VALIDATED || mission.getStatus() == Status.ENDED)
 					&& mission.getEndDate().isBefore(now)) {
@@ -353,7 +357,7 @@ public class InitDataDB {
 
 	/**
 	 * créer des type de dépenses dans la bases de données
-	 * 
+	 *
 	 * @throws BadRequestException
 	 */
 	public void createExpenseTypes() throws BadRequestException {
@@ -380,6 +384,7 @@ public class InitDataDB {
 		return nextWorkedDay(date.plusWeeks(1));
 	}
 
+	@SuppressWarnings("unused")
 	private LocalDateTime previousMonth(LocalDateTime date) {
 		return nextWorkedDay(date.minusMonths(1));
 	}
@@ -402,7 +407,7 @@ public class InitDataDB {
 	/**
 	 * create a Collaborator with the name and roles provides all password are 1111
 	 * and user is acitve et sans manager
-	 * 
+	 *
 	 * @param name
 	 * @throws BadRequestException
 	 * @return a JPA instance of the newly created collaborator
@@ -429,11 +434,11 @@ public class InitDataDB {
 
 	/**
 	 * ici ce sont les données crées par joseph un peu modifiées
-	 * 
+	 *
 	 * les différences elles ne sont plus assignée à un collaborateur fixe les
 	 * missions dans le passé ont le statut rejected les villes et les natures sont
 	 * choisies aléatoirement
-	 * 
+	 *
 	 * @param coll
 	 */
 	public void giveOldSetMissions(Collaborator coll) {

@@ -4,13 +4,13 @@ import diginamic.gdm.vars.errors.ErrorsMessage;
 
 /**
  * Classe d'erreur du service des frais
- * 
+ *
  * @author Vincent
  *
  */
 
 public class ExpenseErrors extends ErrorsMessage {
-	
+
 
 	/**
 	 * @author Vincent
@@ -33,6 +33,6 @@ public class ExpenseErrors extends ErrorsMessage {
 		public static String IS_AFTER="Expenses's date is after ";
 		public static String IS_WEEKEND="Expense's date is on off days :";
 		public static String TAXES_OVERFLOW = "Taxes can't be over 100%";
-		
+
 	}
 }

@@ -11,7 +11,7 @@ import diginamic.gdm.vars.GDMRoutes;
 
 /**
  * used has a default error controller
- * you can change it for customized error 
+ * you can change it for customized error
  * @author Vincent
  *
  */
@@ -26,12 +26,12 @@ public class GDMErrorController implements ErrorController {
 	      return modelAndView;
 	  }
 
-	  
+
 	  /**
 	 * @return
 	 */
 	public String getErrorPath() {
 	    return "/"+GDMRoutes.ERRORS;
 	  }
-	
+
 }
