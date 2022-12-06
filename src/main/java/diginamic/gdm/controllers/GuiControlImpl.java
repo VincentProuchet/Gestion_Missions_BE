@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
  * @author Vincent
  *
  */
-@Controller
+//@Controller
 @AllArgsConstructor
 public class GuiControlImpl implements GuiControl {
 	@Autowired
