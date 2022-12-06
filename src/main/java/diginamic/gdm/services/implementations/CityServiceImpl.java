@@ -2,22 +2,22 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.exceptions.ErrorCodes;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.CityService;
 import diginamic.gdm.vars.errors.impl.CityErrors;
 import lombok.AllArgsConstructor;
 
-import javax.transaction.Transactional;
-
 /**
  * Implementation for {@link CityService}.
- * 
+ *
  * @author DorianBoel
  */
 @Service
@@ -37,12 +37,9 @@ public class CityServiceImpl implements CityService {
 
 	@Override
 	public City create(City city) throws BadRequestException {
-		if(!City.isValidName(city.getName())) {
+		if(!City.isValidName(city.getName()) || !this.cityRepository.findByName(city.getName()).isEmpty()){
 			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
-		}
-		if(!this.cityRepository.findByName(city.getName()).isEmpty()){
-			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
-			
+
 		}
 		return this.cityRepository.findByName(city.getName()).orElseGet(()->this.cityRepository.save(city));
 	}
@@ -57,7 +54,7 @@ public class CityServiceImpl implements CityService {
 	public City update(int id, City city) throws BadRequestException {
 		if(!City.isValidName(city.getName())) {
 			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
-		}	
+		}
 		City current = read(id);
 		current.setName(city.getName());
 		this.cityRepository.save(current);
@@ -85,9 +82,9 @@ public class CityServiceImpl implements CityService {
 			return this.read(city.getId());
 		} catch (BadRequestException e) {
 			// attemp to find it by name
-			
+
 			return this.read(city.getName());
 		}
-		
+
 	}
 }

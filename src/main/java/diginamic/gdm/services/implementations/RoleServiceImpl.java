@@ -1,6 +1,5 @@
 package diginamic.gdm.services.implementations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -32,36 +31,36 @@ public class RoleServiceImpl implements RoleService {
 	public Roles update(Roles role) {
 		return this.repository.findByLabel(role.getLabel())
 				.orElseGet(()-> this.repository.save(role));
-	}	
+	}
 	/**
-	 * This was coded to save all instances of Role enum 
+	 * This was coded to save all instances of Role enum
 	 * in one go
 	 * it may not be useful in the end
 	 * but it was usefull for testing
 	 */
+	@Override
 	public void saveAutorities() {
-		
-		ArrayList<Roles> rols = new ArrayList<Roles>();
+
 		for (Role r : Role.values()) {
-				this.create(new Roles(r));	
+				this.create(new Roles(r));
 		}
 	}
 
 	@Override
 	public List<Roles> all() {
-		
+
 		return this.repository.findAll();
 	}
 
 	@Override
 	public Roles read(int id) throws Exception {
-		
+
 		return this.repository.findById(id).orElseThrow(()-> new Exception(RolesErrors.read.NOT_FOUND)) ;
 	}
 
 	@Override
 	public Roles read(String label) throws Exception {
-		
+
 		return this.repository.findByLabel(label).orElseThrow(()-> new Exception(RolesErrors.read.NOT_FOUND));
 	}
 

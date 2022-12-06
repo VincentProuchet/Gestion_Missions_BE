@@ -18,7 +18,7 @@ import diginamic.gdm.dto.CollaboratorDTO;
 /**
  * classe de test de DAO-DTO/Collaborator on teste aussi la conversion depuis et
  * vers le DTO
- * 
+ *
  * @author Vincent
  *
  */
@@ -69,7 +69,7 @@ public class CollaboratorTest {
 		team.add(user2);
 		team.add(user3);
 		// user.setTeam(team);
-		List<Roles> authorities = new ArrayList<Roles>();
+		List<Roles> authorities = new ArrayList<>();
 		Roles collaborator = new Roles(Role.COLLABORATOR);
 		authorities.add(collaborator);
 		user.setAuthorities(authorities);
@@ -98,7 +98,7 @@ public class CollaboratorTest {
 		Collaborator user = new Collaborator();
 		Collaborator user2 = new Collaborator();
 		Collaborator user3 = new Collaborator();
-		List<Roles> authorities = new ArrayList<Roles>();
+		List<Roles> authorities = new ArrayList<>();
 		Roles collaborator = new Roles(Role.COLLABORATOR);
 		authorities.add(collaborator);
 
@@ -132,7 +132,7 @@ public class CollaboratorTest {
 	@Test
 	public void convertionFromDTO() {
 		CollaboratorDTO userDTO = new CollaboratorDTO();
-		List<Roles> authorities = new ArrayList<Roles>();
+		List<Roles> authorities = new ArrayList<>();
 		Roles collaboratorRole = new Roles(Role.COLLABORATOR);
 		authorities.add(collaboratorRole);
 
@@ -237,7 +237,7 @@ public class CollaboratorTest {
 				"ooooooooodooooooooodoooooooood.ooooooooodooooooooodoooooooooda.ooooooooodooooooooodoooooooood@qdsfqdf.com"));
 		assertFalse(Collaborator.isValidEmail(
 				"ooooooooodooooooooodoooooooooda.ooooooooodooooooooodoooooooood.ooooooooodooooooooodoooooooood@qdsfqdf.com"));
-		
+
 		assertTrue(Collaborator.isValidEmail("aze@ooooooooodooooooooodooooooooodooooooooodooooooooodoooooooood.com"));
 		assertFalse(Collaborator.isValidEmail("aze@ooooooooodooooooooodooooooooodooooooooodooooooooodoooooooooda.com"));
 		assertFalse(
@@ -247,9 +247,9 @@ public class CollaboratorTest {
 
 		assertTrue(Collaborator.isValidEmail("aze@rt.oooood"));
 		assertFalse(Collaborator.isValidEmail("aze@rt.ooooood"));
-		
-		
-		// punctuation 
+
+
+		// punctuation
 		String stringToTest;
 		String charOfPunct = ",;:!*^$&\"'(_)=?/§%¨£°+~#{[|`\\^@]}<>";
 		for (int i = 0; i < charOfPunct.length(); i++) {
@@ -261,7 +261,7 @@ public class CollaboratorTest {
 		// punctuation
 				// yhea all that could be condensed in that
 				// but when it fail it doesn't tells you wich one failled
-				
+
 		charOfPunct = ",;:!*^$&\"'(_)=?./§%¨£°+~#{[|`\\^@]}<>";
 				for (int i = 0; i < charOfPunct.length(); i++) {
 					System.err.println("validMail after @ : "+  i);// corrected you're an idiot vincent
@@ -271,7 +271,7 @@ public class CollaboratorTest {
 				}
 
 
-		
+
 	}
 
 	@Test
@@ -431,7 +431,7 @@ public class CollaboratorTest {
 	public void testIsUsernameValid() {
 		// pretty long
 		assertTrue(Collaborator.isValidUserName("ezdfqefqgmailcom"));
-		
+
 		// composed names
 		assertTrue(Collaborator.isValidUserName("PzdfqGefq-Gsmailcom"));
 		assertTrue(Collaborator.isValidUserName("PzdfqGefq_Gsmailcom"));
@@ -455,10 +455,10 @@ public class CollaboratorTest {
 		assertTrue(Collaborator.isValidUserName("aaaaaaaaaDaaaaaaaaaDaaaaaaaaaDaaaaaaaaaDaaaaaaaP"));
 		assertTrue(Collaborator.isValidUserName("a-aaa-aaa-aaD-aaa-aaa-aaa-Daa-aaa-aaa-aDa-aaa-aaa-aaD-aaa-aaa-aP"));
 		assertFalse(Collaborator.isValidUserName("aaaaaaDaaaaaaaaaDaaaaaaaaaDaaaaaaaaaDaaaaaaaaaDaP"));
-	
-		
+
+
 		// accented char
-		assertTrue(Collaborator.isValidUserName("PzdfqéGefq-gsmaàilcom"));		
+		assertTrue(Collaborator.isValidUserName("PzdfqéGefq-gsmaàilcom"));
 		assertTrue(Collaborator.isValidUserName("aâäàeêëéè-aâäàeêëéè"));
 		assertTrue(Collaborator.isValidUserName("aâäàeêëéèÿ-aâäàeêëéèÿ"));
 		String mirrorValue = "aâäàãeêëéèyÿ";

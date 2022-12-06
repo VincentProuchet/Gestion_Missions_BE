@@ -45,7 +45,7 @@ public interface RoleService {
 	public Roles update(Roles role)throws Exception;
 	/**
 	 * this may depends on you implementation
-	 * refer to the implementation documentation 
+	 * refer to the implementation documentation
 	 * for more information
 	 * Originaly its intended to populate en empty database with
 	 * all Roles found in a Role enum

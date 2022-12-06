@@ -8,5 +8,5 @@ package diginamic.gdm.Enums;
  */
 public enum Locales {
 	fr,
-	en,	
+	en,
 }

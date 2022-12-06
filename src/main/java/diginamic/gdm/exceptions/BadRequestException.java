@@ -21,7 +21,7 @@ public class BadRequestException extends Exception {
      *  Constructeur
      *  désolé joseph j'ai dût interchanger le message et le code erreur
      *  pour des raisons pratiques
-     *  
+     *
      * @param message
      * @param code
      */
@@ -39,15 +39,15 @@ public class BadRequestException extends Exception {
     public BadRequestException(String code,String... message){
     	super(constructMessage(message));
     	this.code = code;
-    } 
-    
-    
+    }
+
+
     /**
-     * this will construct the error message from string given in argument 
+     * this will construct the error message from string given in argument
      * @param message
      * @return
      */
-    private static String constructMessage(String [] message) {    	
+    private static String constructMessage(String [] message) {
     	StringBuilder texte = new StringBuilder();
     	for (String string : message) {
 			texte.append(string);

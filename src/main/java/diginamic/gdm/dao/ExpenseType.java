@@ -14,7 +14,7 @@ import lombok.Setter;
 
 /**
  * Entity which represents the nature of an expense
- * 
+ *
  * @author Joseph
  *
  */
@@ -23,29 +23,29 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExpenseType {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	/** name : the name of the type of expense */
 	@Column(nullable = false,unique = true)
 	private String name;
-	
+
 	public ExpenseType(ExpenseTypeDTO et) {
 		this.id = et.getId();
 		this.setName(et.getName());
 	}
-	
-	
+
+
 	/**
-	 * SETTER 
+	 * SETTER
 	 * @param name
 	 */
 	public void setName(String name) {
 		name = name.replaceAll(GDMVars.REGEX_NAMES,"");
 		name = name.replaceAll(GDMVars.REGEX_STUPID_WHITSPACES," ");
-		name = name.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");		
+		name = name.replaceAll(GDMVars.REGEX_STUPID_MINUS,"-");
 		name =name.strip().toLowerCase();
 		this.name =  name;
 	}

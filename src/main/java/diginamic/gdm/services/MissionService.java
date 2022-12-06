@@ -5,20 +5,19 @@ import java.util.List;
 
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Status;
 import diginamic.gdm.exceptions.BadRequestException;
 
 /**
  * Interface to be implemented by a mission service class.
- * 
+ *
  * @author DorianBoel
  */
 public interface MissionService {
-	
+
 	/**
 	 * Gets the full list of registered missions.
 	 * For test and debug purposes
-	 * 
+	 *
 	 * @return A list of all missions
 	 */
 	List<Mission> list();
@@ -30,7 +29,7 @@ public interface MissionService {
 	 * @return the list of missions
 	 */
 	List<Mission> getMissionsOfCollaborator(Collaborator collaborator);
-	
+
 	/**
 	 * Saves a new {@link Mission} instance.
 	 *
@@ -53,12 +52,12 @@ public interface MissionService {
 
 	/**
 	 * Gets a specific registered mission.
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to get
 	 * @return The registered mission corresponding to the given id
 	 */
 	Mission read(int id) throws BadRequestException;
-	
+
 	/**
 	 * Updates the data for a specific registered mission.
 	 * Does not allow to add or remove expenses, use the appropriate service for this
@@ -81,12 +80,12 @@ public interface MissionService {
 	default Mission update(int id, Mission mission) throws BadRequestException {
 		return update(id, mission, false);
 	}
-	
+
 	/**
 	 * Deletes a specific registered mission.
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to delete
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	void delete(int id) throws BadRequestException, Exception;
 
@@ -119,7 +118,7 @@ public interface MissionService {
 	 * @return the list of missions with status VALIDATED and end date passed
 	 */
 	List<Mission> completedMissions();
-	
+
 	/**
 	 * Check if the mission has been completed
 	 *
@@ -132,29 +131,29 @@ public interface MissionService {
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
 	public Mission RejectMission(int id) throws BadRequestException;
-	
+
 	/**
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
 	public Mission NightComputing(int id) throws BadRequestException ;
-	
+
 	/**
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
@@ -165,11 +164,11 @@ public interface MissionService {
 	 * First draw  of a mission's status manipulator
 	 * the idea is to secure status by limiting possibilities
 	 *  to directly manipulate the data
-	 * 
+	 *
 	 * @param id
 	 * @return the updated mission
 	 * @throws BadRequestException
 	 */
 	Mission validateMission(int id) throws BadRequestException;
-	
+
 }

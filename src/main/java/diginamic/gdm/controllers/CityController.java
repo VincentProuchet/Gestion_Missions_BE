@@ -25,14 +25,14 @@ import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for {@link City} related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
 @RequestMapping(path = GDMRoutes.CITY, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CityController {
-	
+
 	/**
 	 * The {@link CityService} dependency.
 	 */
@@ -40,7 +40,7 @@ public class CityController {
 
 	/**
 	 * Gets the full list of registered cities.
-	 * 
+	 *
 	 * @return A list of all cities
 	 */
 	@GetMapping
@@ -48,12 +48,12 @@ public class CityController {
 	public List<CityDTO> list() {
 		return cityService.list().stream().map(city -> new CityDTO(city)).toList();
 	}
-	
+
 	/**
 	 * Saves a new {@link City} instance.
-	 * 
+	 *
 	 * @param cityDTO The new city within the request body to be registered
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
@@ -61,10 +61,10 @@ public class CityController {
 	public void create(@RequestBody CityDTO cityDTO) throws Exception {
 		cityService.create( new City(cityDTO));
 	}
-	
+
 	/**
 	 * Gets a specific registered city.
-	 * 
+	 *
 	 * @param id The id corresponding to the city to get
 	 * @return The registered city corresponding to the given id
 	 */
@@ -73,10 +73,10 @@ public class CityController {
 	public CityDTO read(@PathVariable int id) throws BadRequestException {
 		return new CityDTO(cityService.read(id));
 	}
-	
+
 	/**
 	 * Updates the data for a specific registered city.
-	 * 
+	 *
 	 * @param id The id corresponding to the city to update
 	 * @param cityDTO The city within the request body with modified info
 	 * @return The resulting city with updated info
@@ -86,10 +86,10 @@ public class CityController {
 	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) throws BadRequestException {
 		return new CityDTO(cityService.update(id,new City(cityDTO)));
 	}
-	
+
 	/**
 	 * Deletes a specific registered city.
-	 * 
+	 *
 	 * @param id The id of the city to delete
 	 */
 	@DeleteMapping(path = "{id}")
@@ -97,5 +97,5 @@ public class CityController {
 	public void delete(@PathVariable int id) throws BadRequestException {
 		cityService.delete(id);
 	}
-	
+
 }

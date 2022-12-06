@@ -1,5 +1,4 @@
 package diginamic.gdm.dto;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import diginamic.gdm.dao.Nature;
@@ -8,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 /**
- * DataTransferObject 
+ * DataTransferObject
  * @author Vincent
  *
  */
@@ -17,20 +16,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NatureDTO implements DTO<Nature> {
-	
+
 	/** id */
-	private int id=0; 
-	/** libelle  le code de la nature si deux nature ont le même libellé 
+	private int id=0;
+	/** libelle  le code de la nature si deux nature ont le même libellé
 	 * une seule auras une endValidity nulle */
 	private String description = "";
-	/** Est-ce que la mission 
+	/** Est-ce que la mission
 	 * fait l'objet de distribution de primes */
 	private boolean givesBonus= false;
-	/** Est-ce que la mission 
+	/** Est-ce que la mission
 	 * fait l'objet de facturation */
 	private boolean charged = false;
 	/** Taux journalier moyen pour la facturation à la journée de mission */
-	private float tjm;	
+	private float tjm;
 	/** % prime taux de prime à sur la montant total de la mission  */
 	private float bonusPercentage;
 	/**  début de validité de la nature  */
@@ -38,7 +37,7 @@ public class NatureDTO implements DTO<Nature> {
 	/** endValidity  fin de validité de la nature
 	 * une nature en cours de validité à cette valeur nulle*/
 	private LocalDateTime endOfValidity = null;
-	
+
 	public NatureDTO(Nature nature) {
 		this.id = nature.getId();
 		this.description = nature.getDescription();
@@ -49,10 +48,10 @@ public class NatureDTO implements DTO<Nature> {
 		this.dateOfValidity = nature.getDateOfValidity();
 		this.endOfValidity = nature.getEndOfValidity();
 	}
-	
+
 	public Nature instantiate() {
 		return new Nature(id, givesBonus, charged, tjm, bonusPercentage, dateOfValidity, endOfValidity, description);
 	}
-	
+
 
 }

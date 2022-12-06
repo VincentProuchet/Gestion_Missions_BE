@@ -1,17 +1,12 @@
 package diginamic.gdm.utilities;
 
-import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import diginamic.gdm.Enums.Role;
 import diginamic.gdm.dao.City;
@@ -28,12 +23,7 @@ import diginamic.gdm.repository.ExpenseRepository;
 import diginamic.gdm.repository.ExpenseTypeRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
-import diginamic.gdm.services.CityService;
-import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.ExpenseTypeService;
-import diginamic.gdm.services.NatureService;
 import diginamic.gdm.services.RoleService;
-import diginamic.gdm.services.implementations.CityServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +32,7 @@ import lombok.Setter;
 /**
  * cette classe contient les outils pour les tests notamment : - des méthodes de
  * création d'instances d'objects JPA valides
- * 
+ *
  * @author Vincent
  *
  */
@@ -82,8 +72,8 @@ public class testTools {
 
 	/**
 	 * create a Collaborator with the name provided with all roles in database
-	 * 
-	 * 
+	 *
+	 *
 	 * @param name
 	 * @throws BadRequestException
 	 * @return a JPA instance of the newly created collaborator
@@ -113,7 +103,7 @@ public class testTools {
 
 	/**
 	 * create a Collaborator with the name provided all roles
-	 * 
+	 *
 	 * @param name
 	 * @throws BadRequestException
 	 * @return a JPA instance of the newly created collaborator
@@ -143,9 +133,9 @@ public class testTools {
 	/**
 	 * this gives you an instance of nature with : startDOV = now endDOV = null;
 	 * description = description giveBonus = true charged = true tjm = this.TestTjm
-	 * 
+	 *
 	 * its just to not write that block for each test
-	 * 
+	 *
 	 * @param description
 	 * @return a NON-persisted nature entity
 	 * @throws BadRequestException
@@ -166,7 +156,7 @@ public class testTools {
 
 	/**
 	 * this is to persist a nature with default values and a provided description
-	 * 
+	 *
 	 * @param description
 	 * @return a persisted nature entity
 	 * @throws BadRequestException
@@ -191,10 +181,10 @@ public class testTools {
 	 * as name for creation of - cities for the mission (5) - mission collaborator
 	 * names, an administrator Collaborator the mission will - start next month from
 	 * now - end in the month after the next one from now
-	 * 
+	 *
 	 * this directly use mission repository there is not control on mission data
 	 * validity
-	 * 
+	 *
 	 * @param nature
 	 * @return a Persisted Mission entity
 	 */
@@ -205,7 +195,7 @@ public class testTools {
 		mission.setEndDate(this.theMonthAfter);
 		mission.setCollaborator(this.CreateCollaborator(nature.getDescription()));
 		List<City> cities = this.createCities(nature.getDescription());
-		;
+
 		mission.setStartCity(cities.get(0));
 		mission.setEndCity(cities.get(0));
 		return this.missionRepository.save(mission);
@@ -213,7 +203,7 @@ public class testTools {
 
 	/**
 	 * create a list of 5 new cities with name in the for name + an iterator
-	 * 
+	 *
 	 * @param name provided name
 	 * @return a list of 5 persisted cities entities
 	 */
@@ -230,7 +220,7 @@ public class testTools {
 
 	/**
 	 * will create and persist 3 expense types of names made of name+iterator
-	 * 
+	 *
 	 * @param name
 	 * @return list of persisted expensesType Entities
 	 */
@@ -249,7 +239,7 @@ public class testTools {
 	/**
 	 * Create and persist a list of 5 expense assigned to the provided mission and
 	 * of types of provided list of types
-	 * 
+	 *
 	 * @param mission associated with the expense
 	 * @param types   associated with the expense
 	 * @return list of 5 persisted expenses types
@@ -273,7 +263,7 @@ public class testTools {
 
 	/**
 	 * give you the next monday date if your day of week is saturday or sunday
-	 * 
+	 *
 	 * @param date
 	 * @return LocalDateTime next work day if the provided date is a saturday or a sunday
 	 */
@@ -289,10 +279,10 @@ public class testTools {
 	}
 
 	/**
-	 * will give you the next saturday 
+	 * will give you the next saturday
 	 * if the provided date is a day of the week
 	 * @param date
-	 * @return LocalDateTime the next saturday 
+	 * @return LocalDateTime the next saturday
 	 */
 	public LocalDateTime nextWeekEnd(LocalDateTime date) {
 		int daytoAdd = 0;

@@ -1,39 +1,18 @@
 package diginamic.gdm.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.converter.ObjectToStringHttpMessageConverter;
-import org.springframework.http.converter.json.JsonbHttpMessageConverter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.TSFBuilder;
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dto.CollaboratorDTO;
 import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.vars.GDMRoutes;
 import diginamic.gdm.vars.GDMVars;
@@ -41,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * Security Configuration this is where we declare
- * 
+ *
  * @Beans related to security and how the spring security will accept or reject
  *        request
  * @author Vincent
@@ -62,7 +41,7 @@ public class GDMSecurityConfig {
 	CustomLogoutHandler logoutHandler;
 	/**
 	 * configuration spring security
-	 * 
+	 *
 	 * @param http
 	 * @return
 	 * @throws Exception
@@ -108,7 +87,7 @@ public class GDMSecurityConfig {
 	/**
 	 * this is where we configure the method and path that can be accessed from
 	 * outside the first commit will open everything its head is Security OpenAll
-	 * 
+	 *
 	 * @return
 	 */
 	@Bean

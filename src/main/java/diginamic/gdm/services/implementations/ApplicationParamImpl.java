@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.ApplicationParams;
 import diginamic.gdm.repository.ApplicationParamsRepository;
-import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.ApplicationParamService;
 import lombok.AllArgsConstructor;
 
@@ -52,7 +51,7 @@ public class ApplicationParamImpl implements ApplicationParamService {
 	@Override
 	public ApplicationParams update(ApplicationParams param) throws Exception {
 		ApplicationParams paramP = this.read(param.getId());
-		
+
 		paramP.setText(param.getText());
 		paramP.setValue(param.getValue());
 		paramP.setValuef(param.getValuef());
@@ -62,7 +61,7 @@ public class ApplicationParamImpl implements ApplicationParamService {
 
 	@Override
 	public ApplicationParams delete(ApplicationParams param) throws Exception {
-		
+
 		return null;
 	}
 

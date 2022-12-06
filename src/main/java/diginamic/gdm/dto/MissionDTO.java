@@ -1,6 +1,5 @@
 package diginamic.gdm.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 /**
- * 
+ *
  * @author Vincent
  *
  */
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MissionDTO implements DTO<Mission> {
-	
+
 	/** id */
 	private int id;
 	/** start */
@@ -37,14 +36,14 @@ public class MissionDTO implements DTO<Mission> {
     /** transport */
     private Transport transport;
     /** status */
-    private Status status; 
+    private Status status;
     /** nature */
     private NatureDTO nature;
     /** collaborator */
     private CollaboratorDTO collaborator;
     /** expenses */
     private List<ExpenseDTO> expenses;
-    
+
     /** Constructeur
      * @param mission
      */
@@ -64,7 +63,7 @@ public class MissionDTO implements DTO<Mission> {
     	this.expenses = mission.getExpenses().stream().map(expense -> new ExpenseDTO(expense)).toList();
     }
 
-    
- 
+
+
 
 }

@@ -8,24 +8,19 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -37,7 +32,6 @@ import diginamic.gdm.dao.Nature;
 import diginamic.gdm.dao.Status;
 import diginamic.gdm.dao.Transport;
 import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.repository.CollaboratorRepository;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
@@ -151,6 +145,7 @@ class MissionServiceImplTest {
 		// create // not used 0
 		m1 = new Mission();
 		m1.setBonus(36f);
+        m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -164,6 +159,7 @@ class MissionServiceImplTest {
 		// Update // validated Mission can't be updated 1
 		m1 = new Mission();
 		m1.setBonus(36f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -178,6 +174,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setBonus(100f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setNature(natures.get(2));
 		m1.setStartCity(this.cities.get(0));
@@ -192,6 +189,7 @@ class MissionServiceImplTest {
 		index++;
 		m1 = new Mission();
 		m1.setBonus(36f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setNature(natures.get(1));
 		m1.setStartCity(this.cities.get(0));
@@ -204,8 +202,10 @@ class MissionServiceImplTest {
 		// mission to validate 4
 		index++;
 		m1 = new Mission();
+
 		m1.setNature(natures.get(1));
 		m1.setBonus(36f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Car);
 		m1.setCollaborator(collaborators.get(4));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -220,6 +220,7 @@ class MissionServiceImplTest {
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
 		m1.setBonus(100f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.WAITING_VALIDATION);
@@ -234,6 +235,7 @@ class MissionServiceImplTest {
 		m1 = new Mission();
 		m1.setNature(natures.get(0));
 		m1.setBonus(100f);
+		 m1.setHasBonusBeenEvaluated(true);
 		m1.setMissionTransport(Transport.Flight);
 		m1.setCollaborator(collaborators.get(5));
 		m1.setStatus(Status.REJECTED);
@@ -272,8 +274,8 @@ class MissionServiceImplTest {
 		m3.setStartDate(LocalDateTime.now().plusDays(13));
 		m3.setEndDate(LocalDateTime.now().plusDays(35));
 		assertDoesNotThrow(() -> missionService.create(m3, true));
-		
-		
+
+
 	}
 
 	@Test
@@ -288,7 +290,7 @@ class MissionServiceImplTest {
 	/**
 	 * on update missions status must be checked mission data intégrity mus be
 	 * checked
-	 * 
+	 *
 	 * @throws BadRequestException
 	 */
 	@Test
@@ -329,7 +331,7 @@ class MissionServiceImplTest {
 		long size = missionsToValidate.stream().filter(mission -> mission.getStatus() == Status.INIT).count();
 		System.out.println(size);
 		// now we check if we have the same count as waiting validation
-		
+
 	}
 
 	@Test
@@ -346,28 +348,28 @@ class MissionServiceImplTest {
 		assertThrows( BadRequestException.class,() -> missionService.validateMission(m1.getId()));
 		assertThrows( BadRequestException.class,() -> missionService.resetMission(m1.getId()));
 		assertDoesNotThrow(() -> missionService.NightComputing(m1.getId()));
-		
+
 		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.WAITING_VALIDATION);
-		
+
 		assertThrows( BadRequestException.class,() -> missionService.NightComputing(m1.getId()));
 		assertThrows( BadRequestException.class,() -> missionService.resetMission(m1.getId()));
 		assertDoesNotThrow(() -> missionService.validateMission(m1.getId()));
-		
+
 		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.VALIDATED);
-		
+
 		assertThrows( BadRequestException.class,() -> missionService.validateMission(m1.getId()));
 		assertThrows( BadRequestException.class,() -> missionService.RejectMission(m1.getId()));
 		assertThrows( BadRequestException.class,() -> missionService.NightComputing(m1.getId()));
 		assertDoesNotThrow(() -> missionService.resetMission(m1.getId()));
-		
+
 		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.WAITING_VALIDATION);
 		assertDoesNotThrow(() -> missionService.RejectMission(m1.getId()));
 		assertSame(missionRepository.findById(m1.getId()).get().getStatus(), Status.REJECTED);
-		
+
 		assertThrows( BadRequestException.class,() -> missionService.NightComputing(m1.getId()));
 		assertThrows( BadRequestException.class,() -> missionService.RejectMission(m1.getId()));
 		assertThrows( BadRequestException.class,() -> missionService.validateMission(m1.getId()));
-		
+
 	}
 
 	/**
@@ -383,8 +385,7 @@ class MissionServiceImplTest {
 		Collaborator collaborator = collaborators.get(6);
 
 		Mission mission = new Mission();
-		// assertThrows(BadRequestException.class,()->missionService.isThisMissionValid(mission,
-		// false));
+		assertThrows(BadRequestException.class,()->missionService.isThisMissionValid(mission,false));
 		mission.setBonus(100f);
 		mission.setMissionTransport(Transport.Flight);
 		mission.setNature(nature);
@@ -432,11 +433,13 @@ class MissionServiceImplTest {
 
 		// dates incompatible with flightTransport
 		mission.setMissionTransport(Transport.Flight);
-		mission.setStartDate(tools.nextWorkDay(LocalDateTime.now().plusDays(5)));
-		mission.setEndDate(tools.nextWorkDay(LocalDateTime.now().plusDays(15)));
-		assertThrows(BadRequestException.class, () -> missionService.isThisMissionValid(mission, false));
+		LocalDateTime start = LocalDateTime.now().plusDays(6);
+		mission.setStartDate(start);
+		mission.setEndDate(tools.nextWorkDay(start.plusDays(15)));
+		assertThrows(BadRequestException.class, () -> missionService.isThisMissionValid(mission, true));
 
 		mission.setMissionTransport(Transport.Car);
+		mission.setStartDate(tools.nextWorkDay(start));
 		// changed transport
 		assertDoesNotThrow(() -> missionService.isThisMissionValid(mission, false));
 

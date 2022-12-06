@@ -32,6 +32,6 @@ public interface MissionRepository extends JpaRepository<Mission, Integer> {
     List<Mission> findByStatus(Status status);
 
     List<Mission> findByCollaborator(Collaborator collaborator);
-    
-    
+
+
 }

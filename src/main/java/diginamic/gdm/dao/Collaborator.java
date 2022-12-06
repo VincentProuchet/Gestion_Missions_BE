@@ -26,12 +26,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 /**
  * Entity which represents a Collaborator implement UserDetails from
  * SpringSecurity project Document the differentiation between different types
  * of user is made by the list of Roles who are also used by spring security for
  * userAccess
- * 
+ *
  * @author Joseph
  */
 @Entity
@@ -57,7 +58,7 @@ public class Collaborator implements UserDetails {
 	@Column(name = "email")
 	private String email;
 	@OneToMany(mappedBy = "manager", fetch = FetchType.LAZY)
-	private Set<Collaborator> team = new HashSet<Collaborator>();
+	private Set<Collaborator> team = new HashSet<>();
 
 	/** userName */
 	@Column(nullable = false, unique = true)
@@ -78,18 +79,18 @@ public class Collaborator implements UserDetails {
 
 	/** missions : the missions this collaborator is in charge of */
 	@OneToMany(mappedBy = "collaborator", fetch = FetchType.LAZY)
-	private Set<Mission> missions = new HashSet<Mission>();
+	private Set<Mission> missions = new HashSet<>();
 
 	/** manager : the manager of this collaborator */
 	@JoinColumn(name = "managerid")
-//	@ManyToOne(fetch = FetchType.LAZY) add to change it because it messed up the authentication 
+//	@ManyToOne(fetch = FetchType.LAZY) add to change it because it messed up the authentication
 	// the risk of stack overflow is contained by DTO conversion
 	@ManyToOne
 	private Collaborator manager = null;
 
 	/**
 	 * Constructeur
-	 * 
+	 *
 	 * @param id
 	 * @param lastName
 	 * @param firstName
@@ -108,7 +109,7 @@ public class Collaborator implements UserDetails {
 
 	/**
 	 * Constructeur used for map
-	 * 
+	 *
 	 * @param user
 	 */
 	public Collaborator(Collaborator user) {
@@ -127,7 +128,7 @@ public class Collaborator implements UserDetails {
 
 	/**
 	 * Constructeur used for map this one exist to prevent stackOverflow
-	 * 
+	 *
 	 * @param user
 	 */
 	public Collaborator(Collaborator user, boolean withManager) {
@@ -146,7 +147,7 @@ public class Collaborator implements UserDetails {
 
 	/**
 	 * Constructeur used for mapping from the DTO
-	 * 
+	 *
 	 * @param user
 	 */
 	public Collaborator(CollaboratorDTO user) {
@@ -164,7 +165,7 @@ public class Collaborator implements UserDetails {
 
 	/**
 	 * Constructeur used for map this one is made to avoid StackOverflow
-	 * 
+	 *
 	 * @param user
 	 */
 	public Collaborator(CollaboratorDTO user, boolean withManager) {
@@ -190,7 +191,7 @@ public class Collaborator implements UserDetails {
 	 * as parameters * @param Roles authority
 	 */
 	public void setRoles(Role... authority) {
-		Set<Roles> construct = new HashSet<Roles>();
+		Set<Roles> construct = new HashSet<>();
 		for (Roles role : this.authorities) {
 			construct.add(role);
 		}
@@ -210,7 +211,7 @@ public class Collaborator implements UserDetails {
 	 * as parameters * @param Roles authority
 	 */
 	public void removeAuthorities(Roles authority) {
-		Set<Roles> construct = new HashSet<Roles>();
+		Set<Roles> construct = new HashSet<>();
 		// we reconstruct the authorithy collection
 		for (Roles role : this.authorities) {
 			// as long as the authority to add is NOT the one we want to remove
@@ -270,12 +271,12 @@ public class Collaborator implements UserDetails {
 		if (manager != null)
 			this.manager = new Collaborator(manager, false);
 	}
-	
+
 	/**
 	 * SETTER
 	 * @param name
 	 */
-	public void setFirstName(String name) {	
+	public void setFirstName(String name) {
 		name =name.strip();
 		this.firstName = name;
 	}
@@ -283,7 +284,7 @@ public class Collaborator implements UserDetails {
 	 * SETTER
 	 * @param name
 	 */
-	public void setLastName(String name) {	
+	public void setLastName(String name) {
 		name =name.strip();
 		this.lastName = name;
 	}
@@ -295,7 +296,7 @@ public class Collaborator implements UserDetails {
 		name =name.strip();
 		this.username = name;
 	}
-	
+
 	/**
 	 * test if a string is a valid name for the collaborator
 	 * @param name
@@ -325,7 +326,7 @@ public class Collaborator implements UserDetails {
 	 * @param name
 	 * @return
 	 */
-	public static boolean isValidEmail(String name) {		
+	public static boolean isValidEmail(String name) {
 		return name.matches(GDMVars.REGEX_EMAIL2);
 	}
 

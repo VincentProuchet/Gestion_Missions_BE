@@ -1,9 +1,9 @@
 package diginamic.gdm.vars.errors;
 
 /**
- * 
- * classe mère des messages d'erreurs 
- * censée contenir les messages de base 
+ *
+ * classe mère des messages d'erreurs
+ * censée contenir les messages de base
  * @author Vincent
  *
  */
@@ -25,19 +25,19 @@ public class ErrorsMessage {
 	/** EXPENSE_TYPE */
 	public static String EXPENSE_TYPE = "expense's type ";
 	/** DATE */
-	public static String DATE = "date ";	
+	public static String DATE = "date ";
 	/** END */
 	public static String END = "end ";
 	/** START */
 	public static String START = "start ";
 	/** NOW */
-	public static String NOW = "today date ";	
+	public static String NOW = "today date ";
 	/** ON */
 	public static String ON = "on ";
 	/** AND */
-	public static String AND = "and "; 
+	public static String AND = "and ";
 	/** ADDED */
-	public static String ADDED = "added "; 
+	public static String ADDED = "added ";
 	/** CANT_BE */
 	public static String CANT_BE ="can't be ";
 	/** NULL */
@@ -52,7 +52,7 @@ public class ErrorsMessage {
 	public static String NO_AUTHENTICATION_CONTEXT = "authentication context is null";
 	/** INCONSISTENT_ID */
 	public static String INCONSISTENT_ID = "inconsistent IDs ";
-	
+
 	public static String VALUE = "Expense cost ";
 	public static String TAXES = "TVA ";
 	public static String NEGATIVE="négative ";
@@ -66,7 +66,7 @@ public class ErrorsMessage {
 
 	/**
 	 * pour les erreur lors de lectures
-	 * 
+	 *
 	 * @author Vincent
 	 *
 	 */

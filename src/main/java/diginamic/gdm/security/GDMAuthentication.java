@@ -13,7 +13,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -30,7 +29,7 @@ import lombok.NoArgsConstructor;
 /**
  * a custom authentication provider for injection in GDMSecurity and its
  * filterChain
- * 
+ *
  * @author Vincent
  *
  */
@@ -43,14 +42,14 @@ public class GDMAuthentication
 	private static final String CONTENT_TYPE_JSON = "application/json";
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String CHARACTER_ENCODING = "UTF-8";
-	
+
 	@Autowired
 	private CollaboratorService collaboratorService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
 	/**
-	 * Authentication method 
+	 * Authentication method
 	 * this is here that you can catch the authentication and
 	 * do the magic
 	 */
@@ -81,7 +80,7 @@ public class GDMAuthentication
 				coll.getUsername(), coll.getPassword(), coll.getAuthorities());
 			return userToken;
 		}
-		throw new BadCredentialsException("les informations de compte sont incorrectes");		
+		throw new BadCredentialsException("les informations de compte sont incorrectes");
 	}
 
 	@Override

@@ -1,5 +1,13 @@
 package diginamic.gdm.services.implementations;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
 import diginamic.gdm.exceptions.BadRequestException;
@@ -7,14 +15,9 @@ import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.MissionRepository;
 import diginamic.gdm.repository.NatureRepository;
 import diginamic.gdm.services.NatureService;
+import diginamic.gdm.vars.errors.ErrorsMessage;
 import diginamic.gdm.vars.errors.impl.NatureErrors;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Implementation for {@link NatureService}.
@@ -68,7 +71,7 @@ public class NatureServiceImpl implements NatureService {
 	}
 
 	/**
-	 * 
+	 *
 	 * Check that the given nature is the last of the natures with the same
 	 * description (active or not)
 	 *
@@ -108,7 +111,7 @@ public class NatureServiceImpl implements NatureService {
 		// LocalDateTime end = null;
 
 		if (id != nature.getId()) {
-			throw new BadRequestException(ErrorCodes.idInconsistent, NatureErrors.INCONSISTENT_ID);
+			throw new BadRequestException(ErrorCodes.idInconsistent, ErrorsMessage.INCONSISTENT_ID);
 		}
 		Nature registeredNature = this.read(nature.getId());
 		if (nature.getDateOfValidity().isBefore(now.minusHours(8))) {
@@ -163,8 +166,7 @@ public class NatureServiceImpl implements NatureService {
 				activeNature = this.justUpdate(registeredNature, nature);
 			}
 			if (activeNature == null) {
-				throw new BadRequestException("Something went wrong and the nature couldn't be updated ",
-						ErrorCodes.natureInvalid);
+				throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.update.CANT_BE_MODIFIED);
 			}
 			// then we update possible future missions with the new nature
 			// update missions that referred to the original nature
@@ -185,7 +187,7 @@ public class NatureServiceImpl implements NatureService {
 	/**
 	 * this fonction will just update the registerdNature with data form the
 	 * givenNature its only control are data integrity
-	 * 
+	 *
 	 * @param registeredNature
 	 * @param givenNature
 	 * @return saved nature
@@ -228,27 +230,6 @@ public class NatureServiceImpl implements NatureService {
 		return;
 	}
 
-	/**
-	 * test if a nature has an assigned mission this is a data integrity test made
-	 * for internal use
-	 * 
-	 * @param nature to test
-	 * @return true if it get to its end
-	 * @throws BadRequestException
-	 */
-	@Deprecated
-	private void isNatureAssigned(Nature nature) throws BadRequestException {
-		// we get mission that have This nature assigned
-		List<Mission> missions = missionRepository.findByNatureOrderByStartDateDesc(nature);
-		// if there is mission
-		if (missions.size() > 0) {
-			// we check only the last mission in chronology
-			Mission lastMission = missions.get(0);
-			if (lastMission.getStartDate().isAfter(LocalDateTime.now())) {
-				throw new BadRequestException(ErrorCodes.natureCantBeDeleted,NatureErrors.delete.IS_ASSIGNED);
-			}
-		}
-	}
 
 	@Override
 	public List<Nature> getActiveNatures() {
@@ -283,7 +264,7 @@ public class NatureServiceImpl implements NatureService {
 		LocalDateTime startDateOfValidity = nature.getDateOfValidity();
 		if (startDateOfValidity == null) {
 			// throw start date of validity can't be null
-			throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.invalid.START_CANT_BE,NatureErrors.NULL);
+			throw new BadRequestException(ErrorCodes.natureInvalid, NatureErrors.invalid.START_CANT_BE,ErrorsMessage.NULL);
 		}
 		// if end of validity not null
 		if (endDateOfValidity != null) {
