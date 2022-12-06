@@ -2,21 +2,22 @@ package diginamic.gdm.services.implementations;
 
 import java.util.List;
 
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.exceptions.ErrorCodes;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
 import diginamic.gdm.repository.CityRepository;
 import diginamic.gdm.services.CityService;
+import diginamic.gdm.vars.errors.impl.CityErrors;
 import lombok.AllArgsConstructor;
-
-import javax.transaction.Transactional;
 
 /**
  * Implementation for {@link CityService}.
- * 
+ *
  * @author DorianBoel
  */
 @Service
@@ -28,24 +29,32 @@ public class CityServiceImpl implements CityService {
 	 * The {@link CityRepository} dependency.
 	 */
 	private CityRepository cityRepository;
-	
+
 	@Override
 	public List<City> list() {
 		return this.cityRepository.findAll();
 	}
 
 	@Override
-	public City create(City city) {
-		return this.cityRepository.save(city);
+	public City create(City city) throws BadRequestException {
+		if(!City.isValidName(city.getName()) || !this.cityRepository.findByName(city.getName()).isEmpty()){
+			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
+
+		}
+		return this.cityRepository.findByName(city.getName()).orElseGet(()->this.cityRepository.save(city));
 	}
-	
+
 	@Override
 	public City read(int id) throws BadRequestException {
-		return this.cityRepository.findById(id).orElseThrow(() -> new BadRequestException("City not found", ErrorCodes.cityNotFound));
+		return this.cityRepository.findById(id)
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.NOT_FOUND));
 	}
 
 	@Override
 	public City update(int id, City city) throws BadRequestException {
+		if(!City.isValidName(city.getName())) {
+			throw new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.INVALID_NAME);
+		}
 		City current = read(id);
 		current.setName(city.getName());
 		this.cityRepository.save(current);
@@ -61,32 +70,21 @@ public class CityServiceImpl implements CityService {
 	@Override
 	public City read(String name) throws BadRequestException {
 		// we first search it
-		return this.cityRepository.findByName(name).orElseThrow(() -> new BadRequestException("City not found", ErrorCodes.cityNotFound));
-		
+		return this.cityRepository.findByName(name)
+				.orElseThrow(() -> new BadRequestException(ErrorCodes.cityNotFound,CityErrors.read.NOT_FOUND));
+
 	}
 
 	@Override
 	public City read(CityDTO city) throws BadRequestException {
-		City city2;
 		// attempt to find it by id
 		try {
-			System.err.println("search by id");
-			 city2  = this.read(city.getId());
-			
+			return this.read(city.getId());
 		} catch (BadRequestException e) {
 			// attemp to find it by name
-			try {
-				System.err.println("id not found  search by name");
-				city2 = read(city.getName());
-				
-			} catch (BadRequestException e2) {
-				// creation of a new city
-			System.err.println("create a new city");
-				city2 = this.create(new City(city));
-			}
-			
-		}		
-		return city2;
-	}
 
+			return this.read(city.getName());
+		}
+
+	}
 }

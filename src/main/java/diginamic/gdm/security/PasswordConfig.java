@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @Configuration
 @AllArgsConstructor
 public class PasswordConfig {
-	
+
 	@Bean
 	public BCryptPasswordEncoder bcCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -17,6 +17,6 @@ public class PasswordConfig {
 
 
 
-	
+
 
 }

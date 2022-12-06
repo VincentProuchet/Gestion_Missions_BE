@@ -5,20 +5,19 @@ import java.util.List;
 
 import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Status;
 import diginamic.gdm.exceptions.BadRequestException;
 
 /**
  * Interface to be implemented by a mission service class.
- * 
+ *
  * @author DorianBoel
  */
 public interface MissionService {
-	
+
 	/**
 	 * Gets the full list of registered missions.
 	 * For test and debug purposes
-	 * 
+	 *
 	 * @return A list of all missions
 	 */
 	List<Mission> list();
@@ -30,7 +29,7 @@ public interface MissionService {
 	 * @return the list of missions
 	 */
 	List<Mission> getMissionsOfCollaborator(Collaborator collaborator);
-	
+
 	/**
 	 * Saves a new {@link Mission} instance.
 	 *
@@ -53,12 +52,12 @@ public interface MissionService {
 
 	/**
 	 * Gets a specific registered mission.
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to get
 	 * @return The registered mission corresponding to the given id
 	 */
 	Mission read(int id) throws BadRequestException;
-	
+
 	/**
 	 * Updates the data for a specific registered mission.
 	 * Does not allow to add or remove expenses, use the appropriate service for this
@@ -81,68 +80,16 @@ public interface MissionService {
 	default Mission update(int id, Mission mission) throws BadRequestException {
 		return update(id, mission, false);
 	}
-	
+
 	/**
 	 * Deletes a specific registered mission.
-	 * 
+	 *
 	 * @param id The id corresponding to the mission to delete
+	 * @throws Exception
 	 */
-	void delete(int id) throws BadRequestException;
+	void delete(int id) throws BadRequestException, Exception;
 
-	/**
-	 * Updates the current status for a specific mission.
-	 *
-	 * @param id     The id corresponding to the mission whose status to update
-	 * @param status The new status to be applied to the mission
-	 * @return the updated mission in DB
-	 */
-	Mission updateStatus(int id, Status status) throws BadRequestException;
 
-	/**
-	 * Check the validity of the mission request
-	 *
-	 * @param mission the mission
-	 * @return true if the mission is correctly formed
-	 * @throws Exception 
-	 */
-	default boolean isThisMissionValid(Mission mission) throws Exception {
-		return isThisMissionValid(mission, false);
-	}
-
-	/**
-	 * Check the validity of the mission request, allow a date in WE
-	 *
-	 * @param allowWE allow to work in WE
-	 * @param mission the mission
-	 * @return true if the mission is correctly formed
-	 * @throws BadRequestException 
-	 */
-	boolean isThisMissionValid(Mission mission, boolean allowWE) throws Exception;
-
-	/**
-	 * Check if the mission status is INIT or REJECTED
-	 *
-	 * @param mission the mission
-	 * @return true if the status allows the update
-	 * @throws Exception 
-	 */
-	boolean canBeUpdated(Mission mission) throws Exception;
-
-	/**
-	 * returns true, but check if the mission status is INIT or REJECTED
-	 * @param mission the mission
-	 * @return true if deleted
-	 */
-	boolean canBeDeleted(Mission mission);
-
-	/**
-	 * Check if the mission has been completed
-	 *
-	 * @param id mission id
-	 * @return true if completed
-	 * @throws Exception 
-	 */
-	boolean isMissionDone(int id) throws Exception;
 
 	/**
 	 * Get the list of missions to validate of the team of a given manager
@@ -171,4 +118,57 @@ public interface MissionService {
 	 * @return the list of missions with status VALIDATED and end date passed
 	 */
 	List<Mission> completedMissions();
+
+	/**
+	 * Check if the mission has been completed
+	 *
+	 * @param id mission id
+	 * @return true if completed
+	 * @throws Exception
+	 */
+	public boolean isMissionDone(int id) throws Exception;
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 *
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	public Mission RejectMission(int id) throws BadRequestException;
+
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 *
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	public Mission NightComputing(int id) throws BadRequestException ;
+
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 *
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	public Mission resetMission(int id) throws BadRequestException ;
+
+	/**
+	 * First draw  of a mission's status manipulator
+	 * the idea is to secure status by limiting possibilities
+	 *  to directly manipulate the data
+	 *
+	 * @param id
+	 * @return the updated mission
+	 * @throws BadRequestException
+	 */
+	Mission validateMission(int id) throws BadRequestException;
+
 }

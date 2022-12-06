@@ -1,21 +1,19 @@
 package diginamic.gdm.services.implementations;
 
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Nature;
-import diginamic.gdm.dao.Status;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.MissionService;
-import diginamic.gdm.services.NatureService;
-import diginamic.gdm.services.ScheduledTasksService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Nature;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.services.MissionService;
+import diginamic.gdm.services.ScheduledTasksService;
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -23,8 +21,6 @@ import java.util.List;
 public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
     private MissionService missionService;
-    private CollaboratorService collaboratorService;
-    private NatureService natureService;
 
     @Override
     public void computeBonusForCompletedMissions() {
@@ -36,7 +32,7 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
 
             Nature nature = mission.getNature();
 
-            BigDecimal bonus = BigDecimal.valueOf(workedDays(mission) * nature.getBonusPercentage() / 100).multiply(nature.getTjm());
+            float bonus = (workedDays(mission) * nature.getBonusPercentage() / 100) *nature.getTjm();
 
             mission.setBonus(bonus);
             mission.setHasBonusBeenEvaluated(true);
@@ -50,7 +46,7 @@ public class ScheduledTasksServiceImpl implements ScheduledTasksService {
         //update missions statuses INIT becomes WAITING_VALIDATION
         List<Mission> missionsWithStatusInit = missionService.missionsToPutInWaitingValidation();
         for (Mission mission : missionsWithStatusInit) {
-            missionService.updateStatus(mission.getId(), Status.WAITING_VALIDATION);
+            missionService.NightComputing(mission.getId());
         }
 
     }
