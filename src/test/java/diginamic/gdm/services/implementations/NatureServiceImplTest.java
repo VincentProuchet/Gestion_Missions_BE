@@ -192,6 +192,7 @@ class NatureServiceImplTest {
 
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	@Order(4)
 	void isThisNatureInUse() throws Exception {

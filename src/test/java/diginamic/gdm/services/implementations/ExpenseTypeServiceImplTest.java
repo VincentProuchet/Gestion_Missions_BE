@@ -46,6 +46,7 @@ public class ExpenseTypeServiceImplTest {
 
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void read() throws BadRequestException {
 		String name = baseName +"read";
@@ -54,6 +55,7 @@ public class ExpenseTypeServiceImplTest {
 		assertThrows(BadRequestException.class,()->this.service.read(Integer.MAX_VALUE));
 		assertDoesNotThrow(()->this.service.read(expenseType.getId()));
 	}
+	@SuppressWarnings("unused")
 	@Test
 	public void update() throws BadRequestException {
 		String name = baseName +"update";
@@ -77,6 +79,7 @@ public class ExpenseTypeServiceImplTest {
 	 * le delete existe mais il n'est pas prévu dans l'intreface et encore moins dans les contrôleurs
 	 * @throws BadRequestException
 	 */
+	@SuppressWarnings("unused")
 	@Test
 	public void delete() throws BadRequestException {
 		String name = baseName +"delete";

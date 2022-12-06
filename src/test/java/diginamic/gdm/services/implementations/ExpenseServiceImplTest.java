@@ -74,6 +74,7 @@ class ExpenseServiceImplTest {
 	/** missions */
 	private List<Mission> missions= new ArrayList<>();
 
+	@SuppressWarnings("unused")
 	@BeforeAll
 	void init() {
 		// valid nature

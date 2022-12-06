@@ -40,6 +40,7 @@ public class GDMAuthentication
 		implements AuthenticationProvider, AuthenticationSuccessHandler, AuthenticationFailureHandler {
 
 	private static final String CONTENT_TYPE_JSON = "application/json";
+	@SuppressWarnings("unused")
 	private static final String CONTENT_TYPE = "Content-Type";
 	private static final String CHARACTER_ENCODING = "UTF-8";
 

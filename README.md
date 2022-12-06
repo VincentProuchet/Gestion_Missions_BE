@@ -1,24 +1,16 @@
-<h1>Projet de fin d formation développeur Java FULL-STACK</h1>
+#Projet de fin de formation développeur Java FULL-STACK
+##FAD 04 DIGINAMIC 	Groupe 2
+###partie Back-end
 
-<h2>FAD 04 DIGINAMIC </h2><p>Groupe 2 </p>
-<h3>partie Back-end</h3>
+#### Contexte
+Ceci est la partie back-end du projet de fin de formation. Dans le cadre de notre formation de développeur Java Full Stack avec [![DIGINAMIC](https://www.diginamic.fr/wp-content/uploads/2017/04/Logo_Diginamic_Passeport-e1492187736114.png)](https://www.diginamic.fr/) 
+Nous avions trois semaine pour réaliser un  projet aussi près que possible du cahier des charges, que vous ne trouverez pas dans les documents de conception pour des raisons légales.
+Nous y sommes parvenus comme vous pouvez les tester avec la branche EOTMaster qui est un instantané de l'état du code a la fin du temps impartit. Cette branche n'existe que pour permettre de poursuivre le développement. 
 
-<div>
-Here you have the Back-end part of an end-of training project
-we had three weeks for making it as close as possible to the "cahier des charge"
-document that you won't find with conceptions files due to legal reasons.
-We succeeded as you can test it with the branch EOTmaster witch is a snapshot of it developpement
-and the end of the given time, this is to allow further developpement 
-</div>
-<div>
-this project is an app that let ONLY people authenticated through a login 
-to access, manipulate and add informations.
-informations where about :
-- mission
-- their nature
-- expenses made for the assignated mission (who also have nature designed as types)
-</div>
+#### à propos
+Il s'agit d'une application qui n'accepte que de commande que d'utilisateur authentifiés par un login.
+Les données concernes des missions, leurs natures, les frais de missions qui ont des types.
 
-<div>
-conception documents are in "conception" file in <strong> the Back-end part files </strong>
-</div> 
+#### Conception
+les documents de conception sont dans le dossier conception du repository du Back-end
+
