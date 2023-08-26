@@ -17,7 +17,7 @@ spring:
     timeout: 7200        
     
   datasource:
-    url: "jdbc:mariadb://localhost:3307/gdmTest"
+    url: "jdbc:mariadb://localhost:3307/gdmtest"
     username: root
     password: "1111"
     driverClassName: org.mariadb.jdbc.Driver
