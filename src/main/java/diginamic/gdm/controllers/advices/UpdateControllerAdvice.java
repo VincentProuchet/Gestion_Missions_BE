@@ -1,13 +1,14 @@
 package diginamic.gdm.controllers.advices;
 
-import diginamic.gdm.dto.errors.BadRequestDTO;
-import diginamic.gdm.exceptions.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+
+import diginamic.gdm.dto.errors.BadRequestDTO;
+import diginamic.gdm.exceptions.BadRequestException;
 
 @ControllerAdvice
 public class UpdateControllerAdvice {
@@ -20,7 +21,7 @@ public class UpdateControllerAdvice {
 
     /**
      * this method has to disappear
-     * @param exception the exceptio
+     * @param exception the exception
      * @param request the request
      * @return the communication exception
      */

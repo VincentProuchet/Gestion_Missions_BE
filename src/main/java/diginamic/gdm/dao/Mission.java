@@ -1,6 +1,5 @@
 package diginamic.gdm.dao;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +26,7 @@ import lombok.Setter;
 
 /**
  * Entity which represents a Collaborator
- * 
+ *
  * @author Joseph
  *
  */
@@ -51,10 +50,12 @@ public class Mission {
 	private LocalDateTime endDate;
 
 	/** bonus : the bonus for the collaborator */
-	private BigDecimal bonus;
+	@Column(precision = 2)
+	private float bonus;
 
 	/** hasBonusBeenEvaluated : a technical data to make it easier to get missions missing a bonus
 	 * it is true only after the night computing has set the value of bonus */
+	@Column
 	private boolean hasBonusBeenEvaluated = false;
 
 	/** missionTransport : the type of transport for the mission */
@@ -91,16 +92,16 @@ public class Mission {
 	@ManyToOne
 	@JoinColumn(name = "collaboratorID", nullable = false)
 	private Collaborator collaborator;
-	
+
 	public Mission(MissionDTO m, City start, City arrival,Collaborator collaborator) {
-		
+
 		super();
 		this.id = m.getId();
 		this.startDate = m.getStart();
 		this.endDate = m.getEnd();
 		this.bonus = m.getBonus();
 		this.missionTransport = m.getTransport();
-		this.nature = m.getNature().instantiate();
+		this.nature =new Nature(m.getNature());
 		this.status = m.getStatus();
 		this.startCity = start;
 		this.endCity = arrival;
@@ -112,12 +113,12 @@ public Mission(MissionDTO m) {
 		this.endDate = m.getEnd();
 		this.bonus = m.getBonus();
 		this.missionTransport = m.getTransport();
-		this.nature = m.getNature().instantiate();
+		this.nature = new Nature(m.getNature());
 		this.status = m.getStatus();
 	}
-	
 
-	
-	
-	
+
+
+
+
 }

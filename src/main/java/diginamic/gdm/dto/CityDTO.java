@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 
+ *
  * @author Vincent
  *
  */
@@ -16,24 +16,29 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CityDTO implements DTO<City> {
-	
+
 	/** id */
-	private int id;
+	private int id = 0;
 
 	/** name : the name of the city */
-	private String name;
-	
+	private String name = "";
+
 	/** Constructeur
 	 * @param city
 	 */
 	public CityDTO(City city) {
-		id = city.getId();
-		name = city.getName();
+		if( city.getId() >= 0 ) {
+			this.id = city.getId();
+			this.name = city.getName();
+		}
+		
 	}
-	
-	@Override
-	public City instantiate() {
-		return new City(0, name);
+
+	/**
+	 * @return Citie's name in lowerCase
+	 */
+	public String getName() {
+		return this.name.toLowerCase();
 	}
-	
+
 }

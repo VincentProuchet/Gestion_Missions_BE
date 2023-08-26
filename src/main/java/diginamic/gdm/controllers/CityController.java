@@ -15,24 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.GDMRoles;
-import diginamic.gdm.GDMRoutes;
 import diginamic.gdm.dao.City;
 import diginamic.gdm.dto.CityDTO;
 import diginamic.gdm.exceptions.BadRequestException;
 import diginamic.gdm.services.CityService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.GDMRoutes;
 import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for {@link City} related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
+// http://wwww.gdm/city/
 @RequestMapping(path = GDMRoutes.CITY, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CityController {
-	
+
 	/**
 	 * The {@link CityService} dependency.
 	 */
@@ -40,7 +41,7 @@ public class CityController {
 
 	/**
 	 * Gets the full list of registered cities.
-	 * 
+	 *
 	 * @return A list of all cities
 	 */
 	@GetMapping
@@ -48,22 +49,23 @@ public class CityController {
 	public List<CityDTO> list() {
 		return cityService.list().stream().map(city -> new CityDTO(city)).toList();
 	}
-	
+
 	/**
 	 * Saves a new {@link City} instance.
-	 * 
+	 *
 	 * @param cityDTO The new city within the request body to be registered
+	 * @throws Exception
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
-	public void create(@RequestBody CityDTO cityDTO) {
-		cityService.create(cityDTO.instantiate());
+	public void create(@RequestBody CityDTO cityDTO) throws Exception {
+		cityService.create( new City(cityDTO));
 	}
-	
+
 	/**
 	 * Gets a specific registered city.
-	 * 
+	 *
 	 * @param id The id corresponding to the city to get
 	 * @return The registered city corresponding to the given id
 	 */
@@ -72,10 +74,10 @@ public class CityController {
 	public CityDTO read(@PathVariable int id) throws BadRequestException {
 		return new CityDTO(cityService.read(id));
 	}
-	
+
 	/**
 	 * Updates the data for a specific registered city.
-	 * 
+	 *
 	 * @param id The id corresponding to the city to update
 	 * @param cityDTO The city within the request body with modified info
 	 * @return The resulting city with updated info
@@ -83,12 +85,12 @@ public class CityController {
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured({GDMRoles.ADMIN})
 	public CityDTO update(@PathVariable int id, @RequestBody CityDTO cityDTO) throws BadRequestException {
-		return new CityDTO(cityService.update(id, cityDTO.instantiate()));
+		return new CityDTO(cityService.update(id,new City(cityDTO)));
 	}
-	
+
 	/**
 	 * Deletes a specific registered city.
-	 * 
+	 *
 	 * @param id The id of the city to delete
 	 */
 	@DeleteMapping(path = "{id}")
@@ -96,5 +98,5 @@ public class CityController {
 	public void delete(@PathVariable int id) throws BadRequestException {
 		cityService.delete(id);
 	}
-	
+
 }

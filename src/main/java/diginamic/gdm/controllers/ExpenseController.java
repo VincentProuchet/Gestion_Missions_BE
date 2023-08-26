@@ -2,11 +2,6 @@ package diginamic.gdm.controllers;
 
 import java.util.List;
 
-import diginamic.gdm.dao.Collaborator;
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.services.CollaboratorService;
-import diginamic.gdm.services.MissionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
@@ -20,38 +15,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import diginamic.gdm.GDMRoles;
-import diginamic.gdm.GDMRoutes;
+import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Expense;
-import diginamic.gdm.dao.ExpenseType;
+import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dto.ExpenseDTO;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.exceptions.ErrorCodes;
+import diginamic.gdm.services.CollaboratorService;
 import diginamic.gdm.services.ExpenseService;
-import diginamic.gdm.services.ExpenseTypeService;
+import diginamic.gdm.services.MissionService;
+import diginamic.gdm.vars.GDMRoles;
+import diginamic.gdm.vars.GDMRoutes;
 import lombok.AllArgsConstructor;
 
 /**
  * REST API controller for {@link Expense} related paths.
- * 
+ *
  * @author DorianBoel
  */
 @RestController
 @RequestMapping(path = GDMRoutes.EXPENSE, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ExpenseController {
-	
+
 	/**
 	 * The {@link ExpenseService} dependency.
 	 */
 	private ExpenseService expenseService;
 
+	/** missionService */
 	private MissionService missionService;
 
+	/** collaboratorService */
 	private CollaboratorService collaboratorService;
 
 	/**
 	 * Gets the full list of registered expenses.
 	 * For test purposes
-	 * 
+	 *
 	 * @return A list of all expenses
 	 */
 	@GetMapping
@@ -59,10 +60,10 @@ public class ExpenseController {
 	public List<ExpenseDTO> list() throws Exception {
 		return expenseService.list().stream().map(ExpenseDTO::new).toList();
 	}
-	
+
 	/**
 	 * Saves a new {@link Expense} instance.
-	 * 
+	 *
 	 * @param expenseDTO The new expense within the request body to be registered
 	 */
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -76,18 +77,18 @@ public class ExpenseController {
 		// we check if the user has the righrs to add expenses to THAT mission
 		if(mission.getCollaborator().getId() == user.getId()){
 			// we create a new expense
-			Expense newExpense = expenseDTO.instantiate();
+			Expense newExpense = new Expense(expenseDTO);
 			// and give it he mission its supposed to
 			newExpense.setMission(mission);
-					
+
 			return new ExpenseDTO(expenseService.create(newExpense));
 		}
 		throw new Exception("Only the assignee can create an expense for a mission");
 	}
-	
+
 	/**
 	 * Gets a specific registered expense.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense to get
 	 * @return The registered expense corresponding to the given id
 	 */
@@ -100,11 +101,11 @@ public class ExpenseController {
 		if(mission.getCollaborator().getId() == user.getId()){
 			return new ExpenseDTO(expense);
 		}
-		throw new Exception("Only the assignee can see an expense of a mission");
+		throw new BadRequestException(ErrorCodes.expenseNotFound,"Only the assignee can see the expenses of a mission");
 	}
 	/**
 	 * Gets the expenses associated to a given mission
-	 * 
+	 *
 	 * @param id The id of the mission
 	 * @return the list of expenses of the mission
 	 */
@@ -117,13 +118,13 @@ public class ExpenseController {
 		if(mission.getCollaborator().getId() == user.getId()){
 			return expenseService.getExpensesOfMission(mission).stream().map(ExpenseDTO::new).toList();
 		}
-		throw new Exception("Only the assignee can see the expenses of a mission");
+		throw new BadRequestException(ErrorCodes.expenseNotFound,"Only the assignee can see the expenses of a mission");
 	}
-	
-	
+
+
 	/**
 	 * Updates the data for a specific registered expense.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense to update
 	 * @param expenseDTO The expense within the request body with modified info
 	 * @return The resulting expense with updated info
@@ -135,7 +136,7 @@ public class ExpenseController {
 		Collaborator user = collaboratorService.getConnectedUser();
 		Mission mission = expenseService.read(id).getMission();
 		if(mission.getCollaborator().getId() == user.getId()){
-			Expense modifiedExpense = expenseDTO.instantiate();
+			Expense modifiedExpense = new Expense(expenseDTO);
 			Mission emptyMission = new Mission();
 			emptyMission.setId(expenseDTO.getIdMission());
 			modifiedExpense.setMission(emptyMission);
@@ -143,10 +144,10 @@ public class ExpenseController {
 		}
 		throw new Exception("Only the assignee can update the expenses of a mission");
 	}
-	
+
 	/**
 	 * Deletes a specific registered expense.
-	 * 
+	 *
 	 * @param id The id corresponding to the expense to delete
 	 */
 	@DeleteMapping(path = "{id}")
@@ -159,5 +160,5 @@ public class ExpenseController {
 		}
 		expenseService.delete(id);
 	}
-	
+
 }

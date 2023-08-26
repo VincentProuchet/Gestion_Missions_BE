@@ -1,11 +1,6 @@
 package diginamic.gdm.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import diginamic.gdm.dao.Expense;
 import lombok.AllArgsConstructor;
@@ -15,7 +10,7 @@ import lombok.Setter;
 
 /**
  * Data transfer object for the {@link diginamic.gdm.dao.Expense Expense} DAO
- * 
+ *
  * @author DorianBoel
  */
 @AllArgsConstructor
@@ -28,32 +23,35 @@ public class ExpenseDTO implements DTO<Expense> {
 	 * Database id
 	 */
 	private int id = 0;
-	
+
 	/**
 	 * Database foreign key id of the associated mission
 	 */
 	private int idMission = 0;
-	
+
 	/**
 	 * Represents {@link diginamic.gdm.dao.Expense Expense.date}
 	 */
 	private LocalDateTime date = null;
-	
+
 	/**
 	 * Represents {@link diginamic.gdm.dao.Expense Expense.cost}
 	 */
-	private BigDecimal cost = null;
-	
+	private float cost = 0;
+
 	/**
 	 * Represents {@link diginamic.gdm.dao.Expense Expense.tva}
 	 */
 	private float tva = 0;
-	
+
 	/**
 	 * Represents {@link diginamic.gdm.dao.Expense Expense.expenseType}
 	 */
 	private ExpenseTypeDTO type = null;
-	
+
+	/** Constructeur
+	 * @param expense
+	 */
 	public ExpenseDTO(Expense expense) {
 		this.id = expense.getId();
 		this.idMission = expense.getMission().getId();
@@ -63,9 +61,4 @@ public class ExpenseDTO implements DTO<Expense> {
 		this.type = new ExpenseTypeDTO(expense.getExpenseType());
 	}
 
-	@Override
-	public Expense instantiate() {
-		return new Expense(id, date, cost, tva, null, type.instantiate());
-	}
-	
 }

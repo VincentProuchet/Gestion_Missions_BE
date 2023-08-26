@@ -1,285 +1,287 @@
 package diginamic.gdm.services.implementations;
 
-import diginamic.gdm.dao.Mission;
-import diginamic.gdm.dao.Nature;
-import diginamic.gdm.dao.Transport;
-import diginamic.gdm.exceptions.BadRequestException;
-import diginamic.gdm.repository.MissionRepository;
-import diginamic.gdm.repository.NatureRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import diginamic.gdm.dao.Mission;
+import diginamic.gdm.dao.Nature;
+import diginamic.gdm.exceptions.BadRequestException;
+import diginamic.gdm.repository.CityRepository;
+import diginamic.gdm.repository.CollaboratorRepository;
+import diginamic.gdm.repository.ExpenseTypeRepository;
+import diginamic.gdm.repository.MissionRepository;
+import diginamic.gdm.repository.NatureRepository;
+import diginamic.gdm.services.RoleService;
+import diginamic.gdm.utilities.testTools;
 
 // ce sont des tests d integrations et pas des tests unitaires... je sais pas trop comment tester plus petit ici
+// ben en fait sur les servicesImpl  tu peux pas, il te faut un contexte Spring
+/**
+ * these test are Only for Nature We dont test the dependency with other
+ * Entities nor Services those kind of test belong to a separate class
+ *
+ * @author Vincent
+ * @author Joseph // ton travail était une excellente base pour le refactoring de cette Junit,
+ * 					 tu est déjà un bon programmeur	et tu ne peu que t'améliorer
+ *
+ */
 @SpringBootTest
+@ActiveProfiles("Test")
 class NatureServiceImplTest {
 
-    @Autowired
-    private NatureServiceImpl natureService;
-
-    @Autowired
-    private NatureRepository natureRepository;
-
-    @Autowired
-    private MissionRepository missionRepository;
-
-    @BeforeEach
-    void init() {
-
-        Nature nature1 = new Nature();
-        nature1.setDateOfValidity(LocalDateTime.of(2000, Month.JANUARY, 24, 01, 01, 01));
-        nature1.setDescription("nature1Name");
-        nature1.setEndOfValidity(null);
-        nature1.setCharged(true);
-        natureRepository.save(nature1);
-
-        Nature nature2 = new Nature();
-        nature2.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setDescription("nature2Name");
-        nature2.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setCharged(false);
-        natureRepository.save(nature2);
-
-        Mission m1 = new Mission();
-        m1.setBonus(BigDecimal.valueOf(36));
-        m1.setMissionTransport(Transport.Car);
-        m1.setNature(nature1);
-        missionRepository.save(m1);
-
-        Mission m2 = new Mission();
-        m2.setBonus(BigDecimal.valueOf(100));
-        m2.setMissionTransport(Transport.Flight);
-        m2.setNature(nature1);
-        missionRepository.save(m2);
+	/** natureServiceImpl
+	 * Well this is supposed to be the class testing it
+	 *
+	 */
+	@Autowired
+	private NatureServiceImpl natureService;
+	@Autowired // we need this. some test need us to pass around the NatureService
+	private NatureRepository natureRepository;
+	/** collabService
+	 * to test :
+	 *  - isNatureInUse
+	 */
+	@Autowired
+	private RoleService roleSrv;
+	// and all repository
+	@Autowired
+	private CollaboratorRepository collaboratorRepository;
+	@Autowired
+	private MissionRepository missionRepository;
+	@Autowired
+	private ExpenseTypeRepository expenseTypeRepository;
+	@Autowired
+	private CityRepository cityRepository;
+	@Autowired
+	private testTools tools ;
 
 
-    }
-
-    @AfterEach
-    void cleanDB() {
-        missionRepository.deleteAll(missionRepository.findAll());
-        natureRepository.deleteAll(natureRepository.findAll());
-    }
-
-    @Test
-    void list() {
-        assertEquals(natureService.list().size(), 2);
-    }
-
-    @Test
-    void canBeUpdated() {
-
-        Nature nature3 = new Nature();
-        nature3.setId(3);
-        nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setDescription("nature3Name");
-        nature3.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setCharged(false);
-
-        assertFalse(natureService.canBeUpdated(nature3.getId(), nature3));
-        assertFalse(natureService.canBeUpdated(2, nature3));
+	private int naturesTobeExpected = 0;
+	private String TestDescription = "TestNature";
+	private int TestTjm = 4500;
+	private float marginError = 0.001f;
+	private LocalDateTime beforeCreation = LocalDateTime.now();
+	private LocalDateTime afterCreation = LocalDateTime.now();
 
 
-        Nature nature2 = new Nature();
-        nature2.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setDescription("nature2Name");
-        nature2.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setCharged(false);
-        int idNature2 = natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature2.getDescription()).get(0).getId();
-        nature2.setId(idNature2);
 
-        Nature nature1 = natureRepository.findByDescription("nature1Name").get(0);
-        assertFalse(natureService.canBeUpdated(nature1.getId(), nature2));
-        assertFalse(natureService.canBeUpdated(1000, nature2));
+	@Test
+	void list() {
+		// well there must have more than 0 one since inityDb fill some values in the persistence
+		assertNotEquals(natureService.list().size(), this.naturesTobeExpected);
+	}
+	/**
+	 * only test if the creation of a nature create and persist the entities with the
+	 * desired values
+	 *
+	 * @throws BadRequestException
+	 */
+	@Test
+	@Order(0)
+	void createSuccess() throws BadRequestException {
+		// we create a testNature with specific values
+		this.beforeCreation = LocalDateTime.now();
+		Nature nature1 = new Nature();
+		// in our implementation date are automatically added
+		// nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10,
+		// 10));
+		// nature3.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10,
+		// 10));
+		nature1.setDescription(this.TestDescription + "Create");
+		System.err.println(nature1.getDescription());
+		// we set them to true because their default values are false
+		nature1.setGivesBonus(true);
+		nature1.setCharged(true);
+		nature1.setTjm(this.TestTjm);
 
-        /* Detailed test
+		Nature nature = natureService.create(nature1);
+		// creating a nature with the same nature should faill
+		assertThrows(BadRequestException.class, () -> natureService.create(nature1));
 
-        List<Nature> orderedListOfNatures = natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature2.getDescription());
-        Optional<Nature> registeredNatureOptional = natureRepository.findById(2);
+		// the name is tested here we would have it if the name wasn't equals
+		assertNotNull(nature);
+		assertNotEquals(nature.getId(), 0); // the id must never be 0 in DB
+		assertTrue(nature.getDescription().equals(nature1.getDescription()));
+		// we check if date of validity is now
+		assertTrue(nature.getDateOfValidity().isAfter(this.beforeCreation));
+		this.afterCreation = LocalDateTime.now();
+		assertTrue(nature.getDateOfValidity().isBefore(this.afterCreation));
+		// that end of validity is supposed to be null
+		assertTrue(nature.getEndOfValidity() == null);
+		assertTrue(nature1.isCharged() == nature.isCharged());
+		assertTrue(nature1.isGivesBonus() == nature.isGivesBonus());
 
-        assertFalse(orderedListOfNatures.size() == 0);
-        assertFalse(registeredNatureOptional.isEmpty());
-        assertFalse(!(orderedListOfNatures.get(0).getId() == registeredNatureOptional.get().getId()));
-        */
+		// here we test the margin error of float persistence
+		assertTrue(nature1.getBonusPercentage() + this.marginError >= nature.getBonusPercentage());
+		assertTrue(nature1.getBonusPercentage() - this.marginError <= nature.getBonusPercentage());
 
-        assertTrue(natureService.canBeUpdated(idNature2, nature2));
+		assertEquals(nature1.getTjm(),nature.getTjm());
+	}
 
-        assertTrue(natureService.canBeUpdated(nature1.getId(), nature1));
+	/**
+	 * to refactor we don't need to use a nature in DB to test that
+	 *
+	 * @throws BadRequestException
+	 */
+	@Test
+	@Order(1)
+	void isAValidNature() throws BadRequestException {
+		Nature nature = new Nature();
+		nature.setEndOfValidity(LocalDateTime.now());
+		// start validity is null
+		assertThrows(BadRequestException.class, () -> natureService.isAValidNature(nature));
+		nature.setDateOfValidity(LocalDateTime.now());
+		// date EOV is not null and before start validity
+		assertThrows(BadRequestException.class, () -> natureService.isAValidNature(nature));
+		nature.setEndOfValidity(null);
+		// description is null
+		assertThrows(BadRequestException.class, () -> natureService.isAValidNature(nature));
+		nature.setDescription("");
+		// description empty
+		assertThrows(BadRequestException.class, () -> natureService.isAValidNature(nature));
+		nature.setDescription(TestDescription + "is a valid nature");
+		assertTrue(natureService.isAValidNature(nature));
+	}
 
+	/**
+	 * need data in db
+	 *
+	 * @throws BadRequestException
+	 */
+	@Test
+	@Order(3)
+	void canBeUpdated() throws BadRequestException {
+		Nature nature = this.pleaseCreateOneNature(this.TestDescription + "canBeupdated");
+		//assertThrows(BadRequestException.class, () -> natureService.canBeUpdated( nature));
+		// should be true, its the only one with that description
+		assertTrue( natureService.canBeUpdated(nature));
+		Nature nature1 = tools.giveMeJustANature(this.TestDescription + "canBeupdated");
+		this.natureRepository.save(nature1);
+		this.natureRepository.save(nature1);
+		assertFalse( natureService.canBeUpdated(nature));
 
-        // test if the id is not the most recent with the same description
+	}
 
-    }
+	/**
+	 * to refactor we need to create a new one in it before
+	 *
+	 * @throws BadRequestException
+	 */
+	@Test
+	@Order(2)
+	void canBeAdded() throws BadRequestException {
+		Nature nature = new Nature();
+		nature.setDescription(TestDescription + "can be added nature");
+		assertTrue(natureService.canBeAdded(nature));
+		assertFalse(natureService.canBeAdded(this.pleaseCreateOneNature(TestDescription + "can be added nature")));
 
-    @Test
-    void canBeAdded() {
+	}
 
-        // note : this method does not check validity
-        Nature nature3 = new Nature();
-        nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setDescription("nature3Name");
-        nature3.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setCharged(false);
+	@SuppressWarnings("unused")
+	@Test
+	@Order(4)
+	void isThisNatureInUse() throws Exception {
 
-        assertTrue(natureService.canBeAdded(nature3), "the list found : " + natureRepository.findByDescription(nature3.getDescription()) + " the size : " + natureRepository.findByDescription(nature3.getDescription()).size());
+		Nature nature = this.pleaseCreateOneNature(TestDescription + "is this nature in use");
+		// just created so it should say no
+		assertFalse(natureService.isThisNatureInUse(nature));
+		//this.setTools();
+		Mission mission = tools.pleaseCreateAMission(nature);
+		// with a mission associated it should say yes
+		assertTrue(natureService.isThisNatureInUse(nature));
 
-        Nature nature4 = new Nature();
-        nature4.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature4.setDescription("nature1Name");
-        nature4.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature4.setCharged(false);
+	}
 
-        assertFalse(natureService.canBeAdded(nature4), "the list found : " + natureRepository.findByDescription(nature3.getDescription()) + " the size : " + natureRepository.findByDescription(nature3.getDescription()).size());
-    }
+	@Test
+	void ReadingTest() throws Exception {
+		assertThrows(BadRequestException.class, () -> natureService.read(0));
+		assertEquals(natureService.read(TestDescription + "readings").size(), 0);
+		Nature nature = this.pleaseCreateOneNature(TestDescription + "readings");
+		Nature nature2 = natureService.read(nature.getDescription()).get(0);
+		assertTrue(nature.getDescription().equals(nature2.getDescription()));
+		assertEquals(nature.getId(), natureService.read(nature.getId()).getId());
+	}
 
-    @Test
-    void isAValidNature() {
-        Nature invalidNature1 = new Nature();
-        invalidNature1.setDateOfValidity(LocalDateTime.now());
-        invalidNature1.setEndOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
+	@Test
+	void getActiveNatures() throws BadRequestException {
+		List<Nature> activeNatures = natureService.getActiveNatures();
+		int previousSize = activeNatures.size();
+		Nature nature = this.pleaseCreateOneNature(TestDescription + "activeNatures");
+		activeNatures = natureService.getActiveNatures();
+		assertNotEquals(activeNatures.size(), previousSize);
+		assertEquals(activeNatures.size(), previousSize + 1);
+		assertTrue(activeNatures.stream().filter((nature2) -> nature2.getId() == nature.getId()).toList().get(0)
+				.getDescription().equals(nature.getDescription()));
+		nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
+        nature.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
+        this.natureRepository.save(nature);
+        activeNatures = natureService.getActiveNatures();
+        assertEquals(activeNatures.size(), previousSize);
+	}
 
-        assertFalse(natureService.isAValidNature(invalidNature1));
-
-        Nature validNature = new Nature();
-        validNature.setDateOfValidity(LocalDateTime.now());
-        validNature.setEndOfValidity(null);
-        validNature.setDescription("validNatureName");
-
-        assertTrue(natureService.isAValidNature(validNature));
-    }
-
-
-    @Test
-    void delete() throws BadRequestException {
-        int idNature1 = natureRepository.findByDescription("nature1Name").get(0).getId();
-        int idNature2 = natureRepository.findByDescription("nature2Name").get(0).getId();
-
-        natureService.delete(idNature2);
-        assertTrue(natureRepository.findById(idNature2).isEmpty());
-
-
-        Optional<Nature> optionalNature1Before = natureRepository.findById(idNature1);
-        assertNull(optionalNature1Before.get().getEndOfValidity());
-        assertTrue(natureService.isThisNatureInUse(optionalNature1Before.get()));
-        natureService.delete(idNature1);
-        assertThrows(BadRequestException.class, () -> natureService.delete(idNature1));
-
-        Optional<Nature> optionalNature1 = natureRepository.findById(idNature1);
-        assertTrue(optionalNature1.isPresent());
-        assertTrue(optionalNature1.get().getEndOfValidity() != null, " end of validity : " + optionalNature1.get().getEndOfValidity());
-    }
-
-    @Test
-    void isThisNatureInUse() {
-        assertTrue(natureService.isThisNatureInUse(natureRepository.findByDescription("nature1Name").get(0)));
-        assertFalse(natureService.isThisNatureInUse(natureRepository.findByDescription("nature2Name").get(0)));
-    }
-    @Test
-    void create() throws BadRequestException {
-
-        Nature nature3 = new Nature();
-        nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setDescription("nature3Name");
-        nature3.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setCharged(false);
-
-        natureService.create(nature3);
-        assertNotNull(natureRepository.findByDescription("nature3Name").get(0));
-
-
-        Nature nature1Bis = new Nature();
-        nature1Bis.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature1Bis.setDescription("nature1Name");
-        nature1Bis.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature1Bis.setCharged(false);
-
-        assertThrows(BadRequestException.class, () -> natureService.create(nature1Bis));
-        assertTrue(natureRepository.findByDescription("nature1Name").get(0).isCharged());
-
-
-        Nature invalidNature1 = new Nature();
-        invalidNature1.setDateOfValidity(LocalDateTime.now());
-        invalidNature1.setEndOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature1Bis.setDescription("invalidNature1name");
-
-        assertThrows(BadRequestException.class, () -> natureService.create(invalidNature1));
-        assertEquals(natureRepository.findByDescription("invalidNature1name").size(), 0);
-
-    }
-
-    @Test
-    void getActiveNatures() {
-        List<Nature> activeNatures = natureService.getActiveNatures();
-        assertEquals(activeNatures.size(), 1);
-        assertTrue(activeNatures.get(0).getDescription().equals("nature1Name"));
-    }
-
+    /**
+     * @TODO rework this to be a real test of updating nature
+     * @throws BadRequestException
+     */
     @Test
     void update() throws BadRequestException {
-        Nature nature3 = new Nature();
-        nature3.setId(3);
-        nature3.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setDescription("nature3Name");
-        nature3.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature3.setCharged(false);
 
-        assertThrows(BadRequestException.class, () -> natureService.update(nature3.getId(), nature3));
-        assertFalse(natureRepository.findById(nature3.getId()).isPresent());
-        assertEquals(natureRepository.findByDescription("nature3name").size(), 0);
-
-
-        Nature nature2 = new Nature();
-        nature2.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setDescription("nature2Name");
-        nature2.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
-        nature2.setCharged(true);
-        int idNature2 = natureRepository.findByDescriptionOrderByDateOfValidityDesc(nature2.getDescription()).get(0).getId();
-        nature2.setId(idNature2);
-
-        assertThrows(BadRequestException.class, () -> natureService.update(1000, nature2));
-        assertFalse(natureRepository.findById(1000).isPresent());
-
-
-        natureService.update(idNature2, nature2);
-        assertTrue(natureRepository.findById(idNature2).get().isCharged());
-        assertEquals(natureRepository.findByDescription("nature2name").size(), 1);
-
-        Nature nature1 = natureRepository.findByDescription("nature1name").get(0);
-        nature1.setCharged(!nature1.isCharged());
-        natureService.update(nature1.getId(), nature1);
-
-        List<Nature> natures1oldAndNew = natureRepository.findByDescription("nature1name");
-        assertEquals(natures1oldAndNew.size(), 2);
-        assertTrue(natures1oldAndNew.get(0).isCharged() != natures1oldAndNew.get(1).isCharged());
-
+        Nature nature = tools.giveMeJustANature(TestDescription+"update");
+        assertNull(nature.getEndOfValidity());
+        nature.setDateOfValidity(LocalDateTime.of(2020, Month.DECEMBER, 6, 10, 10, 10));
+        nature.setEndOfValidity(LocalDateTime.of(2021, Month.DECEMBER, 10, 10, 10, 10));
+        Nature persistedNature  = natureRepository.save(nature);
+        assertNotNull(natureService.read(persistedNature.getId()));
+        // id inconsistent
+        assertThrows(BadRequestException.class, () -> natureService.update(0, persistedNature));
+        assertEquals(natureService.read(TestDescription+"update1").size(), 0);
 
     }
 
-    @Test
-    void isNatureActive() {
-        Nature nature1 = natureRepository.findByDescription("nature1name").get(0);
-        Nature nature2 = natureRepository.findByDescription("nature2name").get(0);
-        assertTrue(natureService.isNatureActive(nature1));
-        assertFalse(natureService.isNatureActive(nature2));
+	/**
+	 * this is to persist a nature with default values and a provided description
+	 *
+	 * @param description
+	 * @return a persisted nature reference
+	 * @throws BadRequestException
+	 */
+	public Nature pleaseCreateOneNature(String description) throws BadRequestException {
+		Nature nature = new Nature();
+		nature.setDescription(description);
+		System.err.println(description);
+		// we set them to true because their default values are false
+		nature.setGivesBonus(true);
+		nature.setCharged(true);
+		nature.setTjm(this.TestTjm);
 
-        assertFalse(natureService.isNatureActive(nature1, LocalDateTime.of(1999, 01,01,01,01)));
+		return this.natureService.create(nature);
+	}
 
-        assertFalse(natureService.isNatureActive(nature2, LocalDateTime.of(1999, 01,01,01,01)));
-        assertFalse(natureService.isNatureActive(nature2, LocalDateTime.now()));
+	public void setTools() {
+		this.tools.setRoleSrv(roleSrv);
+		this.tools.setCollaboratorRepository(this.collaboratorRepository);
+		this.tools.setCityRepository(this.cityRepository);
+		this.tools.setExpenseTypeRepository(expenseTypeRepository);
+		this.tools.setMissionRepository(missionRepository);
 
-        assertTrue(natureService.isNatureActive(nature2, LocalDateTime.of(2021,01,01,01,01)));
-    }
 
+
+	}
 
 
 }
