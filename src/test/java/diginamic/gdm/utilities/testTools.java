@@ -30,8 +30,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * cette classe contient les outils pour les tests notamment : - des méthodes de
- * création d'instances d'objects JPA valides
+ * cette classe contient les outils pour les tests 
+ * principalement des méthodes de création d'instances d'objects JPA valides
  *
  * @author Vincent
  *

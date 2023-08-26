@@ -9,7 +9,12 @@ import diginamic.gdm.dao.Collaborator;
 import diginamic.gdm.dao.Mission;
 import diginamic.gdm.dao.Nature;
 import diginamic.gdm.dao.Status;
-
+/**
+ * 
+ * 
+ * @author Joseph
+ *
+ */
 public interface MissionRepository extends JpaRepository<Mission, Integer> {
 
     List<Mission> findByNatureIs(Nature nature);

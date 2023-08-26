@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomLogoutHandler implements LogoutHandler, LogoutSuccessHandler {
 
+	/** collaboratorService */
 	@Autowired
 	private CollaboratorService collaboratorService;
 

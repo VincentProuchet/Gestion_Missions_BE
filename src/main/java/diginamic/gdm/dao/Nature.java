@@ -97,6 +97,9 @@ public class Nature {
 		this.description = description.trim().toLowerCase();
 	}
 
+	/** Constructeur
+	 * @param nature
+	 */
 	public Nature(NatureDTO nature) {
 		this.id = nature.getId();
 		this.setDescription(nature.getDescription());

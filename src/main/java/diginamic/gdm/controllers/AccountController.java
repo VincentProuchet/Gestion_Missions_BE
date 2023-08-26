@@ -33,7 +33,9 @@ public class AccountController {
 	 * The {@link CollaboratorService} dependency.
 	 */
 	private CollaboratorService collaboratorService;
-
+	/**
+	 * 
+	 */
 	private BCryptPasswordEncoder passwordEncoder;
 
 	/**

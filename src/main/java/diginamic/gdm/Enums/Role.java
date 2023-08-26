@@ -28,6 +28,7 @@ public enum Role implements GrantedAuthority {
 	ANON(5000,GDMRoles.ANON),
 	;
 
+	/** AUTHORITY_PREFIX */
 	public static final String AUTHORITY_PREFIX = GDMRoles.AUTHORITY_PREFIX;
 	/** id */
 	private final int id;

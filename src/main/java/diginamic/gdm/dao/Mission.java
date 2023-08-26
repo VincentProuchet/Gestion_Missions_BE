@@ -55,6 +55,7 @@ public class Mission {
 
 	/** hasBonusBeenEvaluated : a technical data to make it easier to get missions missing a bonus
 	 * it is true only after the night computing has set the value of bonus */
+	@Column
 	private boolean hasBonusBeenEvaluated = false;
 
 	/** missionTransport : the type of transport for the mission */
@@ -100,7 +101,7 @@ public class Mission {
 		this.endDate = m.getEnd();
 		this.bonus = m.getBonus();
 		this.missionTransport = m.getTransport();
-		this.nature = m.getNature().instantiate();
+		this.nature =new Nature(m.getNature());
 		this.status = m.getStatus();
 		this.startCity = start;
 		this.endCity = arrival;
@@ -112,7 +113,7 @@ public Mission(MissionDTO m) {
 		this.endDate = m.getEnd();
 		this.bonus = m.getBonus();
 		this.missionTransport = m.getTransport();
-		this.nature = m.getNature().instantiate();
+		this.nature = new Nature(m.getNature());
 		this.status = m.getStatus();
 	}
 

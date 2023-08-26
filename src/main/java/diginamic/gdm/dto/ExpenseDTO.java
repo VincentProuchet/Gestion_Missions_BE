@@ -49,6 +49,9 @@ public class ExpenseDTO implements DTO<Expense> {
 	 */
 	private ExpenseTypeDTO type = null;
 
+	/** Constructeur
+	 * @param expense
+	 */
 	public ExpenseDTO(Expense expense) {
 		this.id = expense.getId();
 		this.idMission = expense.getMission().getId();

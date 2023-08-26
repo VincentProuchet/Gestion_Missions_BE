@@ -50,6 +50,7 @@ public class MissionController {
 	 * The {@link MissionService} dependency.
 	 */
 	private MissionService missionService;
+	
 	/** cityService */
 	private CityService cityService;
 	/**
@@ -62,6 +63,7 @@ public class MissionController {
 	 * @return A list of all missions
 	 */
 	@GetMapping
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.COLLABORATOR)
 	public List<MissionDTO> list() throws Exception {
 		// get the identity of the collaborator, send only their missions
@@ -78,6 +80,7 @@ public class MissionController {
 	 * @return A list of all missions
 	 */
 	@GetMapping(path = GDMRoutes.MANAGER + "/{idManager}")
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.COLLABORATOR)
 	public List<MissionDTO> missionsWaitingValidation(@PathVariable int idManager) throws Exception {
 		// get the identity of the manager
@@ -113,6 +116,7 @@ public class MissionController {
 	 * @return The registered mission corresponding to the given id
 	 */
 	@GetMapping(path = "{id}")
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.COLLABORATOR)
 	public MissionDTO read(@PathVariable int id) throws BadRequestException {
 		// only a collaborator or his manager can ask for this
@@ -127,6 +131,7 @@ public class MissionController {
 	 * @return The resulting mission with updated info
 	 */
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.COLLABORATOR)
 	public MissionDTO update(@PathVariable int id, @RequestBody MissionDTO missionDTO) throws Exception {
 		// Be aware that only mission with a certain status can be modified
@@ -152,6 +157,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to delete
 	 */
 	@DeleteMapping(path = "{id}")
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.COLLABORATOR)
 	public void delete(@PathVariable int id) throws Exception {
 
@@ -173,6 +179,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to validate
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.VALIDER)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.MANAGER)
 	public MissionDTO validate(@PathVariable int id) throws Exception {
 		Collaborator user = collaboratorService.getConnectedUser();
@@ -191,6 +198,7 @@ public class MissionController {
 	 * @param id The id corresponding to the mission to reject
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.REJETER)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.MANAGER)
 	public MissionDTO reject(@PathVariable int id) throws Exception {
 
@@ -209,6 +217,7 @@ public class MissionController {
 	 * @throws Exception,BadRequestException
 	 */
 	@PutMapping(path = "{id}/" + GDMRoutes.RESET)
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	@Secured(GDMRoles.MANAGER)
 	public MissionDTO reset(@PathVariable int id) throws Exception,BadRequestException {
 

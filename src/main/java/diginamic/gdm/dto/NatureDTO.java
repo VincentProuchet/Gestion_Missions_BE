@@ -49,9 +49,4 @@ public class NatureDTO implements DTO<Nature> {
 		this.endOfValidity = nature.getEndOfValidity();
 	}
 
-	public Nature instantiate() {
-		return new Nature(id, givesBonus, charged, tjm, bonusPercentage, dateOfValidity, endOfValidity, description);
-	}
-
-
 }

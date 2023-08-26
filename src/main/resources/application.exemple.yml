@@ -1,6 +1,9 @@
 spring:
+  config:
+    activate:
+      on-profile: default
   application:
-    name: "Gestion des Missions"
+    name: Gestion des Missions
   jpa:
     generate-ddl: true  
         # this allow you to see sql queries in your console
@@ -24,4 +27,9 @@ spring:
     password: "1111"
     # driver... really important
     driverClassName: org.mariadb.jdbc.Driver
+    
+--- 
+# this is the start of a new config profile
+# yes une yyml to rules them all
+
     

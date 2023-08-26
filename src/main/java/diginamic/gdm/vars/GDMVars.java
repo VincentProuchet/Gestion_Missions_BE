@@ -46,7 +46,7 @@ public abstract class GDMVars {
 
 	/** REGEX_CITY_NAMES
 	 * city names can be up to 180 char
-	 * avec "' ", ' , -  or space in the name and as many as necessary
+	 * with "' ", ' , -  or space in the name and as many as necessary
 	 * but they can't be consecutives
 	 * reject all other punctuations
 	 * accept UPPERCASES

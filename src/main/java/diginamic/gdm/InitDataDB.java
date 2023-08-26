@@ -44,14 +44,18 @@ import diginamic.gdm.services.RoleService;
  * l'application peupleras la base de données avec des données cohérentes et
  * utilisable lors de test
  *
- * @author Joseph
+ * @author Josep
+ * @author Vincent
  *
  */
 @Component
 public class InitDataDB {
 
+	/** pré-allocation d'un dateTime */
 	private final LocalDateTime now;
+	/** pré-allocation d'un dateTime */
 	private final LocalDateTime lastYear;
+	/** pré-allocation d'un dateTime */
 	private final LocalDateTime nextYear;
 	@SuppressWarnings("unused")
 	@Autowired
@@ -88,19 +92,52 @@ public class InitDataDB {
 	@SuppressWarnings("unused")
 	@Autowired
 	private ApplicationParamsRepository applicationParamsRepository;
-
+	// Roles 
+	/** User */
 	private Roles userR;
+	/** Admin */
 	private Roles adminR;
+	/** Manager */
 	private Roles managerR;
-
+	/** 
+	 * Paramétre d'initialisation de la base de données
+	 * l'objet recherchera un ApplicationParam avec ce nom spécifique
+	 * si le paramétre n'est pas trouvé
+	 * ou 
+	 * si le paramétre a un valeur booleane à false
+	 * 
+	 *  alors l'objet éxécuteras toute sa procédure 
+	 *  d'initialisation de la base de données
+	 *  en commençant par l'effacement de toutes les données
+	 *  
+	 */
 	private final String paramInitDBName = "intidb";
+	/**
+	 * listes de collaborateurs
+	 */
 	private List<Collaborator> coll = new ArrayList<>();
+	/**
+	 * liste de natures
+	 */
 	private List<Nature> natures = new ArrayList<>();
+	/**
+	 * liste de villes
+	 */
 	private List<City> Cities = new ArrayList<>();
+	/**
+	 * liste de missions
+	 */
 	private List<Mission> missions = new ArrayList<>();
+	/**
+	 * liste de types de frais
+	 */
 	private List<ExpenseType> expenseTypes = new ArrayList<>();
+	/**
+	 * liste de frais
+	 */
 	private List<Expense> expenses = new ArrayList<>();
-
+	
+	// bloc d'initialisation pré-constructeur
 	{
 		now = nextWorkedDay(LocalDateTime.now().plusDays(1));
 		lastYear = nextWorkedDay(now.minusYears(1));
@@ -159,7 +196,7 @@ public class InitDataDB {
 	}
 
 	/**
-	 * initialise database with mock data mainly used for dveloppement and
+	 * Initialize database with mock data mainly used for development and
 	 * presentation
 	 *
 	 * @throws Exception

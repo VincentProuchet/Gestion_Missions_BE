@@ -31,12 +31,15 @@ import lombok.AllArgsConstructor;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class GDMSecurityConfig {
 
+	/** authProvider */
 	@Autowired
 	private GDMAuthentication authProvider;
 
+	/** userService */
 	@Autowired
 	CollaboratorService userService;
 
+	/** logoutHandler */
 	@Autowired
 	CustomLogoutHandler logoutHandler;
 	/**
@@ -51,7 +54,8 @@ public class GDMSecurityConfig {
 
 		http
 		.csrf()
-		.disable()// apparemment il faut au moins ça
+		.disable()
+		// apparemment il faut au moins ça
 				// si on se connecte depuis autre chose que le login tout fait de spring
 				// security
 				.authorizeRequests()

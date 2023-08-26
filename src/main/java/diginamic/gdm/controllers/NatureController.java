@@ -58,7 +58,7 @@ public class NatureController {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@Secured({GDMRoles.ADMIN})
 	public void create(@RequestBody NatureDTO nature) throws BadRequestException {
-		natureService.create(nature.instantiate());
+		natureService.create(new Nature(nature));
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class NatureController {
 	@PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@Secured(GDMRoles.ADMIN)
 	public NatureDTO update(@PathVariable int id, @RequestBody NatureDTO natureDTO) throws BadRequestException {
-		return new NatureDTO(natureService.update(id, natureDTO.instantiate()));
+		return new NatureDTO(natureService.update(id, new Nature(natureDTO)));
 	}
 
 	/**

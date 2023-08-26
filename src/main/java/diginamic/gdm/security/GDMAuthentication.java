@@ -39,13 +39,18 @@ import lombok.NoArgsConstructor;
 public class GDMAuthentication
 		implements AuthenticationProvider, AuthenticationSuccessHandler, AuthenticationFailureHandler {
 
+	/** CONTENT_TYPE_JSON */
 	private static final String CONTENT_TYPE_JSON = "application/json";
+	/** CONTENT_TYPE */
 	@SuppressWarnings("unused")
 	private static final String CONTENT_TYPE = "Content-Type";
+	/** CHARACTER_ENCODING */
 	private static final String CHARACTER_ENCODING = "UTF-8";
 
+	/** collaboratorService */
 	@Autowired
 	private CollaboratorService collaboratorService;
+	/** passwordEncoder */
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -58,7 +63,7 @@ public class GDMAuthentication
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		// if a security context already exist
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-//			System.out.println("allready authenticated");
+
 			return SecurityContextHolder.getContext().getAuthentication();
 		}
 		if (auth ==null) {

@@ -103,12 +103,10 @@ public class Collaborator implements UserDetails {
 		this.setFirstName(firstName);
 		this.email = email;
 		this.authorities.add(role);
-
-		// id, lastName, firstName, email, "", role, null, null
 	}
 
 	/**
-	 * Constructeur used for map
+	 * Constructor used for map
 	 *
 	 * @param user
 	 */
@@ -127,7 +125,7 @@ public class Collaborator implements UserDetails {
 	}
 
 	/**
-	 * Constructeur used for map this one exist to prevent stackOverflow
+	 * Constructor used for map this one exist to prevent stackOverflow
 	 *
 	 * @param user
 	 */
@@ -146,7 +144,7 @@ public class Collaborator implements UserDetails {
 	}
 
 	/**
-	 * Constructeur used for mapping from the DTO
+	 * Constructor used for mapping from the DTO
 	 *
 	 * @param user
 	 */
@@ -164,7 +162,7 @@ public class Collaborator implements UserDetails {
 	}
 
 	/**
-	 * Constructeur used for map this one is made to avoid StackOverflow
+	 * Constructor used for map this one is made to avoid StackOverflow
 	 *
 	 * @param user
 	 */
@@ -192,35 +190,11 @@ public class Collaborator implements UserDetails {
 	 */
 	public void setRoles(Role... authority) {
 		Set<Roles> construct = new HashSet<>();
-		for (Roles role : this.authorities) {
-			construct.add(role);
-		}
-
+		
 		for (Role role : authority) {
 
 			construct.add(new Roles(role));
 		}
-		this.authorities = construct;
-	}
-
-	/**
-	 * This is to simplify the Authority attribution for Spring Security yhea it
-	 * look complicated for what it does its due to the Collection being and
-	 * immutable and we can't bypass that because of the UserDetail implementation
-	 * this take authorities already the user already have and add it the one passed
-	 * as parameters * @param Roles authority
-	 */
-	public void removeAuthorities(Roles authority) {
-		Set<Roles> construct = new HashSet<>();
-		// we reconstruct the authorithy collection
-		for (Roles role : this.authorities) {
-			// as long as the authority to add is NOT the one we want to remove
-			if (!role.getLabel().equals(authority.getLabel())) {
-				// its add to the new collection
-				construct.add(role);
-			}
-		}
-		// and we ovewrite the new
 		this.authorities = construct;
 	}
 
@@ -254,6 +228,19 @@ public class Collaborator implements UserDetails {
 		return isActive;
 	}
 
+	/** Constructeur
+	 * @param id
+	 * @param lastName
+	 * @param firstName
+	 * @param email
+	 * @param team
+	 * @param username
+	 * @param password
+	 * @param isActive
+	 * @param authorities
+	 * @param missions
+	 * @param manager
+	 */
 	public Collaborator(int id, String lastName, String firstName, String email, Set<Collaborator> team,
 			String username, String password, boolean isActive, Collection<Roles> authorities, Set<Mission> missions,
 			Collaborator manager) {

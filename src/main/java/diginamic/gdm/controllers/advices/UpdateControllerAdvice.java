@@ -21,7 +21,7 @@ public class UpdateControllerAdvice {
 
     /**
      * this method has to disappear
-     * @param exception the exceptio
+     * @param exception the exception
      * @param request the request
      * @return the communication exception
      */

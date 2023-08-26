@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
  * @author DorianBoel
  */
 @RestController
+// http://wwww.gdm/city/
 @RequestMapping(path = GDMRoutes.CITY, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CityController {
